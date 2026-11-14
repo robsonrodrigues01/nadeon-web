@@ -5,27 +5,18 @@ import Image from "next/image";
 import type { Kit } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
 import { Claim } from "@/components/commerce/product-card/claim";
+import { useMarket } from "@/lib/market";
 import type { KitCartLine } from "./kit-lines";
 
 export interface BundleSectionProps {
   kit?: Kit | null;
   kitLines?: KitCartLine[];
-  locale?: string;
 }
 
-export function BundleSection({
-  kit,
-  kitLines = [],
-  locale = "en-US",
-}: BundleSectionProps) {
+export function BundleSection({ kit, kitLines = [] }: BundleSectionProps) {
+  const { formatMoney } = useMarket();
   const [isAdding, setIsAdding] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
-
-  const formatMoney = (amount: number, currencyCode: string) =>
-    new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency: currencyCode,
-    }).format(amount);
 
   const price = kit?.price;
   const compareAt = kit?.compareAtPrice;
@@ -77,11 +68,11 @@ export function BundleSection({
               {price && (
                 <div className="mt-6 flex items-baseline gap-3">
                   <span className="font-archivo text-3xl sm:text-4xl font-black text-fg">
-                    {formatMoney(price.amount, price.currencyCode)}
+                    {formatMoney(price)}
                   </span>
                   {compareAt && (
                     <span className="text-lg text-fg-muted line-through font-medium">
-                      {formatMoney(compareAt.amount, compareAt.currencyCode)}
+                      {formatMoney(compareAt)}
                     </span>
                   )}
                   {savePercent !== null && (

@@ -7,19 +7,16 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Kit } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
 import { Claim } from "@/components/commerce/product-card/claim";
+import { useMarket } from "@/lib/market";
 import type { KitCartLine } from "./kit-lines";
 
 export interface HeroProps {
   energyDuoKit?: Kit | null;
   kitLines?: KitCartLine[];
-  locale?: string;
 }
 
-export function Hero({
-  energyDuoKit,
-  kitLines = [],
-  locale = "en-US",
-}: HeroProps) {
+export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
+  const { formatMoney } = useMarket();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -35,10 +32,7 @@ export function Hero({
   };
 
   const formattedKitPrice = energyDuoKit
-    ? new Intl.NumberFormat(locale, {
-        style: "currency",
-        currency: energyDuoKit.price.currencyCode,
-      }).format(energyDuoKit.price.amount)
+    ? formatMoney(energyDuoKit.price)
     : null;
 
   const handleAddEnergyDuo = async () => {

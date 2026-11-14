@@ -12,6 +12,7 @@ import {
 import HumanPage, { generateMetadata } from "@/app/(human)/human/page";
 import { useCartStore, cartProvider } from "@/lib/providers/client";
 import { catalogProvider } from "@/lib/providers";
+import { MarketProvider } from "@/lib/market";
 
 describe("W2-02 Route: /human (Home Human)", () => {
   beforeEach(() => {
@@ -268,6 +269,18 @@ describe("W2-02 Route: /human (Home Human)", () => {
         expect(tab.getAttribute("aria-controls")).toBe(panel.id);
       }
       expect(panel.getAttribute("aria-labelledby")).toBe("tab-all");
+    }, 15000);
+
+    it("formats kit prices in the active market currency", async () => {
+      render(
+        <MarketProvider initialMarket="ca">{await HumanPage()}</MarketProvider>
+      );
+
+      // Kit price is 105 USD; Canada rate 1.36 gives 142.80 CAD.
+      expect(
+        screen.getByText(/142\.80/, { selector: "span" }).textContent
+      ).toMatch(/142\.80/);
+      expect(screen.queryByText(/105\.00/)).toBeNull();
     }, 15000);
 
     it("does not render a fallback price when the catalog has no kit", async () => {
