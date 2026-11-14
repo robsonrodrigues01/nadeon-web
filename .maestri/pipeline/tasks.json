@@ -589,11 +589,11 @@
     "depende_de": [
       "W1-14"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Remendo",
-    "lease_ate": "2026-11-14T10:14:02.027Z",
+    "lease_ate": null,
     "branch": "agy/W1-22",
-    "pr": "local 8ee1d60",
+    "pr": "local 7945be2",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -629,9 +629,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Aurora",
-    "lease_ate": "2026-11-14T10:17:11.115Z",
+    "lease_ate": null,
     "branch": "agy/W2-02",
     "pr": "local",
     "criterios": [
@@ -689,9 +689,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Capsula",
-    "lease_ate": "2026-11-14T10:18:03.086Z",
+    "lease_ate": "2026-11-14T10:21:21.251Z",
     "branch": "agy/W2-06",
     "pr": "local",
     "criterios": [
@@ -731,7 +731,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Coleira",
-    "lease_ate": "2026-11-14T10:16:08.942Z",
+    "lease_ate": "2026-11-14T10:20:43.239Z",
     "branch": "agy/W2-12",
     "pr": "local",
     "criterios": [
@@ -749,15 +749,94 @@
     "depende_de": [
       "W1-15"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilha",
     "branch": "agy/W2-23",
-    "pr": "local",
+    "pr": "local c48cb23",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ],
     "lease_ate": "2026-11-14T10:15:48.800Z"
+  },
+  {
+    "id": "W2-05",
+    "titulo": "Rota W2-05",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Formato",
+    "lease_ate": "2026-11-14T10:21:15.731Z",
+    "branch": "agy/W2-05",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-07",
+    "titulo": "Rota W2-07",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Combo",
+    "lease_ate": "2026-11-14T10:21:38.551Z",
+    "branch": "agy/W2-07",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-10",
+    "titulo": "Rota W2-10",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Bigode",
+    "lease_ate": "2026-11-14T10:21:06.630Z",
+    "branch": "agy/W2-10",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-23",
+    "titulo": "Correção dev-kit renderização de componentes cliente",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "disponivel",
+    "responsavel": null,
+    "branch": "agy/W1-23",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
   }
 ]
