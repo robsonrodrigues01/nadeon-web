@@ -18,13 +18,10 @@ interface GalleryItem {
 }
 
 export function PetGallery({ product, className = "" }: PetGalleryProps) {
-  const isHorse = product.species === "horse";
-  const isCat = product.species === "cat";
-  const audienceBadge = isHorse
-    ? "FOR EQUINE LONGEVITY"
-    : isCat
-      ? "FOR SENIOR CATS 7+"
-      : "FOR SENIOR DOGS 7+";
+  // Badge from the species only: age ranges are not in the catalog contract
+  const audienceBadge = product.species
+    ? `FOR ${product.species.toUpperCase()}S`
+    : "";
 
   // No hardcoded image: a product without images shows the placeholder, never another product's photo
   const fallbackImage = product.images[0];

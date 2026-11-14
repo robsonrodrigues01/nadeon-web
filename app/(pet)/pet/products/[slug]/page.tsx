@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { catalogProvider } from "@/lib/providers";
+import { catalogProvider, reviewsProvider } from "@/lib/providers";
 import {
   buildMetadata,
   buildProductJsonLd,
@@ -10,9 +10,8 @@ import {
   JsonLd,
 } from "@/lib/seo";
 
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+// Header, announcement bar, trust strip, newsletter and footer come from
+// app/(pet)/pet/layout.tsx. This page must not render them again.
 
 import { PetBreadcrumbs } from "./_components/pet-breadcrumbs";
 import { PetGallery } from "./_components/pet-gallery";
@@ -20,7 +19,6 @@ import { PetPurchaseCard } from "./_components/pet-purchase-card";
 import { PetInsideSection } from "./_components/pet-inside-section";
 import { PetScienceSection } from "./_components/pet-science-section";
 import { PetExpectSection } from "./_components/pet-expect-section";
-import { PetAudienceSection } from "./_components/pet-audience-section";
 import { PetVetSection } from "./_components/pet-vet-section";
 import { PetKitsSection } from "./_components/pet-kits-section";
 import { PetReviewsSection } from "./_components/pet-reviews-section";
@@ -44,17 +42,15 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   if (!product || product.line !== "pet") {
     return buildMetadata({
       title: "Pet Product Not Found",
-      description: "The requested pet longevity product could not be located.",
+      description: "The requested pet product could not be located.",
       noIndex: true,
     });
   }
 
-  const description =
-    product.benefits?.[0] ||
-    `${product.name} - ${product.technicalName}. Dedicated cellular longevity for ${product.species || "pets"}.`;
+  const description = product.benefits[0] ?? product.technicalName;
 
   return buildMetadata({
-    title: `${product.name} | Cellular Longevity for Pets`,
+    title: product.name,
     description,
     pathname: `/pet/products/${product.slug}`,
     openGraph: {
@@ -73,13 +69,16 @@ export default async function PetProductDetailPage(props: PageProps) {
     notFound();
   }
 
+  // Only kits that include this product. No fallback to other kits.
   const petKits = await catalogProvider.getKits("pet");
-
-  // Filter kits related to this product or line
   const relatedKits = petKits.filter((kit) =>
     kit.products.some((ref) => ref.productSlug === product.slug)
   );
-  const displayKits = relatedKits.length > 0 ? relatedKits : petKits;
+
+  const [reviewSummary, reviewList] = await Promise.all([
+    reviewsProvider.summary(product.slug),
+    reviewsProvider.list({ productSlug: product.slug, limit: 5 }),
+  ]);
 
   const speciesLabel =
     product.species === "cat"
@@ -95,7 +94,6 @@ export default async function PetProductDetailPage(props: PageProps) {
         ? "/pet/horses"
         : "/pet/dogs";
 
-  // Build JSON-LD structured data
   const productJsonLd = buildProductJsonLd(product);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Home", url: "/" },
@@ -103,15 +101,14 @@ export default async function PetProductDetailPage(props: PageProps) {
     { name: speciesLabel, url: speciesHref },
     { name: product.name, url: `/pet/products/${product.slug}` },
   ]);
-  const faqJsonLd =
-    product.faq && product.faq.length > 0 ? buildFaqJsonLd(product.faq) : null;
+  // Same list is rendered in PetFaqSection, so visible FAQ and JSON-LD match
+  const faqJsonLd = product.faq.length > 0 ? buildFaqJsonLd(product.faq) : null;
 
   // Without variants there is no price: the purchase card and sticky bar stay out
   const hasVariants = product.variants.length > 0;
 
   return (
-    <div className="min-h-screen flex flex-col bg-bg text-fg">
-      {/* Structured SEO Data */}
+    <>
       <JsonLd
         id="product-jsonld"
         data={productJsonLd as unknown as Record<string, unknown>}
@@ -127,13 +124,7 @@ export default async function PetProductDetailPage(props: PageProps) {
         />
       )}
 
-      {/* Global Pet Layout Header with Announcement */}
-      <AnnouncementBar line="pet" />
-      <Header variant="pet" />
-
-      {/* Main Product Page Content */}
       <main id="main-content" className="flex-1 pb-16">
-        {/* Top Product Hero Block */}
         <section
           aria-label="Product overview and purchase"
           className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-2 sm:pt-4 pb-8 sm:pb-12"
@@ -141,51 +132,35 @@ export default async function PetProductDetailPage(props: PageProps) {
           <PetBreadcrumbs product={product} />
 
           <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-            {/* Gallery Column (Desktop 6.5 cols / Mobile full) */}
             <div className="lg:col-span-6 xl:col-span-6">
               <PetGallery product={product} />
             </div>
 
-            {/* Purchase Form Column (Desktop 5.5 cols / Mobile full) */}
             <div className="lg:col-span-6 xl:col-span-6">
-              {hasVariants && <PetPurchaseCard product={product} />}
+              {hasVariants && (
+                <PetPurchaseCard
+                  product={product}
+                  reviewSummary={reviewSummary}
+                />
+              )}
             </div>
           </div>
         </section>
 
-        {/* Section 1: What is inside & Supplement facts */}
         <PetInsideSection product={product} />
-
-        {/* Section 2: The Science */}
         <PetScienceSection product={product} />
-
-        {/* Section 3: What to Expect */}
         <PetExpectSection />
-
-        {/* Section 4: Who It Is For */}
-        <PetAudienceSection product={product} />
-
-        {/* Section 6: Veterinarian Review */}
         <PetVetSection />
-
-        {/* Section 7: Featured Kits */}
-        <PetKitsSection kits={displayKits} />
-
-        {/* Section 8: Reviews Summary & Empty State */}
-        <PetReviewsSection />
-
-        {/* Section 9: Lab Report & Lot Lookup */}
+        <PetKitsSection kits={relatedKits} />
+        <PetReviewsSection
+          summary={reviewSummary}
+          reviews={reviewList.reviews}
+        />
         <PetLabSearch />
-
-        {/* Section 10: Product FAQ Accordion */}
         <PetFaqSection product={product} />
 
-        {/* Sticky Mobile/Desktop Add-to-cart Bar */}
         {hasVariants && <PetStickyBar product={product} />}
       </main>
-
-      {/* Global Pet Layout Footer */}
-      <Footer line="pet" />
-    </div>
+    </>
   );
 }

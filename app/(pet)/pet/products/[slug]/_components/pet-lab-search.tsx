@@ -44,7 +44,6 @@ export function PetLabSearch({ className = "" }: PetLabSearchProps) {
                   type="text"
                   disabled
                   aria-disabled="true"
-                  placeholder="e.g. NL-0000"
                   className="w-full min-h-11 rounded-field border border-border bg-bg px-4 py-2 text-sm text-fg placeholder:text-fg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-60 disabled:cursor-not-allowed"
                 />
               </div>

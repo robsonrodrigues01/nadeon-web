@@ -7,6 +7,7 @@ import type {
   ProductVariant,
   SellingPlan,
 } from "@/lib/contracts/catalog";
+import type { ReviewSummary } from "@/lib/contracts/reviews";
 import { cartProvider } from "@/lib/providers/client";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import {
 
 export interface PetPurchaseCardProps {
   product: Product;
+  reviewSummary: ReviewSummary;
   locale?: string;
   className?: string;
 }
@@ -27,35 +29,23 @@ export function formatMoney(money: Money, locale = "en-US"): string {
   }).format(money.amount);
 }
 
-const WEIGHT_BANDS = [
-  {
-    id: "up-to-20",
-    label: "Up to 20 lbs",
-    doseText: "1 chew a day · we picked the plan that matches",
-    targetJars: 1,
-  },
-  {
-    id: "21-to-50",
-    label: "21 to 50 lbs",
-    doseText: "2 chews a day · we picked the plan that matches",
-    targetJars: 2,
-  },
-  {
-    id: "51-to-90",
-    label: "51 to 90 lbs",
-    doseText: "3 chews a day · we picked the plan that matches",
-    targetJars: 3,
-  },
-  {
-    id: "over-90",
-    label: "Over 90 lbs",
-    doseText: "4 chews a day · we picked the plan that matches",
-    targetJars: 3,
-  },
-];
+// Weight bands come from product.dosingByWeight. Jars per band is the store rule.
+const JARS_BY_BAND = [1, 2, 3, 3];
+
+function buildWeightBands(
+  bands: { servingDescription: string; dose: string }[]
+) {
+  return bands.map((band, idx) => ({
+    id: String(idx),
+    label: band.servingDescription,
+    doseText: `${band.dose} · we picked the plan that matches`,
+    targetJars: JARS_BY_BAND[idx] ?? 3,
+  }));
+}
 
 export function PetPurchaseCard({
   product,
+  reviewSummary,
   locale = "en-US",
   className = "",
 }: PetPurchaseCardProps) {
@@ -63,9 +53,10 @@ export function PetPurchaseCard({
   const [purchaseType, setPurchaseType] = useState<"subscription" | "one-time">(
     "subscription"
   );
+  const weightBands = buildWeightBands(product.dosingByWeight);
 
-  const [selectedWeightBandId, setSelectedWeightBandId] =
-    useState<string>("21-to-50");
+  // Default band: the second one (the 21 to 50 lbs band in the catalog)
+  const [selectedWeightBandId, setSelectedWeightBandId] = useState<string>("1");
 
   const uniqueVariants = useMemo(() => {
     const seen = new Set<number>();
@@ -152,13 +143,16 @@ export function PetPurchaseCard({
     locale
   );
 
+  // Undefined when the product has no 1-jar variant: no one-jar price is shown
   const singleJarOneTime = product.variants.find((v) => v.jars === 1);
-  const singleJarBasePrice =
-    singleJarOneTime?.price.amount ?? product.variants[0].price.amount;
+  const singleJarBasePrice = singleJarOneTime?.price.amount;
   const subscriptionDiscount = selectedSellingPlan?.discountPercentage ?? 0;
-  const singleJarSubPrice = Number(
-    (singleJarBasePrice * (1 - subscriptionDiscount / 100)).toFixed(2)
-  );
+  const singleJarSubPrice =
+    singleJarBasePrice === undefined
+      ? undefined
+      : Number(
+          (singleJarBasePrice * (1 - subscriptionDiscount / 100)).toFixed(2)
+        );
 
   const isHorse = product.species === "horse";
   const weightLegend = isHorse
@@ -168,11 +162,11 @@ export function PetPurchaseCard({
       : "Your dog weighs";
 
   const activeWeightBand =
-    WEIGHT_BANDS.find((b) => b.id === selectedWeightBandId) || WEIGHT_BANDS[1];
+    weightBands.find((b) => b.id === selectedWeightBandId) ?? weightBands[1];
 
   const handleSelectWeight = (bandId: string) => {
     setSelectedWeightBandId(bandId);
-    const band = WEIGHT_BANDS.find((b) => b.id === bandId);
+    const band = weightBands.find((b) => b.id === bandId);
     if (!band) return;
 
     if (band.targetJars === 1) {
@@ -270,9 +264,6 @@ export function PetPurchaseCard({
 
       {/* Reviews & Lab info row */}
       <div className="flex items-center gap-3 text-xs font-bold flex-wrap">
-        <span className="inline-flex items-center rounded-pill bg-accent/20 text-accent px-2 py-0.5 text-[11px] font-extrabold">
-          New
-        </span>
         <a
           href="#reviews"
           className="hover:underline flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm py-1"
@@ -280,7 +271,11 @@ export function PetPurchaseCard({
           <span className="opacity-60" aria-hidden="true">
             ☆☆☆☆☆
           </span>
-          <span>No reviews yet · be the first</span>
+          <span>
+            {reviewSummary.totalReviews === 0
+              ? "No reviews yet · be the first"
+              : `${reviewSummary.totalReviews} reviews`}
+          </span>
         </a>
         <span className="opacity-40" aria-hidden="true">
           |
@@ -296,12 +291,14 @@ export function PetPurchaseCard({
       {/* Price summary */}
       <div className="flex items-baseline gap-2 flex-wrap">
         <span className="text-2xl sm:text-3xl font-extrabold text-fg">
-          {formatMoney({ amount: singleJarBasePrice, currencyCode }, locale)}
+          {singleJarBasePrice !== undefined &&
+            formatMoney({ amount: singleJarBasePrice, currencyCode }, locale)}
         </span>
         <span className="text-sm font-bold text-fg/70">
           or{" "}
           <strong className="text-fg">
-            {formatMoney({ amount: singleJarSubPrice, currencyCode }, locale)}
+            {singleJarSubPrice !== undefined &&
+              formatMoney({ amount: singleJarSubPrice, currencyCode }, locale)}
           </strong>{" "}
           with Subscribe &amp; Save
         </span>
@@ -320,15 +317,6 @@ export function PetPurchaseCard({
             <Claim showDisclaimer={false}>{benefit}</Claim>
           </li>
         ))}
-        <li className="flex items-start gap-2.5">
-          <span
-            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-[11px] font-bold text-accent mt-0.5"
-            aria-hidden="true"
-          >
-            ✓
-          </span>
-          <span>Dosed by weight, vet-reviewed formula</span>
-        </li>
       </ul>
       {product.benefits.length > 0 && (
         <p
@@ -414,7 +402,7 @@ export function PetPurchaseCard({
                     aria-label={weightLegend}
                     className="grid grid-cols-2 sm:grid-cols-4 gap-2"
                   >
-                    {WEIGHT_BANDS.map((band) => {
+                    {weightBands.map((band) => {
                       const isBandActive = selectedWeightBandId === band.id;
                       const inputId = `${componentId}-weight-${band.id}`;
 
@@ -444,7 +432,7 @@ export function PetPurchaseCard({
                   </div>
 
                   <p className="text-xs text-accent font-semibold pt-1">
-                    {activeWeightBand.doseText}
+                    {activeWeightBand?.doseText}
                   </p>
                 </fieldset>
 
@@ -479,9 +467,11 @@ export function PetPurchaseCard({
                     const isRecommended = plan.intervalDays === 60;
                     const planRadioId = `${componentId}-plan-${plan.id}`;
 
-                    let planSubtitle = "60 chews · 30 days at 2 chews/day";
+                    let planSubtitle = product.netWeight;
                     if (plan.intervalDays === 60) {
-                      planSubtitle = "Recommended for 21 to 50 lbs";
+                      planSubtitle = weightBands[1]
+                        ? `Recommended for ${weightBands[1].label}`
+                        : planSubtitle;
                     } else if (plan.intervalDays === 90) {
                       planSubtitle = "Best price per chew";
                     }
@@ -582,9 +572,14 @@ export function PetPurchaseCard({
                     const unitPrice = Number(
                       (variant.price.amount / variant.jars).toFixed(2)
                     );
-                    const singlePrice = singleJarBasePrice;
-                    const expectedTotal = singlePrice * variant.jars;
-                    const savings = expectedTotal - variant.price.amount;
+                    const expectedTotal =
+                      singleJarBasePrice === undefined
+                        ? undefined
+                        : singleJarBasePrice * variant.jars;
+                    const savings =
+                      expectedTotal === undefined
+                        ? 0
+                        : expectedTotal - variant.price.amount;
                     const isPopular = variant.jars === 2;
 
                     return (

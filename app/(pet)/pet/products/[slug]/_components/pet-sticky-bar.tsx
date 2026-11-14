@@ -85,8 +85,9 @@ export function PetStickyBar({ product, locale = "en-US" }: PetStickyBarProps) {
             {product.name}
           </div>
           <div className="text-xs text-fg-muted truncate hidden sm:block">
-            {product.technicalName} · Subscribe &amp; save {discountRate}% · 2
-            jars every 60 days
+            {product.technicalName} · Subscribe &amp; save {discountRate}% ·{" "}
+            {defaultVariant.jars} {defaultVariant.jars === 1 ? "jar" : "jars"}{" "}
+            every {defaultPlan?.intervalDays} days
           </div>
         </div>
 

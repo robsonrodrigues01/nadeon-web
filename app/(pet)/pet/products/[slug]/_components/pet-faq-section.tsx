@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import type { Product, ProductFaq } from "@/lib/contracts/catalog";
+import type { Product } from "@/lib/contracts/catalog";
 import { Claim } from "@/components/commerce/product-card/claim";
 
 export interface PetFaqSectionProps {
@@ -8,40 +8,9 @@ export interface PetFaqSectionProps {
   className?: string;
 }
 
-const DESIGN_FAQS: ProductFaq[] = [
-  {
-    question: "My dog is under 7. Is this right for them?",
-    answer:
-      "More Good Years is made for dogs 7 and older, or 5 and older for large breeds. For younger dogs, look at Good Days treats. Ask your vet before starting any supplement.*",
-  },
-  {
-    question: "How long until I notice a difference?",
-    answer:
-      "Every dog responds individually. Many pet parents observe refreshed morning enthusiasm within 2 to 4 weeks of consistent daily administration.*",
-  },
-  {
-    question: "Can I give it with my dog's medication?",
-    answer:
-      "Always consult your licensed veterinarian before introducing any new supplement if your dog is currently taking prescription medications.",
-  },
-  {
-    question: "Is it safe to use long term?",
-    answer:
-      "Yes. Our formula is crafted for daily, sustained senior longevity support when given according to canine weight guidelines.",
-  },
-];
-
+// Visible FAQ = product.faq, the same list the page sends as FAQPage JSON-LD.
 export function PetFaqSection({ product, className = "" }: PetFaqSectionProps) {
-  // Combine product FAQs with design FAQs, avoiding duplicates
-  const existingQuestions = new Set(
-    (product.faq || []).map((f) => f.question.toLowerCase().trim())
-  );
-  const combinedFaqs: ProductFaq[] = [
-    ...(product.faq || []),
-    ...DESIGN_FAQS.filter(
-      (f) => !existingQuestions.has(f.question.toLowerCase().trim())
-    ),
-  ];
+  if (product.faq.length === 0) return null;
 
   return (
     <section
@@ -72,9 +41,9 @@ export function PetFaqSection({ product, className = "" }: PetFaqSectionProps) {
         </div>
 
         <div className="divide-y divide-border/60 rounded-card border border-border bg-bg-elevated p-2 sm:p-4 shadow-card">
-          {combinedFaqs.map((faq, idx) => (
+          {product.faq.map((faq) => (
             <details
-              key={idx}
+              key={faq.question}
               className="group py-4 px-2 sm:px-4 cursor-pointer focus-within:outline-none"
             >
               <summary className="flex items-center justify-between gap-4 text-sm sm:text-base font-extrabold text-fg list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-field py-1">
