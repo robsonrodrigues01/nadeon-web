@@ -287,7 +287,7 @@
     "responsavel": "Timao",
     "lease_ate": null,
     "branch": "agy/W1-03",
-    "pr": "local",
+    "pr": "local 880a23b",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -343,11 +343,11 @@
     "depende_de": [
       "W1-01"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Carta",
-    "lease_ate": "2026-11-14T07:24:48.418Z",
+    "lease_ate": null,
     "branch": "agy/W1-06",
-    "pr": "local fbecfc8",
+    "pr": "local 880a23b",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -403,11 +403,11 @@
     "depende_de": [
       "W1-01"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Vitrine",
-    "lease_ate": "2026-11-14T07:27:22.640Z",
+    "lease_ate": null,
     "branch": "agy/W1-12",
-    "pr": "local",
+    "pr": "local 880a23b",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -427,7 +427,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lastro",
-    "lease_ate": "2026-11-14T07:30:48.230Z",
+    "lease_ate": "2026-11-14T07:31:51.204Z",
     "branch": "agy/W1-19",
     "pr": "local",
     "criterios": [
