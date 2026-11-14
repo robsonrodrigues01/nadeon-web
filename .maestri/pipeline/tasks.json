@@ -469,7 +469,7 @@
     "responsavel": "Rastro",
     "lease_ate": null,
     "branch": "agy/W1-10",
-    "pr": "local",
+    "pr": "local e8b0cc9",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -550,7 +550,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Rotulo",
-    "lease_ate": "2026-11-14T09:45:32.732Z",
+    "lease_ate": "2026-11-14T09:48:14.517Z",
     "branch": "agy/W1-20",
     "pr": "local",
     "criterios": [
