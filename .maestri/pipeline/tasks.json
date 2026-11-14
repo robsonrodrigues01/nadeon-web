@@ -629,9 +629,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
-    "responsavel": "Aurora",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Vela",
+    "lease_ate": "2026-11-14T23:05:04.037Z",
     "branch": "agy/W2-02",
     "pr": "local",
     "criterios": [
@@ -1079,7 +1079,8 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Bitola"
   },
   {
     "id": "W2-24",
@@ -1130,9 +1131,9 @@
     "depende_de": [
       "W0-07"
     ],
-    "status": "para_revisao",
-    "responsavel": "Preco",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Remo",
+    "lease_ate": "2026-11-14T23:05:04.005Z",
     "branch": "agy/W1-24",
     "pr": "local",
     "criterios": [
@@ -1210,16 +1211,17 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
-    "responsavel": "Laudo",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Codex-Reviewer",
+    "lease_ate": "2026-11-14T23:05:10.906Z",
     "branch": "agy/W2-28",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Sonda"
   },
   {
     "id": "W2-29",
