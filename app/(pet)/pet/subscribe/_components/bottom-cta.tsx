@@ -3,13 +3,17 @@ import Link from "next/link";
 
 interface BottomCtaProps {
   freeShippingText?: string | null;
+  discountPercentage?: number;
 }
 
-export function BottomCta({ freeShippingText }: BottomCtaProps) {
+export function BottomCta({
+  freeShippingText,
+  discountPercentage = 15,
+}: BottomCtaProps) {
   return (
     <section
       aria-labelledby="bottom-cta-heading"
-      className="relative overflow-hidden border-b border-border py-20 sm:py-28 text-center"
+      className="relative overflow-hidden border-b border-border py-20 text-center sm:py-28"
       style={{
         background:
           "linear-gradient(135deg, rgba(255, 237, 176, 0.95) 0%, rgba(255, 220, 192, 0.9) 45%, rgba(221, 238, 251, 0.9) 100%)",
@@ -22,7 +26,7 @@ export function BottomCta({ freeShippingText }: BottomCtaProps) {
       >
         <svg
           viewBox="0 0 100 100"
-          className="h-64 w-64 sm:h-80 sm:w-80 fill-current"
+          className="h-64 w-64 fill-current sm:h-80 sm:w-80"
         >
           <ellipse
             cx="22"
@@ -58,7 +62,7 @@ export function BottomCta({ freeShippingText }: BottomCtaProps) {
 
       <div className="relative z-10 mx-auto max-w-4xl px-5 sm:px-8">
         <span className="inline-block rounded-full bg-fg px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-bg">
-          SAVE 15% ON EVERY ORDER
+          SAVE {discountPercentage}% ON EVERY ORDER
         </span>
         <h2
           id="bottom-cta-heading"

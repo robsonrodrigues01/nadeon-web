@@ -2,9 +2,15 @@ import React from "react";
 
 interface HowItWorksProps {
   freeShippingText?: string | null;
+  discountPercentage?: number;
+  frequencyText?: string;
 }
 
-export function HowItWorks({ freeShippingText }: HowItWorksProps) {
+export function HowItWorks({
+  freeShippingText,
+  discountPercentage = 15,
+  frequencyText = "30, 60 or 90 days",
+}: HowItWorksProps) {
   const steps = [
     {
       step: 1,
@@ -14,11 +20,11 @@ export function HowItWorks({ freeShippingText }: HowItWorksProps) {
     {
       step: 2,
       title: "Set the rhythm",
-      description: "Every 30, 60 or 90 days. Change it anytime.",
+      description: `Every ${frequencyText}. Change it anytime.`,
     },
     {
       step: 3,
-      title: "Save 15%",
+      title: `Save ${discountPercentage}%`,
       description: `On every delivery, plus ${freeShippingText ? freeShippingText.toLowerCase() : "free shipping over $49"}.`,
     },
   ];

@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
 
-export function Hero() {
+interface HeroProps {
+  discountPercentage?: number;
+}
+
+export function Hero({ discountPercentage = 15 }: HeroProps) {
   return (
     <section
       aria-labelledby="hero-heading"
@@ -13,12 +17,12 @@ export function Hero() {
     >
       {/* Decorative paw print SVG */}
       <div
-        className="pointer-events-none absolute -bottom-10 right-4 sm:right-10 text-fg opacity-[0.06]"
+        className="pointer-events-none absolute -bottom-10 right-4 text-fg opacity-[0.06] sm:right-10"
         aria-hidden="true"
       >
         <svg
           viewBox="0 0 100 100"
-          className="h-64 w-64 sm:h-96 sm:w-96 fill-current"
+          className="h-64 w-64 fill-current sm:h-96 sm:w-96"
         >
           <ellipse
             cx="22"
@@ -56,7 +60,7 @@ export function Hero() {
         {/* Left Column: Headline and CTAs */}
         <div className="relative z-10 max-w-2xl text-left">
           <span className="inline-block rounded-full bg-fg px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-bg">
-            SUBSCRIBE &amp; SAVE 15%
+            SUBSCRIBE &amp; SAVE {discountPercentage}%
           </span>
           <h1
             id="hero-heading"
@@ -65,8 +69,9 @@ export function Hero() {
             Never run out of good days.
           </h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-fg sm:text-lg">
-            Their daily chew, delivered on your schedule. Save 15% on every
-            order. Skip, pause or cancel anytime, no calls needed.
+            Their daily chew, delivered on your schedule. Save{" "}
+            {discountPercentage}% on every order. Skip, pause or cancel anytime,
+            no calls needed.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">

@@ -3,7 +3,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-export function FlexibilitySection() {
+interface FlexibilitySectionProps {
+  intervalDays?: number;
+  pauseMonths?: number;
+}
+
+export function FlexibilitySection({
+  intervalDays = 30,
+  pauseMonths = 3,
+}: FlexibilitySectionProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState("Dec 3 (example)");
   const [productName, setProductName] = useState("More Good Years");
@@ -27,7 +35,7 @@ export function FlexibilitySection() {
     setIsCancelled(false);
     if (!isPaused) {
       setIsPaused(true);
-      setMessage("Subscription paused for up to 3 months.");
+      setMessage(`Subscription paused for up to ${pauseMonths} months.`);
     } else {
       setIsPaused(false);
       setMessage("Subscription resumed. Your next shipment is scheduled.");
@@ -94,7 +102,7 @@ export function FlexibilitySection() {
             {/* 1. Skip */}
             <div className="flex items-start gap-4 border-b border-bg/20 pb-6">
               <div
-                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent text-fg font-sans text-xl font-extrabold"
+                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent font-sans text-xl font-extrabold text-fg"
                 aria-hidden="true"
               >
                 »
@@ -112,7 +120,7 @@ export function FlexibilitySection() {
             {/* 2. Pause */}
             <div className="flex items-start gap-4 border-b border-bg/20 pb-6">
               <div
-                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent text-fg font-sans text-base font-extrabold"
+                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent font-sans text-base font-extrabold text-fg"
                 aria-hidden="true"
               >
                 ❚❚
@@ -122,7 +130,7 @@ export function FlexibilitySection() {
                   Pause
                 </h3>
                 <p className="mt-1 text-sm leading-relaxed text-bg/80 sm:text-base">
-                  Going away? Pause for up to 3 months.
+                  Going away? Pause for up to {pauseMonths} months.
                 </p>
               </div>
             </div>
@@ -130,7 +138,7 @@ export function FlexibilitySection() {
             {/* 3. Cancel */}
             <div className="flex items-start gap-4 border-b border-bg/20 pb-6">
               <div
-                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent text-fg font-sans text-lg font-extrabold"
+                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent font-sans text-lg font-extrabold text-fg"
                 aria-hidden="true"
               >
                 ✕
@@ -187,7 +195,7 @@ export function FlexibilitySection() {
               </h4>
               <p className="text-xs text-fg-muted">{productBadge}</p>
               <p className="mt-1 text-xs text-fg/70">
-                For: Buddy (example) · every 30 days
+                For: Buddy (example) · every {intervalDays} days
               </p>
             </div>
           </div>
@@ -209,7 +217,7 @@ export function FlexibilitySection() {
             <div
               role="status"
               aria-live="polite"
-              className="mt-4 rounded-lg bg-bg-elevated border border-border p-3 text-center text-xs font-medium text-fg"
+              className="mt-4 rounded-lg border border-border bg-bg-elevated p-3 text-center text-xs font-medium text-fg"
             >
               {message}
             </div>
@@ -221,7 +229,7 @@ export function FlexibilitySection() {
               type="button"
               onClick={handleSkip}
               disabled={isCancelled}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-3 py-2 text-xs sm:text-sm font-bold text-fg transition hover:bg-fg hover:text-bg active:scale-95 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-3 py-2 text-xs font-bold text-fg transition hover:bg-fg hover:text-bg active:scale-95 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg sm:text-sm"
             >
               Skip next
             </button>
@@ -229,7 +237,7 @@ export function FlexibilitySection() {
               type="button"
               onClick={handlePause}
               disabled={isCancelled}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-3 py-2 text-xs sm:text-sm font-bold text-fg transition hover:bg-fg hover:text-bg active:scale-95 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-3 py-2 text-xs font-bold text-fg transition hover:bg-fg hover:text-bg active:scale-95 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg sm:text-sm"
             >
               {isPaused ? "Resume" : "Pause"}
             </button>
@@ -237,7 +245,7 @@ export function FlexibilitySection() {
               type="button"
               onClick={handleChangeDate}
               disabled={isCancelled}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-3 py-2 text-xs sm:text-sm font-bold text-fg transition hover:bg-fg hover:text-bg active:scale-95 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-3 py-2 text-xs font-bold text-fg transition hover:bg-fg hover:text-bg active:scale-95 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg sm:text-sm"
             >
               Change date
             </button>
@@ -245,7 +253,7 @@ export function FlexibilitySection() {
               type="button"
               onClick={handleSwap}
               disabled={isCancelled}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-3 py-2 text-xs sm:text-sm font-bold text-fg transition hover:bg-fg hover:text-bg active:scale-95 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-3 py-2 text-xs font-bold text-fg transition hover:bg-fg hover:text-bg active:scale-95 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg sm:text-sm"
             >
               Swap product
             </button>
@@ -265,7 +273,7 @@ export function FlexibilitySection() {
           <div className="mt-2 text-center">
             <Link
               href="/account/subscriptions"
-              className="inline-flex min-h-[44px] items-center justify-center text-xs text-accent-fg font-semibold hover:underline"
+              className="inline-flex min-h-[44px] items-center justify-center text-xs font-semibold text-accent-fg hover:underline"
             >
               Go to account subscriptions →
             </Link>

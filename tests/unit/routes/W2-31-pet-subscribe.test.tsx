@@ -7,7 +7,13 @@ import {
   within,
   fireEvent,
 } from "@testing-library/react";
-import PetSubscribePage, { metadata } from "@/app/(pet)/pet/subscribe/page";
+import PetSubscribePage, {
+  generateMetadata,
+  getSubscriptionDiscount,
+  getSubscriptionIntervals,
+  formatIntervalsText,
+} from "@/app/(pet)/pet/subscribe/page";
+import type { Product } from "@/lib/contracts/catalog";
 
 // Página de servidor lê o cookie de mercado; o teste não tem requisição HTTP.
 vi.mock("next/headers", () => ({
@@ -22,12 +28,44 @@ async function renderPetSubscribe() {
 
 afterEach(() => cleanup());
 
+describe("W2-31 /pet/subscribe contract derivation helpers", () => {
+  it("derives discount percentage from selling plans rather than fixed values", () => {
+    const mockProducts = [
+      {
+        sellingPlans: [{ intervalDays: 30, discountPercentage: 20 }],
+      },
+    ] as unknown as Product[];
+
+    expect(getSubscriptionDiscount(mockProducts)).toBe(20);
+  });
+
+  it("derives and formats unique interval days from selling plans", () => {
+    const mockProducts = [
+      {
+        sellingPlans: [
+          { intervalDays: 30, discountPercentage: 15 },
+          { intervalDays: 60, discountPercentage: 15 },
+          { intervalDays: 90, discountPercentage: 15 },
+        ],
+      },
+      {
+        sellingPlans: [{ intervalDays: 30, discountPercentage: 15 }],
+      },
+    ] as unknown as Product[];
+
+    const intervals = getSubscriptionIntervals(mockProducts);
+    expect(intervals).toEqual([30, 60, 90]);
+    expect(formatIntervalsText(intervals)).toBe("30, 60 or 90 days");
+  });
+});
+
 describe("W2-31 /pet/subscribe metadata and SEO", () => {
-  it("builds title, description and canonical path", () => {
-    expect(metadata.title).toContain("Subscribe & Save 15%");
-    expect(metadata.title).toContain("Nadeon Pet");
-    expect(String(metadata.alternates?.canonical)).toMatch(/\/pet\/subscribe$/);
-    expect(metadata.description).toContain("daily chew");
+  it("builds title, description and canonical path via generateMetadata", async () => {
+    const meta = await generateMetadata();
+    expect(meta.title).toContain("Subscribe & Save");
+    expect(meta.title).toContain("Nadeon Pet");
+    expect(String(meta.alternates?.canonical)).toMatch(/\/pet\/subscribe$/);
+    expect(meta.description).toContain("daily chew");
   });
 
   it("renders breadcrumb and FAQ json-ld schemas", async () => {
@@ -148,7 +186,7 @@ describe("W2-31 /pet/subscribe pricing and savings calculation", () => {
     const body = await renderPetSubscribe();
     expect(
       within(body).getByText(
-        /Example prices\. Yearly savings assume one jar every 30 days\./
+        /Example prices\. Yearly savings assume delivery every \d+ days\./
       )
     ).toBeTruthy();
   });
@@ -188,7 +226,7 @@ describe("W2-31 /pet/subscribe interactive simulation dashboard", () => {
 
     fireEvent.click(pauseBtn);
     expect(
-      screen.getByText("Subscription paused for up to 3 months.")
+      screen.getByText(/Subscription paused for up to \d+ months\./)
     ).toBeTruthy();
     expect(screen.getByRole("button", { name: "Resume" })).toBeTruthy();
 

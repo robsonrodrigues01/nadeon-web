@@ -14,6 +14,8 @@ interface ItemSaving {
   subtitle: string;
   colorClass: string;
   product?: Product;
+  discountPercentage: number;
+  intervalDays: number;
   oneTimeAmount: number;
   subscribeAmount: number;
   yearlySavedAmount: number;
@@ -55,9 +57,18 @@ export function WhatYouSave({ products, market }: WhatYouSaveProps) {
   const savings: ItemSaving[] = targetItems.map((target) => {
     const p = products.find((prod) => prod.slug === target.slug);
     const oneTime = p?.variants[0]?.price.amount ?? target.fallbackPrice;
-    const discount = p?.sellingPlans[0]?.discountPercentage ?? 15;
+
+    // Derive discount percentage and interval from product's sellingPlans
+    const primaryPlan = p?.sellingPlans?.[0];
+    const discount =
+      typeof primaryPlan?.discountPercentage === "number"
+        ? primaryPlan.discountPercentage
+        : 15;
+    const intervalDays = primaryPlan?.intervalDays ?? 30;
+
     const subscribe = oneTime * (1 - discount / 100);
-    const yearlySaved = (oneTime - subscribe) * 12;
+    const deliveriesPerYear = Math.round(365 / intervalDays);
+    const yearlySaved = (oneTime - subscribe) * deliveriesPerYear;
 
     return {
       slug: target.slug,
@@ -65,11 +76,15 @@ export function WhatYouSave({ products, market }: WhatYouSaveProps) {
       subtitle: target.subtitle,
       colorClass: target.colorClass,
       product: p,
+      discountPercentage: discount,
+      intervalDays,
       oneTimeAmount: oneTime,
       subscribeAmount: subscribe,
       yearlySavedAmount: yearlySaved,
     };
   });
+
+  const baseInterval = savings[0]?.intervalDays ?? 30;
 
   return (
     <section
@@ -180,8 +195,8 @@ export function WhatYouSave({ products, market }: WhatYouSaveProps) {
         </div>
 
         <p className="mt-6 text-left text-xs text-fg-muted">
-          Example prices. Yearly savings assume one jar every 30 days. Final
-          prices are set at launch.
+          Example prices. Yearly savings assume delivery every {baseInterval}{" "}
+          days. Final prices are set at launch.
         </p>
       </div>
     </section>
