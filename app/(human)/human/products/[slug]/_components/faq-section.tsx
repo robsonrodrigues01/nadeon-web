@@ -66,8 +66,7 @@ const DEFAULT_FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: "How pure is your NMN and how do you test it?",
-    answer:
-      "Every batch tests at ≥99% pure NMN via third-party HPLC analysis. Detailed COA lab reports are published for every lot.",
+    answer: "Lab results are published per lot. First lots publishing soon.",
     hasAsterisk: false,
   },
   {
@@ -97,7 +96,7 @@ const DEFAULT_FAQ_ITEMS: FaqItem[] = [
   {
     question: "How does Subscribe & Save work?",
     answer:
-      "You save 15% on every delivery with free shipping. You can skip, modify delivery intervals, or cancel anytime in your account.",
+      "You save on every delivery. You can skip, modify delivery intervals, or cancel anytime in your account.",
     hasAsterisk: false,
   },
   {
@@ -182,7 +181,7 @@ export function FaqSection({
                     className="pt-2 pb-4 text-sm sm:text-base text-fg-muted leading-relaxed"
                   >
                     {item.hasAsterisk ? (
-                      <Claim showDisclaimer={false}>{item.answer}</Claim>
+                      <Claim showDisclaimer>{item.answer}</Claim>
                     ) : (
                       <span>{item.answer}</span>
                     )}

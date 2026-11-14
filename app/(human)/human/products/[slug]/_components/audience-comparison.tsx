@@ -32,13 +32,13 @@ const COMPARISON_ROWS = [
   },
   {
     metric: "Purity tested",
-    biohack: "≥99%, every lot",
+    biohack: "first lots publishing soon",
     brandA: "Not stated",
     brandB: "Not stated",
   },
   {
     metric: "Lab report per lot, public",
-    biohack: "✓",
+    biohack: "first lots publishing soon",
     brandA: "✗",
     brandB: "✗",
   },
@@ -65,12 +65,6 @@ const COMPARISON_ROWS = [
     biohack: "✓",
     brandA: "✓",
     brandB: "✗",
-  },
-  {
-    metric: "Price per 100 mg NMN",
-    biohack: "$0.20",
-    brandA: "$0.24",
-    brandB: "$0.30",
   },
 ];
 
@@ -102,7 +96,7 @@ export function AudienceComparison({
               <h3 className="text-lg font-bold text-fg mb-2">{card.title}</h3>
               <div className="text-sm text-fg-muted leading-relaxed">
                 {card.isClaim ? (
-                  <Claim showDisclaimer={false}>{card.description}</Claim>
+                  <Claim showDisclaimer>{card.description}</Claim>
                 ) : (
                   <span>{card.description}</span>
                 )}

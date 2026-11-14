@@ -31,8 +31,8 @@ const SCIENCE_CARDS = [
   {
     step: "04",
     title: "Purity you can check",
-    text: "≥99% NMN, tested by a third-party lab, report published per lot.",
-    tag: "EVERY LOT",
+    text: "Lab results are published per lot. First lots publishing soon.",
+    tag: "LAB RESULTS",
     isClaim: false,
   },
 ];
@@ -77,7 +77,7 @@ export function ScienceSection({
                 <h3 className="text-lg font-bold text-fg mb-2">{card.title}</h3>
                 <div className="text-sm text-fg-muted leading-relaxed">
                   {card.isClaim ? (
-                    <Claim showDisclaimer={false}>{card.text}</Claim>
+                    <Claim showDisclaimer>{card.text}</Claim>
                   ) : (
                     <span>{card.text}</span>
                   )}

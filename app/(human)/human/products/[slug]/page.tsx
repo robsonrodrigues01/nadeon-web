@@ -10,6 +10,8 @@ import { Footer } from "@/components/layout/footer";
 import { TrustStrip } from "@/components/brand/trust-strip";
 import { PurchaseOptions } from "@/components/commerce/purchase-options";
 import { Claim } from "@/components/commerce/product-card/claim";
+import { formatMarketPrice } from "@/lib/market/formatter";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
 
 import { Gallery } from "./_components/gallery";
 import { DetailsTabs } from "./_components/details-tabs";
@@ -53,20 +55,6 @@ export async function generateMetadata({
   });
 }
 
-// shortcut: one market locale until CatalogProvider takes a market param (Shopify Markets, onda 4)
-const MARKET_LOCALE = "en-US";
-
-function formatPriceString(
-  amount: number,
-  currencyCode: string,
-  locale: string
-): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currencyCode,
-  }).format(amount);
-}
-
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
   const product = await catalogProvider.getProduct(slug);
@@ -90,16 +78,19 @@ export default async function ProductPage({ params }: PageProps) {
   const primaryPlan = product.sellingPlans[0];
   const price = primaryVariant?.price;
   const formattedBasePrice = price
-    ? formatPriceString(price.amount, price.currencyCode, MARKET_LOCALE)
+    ? formatMarketPrice(price.amount, price.currencyCode, DEFAULT_MARKET.locale)
     : null;
   const formattedDiscountedPrice =
     price && primaryPlan
-      ? formatPriceString(
+      ? formatMarketPrice(
           Number(
-            (price.amount * ((100 - primaryPlan.discountPercentage) / 100)).toFixed(2)
+            (
+              price.amount *
+              ((100 - primaryPlan.discountPercentage) / 100)
+            ).toFixed(2)
           ),
           price.currencyCode,
-          MARKET_LOCALE
+          DEFAULT_MARKET.locale
         )
       : null;
 
@@ -289,11 +280,7 @@ export default async function ProductPage({ params }: PageProps) {
         <AudienceComparison productName={product.name} />
 
         {/* Section 6: Kit & Pairs Well With */}
-        <KitAndPairs
-          kit={kit}
-          relatedProducts={relatedProducts}
-          locale={MARKET_LOCALE}
-        />
+        <KitAndPairs kit={kit} relatedProducts={relatedProducts} />
 
         {/* Section 7: Reviews */}
         <ReviewsSection productName={product.name} />
@@ -309,7 +296,7 @@ export default async function ProductPage({ params }: PageProps) {
       <Footer line="human" />
 
       {/* Sticky Bottom Bar on Scroll */}
-      <StickyBar product={product} locale={MARKET_LOCALE} />
+      <StickyBar product={product} />
     </>
   );
 }

@@ -1,23 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import type { Product, Money } from "@/lib/contracts/catalog";
+import type { Product } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
+import { formatMarketPrice } from "@/lib/market/formatter";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
 import { Button } from "@/components/ui/button";
 
 export interface StickyBarProps {
   product: Product;
-  locale?: string;
 }
 
-function formatMoney(money: Money, locale = "en-US"): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
-}
-
-export function StickyBar({ product, locale = "en-US" }: StickyBarProps) {
+export function StickyBar({ product }: StickyBarProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [added, setAdded] = useState(false);
@@ -28,18 +22,6 @@ export function StickyBar({ product, locale = "en-US" }: StickyBarProps) {
   const recommendedPlan =
     product.sellingPlans.find((p) => p.intervalDays === 60) ||
     product.sellingPlans[0];
-
-  const basePrice = recommendedVariant?.price.amount ?? 106;
-  const discountRate = recommendedPlan?.discountPercentage ?? 15;
-  const subscriptionPriceAmount = Number(
-    (basePrice * ((100 - discountRate) / 100)).toFixed(2)
-  );
-
-  const currencyCode = recommendedVariant?.price.currencyCode ?? "USD";
-  const formattedPrice = formatMoney(
-    { amount: subscriptionPriceAmount, currencyCode },
-    locale
-  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,6 +57,21 @@ export function StickyBar({ product, locale = "en-US" }: StickyBarProps) {
     }
   };
 
+  // No catalog variant or plan: no bar, so no price is ever invented
+  if (!recommendedVariant || !recommendedPlan) return null;
+
+  const { price } = recommendedVariant;
+  const subscriptionPriceAmount = Number(
+    (price.amount * ((100 - recommendedPlan.discountPercentage) / 100)).toFixed(
+      2
+    )
+  );
+  const formattedPrice = formatMarketPrice(
+    subscriptionPriceAmount,
+    price.currencyCode,
+    DEFAULT_MARKET.locale
+  );
+
   return (
     <aside
       aria-label="Quick add to cart bar"
@@ -90,10 +87,14 @@ export function StickyBar({ product, locale = "en-US" }: StickyBarProps) {
           </span>
           <span className="text-xs text-fg-muted truncate">
             <span className="hidden sm:inline">
-              {product.technicalName} · Subscribe &amp; save {discountRate}% · 2
-              jars every 60 days
+              {product.technicalName} · Subscribe &amp; save{" "}
+              {recommendedPlan.discountPercentage}% · {recommendedVariant.jars}{" "}
+              jars every {recommendedPlan.intervalDays} days
             </span>
-            <span className="sm:hidden">Subscribe · 2 jars / 60 days</span>
+            <span className="sm:hidden">
+              Subscribe · {recommendedVariant.jars} jars /{" "}
+              {recommendedPlan.intervalDays} days
+            </span>
           </span>
         </div>
 

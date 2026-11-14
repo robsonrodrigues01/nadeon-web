@@ -42,7 +42,7 @@ const GALLERY_TABS: GalleryTab[] = [
   {
     id: "lab-report",
     label: "Lab report",
-    altText: "BioHack third-party certificate of analysis report",
+    altText: "BioHack lab report, first lots publishing soon",
   },
   {
     id: "video",

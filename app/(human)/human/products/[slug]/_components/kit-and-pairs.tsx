@@ -4,27 +4,25 @@ import React, { useState } from "react";
 import Link from "next/link";
 import type { Kit, Product, Money } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
+import { formatMarketPrice } from "@/lib/market/formatter";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
 import { Button } from "@/components/ui/button";
 import { Claim } from "@/components/commerce/product-card/claim";
 
 export interface KitAndPairsProps {
   kit: Kit | null;
   relatedProducts: Product[];
-  locale?: string;
 }
 
-function formatMoney(money: Money, locale = "en-US"): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
+function formatMoney(money: Money): string {
+  return formatMarketPrice(
+    money.amount,
+    money.currencyCode,
+    DEFAULT_MARKET.locale
+  );
 }
 
-export function KitAndPairs({
-  kit,
-  relatedProducts,
-  locale = "en-US",
-}: KitAndPairsProps) {
+export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
   const [isAddingKit, setIsAddingKit] = useState(false);
   const [addingSlug, setAddingSlug] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -87,10 +85,10 @@ export function KitAndPairs({
     }
   };
 
-  const kitPrice = kit?.price ? formatMoney(kit.price, locale) : "$105.00";
+  const kitPrice = kit?.price ? formatMoney(kit.price) : null;
   const kitComparePrice = kit?.compareAtPrice
-    ? formatMoney(kit.compareAtPrice, locale)
-    : "$124.00";
+    ? formatMoney(kit.compareAtPrice)
+    : null;
 
   return (
     <section
@@ -108,75 +106,81 @@ export function KitAndPairs({
           </div>
         )}
 
-        {/* Featured Kit Section: The Energy Duo */}
-        <div className="rounded-card border border-border bg-bg-elevated p-6 sm:p-8 lg:p-10 shadow-card">
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-            {/* Left Duo Graphic */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-6 rounded-card bg-bg border border-border/50">
-              <div className="flex items-center gap-4 text-center">
-                <div className="p-4 rounded-card bg-bg-elevated border border-border">
-                  <div className="font-archivo font-black text-lg text-fg">
-                    BioHack
+        {/* Featured Kit Section: The Energy Duo (only when the catalog has the kit) */}
+        {kit && (
+          <div className="rounded-card border border-border bg-bg-elevated p-6 sm:p-8 lg:p-10 shadow-card">
+            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+              {/* Left Duo Graphic */}
+              <div className="w-full lg:w-1/2 flex items-center justify-center p-6 rounded-card bg-bg border border-border/50">
+                <div className="flex items-center gap-4 text-center">
+                  <div className="p-4 rounded-card bg-bg-elevated border border-border">
+                    <div className="font-archivo font-black text-lg text-fg">
+                      BioHack
+                    </div>
+                    <div className="text-xs text-product-amber font-bold">
+                      NMN 500 mg
+                    </div>
                   </div>
-                  <div className="text-xs text-product-amber font-bold">
-                    NMN 500 mg
+                  <span className="text-2xl font-black text-product-amber select-none">
+                    +
+                  </span>
+                  <div className="p-4 rounded-card bg-bg-elevated border border-border">
+                    <div className="font-archivo font-black text-lg text-fg">
+                      Renew
+                    </div>
+                    <div className="text-xs text-product-amber font-bold">
+                      NAD+ + Resveratrol
+                    </div>
                   </div>
                 </div>
-                <span className="text-2xl font-black text-product-amber select-none">
-                  +
+              </div>
+
+              {/* Right Duo Copy & Action */}
+              <div className="w-full lg:w-1/2 flex flex-col items-start gap-4">
+                <span className="rounded-pill bg-product-amber/15 border border-product-amber/30 px-3 py-1 text-xs font-bold tracking-wider uppercase text-product-amber">
+                  FEATURED KIT
                 </span>
-                <div className="p-4 rounded-card bg-bg-elevated border border-border">
-                  <div className="font-archivo font-black text-lg text-fg">
-                    Renew
-                  </div>
-                  <div className="text-xs text-product-amber font-bold">
-                    NAD+ + Resveratrol
-                  </div>
+
+                <h3 className="text-2xl sm:text-3xl font-black font-archivo uppercase text-fg">
+                  The Energy Duo
+                </h3>
+
+                <div className="text-sm text-fg-muted leading-relaxed">
+                  <Claim showDisclaimer>
+                    BioHack in the morning, Renew with lunch. NMN plus direct
+                    NAD+.*
+                  </Claim>
                 </div>
+
+                {kitPrice && (
+                  <div className="flex items-baseline gap-3 my-2">
+                    <span className="text-2xl font-black font-archivo text-fg">
+                      {kitPrice}
+                    </span>
+                    {kitComparePrice && (
+                      <span className="text-sm font-medium line-through text-fg-muted">
+                        {kitComparePrice}
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="lg"
+                  isLoading={isAddingKit}
+                  loadingText="Adding duo..."
+                  onClick={handleAddDuo}
+                  className="w-full sm:w-auto min-w-[200px]"
+                  aria-label="Add the duo to cart"
+                >
+                  Add the duo
+                </Button>
               </div>
-            </div>
-
-            {/* Right Duo Copy & Action */}
-            <div className="w-full lg:w-1/2 flex flex-col items-start gap-4">
-              <span className="rounded-pill bg-product-amber/15 border border-product-amber/30 px-3 py-1 text-xs font-bold tracking-wider uppercase text-product-amber">
-                FEATURED KIT · SAVE 15%
-              </span>
-
-              <h3 className="text-2xl sm:text-3xl font-black font-archivo uppercase text-fg">
-                The Energy Duo
-              </h3>
-
-              <div className="text-sm text-fg-muted leading-relaxed">
-                <Claim showDisclaimer={false}>
-                  BioHack in the morning, Renew with lunch. NMN plus direct
-                  NAD+.*
-                </Claim>
-              </div>
-
-              <div className="flex items-baseline gap-3 my-2">
-                <span className="text-2xl font-black font-archivo text-fg">
-                  {kitPrice}
-                </span>
-                <span className="text-sm font-medium line-through text-fg-muted">
-                  {kitComparePrice}
-                </span>
-              </div>
-
-              <Button
-                type="button"
-                variant="primary"
-                size="lg"
-                isLoading={isAddingKit}
-                loadingText="Adding duo..."
-                onClick={handleAddDuo}
-                className="w-full sm:w-auto min-w-[200px]"
-                aria-label="Add the duo to cart"
-              >
-                Add the duo
-              </Button>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Pairs Well With Section */}
         <div>
@@ -192,9 +196,8 @@ export function KitAndPairs({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.slice(0, 4).map((product) => {
               const price = product.variants[0]?.price;
-              const formattedPrice = price
-                ? formatMoney(price, locale)
-                : "$59.00";
+              const formattedPrice = price ? formatMoney(price) : null;
+              const discountRate = product.sellingPlans[0]?.discountPercentage;
               const isCurrentlyAdding = addingSlug === product.slug;
 
               return (
@@ -220,9 +223,7 @@ export function KitAndPairs({
 
                     <div className="text-xs text-fg-muted mt-3 line-clamp-2">
                       {product.claims[0] ? (
-                        <Claim showDisclaimer={false}>
-                          {product.claims[0].text}
-                        </Claim>
+                        <Claim showDisclaimer>{product.claims[0].text}</Claim>
                       ) : (
                         product.benefits[0] || "Supports cellular routine"
                       )}
@@ -230,18 +231,22 @@ export function KitAndPairs({
 
                     <div className="flex items-center gap-1.5 text-xs text-fg-muted mt-3">
                       <span className="text-accent">✓</span>
-                      <span>Lab-tested every lot</span>
+                      <span>first lots publishing soon</span>
                     </div>
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-border/40 flex flex-col gap-3">
                     <div className="flex items-baseline justify-between">
-                      <span className="text-base font-bold text-fg">
-                        {formattedPrice}
-                      </span>
-                      <span className="text-[11px] text-fg-muted font-medium">
-                        Subscribe &amp; save 15%
-                      </span>
+                      {formattedPrice && (
+                        <span className="text-base font-bold text-fg">
+                          {formattedPrice}
+                        </span>
+                      )}
+                      {discountRate !== undefined && (
+                        <span className="text-[11px] text-fg-muted font-medium">
+                          Subscribe &amp; save {discountRate}%
+                        </span>
+                      )}
                     </div>
 
                     <Button

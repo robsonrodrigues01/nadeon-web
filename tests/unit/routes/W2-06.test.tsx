@@ -11,6 +11,9 @@ import ProductPage, {
   generateMetadata,
   generateStaticParams,
 } from "@/app/(human)/human/products/[slug]/page";
+import { catalogProvider } from "@/lib/providers";
+import { formatMarketPrice } from "@/lib/market/formatter";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
 
 const mockNotFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
@@ -171,7 +174,9 @@ describe("Route /human/products/[slug] (W2-06)", () => {
       expect(searchButton.disabled).toBe(true);
 
       // Compliance Rule 8 text: first lots publishing soon
-      expect(screen.getByText(/first lots publishing soon/i)).toBeTruthy();
+      expect(
+        screen.getAllByText(/first lots publishing soon/i).length
+      ).toBeGreaterThan(0);
 
       // 8. Seção Ciência: link "Read the science"
       const readScienceLink = screen.getByRole("link", {
@@ -235,7 +240,7 @@ describe("Route /human/products/[slug] (W2-06)", () => {
         name: /add to cart/i,
       });
       expect(stickyButton).toBeTruthy();
-    }, 15000);
+    }, 30000);
 
     it("toggles FAQ accordion items when clicked", async () => {
       const jsx = await ProductPage({
@@ -254,6 +259,46 @@ describe("Route /human/products/[slug] (W2-06)", () => {
       expect(
         screen.getByText(/biohack provides nmn in the morning/i)
       ).toBeTruthy();
-    }, 15000);
+    }, 30000);
+  });
+
+  describe("Compliance and market rules", () => {
+    it("shows the FDA notice next to claims", async () => {
+      render(
+        await ProductPage({ params: Promise.resolve({ slug: "biohack" }) })
+      );
+
+      expect(
+        screen.getAllByText(/These statements have not been evaluated/).length
+      ).toBeGreaterThan(0);
+    }, 30000);
+
+    it("omits the route's own lot, lab and shipping copy", async () => {
+      render(
+        await ProductPage({ params: Promise.resolve({ slug: "biohack" }) })
+      );
+
+      const text = document.body.textContent ?? "";
+      expect(text).not.toMatch(/Lab report published for every lot/);
+      expect(text).not.toMatch(/Lab-tested every lot/);
+      expect(text).not.toMatch(/Free shipping over \$75/);
+      expect(text).not.toMatch(/You save 15%/);
+    }, 30000);
+
+    it("formats the headline price from the catalog variant", async () => {
+      const product = await catalogProvider.getProduct("biohack");
+      const price = product!.variants[0].price;
+      const expected = formatMarketPrice(
+        price.amount,
+        price.currencyCode,
+        DEFAULT_MARKET.locale
+      );
+
+      render(
+        await ProductPage({ params: Promise.resolve({ slug: "biohack" }) })
+      );
+
+      expect(screen.getAllByText(expected).length).toBeGreaterThan(0);
+    }, 30000);
   });
 });

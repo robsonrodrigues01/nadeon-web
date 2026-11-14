@@ -272,7 +272,7 @@ export function DetailsTabs({ product }: DetailsTabsProps) {
                     >
                       ✓
                     </span>
-                    <Claim showDisclaimer={false}>
+                    <Claim showDisclaimer>
                       Supports cellular energy and NAD+ levels*
                     </Claim>
                   </li>
@@ -283,7 +283,7 @@ export function DetailsTabs({ product }: DetailsTabsProps) {
                     >
                       ✓
                     </span>
-                    <Claim showDisclaimer={false}>
+                    <Claim showDisclaimer>
                       Supports healthy aging from the inside*
                     </Claim>
                   </li>
