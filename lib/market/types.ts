@@ -10,6 +10,12 @@ export interface MarketCurrency {
   fractionDigits: number;
 }
 
+/** Free shipping thresholds per product line, in the market currency. */
+export interface FreeShippingThresholds {
+  human: number;
+  pet: number;
+}
+
 export interface Market {
   id: string;
   countryCode: string;
@@ -20,6 +26,8 @@ export interface Market {
   rate: number;
   flag: string;
   taxNotice?: string;
+  /** null when the market advertises no free shipping. */
+  freeShipping: FreeShippingThresholds | null;
 }
 
 export interface FormatMoneyOptions {

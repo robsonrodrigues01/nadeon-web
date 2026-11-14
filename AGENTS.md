@@ -33,6 +33,13 @@ a revisão e faz o merge no `main` local após aprovação.
 `vercel --prod`, domínio, DNS, credenciais de produção, pagamentos reais e gastos
 exigem aprovação explícita do Robson. Segredos ficam fora do Git.
 
+Capacidade do Mac (16 GB, travou em 14/11): no seu worktree rode só os testes da
+sua área (`pnpm vitest run <pasta>`), lint e typecheck. Comando pesado (`pnpm gate`,
+`pnpm build`, `next build`, suíte completa do Vitest) só um por vez no Mac inteiro:
+`until mkdir /tmp/nadeon-heavy.lock 2>/dev/null; do sleep 15; done`, rode o comando
+e depois `rmdir /tmp/nadeon-heavy.lock`, mesmo se falhar. O gate completo roda uma
+vez, no merge, pelo Maestro.
+
 - Certo: reservar `W0-06`, renovar heartbeat e entregar commit local com SHA e verify no `DONE`.
 - Errado: trabalhar no checkout de outro agente ou marcar `DONE` com gate falhando.
 

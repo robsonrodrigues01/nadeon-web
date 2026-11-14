@@ -1,4 +1,9 @@
+"use client";
+
 import React from "react";
+import { useMarket } from "@/lib/market/context";
+import type { Market } from "@/lib/market/types";
+import { formatFreeShippingThreshold } from "@/lib/market/shipping";
 import { BrandMarkIcon, PawIcon } from "./icons";
 
 export interface TrustItem {
@@ -8,51 +13,45 @@ export interface TrustItem {
   icon?: React.ReactNode;
 }
 
-export const HUMAN_TRUST_ITEMS: readonly TrustItem[] = [
-  {
-    id: "clifton-lab",
-    title: "Made in Clifton, NJ",
-    description: "Our own lab",
-  },
-  {
-    id: "tested-lots",
-    title: "Tested every lot",
-    description: "Public lab reports",
-  },
-  {
-    id: "free-shipping",
-    title: "Free shipping",
-    description: "Over $75",
-  },
-  {
-    id: "guarantee",
-    title: "60-day guarantee",
-    description: "Love it or refund",
-  },
-] as const;
+/**
+ * Trust items for a line in a market. The free shipping item shows the market's
+ * threshold (Rule 14) and is left out where the market advertises no free shipping.
+ */
+export function getTrustItems(
+  line: "human" | "pet",
+  market: Market
+): TrustItem[] {
+  const threshold = formatFreeShippingThreshold(market, line);
+  const freeShipping: TrustItem[] =
+    threshold === null
+      ? []
+      : [
+          {
+            id: "free-shipping",
+            title: "Free shipping",
+            description: `Over ${threshold}`,
+          },
+        ];
 
-export const PET_TRUST_ITEMS: readonly TrustItem[] = [
-  {
-    id: "clifton-lab",
-    title: "Made in Clifton, NJ",
-    description: "Our own lab",
-  },
-  {
-    id: "tested-lots",
-    title: "Tested every lot",
-    description: "Public lab reports",
-  },
-  {
-    id: "free-shipping",
-    title: "Free shipping",
-    description: "Over $49",
-  },
-  {
-    id: "guarantee",
-    title: "60-day guarantee",
-    description: "Love it or refund",
-  },
-] as const;
+  return [
+    {
+      id: "clifton-lab",
+      title: "Made in Clifton, NJ",
+      description: "Our own lab",
+    },
+    {
+      id: "tested-lots",
+      title: "Tested every lot",
+      description: "Public lab reports",
+    },
+    ...freeShipping,
+    {
+      id: "guarantee",
+      title: "60-day guarantee",
+      description: "Love it or refund",
+    },
+  ];
+}
 
 export interface TrustStripProps extends React.HTMLAttributes<HTMLElement> {
   line?: "human" | "pet";
@@ -77,9 +76,9 @@ export function TrustStrip({
   "aria-label": ariaLabel = "Trust highlights",
   ...props
 }: TrustStripProps) {
+  const { market } = useMarket();
   const isPet = line === "pet";
-  const defaultItems = isPet ? PET_TRUST_ITEMS : HUMAN_TRUST_ITEMS;
-  const resolvedItems = items ?? defaultItems;
+  const resolvedItems = items ?? getTrustItems(line, market);
 
   return (
     <section
