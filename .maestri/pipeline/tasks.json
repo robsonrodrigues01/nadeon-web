@@ -1039,7 +1039,8 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Malha"
   },
   {
     "id": "W2-21",
@@ -1070,17 +1071,16 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
-    "responsavel": "Ajustes",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Cardo",
+    "lease_ate": "2026-11-14T23:06:47.754Z",
     "branch": "agy/W2-22",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ],
-    "revisor": "Bitola"
+    ]
   },
   {
     "id": "W2-24",
@@ -1211,9 +1211,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
-    "responsavel": "Codex-Reviewer",
-    "lease_ate": "2026-11-14T23:05:10.906Z",
+    "status": "para_revisao",
+    "responsavel": "Laudo",
+    "lease_ate": null,
     "branch": "agy/W2-28",
     "pr": "local",
     "criterios": [
