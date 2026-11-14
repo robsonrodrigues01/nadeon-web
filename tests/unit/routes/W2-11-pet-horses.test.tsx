@@ -97,6 +97,26 @@ describe("W2-11: /pet/horses route", () => {
       ).toBe("BUTTON");
     });
 
+    it("dose by weight band table lists the four horse bands with scoops", async () => {
+      render(await HorsesPage());
+      const section = screen.getByRole("region", {
+        name: "Dose by weight band",
+      });
+      expect(within(section).getByText("Per day, on feed.")).toBeTruthy();
+
+      const table = within(section).getByRole("table");
+      const rowHeaders = within(table)
+        .getAllByRole("rowheader")
+        .map((th) => th.textContent);
+      expect(rowHeaders).toEqual([
+        "Pony (< 800 lbs)",
+        "Light horse (800 to 1,100 lbs)",
+        "Horse (1,100 to 1,400 lbs)",
+        "Draft (> 1,400 lbs)",
+      ]);
+      expect(within(table).getAllByText(/scoops? daily/).length).toBe(4);
+    });
+
     it("dose calculator and quiz are links to their routes", async () => {
       render(await HorsesPage());
       expect(
