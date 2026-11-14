@@ -31,42 +31,20 @@ async function renderWithQuery(format: string, query: Record<string, string>) {
   return render(element);
 }
 
-describe("W2-05 Why this format block", () => {
+describe("W2-05 Why this format block (pendente de copy)", () => {
   afterEach(() => {
     cleanup();
   });
 
-  it("renders the eyebrow, heading and three reasons for capsules", async () => {
+  it("does not render the block: its copy is pending approval", async () => {
     await renderFormat("capsules");
-
-    const heading = screen.getByRole("heading", {
-      level: 2,
-      name: "Why this format",
-    });
-    const section = heading.closest("section") as HTMLElement;
-    expect(section).not.toBeNull();
-    expect(within(section).getByText("Why capsules")).toBeDefined();
-
-    const reasons = within(section).getAllByRole("heading", { level: 3 });
-    expect(reasons.map((r) => r.textContent)).toEqual([
-      "Morning routine",
-      "No taste",
-      "Pre-measured dose",
-    ]);
-    expect(within(section).getByText("No taste, no mixing.")).toBeDefined();
-  });
-
-  it("places the block between the hero and the product listing", async () => {
-    await renderFormat("capsules");
-    const why = screen.getByRole("heading", { name: "Why this format" });
-    const shop = screen.getByRole("heading", { name: "Shop capsules" });
-    // DOCUMENT_POSITION_FOLLOWING: shop heading comes after the why heading.
     expect(
-      why.compareDocumentPosition(shop) & Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
+      screen.queryByRole("heading", { name: "Why this format" })
+    ).toBeNull();
+    expect(screen.queryByText("Why capsules")).toBeNull();
   });
 
-  it("hides the block for a format with no reason copy", async () => {
+  it("does not render the block for powders either", async () => {
     await renderFormat("powders");
     expect(
       screen.queryByRole("heading", { name: "Why this format" })
