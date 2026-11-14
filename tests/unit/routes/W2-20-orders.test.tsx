@@ -182,7 +182,7 @@ describe("W2-20 /account/orders row actions by status", () => {
     renderBrowser();
     const card = articleFor("NL-200001");
     const edit = within(card).getByRole("link", { name: "Edit address" });
-    expect(edit.getAttribute("href")).toBe("/account/addresses");
+    expect(edit.getAttribute("href")).toBe("/account/settings");
     expect(
       within(card).getByRole("link", { name: "Details" }).getAttribute("href")
     ).toBe("/account/orders/ord_200001");

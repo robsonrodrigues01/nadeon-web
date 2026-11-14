@@ -44,7 +44,7 @@ export function OrderCard({ row }: OrderCardProps) {
 
       <div className="flex flex-wrap gap-2 lg:justify-end">
         {row.status === "processing" && (
-          <Button variant="secondary" size="sm" href="/account/addresses">
+          <Button variant="secondary" size="sm" href="/account/settings">
             Edit address
           </Button>
         )}
