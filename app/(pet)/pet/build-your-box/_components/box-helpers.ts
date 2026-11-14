@@ -92,8 +92,11 @@ export function buildBoxLines(
   });
 }
 
+/** Totals in the currency of the catalog lines; null when the box is empty (no currency to show). */
 export function boxTotals(lines: BoxLine[]) {
-  const currencyCode = lines[0]?.list.currencyCode ?? "USD";
+  const first = lines[0];
+  if (!first) return null;
+  const currencyCode = first.list.currencyCode;
   const subtotal = roundMoney(lines.reduce((s, l) => s + l.list.amount, 0));
   const total = roundMoney(
     lines.reduce((s, l) => s + l.subscription.amount, 0)
@@ -103,7 +106,7 @@ export function boxTotals(lines: BoxLine[]) {
     subtotal: { amount: subtotal, currencyCode },
     total: { amount: total, currencyCode },
     savings: { amount: savings, currencyCode },
-    discountPercentage: lines[0]?.discountPercentage ?? 0,
+    discountPercentage: first.discountPercentage,
   };
 }
 

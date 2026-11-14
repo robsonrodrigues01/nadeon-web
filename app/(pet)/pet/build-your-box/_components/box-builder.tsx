@@ -157,8 +157,7 @@ export function BoxBuilder({
         </h1>
         <p className="text-fg-muted">
           Tell us about your pet, pick their formulas and set the rhythm. Doses
-          are worked out by weight. Save {savePercentage}% and ship free on
-          every box.
+          are worked out by weight. Save {savePercentage}% on every box.
         </p>
       </header>
 
@@ -399,7 +398,7 @@ export function BoxBuilder({
           </h2>
         </div>
 
-        {lines.length === 0 ? (
+        {totals === null ? (
           <p className="text-fg-muted">
             Add at least one formula to review your box.
           </p>
@@ -448,10 +447,6 @@ export function BoxBuilder({
                 <dd>
                   −<MoneyDisplay money={totals.savings} />
                 </dd>
-              </div>
-              <div className="flex justify-between">
-                <dt>Shipping</dt>
-                <dd>Free, every delivery</dd>
               </div>
               <div className="flex justify-between font-bold">
                 <dt>Total per delivery</dt>

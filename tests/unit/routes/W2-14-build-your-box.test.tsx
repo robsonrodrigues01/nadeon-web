@@ -68,11 +68,15 @@ describe("W2-14: pure box helpers", () => {
     const pair = ["more-good-years", "more-good-years-oil"].map((slug) =>
       products.find((p) => p.slug === slug)!
     );
-    const totals = boxTotals(buildBoxLines(pair, 30, BAND_21_TO_50));
+    const totals = boxTotals(buildBoxLines(pair, 30, BAND_21_TO_50))!;
     expect(totals.subtotal).toEqual({ amount: 88, currencyCode: "USD" });
     expect(totals.savings.amount).toBe(13.2);
     expect(totals.total.amount).toBe(74.8);
     expect(totals.discountPercentage).toBe(15);
+  });
+
+  it("returns no totals for an empty box instead of a currency fallback", () => {
+    expect(boxTotals([])).toBeNull();
   });
 
   it("takes the dose from dosingByWeight and leaves it empty for cats and horses", () => {
