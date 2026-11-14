@@ -970,11 +970,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Carrinho",
-    "lease_ate": "2026-11-14T14:29:07.943Z",
+    "lease_ate": null,
     "branch": "agy/W2-17",
-    "pr": "local",
+    "pr": "local c19fff5",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
