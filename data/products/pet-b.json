@@ -1,0 +1,562 @@
+{
+  "products": [
+    {
+      "slug": "high-jump",
+      "handle": "high-jump",
+      "name": "High Jump",
+      "technicalName": "Joints · drops",
+      "line": "pet",
+      "species": "cat",
+      "format": "Drops",
+      "color": "#A592D8",
+      "images": ["/images/products/high-jump-front.webp"],
+      "actives": [
+        {
+          "name": "NMN",
+          "amount": "25 mg"
+        },
+        {
+          "name": "Green Lipped Mussel Extract",
+          "amount": "50 mg"
+        }
+      ],
+      "serving": "5 drops in food daily",
+      "servingsPerJar": 60,
+      "netWeight": "30 mL (1 fl oz)",
+      "variants": [
+        {
+          "id": "var_high_jump_1",
+          "jars": 1,
+          "title": "1 Bottle (60 days)",
+          "price": {
+            "amount": 32,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 32,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-HJP-1"
+        },
+        {
+          "id": "var_high_jump_2",
+          "jars": 2,
+          "title": "2 Bottles (120 days)",
+          "price": {
+            "amount": 58,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 64,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-HJP-2"
+        },
+        {
+          "id": "var_high_jump_3",
+          "jars": 3,
+          "title": "3 Bottles (180 days)",
+          "price": {
+            "amount": 78,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 96,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-HJP-3"
+        }
+      ],
+      "sellingPlans": [
+        {
+          "id": "plan_high_jump_30d",
+          "name": "Delivery every 30 days (15% off)",
+          "intervalDays": 30,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_high_jump_60d",
+          "name": "Delivery every 60 days (15% off)",
+          "intervalDays": 60,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_high_jump_90d",
+          "name": "Delivery every 90 days (15% off)",
+          "intervalDays": 90,
+          "discountPercentage": 15
+        }
+      ],
+      "benefits": [
+        "Drops on food, dosed by weight*",
+        "Supports feline joint agility and mobility*",
+        "Easy drop administration for wet or dry food"
+      ],
+      "howToUse": "Add 5 drops daily directly onto cat food.",
+      "faq": [],
+      "related": ["purr-mode"],
+      "claims": [
+        {
+          "text": "For animal use only.",
+          "isClaim": false
+        },
+        {
+          "text": "Drops on food, dosed by weight*",
+          "isClaim": true
+        },
+        {
+          "text": "Supports feline joint agility and mobility*",
+          "isClaim": true
+        }
+      ],
+      "dosingByWeight": []
+    },
+    {
+      "slug": "purr-mode",
+      "handle": "purr-mode",
+      "name": "Purr Mode",
+      "technicalName": "Calm · drops",
+      "line": "pet",
+      "species": "cat",
+      "format": "Drops",
+      "color": "#A3CCEF",
+      "images": ["/images/products/purr-mode-front.webp"],
+      "actives": [
+        {
+          "name": "NMN",
+          "amount": "25 mg"
+        },
+        {
+          "name": "L-Theanine",
+          "amount": "25 mg"
+        }
+      ],
+      "serving": "5 drops in food daily",
+      "servingsPerJar": 60,
+      "netWeight": "30 mL (1 fl oz)",
+      "variants": [
+        {
+          "id": "var_purr_mode_1",
+          "jars": 1,
+          "title": "1 Bottle (60 days)",
+          "price": {
+            "amount": 32,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 32,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-PUR-1"
+        },
+        {
+          "id": "var_purr_mode_2",
+          "jars": 2,
+          "title": "2 Bottles (120 days)",
+          "price": {
+            "amount": 58,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 64,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-PUR-2"
+        },
+        {
+          "id": "var_purr_mode_3",
+          "jars": 3,
+          "title": "3 Bottles (180 days)",
+          "price": {
+            "amount": 78,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 96,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-PUR-3"
+        }
+      ],
+      "sellingPlans": [
+        {
+          "id": "plan_purr_mode_30d",
+          "name": "Delivery every 30 days (15% off)",
+          "intervalDays": 30,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_purr_mode_60d",
+          "name": "Delivery every 60 days (15% off)",
+          "intervalDays": 60,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_purr_mode_90d",
+          "name": "Delivery every 90 days (15% off)",
+          "intervalDays": 90,
+          "discountPercentage": 15
+        }
+      ],
+      "benefits": [
+        "Calm drops for cats*",
+        "Supports calm, relaxed behavior and stress resilience*",
+        "Gentle liquid drops for picky cats"
+      ],
+      "howToUse": "Add 5 drops daily directly onto cat food.",
+      "faq": [],
+      "related": ["high-jump"],
+      "claims": [
+        {
+          "text": "For animal use only.",
+          "isClaim": false
+        },
+        {
+          "text": "Calm drops for cats*",
+          "isClaim": true
+        },
+        {
+          "text": "Supports calm, relaxed behavior in cats*",
+          "isClaim": true
+        }
+      ],
+      "dosingByWeight": []
+    },
+    {
+      "slug": "long-stride",
+      "handle": "long-stride",
+      "name": "Long Stride",
+      "technicalName": "Joints · top-dress",
+      "line": "pet",
+      "species": "horse",
+      "format": "Top-dress",
+      "color": "#D49A5E",
+      "images": ["/images/products/long-stride-front.webp"],
+      "actives": [
+        {
+          "name": "NMN",
+          "amount": "500 mg"
+        },
+        {
+          "name": "Glucosamine + MSM",
+          "amount": "5000 mg"
+        }
+      ],
+      "serving": "1 scoop daily with grain",
+      "servingsPerJar": 30,
+      "netWeight": "900 g (2 lb)",
+      "variants": [
+        {
+          "id": "var_long_stride_1",
+          "jars": 1,
+          "title": "1 Bucket (30 days)",
+          "price": {
+            "amount": 59,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 59,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-LSD-1"
+        },
+        {
+          "id": "var_long_stride_2",
+          "jars": 2,
+          "title": "2 Buckets (60 days)",
+          "price": {
+            "amount": 106,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 118,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-LSD-2"
+        },
+        {
+          "id": "var_long_stride_3",
+          "jars": 3,
+          "title": "3 Buckets (90 days)",
+          "price": {
+            "amount": 150,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 177,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-LSD-3"
+        }
+      ],
+      "sellingPlans": [
+        {
+          "id": "plan_long_stride_30d",
+          "name": "Delivery every 30 days (15% off)",
+          "intervalDays": 30,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_long_stride_60d",
+          "name": "Delivery every 60 days (15% off)",
+          "intervalDays": 60,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_long_stride_90d",
+          "name": "Delivery every 90 days (15% off)",
+          "intervalDays": 90,
+          "discountPercentage": 15
+        }
+      ],
+      "benefits": [
+        "A scoop on feed, once a day*",
+        "Equine joint integrity and connective tissue strength*",
+        "Supports cartilage resilience in horses*"
+      ],
+      "howToUse": "Top dress feed once daily: 1 scoop mixed into regular grain ration.",
+      "faq": [],
+      "related": ["solid-ground"],
+      "claims": [
+        {
+          "text": "For animal use only. Not for horses intended for human consumption.",
+          "isClaim": false
+        },
+        {
+          "text": "A scoop on feed, once a day*",
+          "isClaim": true
+        },
+        {
+          "text": "Supports joint and tendon resilience*",
+          "isClaim": true
+        }
+      ],
+      "dosingByWeight": []
+    },
+    {
+      "slug": "solid-ground",
+      "handle": "solid-ground",
+      "name": "Solid Ground",
+      "technicalName": "Hooves · top-dress",
+      "line": "pet",
+      "species": "horse",
+      "format": "Top-dress",
+      "color": "#A9CC8E",
+      "images": ["/images/products/solid-ground-front.webp"],
+      "actives": [
+        {
+          "name": "Biotin",
+          "amount": "25 mg"
+        },
+        {
+          "name": "Zinc Gluconate",
+          "amount": "250 mg"
+        },
+        {
+          "name": "DL-Methionine",
+          "amount": "2,500 mg"
+        }
+      ],
+      "serving": "1 scoop daily with grain",
+      "servingsPerJar": 30,
+      "netWeight": "900 g (2 lb)",
+      "variants": [
+        {
+          "id": "var_solid_ground_1",
+          "jars": 1,
+          "title": "1 Bucket (30 days)",
+          "price": {
+            "amount": 59,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 59,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-SGD-1"
+        },
+        {
+          "id": "var_solid_ground_2",
+          "jars": 2,
+          "title": "2 Buckets (60 days)",
+          "price": {
+            "amount": 106,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 118,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-SGD-2"
+        },
+        {
+          "id": "var_solid_ground_3",
+          "jars": 3,
+          "title": "3 Buckets (90 days)",
+          "price": {
+            "amount": 150,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 177,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-PET-SGD-3"
+        }
+      ],
+      "sellingPlans": [
+        {
+          "id": "plan_solid_ground_30d",
+          "name": "Delivery every 30 days (15% off)",
+          "intervalDays": 30,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_solid_ground_60d",
+          "name": "Delivery every 60 days (15% off)",
+          "intervalDays": 60,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_solid_ground_90d",
+          "name": "Delivery every 90 days (15% off)",
+          "intervalDays": 90,
+          "discountPercentage": 15
+        }
+      ],
+      "benefits": [
+        "A scoop on feed, once a day*",
+        "Hoof support top-dress for horses*",
+        "Promotes healthy hoof wall growth and horn strength*"
+      ],
+      "howToUse": "Top dress feed once daily: 1 scoop mixed into regular grain ration.",
+      "faq": [],
+      "related": ["long-stride"],
+      "claims": [
+        {
+          "text": "For animal use only. Not for horses intended for human consumption.",
+          "isClaim": false
+        },
+        {
+          "text": "A scoop on feed, once a day*",
+          "isClaim": true
+        },
+        {
+          "text": "Supports strong hoof walls and healthy growth*",
+          "isClaim": true
+        }
+      ],
+      "dosingByWeight": []
+    }
+  ],
+  "kits": [
+    {
+      "slug": "chew-oil",
+      "handle": "chew-oil",
+      "name": "Chew + Oil",
+      "line": "pet",
+      "description": "More Good Years + More Good Years Oil. The daily chew plus drops for picky days. Oil: 0.5 mL per 20 lbs.*",
+      "products": [
+        {
+          "productSlug": "more-good-years",
+          "quantity": 1
+        },
+        {
+          "productSlug": "more-good-years-oil",
+          "quantity": 1
+        }
+      ],
+      "price": {
+        "amount": 75,
+        "currencyCode": "USD"
+      },
+      "compareAtPrice": {
+        "amount": 88,
+        "currencyCode": "USD"
+      },
+      "images": ["/images/kits/chew-oil.webp"]
+    },
+    {
+      "slug": "chew-good-days",
+      "handle": "chew-good-days",
+      "name": "Chew + Good Days",
+      "line": "pet",
+      "description": "More Good Years + Good Days. The daily chew plus a longevity treat for training and rewards.*",
+      "products": [
+        {
+          "productSlug": "more-good-years",
+          "quantity": 1
+        },
+        {
+          "productSlug": "good-days",
+          "quantity": 1
+        }
+      ],
+      "price": {
+        "amount": 62,
+        "currencyCode": "USD"
+      },
+      "compareAtPrice": {
+        "amount": 73,
+        "currencyCode": "USD"
+      },
+      "images": ["/images/kits/chew-good-days.webp"]
+    },
+    {
+      "slug": "senior-starter",
+      "handle": "senior-starter",
+      "name": "Senior Starter",
+      "line": "pet",
+      "description": "More Good Years + Golden Years Oil + Good Days. Everything for a senior dog: NAD+ chew, joint drops and daily treats.*",
+      "products": [
+        {
+          "productSlug": "more-good-years",
+          "quantity": 1
+        },
+        {
+          "productSlug": "golden-years-oil",
+          "quantity": 1
+        },
+        {
+          "productSlug": "good-days",
+          "quantity": 1
+        }
+      ],
+      "price": {
+        "amount": 99,
+        "currencyCode": "USD"
+      },
+      "compareAtPrice": {
+        "amount": 117,
+        "currencyCode": "USD"
+      },
+      "images": ["/images/kits/senior-starter.webp"]
+    },
+    {
+      "slug": "cat-care",
+      "handle": "cat-care",
+      "name": "Cat Care",
+      "line": "pet",
+      "description": "High Jump + Purr Mode. High Jump joint drops and Purr Mode calm drops, made for cats.*",
+      "products": [
+        {
+          "productSlug": "high-jump",
+          "quantity": 1
+        },
+        {
+          "productSlug": "purr-mode",
+          "quantity": 1
+        }
+      ],
+      "price": {
+        "amount": 54,
+        "currencyCode": "USD"
+      },
+      "compareAtPrice": {
+        "amount": 64,
+        "currencyCode": "USD"
+      },
+      "images": ["/images/kits/cat-care.webp"]
+    }
+  ]
+}
