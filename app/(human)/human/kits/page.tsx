@@ -1,3 +1,4 @@
+import { getVisitorMarket } from "@/lib/market/visitor";
 import Link from "next/link";
 import { catalogProvider } from "@/lib/providers";
 import { buildBreadcrumbJsonLd, buildMetadata, JsonLd } from "@/lib/seo";
@@ -14,6 +15,7 @@ export const metadata = buildMetadata({
 });
 
 export default async function HumanKitsPage() {
+  const market = await getVisitorMarket();
   const [kits, products] = await Promise.all([
     catalogProvider.getKits("human"),
     catalogProvider.getProducts({ line: "human" }),
@@ -67,7 +69,7 @@ export default async function HumanKitsPage() {
         </p>
       </header>
 
-      <KitsBrowser kits={views} />
+      <KitsBrowser kits={views} market={market} />
 
       <section
         aria-labelledby="build-own-kit"

@@ -109,11 +109,6 @@ export default async function CatsPage({
         price: kit.price,
         compareAtPrice: kit.compareAtPrice,
         savePercent: savePercent(kit.price, kit.compareAtPrice),
-        lines: catMembers.flatMap((m) =>
-          m.product.variants[0]
-            ? [{ variantId: m.product.variants[0].id, quantity: m.quantity }]
-            : []
-        ),
       },
     ];
   });
@@ -186,7 +181,7 @@ export default async function CatsPage({
         <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3">
           {visibleProducts.map((product) => (
             <li key={product.slug}>
-              <ProductCard product={product} locale={market.locale} />
+              <ProductCard product={product} />
             </li>
           ))}
         </ul>

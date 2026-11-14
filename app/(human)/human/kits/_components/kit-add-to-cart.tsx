@@ -3,11 +3,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cartProvider } from "@/lib/providers/client";
-import type { AddCartLineInput } from "@/lib/contracts/cart";
 
 export interface KitAddToCartProps {
   kitName: string;
-  cartLines: AddCartLineInput[];
+  kitSlug: string;
   disabled?: boolean;
 }
 
@@ -15,7 +14,7 @@ type Status = "idle" | "adding" | "added" | "error";
 
 export function KitAddToCart({
   kitName,
-  cartLines,
+  kitSlug,
   disabled = false,
 }: KitAddToCartProps) {
   const [status, setStatus] = useState<Status>("idle");
@@ -23,9 +22,7 @@ export function KitAddToCart({
   const handleClick = async () => {
     setStatus("adding");
     try {
-      // TODO(W1-24): switch to the kit-level addKit once it lands on main;
-      // until then the kit's formulas are added line by line (kit price not applied).
-      await cartProvider.addLines(cartLines);
+      await cartProvider.addKit(kitSlug, 1);
       setStatus("added");
       setTimeout(() => setStatus("idle"), 3000);
     } catch {

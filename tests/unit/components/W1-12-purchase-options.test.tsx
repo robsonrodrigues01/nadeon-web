@@ -11,6 +11,7 @@ import {
 import { PurchaseOptions } from "@/components/commerce/purchase-options";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import type { CartProvider, Cart } from "@/lib/contracts/cart";
+import { MarketProvider } from "@/lib/market/context";
 
 describe("PurchaseOptions component (W1-12)", () => {
   let mockCartProviderInstance: CartProvider;
@@ -32,6 +33,7 @@ describe("PurchaseOptions component (W1-12)", () => {
       get: vi.fn().mockResolvedValue(sampleCart),
       create: vi.fn().mockResolvedValue(sampleCart),
       addLines: vi.fn().mockResolvedValue(sampleCart),
+      addKit: vi.fn().mockResolvedValue(sampleCart),
       updateLines: vi.fn().mockResolvedValue(sampleCart),
       removeLines: vi.fn().mockResolvedValue(sampleCart),
       applyDiscount: vi.fn().mockResolvedValue(sampleCart),
@@ -228,5 +230,64 @@ describe("PurchaseOptions component (W1-12)", () => {
     expect(screen.getAllByText("$44.00").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("$80.00").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("$108.00").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("renders market-aware free shipping label on one-time purchase options", async () => {
+    const biohack = await mockCatalogProvider.getProduct("biohack");
+    expect(biohack).not.toBeNull();
+
+    // Default US market (threshold 75 for human line)
+    const { unmount } = render(
+      <PurchaseOptions
+        product={biohack!}
+        cartProvider={mockCartProviderInstance}
+        defaultPurchaseType="one-time"
+      />
+    );
+
+    // 1 jar ($65) is below $75 threshold -> "Free shipping over $75"
+    expect(screen.getByText("Free shipping over $75")).toBeTruthy();
+    // 2 jars ($118) and 3 jars ($165) meet threshold -> "Free shipping"
+    expect(screen.getAllByText("Free shipping").length).toBe(2);
+
+    unmount();
+
+    // Pet product in US market (threshold 49 for pet line)
+    const moreGoodYears =
+      await mockCatalogProvider.getProduct("more-good-years");
+    expect(moreGoodYears).not.toBeNull();
+
+    const { unmount: unmountPet } = render(
+      <PurchaseOptions
+        product={moreGoodYears!}
+        cartProvider={mockCartProviderInstance}
+        defaultPurchaseType="one-time"
+      />
+    );
+
+    // 1 jar ($44) is below $49 threshold -> "Free shipping over $49"
+    expect(
+      screen.getAllByText("Free shipping over $49").length
+    ).toBeGreaterThanOrEqual(1);
+    // 2 jars ($80) and 3 jars ($108) meet threshold -> "Free shipping"
+    expect(screen.getAllByText("Free shipping").length).toBeGreaterThanOrEqual(
+      2
+    );
+
+    unmountPet();
+
+    // GB market without free shipping -> null, no free shipping label on one-time options
+    render(
+      <MarketProvider initialMarket="gb">
+        <PurchaseOptions
+          product={biohack!}
+          cartProvider={mockCartProviderInstance}
+          defaultPurchaseType="one-time"
+        />
+      </MarketProvider>
+    );
+
+    expect(screen.queryByText("Free shipping")).toBeNull();
+    expect(screen.queryByText(/Free shipping over/i)).toBeNull();
   });
 });

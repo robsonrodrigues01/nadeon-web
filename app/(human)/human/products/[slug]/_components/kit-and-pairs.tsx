@@ -4,17 +4,22 @@ import React, { useState } from "react";
 import Link from "next/link";
 import type { Kit, Product } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
-import { formatMarketPrice } from "@/lib/market/formatter";
-import { DEFAULT_MARKET } from "@/lib/market/markets";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 import { Button } from "@/components/ui/button";
 import { Claim } from "@/components/commerce/product-card/claim";
 
 export interface KitAndPairsProps {
   kit: Kit | null;
+  market: Market;
   relatedProducts: Product[];
 }
 
-export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
+export function KitAndPairs({
+  kit,
+  relatedProducts,
+  market,
+}: KitAndPairsProps) {
   const [isAddingKit, setIsAddingKit] = useState(false);
   const [addingSlug, setAddingSlug] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -23,31 +28,11 @@ export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
     setIsAddingKit(true);
     setFeedback(null);
     try {
-      // Find variants for the products in kit if available, otherwise primary variants
-      const linesToAdd =
-        kit?.products.map((ref) => {
-          const matchedProduct = relatedProducts.find(
-            (p) => p.slug === ref.productSlug
-          );
-          const variantId =
-            matchedProduct?.variants[0]?.id || `var_${ref.productSlug}_1`;
-          return {
-            variantId,
-            quantity: ref.quantity,
-          };
-        }) || [];
-
-      if (linesToAdd.length > 0) {
-        await cartProvider.addLines(linesToAdd);
-      } else {
-        await cartProvider.addLines([
-          { variantId: "var_biohack_1", quantity: 1 },
-          { variantId: "var_renew_1", quantity: 1 },
-        ]);
+      if (kit) {
+        await cartProvider.addKit(kit.slug, 1);
+        setFeedback(`Added ${kit.name} to cart`);
+        setTimeout(() => setFeedback(null), 3500);
       }
-
-      setFeedback("Added The Energy Duo to cart");
-      setTimeout(() => setFeedback(null), 3500);
     } catch {
       setFeedback("Failed to add duo to cart");
     } finally {
@@ -78,17 +63,18 @@ export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
   };
 
   const kitPrice = kit?.price
-    ? formatMarketPrice(
-        kit.price.amount,
-        kit.price.currencyCode,
-        DEFAULT_MARKET.locale
+    ? formatMoneyWithMarket(
+        { amount: kit.price.amount, currencyCode: kit.price.currencyCode },
+        market
       )
     : null;
   const kitComparePrice = kit?.compareAtPrice
-    ? formatMarketPrice(
-        kit.compareAtPrice.amount,
-        kit.compareAtPrice.currencyCode,
-        DEFAULT_MARKET.locale
+    ? formatMoneyWithMarket(
+        {
+          amount: kit.compareAtPrice.amount,
+          currencyCode: kit.compareAtPrice.currencyCode,
+        },
+        market
       )
     : null;
 
@@ -199,10 +185,9 @@ export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
             {relatedProducts.slice(0, 4).map((product) => {
               const price = product.variants[0]?.price;
               const formattedPrice = price
-                ? formatMarketPrice(
-                    price.amount,
-                    price.currencyCode,
-                    DEFAULT_MARKET.locale
+                ? formatMoneyWithMarket(
+                    { amount: price.amount, currencyCode: price.currencyCode },
+                    market
                   )
                 : null;
               const discountRate = product.sellingPlans[0]?.discountPercentage;

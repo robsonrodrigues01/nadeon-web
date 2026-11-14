@@ -7,17 +7,13 @@ import { ProductCard } from "@/components/commerce/product-card";
 
 export interface DailyRoutineProps {
   products: Product[];
-  locale?: string;
 }
 
 const FORMAT_TABS = ["All", "Capsules", "Powders", "Tinctures"] as const;
 type TabType = (typeof FORMAT_TABS)[number];
 const PANEL_ID = "daily-routine-panel";
 
-export function DailyRoutine({
-  products,
-  locale = "en-US",
-}: DailyRoutineProps) {
+export function DailyRoutine({ products }: DailyRoutineProps) {
   const [activeTab, setActiveTab] = useState<TabType>("All");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -108,7 +104,6 @@ export function DailyRoutine({
             <ProductCard
               key={product.slug}
               product={product}
-              locale={locale}
               className="h-full"
             />
           ))}
