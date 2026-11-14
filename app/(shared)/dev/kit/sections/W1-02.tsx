@@ -1,9 +1,12 @@
 import React from "react";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
+import { campaignConfig } from "@/lib/providers";
 
 const SHOWCASE_COUNTDOWN_TARGET = "2026-11-30T23:59:59-05:00";
 
-export default function W1_02_Section() {
+export default async function W1_02_Section() {
+  const campaign = await campaignConfig.getActiveCampaign();
+
   return (
     <section
       id="section-w1-02"
@@ -51,7 +54,7 @@ export default function W1_02_Section() {
           data-theme="human"
           className="rounded-lg border border-border overflow-hidden bg-bg"
         >
-          <AnnouncementBar line="human" />
+          <AnnouncementBar line="human" campaign={campaign} />
         </div>
       </div>
 
@@ -74,7 +77,7 @@ export default function W1_02_Section() {
           data-theme="pet"
           className="rounded-lg border border-border overflow-hidden bg-bg"
         >
-          <AnnouncementBar line="pet" />
+          <AnnouncementBar line="pet" campaign={campaign} />
         </div>
       </div>
 
@@ -155,11 +158,11 @@ export default function W1_02_Section() {
               <div className="text-[10px] text-fg-muted font-mono px-1">
                 Human Mobile
               </div>
-              <AnnouncementBar line="human" />
+              <AnnouncementBar line="human" campaign={campaign} />
               <div className="text-[10px] text-fg-muted font-mono px-1 pt-2">
                 Pet Mobile
               </div>
-              <AnnouncementBar line="pet" />
+              <AnnouncementBar line="pet" campaign={campaign} />
             </div>
           </div>
 

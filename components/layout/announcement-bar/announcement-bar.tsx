@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Campaign } from "@/lib/contracts/campaign";
-import { campaignConfig as defaultCampaignConfig } from "@/lib/providers";
 import { CountdownTimer } from "./countdown-timer";
 import type { AnnouncementBarProps } from "./types";
 
@@ -12,7 +11,7 @@ const DEFAULT_FALLBACK_COUNTDOWN = "2026-11-30T23:59:59-05:00";
 export function AnnouncementBar({
   line = "human",
   campaign: propCampaign,
-  campaignConfig = defaultCampaignConfig,
+  campaignConfig,
   forceBlackFriday = false,
   shippingHref,
   subscribeHref,
@@ -27,7 +26,7 @@ export function AnnouncementBar({
   >(undefined);
 
   useEffect(() => {
-    if (propCampaign !== undefined) {
+    if (propCampaign !== undefined || !campaignConfig) {
       return;
     }
 
@@ -52,7 +51,7 @@ export function AnnouncementBar({
   }, [campaignConfig, propCampaign]);
 
   const resolvedCampaign =
-    propCampaign !== undefined ? propCampaign : fetchedCampaign;
+    propCampaign !== undefined ? propCampaign : (fetchedCampaign ?? null);
 
   const isBlackFriday =
     forceBlackFriday || Boolean(resolvedCampaign && resolvedCampaign.isActive);

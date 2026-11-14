@@ -8,7 +8,7 @@ import type {
   SellingPlan,
 } from "@/lib/contracts/catalog";
 import type { Cart, CartProvider } from "@/lib/contracts/cart";
-import { cartProvider as defaultCartProvider } from "@/lib/providers";
+import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
 import { Button } from "@/components/ui/button";
 
 export interface PurchaseOptionsProps {

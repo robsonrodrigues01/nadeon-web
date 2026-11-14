@@ -2,17 +2,20 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { formsProvider } from "@/lib/providers";
+import { subscribeNewsletter } from "@/components/brand/newsletter/actions";
+import type { FormsProvider } from "@/lib/contracts/forms";
 import type { FooterLine } from "./types";
 
 export interface NewsletterFormProps {
   line?: FooterLine;
   className?: string;
+  provider?: FormsProvider;
 }
 
 export function NewsletterForm({
   line = "human",
   className = "",
+  provider,
 }: NewsletterFormProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
@@ -35,7 +38,11 @@ export function NewsletterForm({
     try {
       setStatus("loading");
       setErrorMessage("");
-      await formsProvider.subscribe(listName, email.trim(), true);
+      if (provider) {
+        await provider.subscribe(listName, email.trim(), true);
+      } else {
+        await subscribeNewsletter(listName, email.trim(), true);
+      }
       setStatus("success");
       setEmail("");
     } catch {
