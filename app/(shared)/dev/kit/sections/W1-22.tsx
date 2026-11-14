@@ -6,7 +6,7 @@ import { Header } from "@/components/layout/header";
 import { TrustStrip } from "@/components/brand/trust-strip";
 import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
-import { CartDrawer, openCartDrawer } from "@/components/commerce/cart-drawer";
+import { CartDrawer } from "@/components/commerce/cart-drawer";
 import { CookieBanner } from "@/components/layout/cookie-banner";
 import { FirstVisitPopup } from "@/components/layout/popup";
 
