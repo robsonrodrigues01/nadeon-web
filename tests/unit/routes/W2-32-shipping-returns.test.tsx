@@ -9,7 +9,10 @@ vi.mock("next/headers", () => ({
 import ShippingReturnsPage, {
   metadata,
 } from "@/app/(shared)/shipping-returns/page";
-import { formatFreeShippingThreshold } from "@/lib/market";
+import {
+  formatFreeShippingThreshold,
+  formatFreeShippingLabel,
+} from "@/lib/market";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
 
 describe("W2-32: /shipping-returns route", () => {
@@ -61,26 +64,34 @@ describe("W2-32: /shipping-returns route", () => {
       }
     });
 
-    it("displays dynamic free shipping threshold from lib/market", async () => {
+    it("displays dynamic free shipping label from lib/market", async () => {
       const html = await getHtml();
+      const label = formatFreeShippingLabel(DEFAULT_MARKET, "human");
       const threshold = formatFreeShippingThreshold(DEFAULT_MARKET, "human");
+      expect(label).toBeTruthy();
       expect(threshold).toBeTruthy();
+      expect(html).toContain(label!);
       expect(html).toContain(threshold!);
     });
 
-    it("renders the 60-day money-back guarantee highlight and promise", async () => {
+    it("renders money-back guarantee with unconfirmed terms marked as To be confirmed", async () => {
       const html = await getHtml();
-      expect(html).toContain("60-day guarantee");
-      expect(html).toMatch(/try it for up to 60 days/i);
+      expect(html).toContain("Money-back guarantee");
+      expect(html).toContain("Guarantee window: To be confirmed");
+      expect(html).toContain(
+        "Conditions, limits and trial period: To be confirmed"
+      );
     });
 
-    it("renders the shipping zones table with contiguous US, express and international", async () => {
+    it("renders shipping zones table with unconfirmed costs and times as To be confirmed", async () => {
       const html = await getHtml();
       expect(html).toContain("Zones and delivery times");
       expect(html).toContain("Contiguous US");
       expect(html).toContain("Express");
       expect(html).toContain("Alaska and Hawaii");
+      expect(html).toContain("PR, US territories, APO/FPO");
       expect(html).toContain("International");
+      expect(html).toContain("To be confirmed");
     });
 
     it("renders 4 return steps and eligibility cards", async () => {
@@ -102,7 +113,7 @@ describe("W2-32: /shipping-returns route", () => {
       expect(html).toContain("Report a problem");
     });
 
-    it("renders FAQ details with 7 shipping questions", async () => {
+    it("renders FAQ details with 7 shipping questions and unconfirmed answers marked as To be confirmed", async () => {
       const html = await getHtml();
       expect(html).toContain("Shipping questions");
       const questions = [

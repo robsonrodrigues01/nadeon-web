@@ -12,7 +12,6 @@ import {
   formatFreeShippingThreshold,
   formatFreeShippingLabel,
 } from "@/lib/market/shipping";
-import { formatMoneyWithMarket } from "@/lib/market/formatter";
 
 export const metadata: Metadata = buildMetadata({
   title: "Shipping & Returns | Nadeon Labs",
@@ -40,19 +39,20 @@ const RETURN_STEPS = [
   {
     step: 2,
     title: "Tell us why",
-    description: "Pick a reason. Opened jars are fine within 60 days.",
+    description:
+      "Pick a reason. Return policy for opened jars: To be confirmed.",
   },
   {
     step: 3,
     title: "Send it back",
     description:
-      "We email a prepaid label or instructions. No return needed in some circumstances.",
+      "Return shipping instructions and prepaid labels: To be confirmed.",
   },
   {
     step: 4,
     title: "Get your refund",
     description:
-      "Refunded to your original payment within 5 to 7 business days of approval.",
+      "Refunded to your original payment method. Processing timeframe: To be confirmed.",
   },
 ] as const;
 
@@ -61,13 +61,12 @@ const DAMAGED_STEPS = [
     step: 1,
     title: "Take a photo",
     description:
-      "Of the box, the label and the damaged item within 7 days of delivery.",
+      "Of the box, the label and the damaged item. Reporting window: To be confirmed.",
   },
   {
     step: 2,
     title: "Contact us",
-    description:
-      "Send the photos with your order number through our help form or email.",
+    description: "Send the photos with your order number by chat or email.",
   },
   {
     step: 3,
@@ -81,36 +80,35 @@ const FAQ_ITEMS = [
   {
     question: "When will my order ship?",
     answer:
-      "Orders placed before 2 PM ET on business days ship the same day. Orders placed after 2 PM ET or on weekends and holidays ship the next business day.",
+      "Orders placed before cutoff on business days ship the same day. Fulfillment schedule and cutoff time: To be confirmed.",
   },
   {
     question: "Do you ship outside the US?",
     answer:
-      "Currently, we ship to all 50 US states, Puerto Rico, US territories, and APO/FPO addresses. International shipping is coming soon.",
+      "Shipping coverage and international destinations: To be confirmed.",
   },
   {
     question: "Can I change my address after ordering?",
     answer:
-      "If your order has not shipped yet, contact us immediately and we will update your address. Once an order has shipped, address changes must be handled directly with the carrier.",
+      "Address change policy: To be confirmed. If your order has not shipped yet, contact support as soon as possible.",
   },
   {
     question: "How do I return a subscription order?",
     answer:
-      "You can initiate a return for any subscription shipment within 60 days through your account dashboard or by contacting our support team.",
+      "Subscription return policy: To be confirmed. Subscriptions can be managed directly in your account dashboard.",
   },
   {
     question: "What if my package says delivered but I do not have it?",
     answer:
-      "Please allow 24 hours as carriers occasionally scan packages prior to physical drop-off. Check with neighbors or building management. If your order still has not arrived, contact us and we will promptly send a replacement or issue a refund.",
+      "Delivery resolution policy: To be confirmed. Please check with neighbors or building staff and contact our support team.",
   },
   {
     question: "How long do refunds take to show up?",
-    answer:
-      "Once approved, refunds are credited back to your original payment method within 5 to 7 business days, depending on your financial institution.",
+    answer: "Refund processing timeframe: To be confirmed.",
   },
   {
     question: "Do you charge restocking fees?",
-    answer: "No, we never charge restocking fees on approved returns.",
+    answer: "Restocking fee policy: To be confirmed.",
   },
 ] as const;
 
@@ -126,35 +124,35 @@ export default async function ShippingReturnsPage() {
     {
       zone: "Contiguous US",
       method: "Standard",
-      time: "3 to 5 business days",
-      cost: formatMoneyWithMarket(5, market),
-      freeOver: freeShippingThreshold ?? "None",
+      time: "To be confirmed",
+      cost: "To be confirmed",
+      freeOver: freeShippingThreshold ?? "To be confirmed",
     },
     {
       zone: "Contiguous US",
       method: "Express",
-      time: "1 to 2 business days",
-      cost: formatMoneyWithMarket(15, market),
+      time: "To be confirmed",
+      cost: "To be confirmed",
       freeOver: "None",
     },
     {
       zone: "Alaska and Hawaii",
       method: "Standard",
-      time: "5 to 7 business days",
-      cost: formatMoneyWithMarket(10, market),
-      freeOver: freeShippingThreshold ?? "None",
+      time: "To be confirmed",
+      cost: "To be confirmed",
+      freeOver: "To be confirmed",
     },
     {
       zone: "PR, US territories, APO/FPO",
       method: "Standard",
-      time: "7 to 14 business days",
-      cost: formatMoneyWithMarket(12, market),
+      time: "To be confirmed",
+      cost: "To be confirmed",
       freeOver: "None",
     },
     {
       zone: "International",
       method: "Not available yet",
-      time: "Coming soon",
+      time: "Coming later (To be confirmed)",
       cost: "None",
       freeOver: "None",
     },
@@ -200,10 +198,10 @@ export default async function ShippingReturnsPage() {
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg">
               Where we ship, how long it takes, what it costs and how returns
-              work.
+              work. All rates and times below are placeholders.
             </p>
             <p className="mt-3 text-xs text-fg-muted">
-              Last updated: November 2026
+              Last updated: To be confirmed
             </p>
 
             {/* 3 Highlight Cards */}
@@ -214,8 +212,8 @@ export default async function ShippingReturnsPage() {
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                   {freeShippingLabel
-                    ? `On orders over ${freeShippingThreshold} and on every subscription delivery.`
-                    : "Free on every subscription delivery."}
+                    ? `${freeShippingLabel}. Subscription delivery: To be confirmed.`
+                    : "To be confirmed."}
                 </p>
               </div>
 
@@ -224,16 +222,16 @@ export default async function ShippingReturnsPage() {
                   Ships fast
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  Orders leave our warehouse within 1 to 2 business days.
+                  Orders leave our warehouse: To be confirmed.
                 </p>
               </div>
 
               <div className="rounded-card border border-border bg-bg p-5 sm:p-6 shadow-card">
                 <p className="font-archivo text-lg font-extrabold uppercase tracking-tight text-accent sm:text-xl">
-                  60-day guarantee
+                  Guarantee
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  Not happy? Get your money back within 60 days.
+                  Not happy? Guarantee window: To be confirmed.
                 </p>
               </div>
             </div>
@@ -348,8 +346,8 @@ export default async function ShippingReturnsPage() {
                   Order cutoff
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  Orders placed before 2 PM ET on business days ship the same
-                  day.
+                  Orders placed before cutoff on business days ship the same
+                  day. Cutoff time: To be confirmed.
                 </p>
               </div>
               <div>
@@ -357,7 +355,7 @@ export default async function ShippingReturnsPage() {
                   Carriers
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  We ship with USPS and UPS. You get tracking on every order.
+                  Carriers: To be confirmed. You get tracking on every order.
                 </p>
               </div>
               <div>
@@ -485,7 +483,9 @@ export default async function ShippingReturnsPage() {
                     >
                       ✓
                     </span>
-                    <span>Every subscription delivery ships free.</span>
+                    <span>
+                      Subscription delivery shipping: To be confirmed.
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span
@@ -495,7 +495,8 @@ export default async function ShippingReturnsPage() {
                       ✓
                     </span>
                     <span>
-                      We email you 3 days before each charge and shipment.
+                      We email you before each charge and shipment. Notice
+                      window: To be confirmed.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -558,12 +559,13 @@ export default async function ShippingReturnsPage() {
                   Our promise
                 </span>
                 <h3 className="mt-3 font-archivo text-2xl font-extrabold uppercase tracking-tight text-fg sm:text-3xl">
-                  60-day money-back guarantee
+                  Money-back guarantee
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted sm:text-base">
-                  Try it for up to 60 days. If it is not right for you, contact
-                  us and we will refund your first order, even if the jar is
-                  opened.
+                  Try it on your first order. If it is not right for you,
+                  contact us and we will refund your first order, even if the
+                  jar is opened. Conditions, limits and trial period: To be
+                  confirmed.
                 </p>
               </div>
               <div className="shrink-0">
@@ -610,10 +612,14 @@ export default async function ShippingReturnsPage() {
                 </div>
                 <ul className="mt-4 flex flex-col gap-2.5 text-sm text-fg-muted">
                   <li className="pl-8">
-                    First order of any formula within 60 days
+                    First order of any formula (trial period: To be confirmed)
                   </li>
-                  <li className="pl-8">Unopened products within 30 days</li>
-                  <li className="pl-8">Defective or damaged items</li>
+                  <li className="pl-8">
+                    Unopened products (return window: To be confirmed)
+                  </li>
+                  <li className="pl-8">
+                    Other eligible conditions: To be confirmed
+                  </li>
                 </ul>
               </div>
 
@@ -628,11 +634,13 @@ export default async function ShippingReturnsPage() {
                   Not eligible
                 </div>
                 <ul className="mt-4 flex flex-col gap-2.5 text-sm text-fg-muted">
-                  <li className="pl-8">Orders older than 60 days</li>
+                  <li className="pl-8">
+                    Orders past the return window: To be confirmed
+                  </li>
                   <li className="pl-8">
                     Products bought from third-party sellers
                   </li>
-                  <li className="pl-8">Items damaged through misuse</li>
+                  <li className="pl-8">Other exclusions: To be confirmed</li>
                 </ul>
               </div>
             </div>
@@ -667,7 +675,8 @@ export default async function ShippingReturnsPage() {
                   Damaged, missing or wrong item?
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-fg-muted sm:text-base">
-                  Sorry about that. Tell us within 7 days and we fix it fast.
+                  Sorry about that. Reporting window: To be confirmed. We fix it
+                  fast.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <Button href="/help#contact" variant="primary">
