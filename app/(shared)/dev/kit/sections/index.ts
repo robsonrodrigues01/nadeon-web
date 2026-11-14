@@ -1,7 +1,10 @@
-import type React from "react";
+import React from "react";
 import { FoundationSection } from "./foundation";
+import SW1_20 from "./W1-20";
+import SW1_14 from "./W1-14";
 import SW1_13 from "./W1-13";
 import SW1_10 from "./W1-10";
+import SW1_09 from "./W1-09";
 import SW1_08 from "./W1-08";
 import SW1_05 from "./W1-05";
 import SW1_04 from "./W1-04";
@@ -38,8 +41,15 @@ export const sections: DevKitSection[] = [
   { id: "W1-04", title: "Footer", Component: SW1_04 },
   { id: "W1-05", title: "Country selector", Component: SW1_05 },
   { id: "W1-08", title: "Cookie banner", Component: SW1_08 },
+  {
+    id: "W1-09",
+    title: "First-visit popup",
+    Component: () => React.createElement(SW1_09),
+  },
   { id: "W1-10", title: "Analytics", Component: SW1_10 },
   { id: "W1-13", title: "Weight ]; dosing", Component: SW1_13 },
+  { id: "W1-14", title: "Cart drawer", Component: SW1_14 },
+  { id: "W1-20", title: "Shopify handles & renders", Component: SW1_20 },
 ];
 
 export default sections;
