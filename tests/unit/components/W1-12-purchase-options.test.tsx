@@ -270,7 +270,9 @@ describe("PurchaseOptions component (W1-12)", () => {
       screen.getAllByText("Free shipping over $49").length
     ).toBeGreaterThanOrEqual(1);
     // 2 jars ($80) and 3 jars ($108) meet threshold -> "Free shipping"
-    expect(screen.getAllByText("Free shipping").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText("Free shipping").length).toBeGreaterThanOrEqual(
+      2
+    );
 
     unmountPet();
 
