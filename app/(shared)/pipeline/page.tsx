@@ -10,21 +10,44 @@ function getMaestriDir(): string {
   if (process.env.MAESTRI_HOME) {
     return path.resolve(process.env.MAESTRI_HOME);
   }
+  const local = path.resolve(process.cwd(), ".maestri");
+  if (fs.existsSync(path.join(local, "pipeline", "tasks.json"))) {
+    return local;
+  }
   const central =
     "/Users/robsoncoffy/Documents/Nadeon/Website/nadeon-web/.maestri";
   if (fs.existsSync(central)) {
     return central;
   }
-  return path.resolve(process.cwd(), ".maestri");
+  return local;
 }
 
 function loadPipelineData(): { tasks: Task[]; events: PipelineEvent[] } {
   const maestriDir = getMaestriDir();
+  const localDir = path.resolve(process.cwd(), ".maestri");
+  const centralDir =
+    "/Users/robsoncoffy/Documents/Nadeon/Website/nadeon-web/.maestri";
+  const statusBaseDir =
+    fs.existsSync(path.join(centralDir, "status")) && !process.env.MAESTRI_HOME
+      ? centralDir
+      : maestriDir;
+  const logsBaseDir =
+    fs.existsSync(path.join(centralDir, "logs")) && !process.env.MAESTRI_HOME
+      ? centralDir
+      : maestriDir;
+
   let tasks: Task[] = [];
   const events: PipelineEvent[] = [];
 
-  // Carrega tarefas de pipeline/tasks.json
-  const tasksFile = path.join(maestriDir, "pipeline", "tasks.json");
+  // Carrega tarefas de pipeline/tasks.json (prioriza onde o arquivo existir)
+  let tasksFile = path.join(maestriDir, "pipeline", "tasks.json");
+  if (
+    !fs.existsSync(tasksFile) &&
+    fs.existsSync(path.join(localDir, "pipeline", "tasks.json"))
+  ) {
+    tasksFile = path.join(localDir, "pipeline", "tasks.json");
+  }
+
   if (fs.existsSync(tasksFile)) {
     try {
       const content = fs.readFileSync(tasksFile, "utf8");
@@ -36,7 +59,7 @@ function loadPipelineData(): { tasks: Task[]; events: PipelineEvent[] } {
 
   // Enriquece tarefas com dados da pasta status/ (ex: motivo de bloqueio)
   for (const task of tasks) {
-    const blockedFile = path.join(maestriDir, "status", task.id, "BLOCKED");
+    const blockedFile = path.join(statusBaseDir, "status", task.id, "BLOCKED");
     if (fs.existsSync(blockedFile)) {
       try {
         task.bloqueio = fs.readFileSync(blockedFile, "utf8").trim();
@@ -47,7 +70,7 @@ function loadPipelineData(): { tasks: Task[]; events: PipelineEvent[] } {
   }
 
   // Carrega eventos de logs/events.jsonl (últimos 50 eventos)
-  const eventsFile = path.join(maestriDir, "logs", "events.jsonl");
+  const eventsFile = path.join(logsBaseDir, "logs", "events.jsonl");
   if (fs.existsSync(eventsFile)) {
     try {
       const content = fs.readFileSync(eventsFile, "utf8");
