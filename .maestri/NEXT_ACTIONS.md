@@ -1,11 +1,13 @@
-# Próximas ações (atualizado 14/11/2026 ~08:00 BRT pelo Maestro)
+# Próximas ações (14/11/2026 19:10 BRT, Maestro)
 
 ## Robson
-- Aprovar ou ajustar o quiz proposto: `docs/quiz-proposta.md` e `data/quiz.json` (bloqueante de saída da onda 1).
-- Revisar claims de saúde no quiz (ex.: "DNA repair support" na faixa 55+) antes do lançamento.
-- Decidir o GitHub (CI parado por billing; fluxo atual é só local).
+- Reabrir o app Maestri (CLI dá "Connection refused") e manter o Mac acordado: tampa aberta, na tomada, Ajustes > Bateria > impedir repouso automático.
+- Aprovar `docs/quiz-proposta.md` (claims de saúde a revisar).
 
-## Maestro
-- Revisar e mergear W1-22 (shell completo nos layouts e seções W1-09/W1-14 no /dev/kit).
-- Onda 2 em execução: W2-01, 02, 03, 04, 06, 09, 12, 23. Fila: demais linhas de maestri/BRIEFINGS-W2.md.
-- Revisores fixos: Lupa e Olho. Auditor temporário: Vigia (Antigravity) no nó do Codex.
+## Maestro, ao retomar
+- Refazer merge da W2-21 (aprovada por Busca; gate falhou por timeout instável).
+- Coletar pareceres do Olho para W2-20 e W2-24.
+- W1-24 (Preco): corrigir preços fixos dos bundles em /pet/dogs e kit-price. W2-22 (Ajustes): perfil pet. W2-02 (Aurora): usar formatFreeShippingLabel (W1-26 já no main).
+- W2-26 a W2-29 em construção; W2-27 (Socorro) parou no meio.
+- Fila da onda 2: W2-30 a W2-36.
+- Painel: scratchpad/syncpanel.py em loop a cada 2 min espelha tasks.json no SQLite (porta 4178).

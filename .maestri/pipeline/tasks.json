@@ -1172,7 +1172,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Duvida",
-    "lease_ate": "2026-11-14T18:07:44.399Z",
+    "lease_ate": "2026-11-14T22:25:32.474Z",
     "branch": "agy/W2-26",
     "pr": "local",
     "criterios": [
@@ -1192,7 +1192,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Socorro",
-    "lease_ate": "2026-11-14T18:07:27.373Z",
+    "lease_ate": "2026-11-14T22:21:40.364Z",
     "branch": "agy/W2-27",
     "pr": "local",
     "criterios": [
@@ -1212,7 +1212,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Laudo",
-    "lease_ate": "2026-11-14T18:08:31.620Z",
+    "lease_ate": "2026-11-14T22:25:17.452Z",
     "branch": "agy/W2-28",
     "pr": "local",
     "criterios": [
@@ -1230,9 +1230,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Ciencia",
-    "lease_ate": "2026-11-14T18:07:36.340Z",
+    "lease_ate": null,
     "branch": "agy/W2-29",
     "pr": "local",
     "criterios": [
