@@ -1030,7 +1030,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Pedidos",
     "lease_ate": null,
     "branch": "agy/W2-20",
@@ -1092,7 +1092,7 @@
     ],
     "status": "para_revisao",
     "responsavel": "Farejo",
-    "lease_ate": null,
+    "lease_ate": "2026-11-14T18:06:39.195Z",
     "branch": "agy/W2-24",
     "pr": "local",
     "criterios": [
@@ -1110,11 +1110,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Origem",
     "lease_ate": null,
     "branch": "agy/W2-25",
-    "pr": "local",
+    "pr": "local 6785f98",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1155,6 +1155,86 @@
     "lease_ate": null,
     "branch": "agy/W1-26",
     "pr": "local d4c304f",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-26",
+    "titulo": "Rota W2-26",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Duvida",
+    "lease_ate": "2026-11-14T18:06:31.655Z",
+    "branch": "agy/W2-26",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-27",
+    "titulo": "Rota W2-27",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Socorro",
+    "lease_ate": "2026-11-14T18:07:27.373Z",
+    "branch": "agy/W2-27",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-28",
+    "titulo": "Rota W2-28",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Laudo",
+    "lease_ate": "2026-11-14T18:06:39.541Z",
+    "branch": "agy/W2-28",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-29",
+    "titulo": "Rota W2-29",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Ciencia",
+    "lease_ate": "2026-11-14T18:06:32.112Z",
+    "branch": "agy/W2-29",
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
