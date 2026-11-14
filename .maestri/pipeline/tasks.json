@@ -713,7 +713,7 @@
     "responsavel": "Focinho",
     "lease_ate": null,
     "branch": "agy/W2-09",
-    "pr": "local",
+    "pr": "local 7ae0e51",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -789,9 +789,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Combo",
-    "lease_ate": "2026-11-14T10:21:38.551Z",
+    "lease_ate": null,
     "branch": "agy/W2-07",
     "pr": "local",
     "criterios": [
@@ -811,7 +811,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Bigode",
-    "lease_ate": "2026-11-14T10:21:06.630Z",
+    "lease_ate": "2026-11-14T10:27:37.857Z",
     "branch": "agy/W2-10",
     "pr": "local",
     "criterios": [
@@ -829,7 +829,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "bloqueada",
     "responsavel": "Agulha",
     "branch": "agy/W1-23",
     "pr": "local",
@@ -838,6 +838,66 @@
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ],
-    "lease_ate": "2026-11-14T10:21:47.935Z"
+    "lease_ate": null
+  },
+  {
+    "id": "W2-11",
+    "titulo": "Rota W2-11",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Crina",
+    "lease_ate": "2026-11-14T10:23:04.894Z",
+    "branch": "agy/W2-11",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-13",
+    "titulo": "Rota W2-13",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Kit",
+    "lease_ate": "2026-11-14T10:27:44.732Z",
+    "branch": "agy/W2-13",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-15",
+    "titulo": "Rota W2-15",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Dosador",
+    "lease_ate": "2026-11-14T10:27:44.688Z",
+    "branch": "agy/W2-15",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
   }
 ]
