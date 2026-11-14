@@ -31,6 +31,49 @@ async function renderWithQuery(format: string, query: Record<string, string>) {
   return render(element);
 }
 
+describe("W2-05 Why this format block", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it("renders the eyebrow, heading and three reasons for capsules", async () => {
+    await renderFormat("capsules");
+
+    const heading = screen.getByRole("heading", {
+      level: 2,
+      name: "Why this format",
+    });
+    const section = heading.closest("section") as HTMLElement;
+    expect(section).not.toBeNull();
+    expect(within(section).getByText("Why capsules")).toBeDefined();
+
+    const reasons = within(section).getAllByRole("heading", { level: 3 });
+    expect(reasons.map((r) => r.textContent)).toEqual([
+      "Morning routine",
+      "No taste",
+      "Pre-measured dose",
+    ]);
+    expect(within(section).getByText("No taste, no mixing.")).toBeDefined();
+  });
+
+  it("places the block between the hero and the product listing", async () => {
+    await renderFormat("capsules");
+    const why = screen.getByRole("heading", { name: "Why this format" });
+    const shop = screen.getByRole("heading", { name: "Shop capsules" });
+    // DOCUMENT_POSITION_FOLLOWING: shop heading comes after the why heading.
+    expect(
+      why.compareDocumentPosition(shop) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
+  it("hides the block for a format with no reason copy", async () => {
+    await renderFormat("powders");
+    expect(
+      screen.queryByRole("heading", { name: "Why this format" })
+    ).toBeNull();
+  });
+});
+
 describe("W2-05 goal filter (objetivo derivado do quiz human)", () => {
   afterEach(() => {
     cleanup();

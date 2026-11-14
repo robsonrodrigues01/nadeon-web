@@ -20,6 +20,8 @@ import {
 } from "./_components/format-config";
 import { getHumanShopGoals } from "./_components/format-goals";
 import { FormatHero } from "./_components/format-hero";
+import { getFormatReasons } from "./_components/format-reasons";
+import { WhyFormat } from "./_components/why-format";
 import { ShopProducts } from "./_components/shop-products";
 import { CompareFormats } from "./_components/compare-formats";
 import { QuizTeaser } from "./_components/quiz-teaser";
@@ -138,6 +140,10 @@ export default async function ShopByFormatPage({
         current={current}
         tabs={tabs}
         jarNames={products.slice(0, 3).map((p) => p.name)}
+      />
+      <WhyFormat
+        label={current.label}
+        reasons={getFormatReasons(current.slug)}
       />
       <ShopProducts
         format={current}
