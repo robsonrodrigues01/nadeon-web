@@ -25,13 +25,6 @@ export function toQueryString(state: {
   return query ? `?${query}` : "";
 }
 
-export function formatPrice(money: Money, locale: string): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
-}
-
 export function savePercent(price: Money, compareAt?: Money): number | null {
   if (!compareAt || compareAt.amount <= price.amount) return null;
   return Math.round(

@@ -4,14 +4,16 @@ import { useState } from "react";
 import { cartProvider } from "@/lib/providers/client";
 import { Button } from "@/components/ui/button";
 import { Claim } from "@/components/commerce/product-card/claim";
-import { formatPrice, type CatKitView } from "./cat-query";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
+import type { CatKitView } from "./cat-query";
 
 export interface CatKitCardProps {
   kit: CatKitView;
-  locale: string;
+  market: Market;
 }
 
-export function CatKitCard({ kit, locale }: CatKitCardProps) {
+export function CatKitCard({ kit, market }: CatKitCardProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -53,11 +55,11 @@ export function CatKitCard({ kit, locale }: CatKitCardProps) {
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline gap-2">
           <span className="text-lg font-extrabold text-fg">
-            {formatPrice(kit.price, locale)}
+            {formatMoneyWithMarket(kit.price, market)}
           </span>
           {kit.compareAtPrice && (
             <s className="text-sm text-fg-muted">
-              {formatPrice(kit.compareAtPrice, locale)}
+              {formatMoneyWithMarket(kit.compareAtPrice, market)}
             </s>
           )}
           {kit.savePercent !== null && (

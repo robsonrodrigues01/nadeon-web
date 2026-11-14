@@ -10,6 +10,17 @@ vi.mock("next/navigation", () => ({
   },
 }));
 
+// Market cookie drives price conversion; tests switch it per case.
+let marketCookie: string | undefined;
+vi.mock("next/headers", () => ({
+  cookies: async () => ({
+    get: (name: string) =>
+      name === "nadeon_market" && marketCookie
+        ? { name, value: marketCookie }
+        : undefined,
+  }),
+}));
+
 async function renderCats(query: Record<string, string> = {}) {
   const jsx = await CatsPage({
     searchParams: Promise.resolve(query),
@@ -20,6 +31,16 @@ async function renderCats(query: Record<string, string> = {}) {
 describe("W2-10 Route: /pet/cats", () => {
   afterEach(() => {
     cleanup();
+    marketCookie = undefined;
+  });
+
+  it("formats prices in the cookie market currency (Canada converts USD to CAD)", async () => {
+    marketCookie = "ca";
+    await renderCats();
+
+    // Cat Care lists at 54 USD; CA rate 1.36 gives 73.44 CAD (CAD shown in the kit card).
+    expect(screen.getAllByText(/73\.44/).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/\$54\.00/)).toBeNull();
   });
 
   it("exports metadata with canonical path /pet/cats", () => {

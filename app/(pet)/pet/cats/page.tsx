@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import type { Product } from "@/lib/contracts/catalog";
 import { catalogProvider } from "@/lib/providers";
 import { buildBreadcrumbJsonLd, buildMetadata, JsonLd } from "@/lib/seo";
-import { DEFAULT_MARKET } from "@/lib/market/markets";
+import { cookies } from "next/headers";
+import { DEFAULT_MARKET, getMarket } from "@/lib/market/markets";
+import { MARKET_COOKIE_NAME } from "@/lib/market/cookies";
 import { ProductCard } from "@/components/commerce/product-card/product-card";
 import { Button } from "@/components/ui/button";
 import { CatFilters, type CatFilterOption } from "./_components/cat-filters";
@@ -49,7 +51,9 @@ export default async function CatsPage({
   const format = one(params.format).toLowerCase();
   const sort: CatSort =
     one(params.sort) === "best-selling" ? "best-selling" : "featured";
-  const locale = DEFAULT_MARKET.locale;
+  // Market from the country selector cookie; prices convert and format per market.
+  const marketId = (await cookies()).get(MARKET_COOKIE_NAME)?.value;
+  const market = getMarket(marketId) ?? DEFAULT_MARKET;
 
   const [collection, petProducts, kits] = await Promise.all([
     catalogProvider.getCollection(
@@ -182,7 +186,7 @@ export default async function CatsPage({
         <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3">
           {visibleProducts.map((product) => (
             <li key={product.slug}>
-              <ProductCard product={product} locale={locale} />
+              <ProductCard product={product} locale={market.locale} />
             </li>
           ))}
         </ul>
@@ -249,7 +253,7 @@ export default async function CatsPage({
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {catKits.map((kit) => (
               <li key={kit.slug}>
-                <CatKitCard kit={kit} locale={locale} />
+                <CatKitCard kit={kit} market={market} />
               </li>
             ))}
           </ul>
