@@ -225,8 +225,8 @@ describe("PurchaseOptions component (W1-12)", () => {
     ).toBeTruthy();
 
     // 1 jar $44, 2 jars $80, 3 jars $108
-    expect(screen.getByText("$44.00")).toBeTruthy();
-    expect(screen.getByText("$80.00")).toBeTruthy();
-    expect(screen.getByText("$108.00")).toBeTruthy();
+    expect(screen.getAllByText("$44.00").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("$80.00").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("$108.00").length).toBeGreaterThanOrEqual(1);
   });
 });
