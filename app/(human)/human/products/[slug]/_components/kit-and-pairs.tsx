@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import type { Kit, Product, Money } from "@/lib/contracts/catalog";
+import type { Kit, Product } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
 import { formatMarketPrice } from "@/lib/market/formatter";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
@@ -12,14 +12,6 @@ import { Claim } from "@/components/commerce/product-card/claim";
 export interface KitAndPairsProps {
   kit: Kit | null;
   relatedProducts: Product[];
-}
-
-function formatMoney(money: Money): string {
-  return formatMarketPrice(
-    money.amount,
-    money.currencyCode,
-    DEFAULT_MARKET.locale
-  );
 }
 
 export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
@@ -85,9 +77,19 @@ export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
     }
   };
 
-  const kitPrice = kit?.price ? formatMoney(kit.price) : null;
+  const kitPrice = kit?.price
+    ? formatMarketPrice(
+        kit.price.amount,
+        kit.price.currencyCode,
+        DEFAULT_MARKET.locale
+      )
+    : null;
   const kitComparePrice = kit?.compareAtPrice
-    ? formatMoney(kit.compareAtPrice)
+    ? formatMarketPrice(
+        kit.compareAtPrice.amount,
+        kit.compareAtPrice.currencyCode,
+        DEFAULT_MARKET.locale
+      )
     : null;
 
   return (
@@ -196,7 +198,13 @@ export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.slice(0, 4).map((product) => {
               const price = product.variants[0]?.price;
-              const formattedPrice = price ? formatMoney(price) : null;
+              const formattedPrice = price
+                ? formatMarketPrice(
+                    price.amount,
+                    price.currencyCode,
+                    DEFAULT_MARKET.locale
+                  )
+                : null;
               const discountRate = product.sellingPlans[0]?.discountPercentage;
               const isCurrentlyAdding = addingSlug === product.slug;
 
