@@ -910,11 +910,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Caixa",
-    "lease_ate": "2026-11-14T10:32:32.012Z",
+    "lease_ate": null,
     "branch": "agy/W2-08",
-    "pr": "local",
+    "pr": "local 6e624c9",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
