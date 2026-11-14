@@ -14,12 +14,17 @@ import { CartView } from "@/app/(shared)/cart/_components/cart-view";
 import { CartEmpty } from "@/app/(shared)/cart/_components/cart-empty";
 import { formatMoneyWithMarket, getMarket } from "@/lib/market";
 import { toCartCatalogProduct } from "@/app/(shared)/cart/_components/types";
+import { redirectToCheckout } from "@/app/(shared)/cart/_components/checkout";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import {
   cartProvider,
   type Cart,
   type CartLineItem,
 } from "@/lib/providers/client";
+
+vi.mock("@/app/(shared)/cart/_components/checkout", () => ({
+  redirectToCheckout: vi.fn(),
+}));
 
 vi.mock("next/headers", () => ({
   cookies: async () => ({ get: () => undefined }),
@@ -156,7 +161,7 @@ describe("W2-17: /cart route", () => {
   describe("cart page (CartView) with two lines", () => {
     beforeEach(async () => {
       await renderCartView(await buildCart());
-      await screen.findByRole("heading", { level: 1, name: "Your cart" });
+      await screen.findByRole("list", { name: "Items in your cart" });
     });
 
     it("has a breadcrumb nav and a continue shopping link", () => {
@@ -247,14 +252,27 @@ describe("W2-17: /cart route", () => {
       await waitFor(() => expect(applyDiscount).toHaveBeenCalledWith("SAVE15"));
     });
 
-    it("has a Checkout securely button that asks the provider for the checkout URL", async () => {
+    it("has a Checkout securely button that redirects to the provider checkout URL", async () => {
+      const url = "https://checkout.nadeon.com/mock/cart_w217";
       const checkoutUrl = vi
         .spyOn(cartProvider, "checkoutUrl")
-        .mockResolvedValue("https://checkout.nadeon.com/mock/cart_w217");
+        .mockResolvedValue(url);
       fireEvent.click(
         screen.getByRole("button", { name: "Checkout securely" })
       );
-      await waitFor(() => expect(checkoutUrl).toHaveBeenCalled());
+      await waitFor(() => expect(redirectToCheckout).toHaveBeenCalledWith(url));
+      expect(checkoutUrl).toHaveBeenCalled();
+    });
+
+    it("shows an alert when the checkout URL cannot be fetched", async () => {
+      vi.spyOn(cartProvider, "checkoutUrl").mockRejectedValue(
+        new Error("down")
+      );
+      fireEvent.click(
+        screen.getByRole("button", { name: "Checkout securely" })
+      );
+      expect(await screen.findByRole("alert")).toBeTruthy();
+      expect(redirectToCheckout).not.toHaveBeenCalled();
     });
 
     it("has Frequently bought together add buttons and an add-all button", async () => {
@@ -297,7 +315,7 @@ describe("W2-17: /cart route", () => {
   describe("error feedback", () => {
     it("shows an alert when an update fails", async () => {
       await renderCartView(await buildCart());
-      await screen.findByRole("heading", { level: 1, name: "Your cart" });
+      await screen.findByRole("list", { name: "Items in your cart" });
       vi.spyOn(cartProvider, "removeLines").mockRejectedValue(
         new Error("down")
       );

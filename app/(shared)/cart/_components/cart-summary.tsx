@@ -5,6 +5,7 @@ import { Lock } from "lucide-react";
 import { cartProvider, type Cart } from "@/lib/providers/client";
 import { useMarket } from "@/lib/market";
 import type { CartCatalogProduct, RunCartAction } from "./types";
+import { redirectToCheckout } from "./checkout";
 
 interface CartSummaryProps {
   cart: Cart;
@@ -17,6 +18,7 @@ export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
   const { formatMoney } = useMarket();
   const [code, setCode] = useState("");
   const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState(false);
   const currencyCode = cart.totalPrice.currencyCode;
 
   // Subtotal pelo preço de lista; a economia de assinatura é a diferença para o preço da linha.
@@ -52,10 +54,11 @@ export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
 
   const handleCheckout = async () => {
     setCheckingOut(true);
+    setCheckoutError(false);
     try {
-      const url = await cartProvider.checkoutUrl();
-      window.location.assign(url);
-    } finally {
+      redirectToCheckout(await cartProvider.checkoutUrl());
+    } catch {
+      setCheckoutError(true);
       setCheckingOut(false);
     }
   };
@@ -153,6 +156,14 @@ export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
         >
           Checkout securely
         </button>
+        {checkoutError && (
+          <p
+            role="alert"
+            className="mt-3 text-center text-sm font-bold text-fg"
+          >
+            Could not update your cart. Try again.
+          </p>
+        )}
         <p className="mt-3 flex items-center justify-center gap-2 text-xs text-fg-muted">
           <Lock className="h-3.5 w-3.5" aria-hidden="true" />
           Secure checkout · Skip or cancel subscriptions anytime
