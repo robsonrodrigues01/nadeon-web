@@ -6,7 +6,11 @@ import { TrustStrip, type TrustItem } from "@/components/brand/trust-strip";
 import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
 import { FaqBrowser } from "./_components/faq-browser";
-import { FAQ_CATEGORIES, FAQ_ENTRIES } from "./_components/faq-content";
+import {
+  FAQ_CATEGORIES,
+  FAQ_ENTRIES,
+  DESIGN_FAQ_ENTRIES,
+} from "./_components/faq-content";
 import { NotFoundBanner, StillStuck } from "./_components/faq-help";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -30,7 +34,12 @@ export default function FaqPage() {
     <>
       <JsonLd
         id="ld-faq"
-        data={buildFaqJsonLd(FAQ_ENTRIES) as unknown as Record<string, unknown>}
+        data={
+          buildFaqJsonLd(DESIGN_FAQ_ENTRIES) as unknown as Record<
+            string,
+            unknown
+          >
+        }
       />
       <AnnouncementBar line="human" />
       <Header variant="human" />

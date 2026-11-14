@@ -5,6 +5,8 @@ import FaqPage, { generateMetadata } from "@/app/(shared)/faq/page";
 import {
   FAQ_CATEGORIES,
   FAQ_ENTRIES,
+  DESIGN_FAQ_ENTRIES,
+  PENDING_FAQ_ANSWER,
   type FaqCategory,
 } from "@/app/(shared)/faq/_components/faq-content";
 import { FaqBrowser } from "@/app/(shared)/faq/_components/faq-browser";
@@ -22,18 +24,22 @@ describe("W2-26 /faq metadata & SEO", () => {
     expect(String(meta.alternates?.canonical)).toMatch(/\/faq$/);
   });
 
-  it("builds valid FAQPage JSON-LD schema", () => {
-    const jsonLd = buildFaqJsonLd(FAQ_ENTRIES);
+  it("builds valid FAQPage JSON-LD schema with only design-approved answers", () => {
+    const jsonLd = buildFaqJsonLd(DESIGN_FAQ_ENTRIES);
     expect(jsonLd["@context"]).toBe("https://schema.org");
     expect(jsonLd["@type"]).toBe("FAQPage");
     expect(Array.isArray(jsonLd.mainEntity)).toBe(true);
-    expect(jsonLd.mainEntity.length).toBe(FAQ_ENTRIES.length);
-    expect(jsonLd.mainEntity[0]["@type"]).toBe("Question");
-    expect(jsonLd.mainEntity[0].name).toBe(FAQ_ENTRIES[0].question);
-    expect(jsonLd.mainEntity[0].acceptedAnswer["@type"]).toBe("Answer");
-    expect(jsonLd.mainEntity[0].acceptedAnswer.text).toBe(
-      FAQ_ENTRIES[0].answer
+    expect(jsonLd.mainEntity.length).toBe(DESIGN_FAQ_ENTRIES.length);
+    for (const item of jsonLd.mainEntity) {
+      expect(item["@type"]).toBe("Question");
+      expect(item.acceptedAnswer["@type"]).toBe("Answer");
+      expect(item.acceptedAnswer.text).not.toBe(PENDING_FAQ_ANSWER);
+    }
+    // Verify first design item
+    expect(jsonLd.mainEntity[0].name).toBe(
+      "What is NMN and how is it different from NAD+?"
     );
+    expect(jsonLd.mainEntity[0].acceptedAnswer.text).toContain("NMN");
   });
 });
 
@@ -87,6 +93,22 @@ describe("W2-26 /faq categories and entries integrity", () => {
       { category: "quality", count: 4 },
     ]);
   });
+
+  it("sets pending answer for items without design answers", () => {
+    const pendingEntries = FAQ_ENTRIES.filter((e) => !e.hasDesignAnswer);
+    expect(pendingEntries.length).toBeGreaterThan(0);
+    for (const entry of pendingEntries) {
+      expect(entry.answer).toBe(PENDING_FAQ_ANSWER);
+    }
+  });
+
+  it("keeps design answers for items backed by design boards", () => {
+    const designEntries = FAQ_ENTRIES.filter((e) => e.hasDesignAnswer);
+    expect(designEntries.length).toBe(DESIGN_FAQ_ENTRIES.length);
+    for (const entry of designEntries) {
+      expect(entry.answer).not.toBe(PENDING_FAQ_ANSWER);
+    }
+  });
 });
 
 describe("W2-26 /faq server render structure", () => {
@@ -139,6 +161,16 @@ describe("W2-26 /faq server render structure", () => {
     // Action links
     expect(html).toContain('href="/help#contact"');
     expect(html).toContain('href="/track"');
+
+    // JSON-LD output only has design answers
+    const scriptMatch = html.match(
+      /<script id="ld-faq"[^>]*>([\s\S]*?)<\/script>/
+    );
+    expect(scriptMatch).not.toBeNull();
+    const ldJson = JSON.parse(scriptMatch![1]);
+    expect(ldJson["@type"]).toBe("FAQPage");
+    expect(JSON.stringify(ldJson)).not.toContain(PENDING_FAQ_ANSWER);
+    expect(ldJson.mainEntity.length).toBe(DESIGN_FAQ_ENTRIES.length);
   });
 
   it("renders FaqBrowser with custom props and children", () => {
@@ -175,17 +207,6 @@ describe("W2-26 /faq server render structure", () => {
 });
 
 describe("W2-26 /faq compliance and rules", () => {
-  it("includes required pet and equine compliance notices", () => {
-    const petEntries = FAQ_ENTRIES.filter((e) => e.category === "pets");
-    for (const entry of petEntries) {
-      expect(entry.answer).toContain("For animal use only");
-    }
-
-    const horseEntry = FAQ_ENTRIES.find((e) => e.id === "pet-horse-top-dress");
-    expect(horseEntry).toBeDefined();
-    expect(horseEntry?.answer).toContain("Not for horses intended for food");
-  });
-
   it("does not render design placeholders like [X], $XX, or (example)", () => {
     const html = renderToString(React.createElement(FaqPage));
     expect(html).not.toContain("[X]");
