@@ -19,12 +19,14 @@
     "onda": 0,
     "papel": "Frontend",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "depende_de": ["W0-01"],
-    "status": "em_andamento",
+    "depende_de": [
+      "W0-01"
+    ],
+    "status": "entregue",
     "responsavel": "Brasa",
-    "lease_ate": "2026-11-14T06:00:00.000Z",
+    "lease_ate": null,
     "branch": "agy/W0-02",
-    "pr": null,
+    "pr": "local",
     "criterios": "tokens nos dois temas, fontes carregando, check-tokens no verify, contraste AA registrado."
   },
   {
@@ -33,12 +35,14 @@
     "onda": 0,
     "papel": "Arquiteto técnico + Backend/API",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "depende_de": ["W0-01"],
-    "status": "em_andamento",
+    "depende_de": [
+      "W0-01"
+    ],
+    "status": "entregue",
     "responsavel": "Prumo",
-    "lease_ate": "2026-11-14T06:00:00.000Z",
+    "lease_ate": null,
     "branch": "agy/W0-03",
-    "pr": null,
+    "pr": "local",
     "criterios": "schemas exportados, mocks funcionando com filtros e busca, CatalogProvider devolve preço formatado por mercado, testes cobrindo cada contrato."
   },
   {
@@ -47,12 +51,14 @@
     "onda": 0,
     "papel": "CI/CD Engineer",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "depende_de": ["W0-01"],
-    "status": "em_andamento",
+    "depende_de": [
+      "W0-01"
+    ],
+    "status": "entregue",
     "responsavel": "Catraca",
-    "lease_ate": "2026-11-14T06:00:00.000Z",
+    "lease_ate": null,
     "branch": "agy/W0-04",
-    "pr": null,
+    "pr": "local",
     "criterios": "PR de teste roda o CI e passa, branch main protegida impedindo push sem CI verde, merge automático configurado."
   },
   {
@@ -61,12 +67,14 @@
     "onda": 0,
     "papel": "Backend/API + Documentation",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "depende_de": ["W0-01"],
-    "status": "em_andamento",
+    "depende_de": [
+      "W0-01"
+    ],
+    "status": "entregue",
     "responsavel": "Abaco",
-    "lease_ate": "2026-11-14T06:00:00.000Z",
+    "lease_ate": null,
     "branch": "agy/W0-05",
-    "pr": "https://github.com/robsonrodrigues01/nadeon-web/pull/3",
+    "pr": "local",
     "criterios": "CLI testado, /pipeline mostrando as 7 tarefas da onda 0 em desenvolvimento e 404 em produção."
   },
   {
@@ -75,12 +83,14 @@
     "onda": 0,
     "papel": "Documentation/Handoff",
     "preset": "Luna 6 Low (GPT)",
-    "depende_de": ["W0-01"],
-    "status": "para_revisao",
+    "depende_de": [
+      "W0-01"
+    ],
+    "status": "entregue",
     "responsavel": "Pena",
     "lease_ate": null,
     "branch": "agy/W0-06",
-    "pr": "https://github.com/robsonrodrigues01/nadeon-web/pull/1",
+    "pr": "local",
     "criterios": "AGENTS.md revisado por outro agente e coerente com as seções 1.4 e 0 do plano v3."
   },
   {
@@ -89,12 +99,341 @@
     "onda": 0,
     "papel": "Frontend",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "depende_de": ["W0-02", "W0-03", "W0-04", "W0-05", "W0-06"],
-    "status": "backlog",
-    "responsavel": null,
+    "depende_de": [
+      "W0-02",
+      "W0-03",
+      "W0-04",
+      "W0-05",
+      "W0-06"
+    ],
+    "status": "entregue",
+    "responsavel": "Farol",
     "lease_ate": null,
     "branch": "agy/W0-07",
-    "pr": null,
+    "pr": "local",
     "criterios": "PR revisado pelo Luna 6 Low, CI verde, merge automático feito, /dev/kit na prévia da Vercel, tarefa como entregue no /pipeline com os eventos do caminho todo."
+  },
+  {
+    "id": "W0-08",
+    "titulo": "Corrigir DONE sobrescrito pelo maestri-task",
+    "onda": 0,
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-05"
+    ],
+    "status": "entregue",
+    "responsavel": "agy-W0-08",
+    "lease_ate": null,
+    "branch": "agy/W0-08",
+    "pr": "local ba49876",
+    "criterios": [
+      "done preserva conteúdo anterior do DONE",
+      "teste Vitest",
+      "pnpm verify verde"
+    ]
+  },
+  {
+    "id": "W0-09",
+    "titulo": "check-placeholders ignora classes Tailwind arbitrárias",
+    "onda": 0,
+    "papel": "CI/CD Engineer",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-04",
+      "W0-07"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Catraca",
+    "lease_ate": "2026-11-14T06:31:10.087Z",
+    "branch": "agy/W0-09",
+    "pr": "local",
+    "criterios": [
+      "className não acusa",
+      "[X], $XX e (example) em texto acusam",
+      "pnpm gate verde"
+    ]
+  },
+  {
+    "id": "W1-01",
+    "titulo": "Shell dos grupos de rota e /dev/kit por seções",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-07"
+    ],
+    "status": "entregue",
+    "responsavel": "Trama",
+    "lease_ate": null,
+    "branch": "agy/W1-01",
+    "pr": "local 3f8e037",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-11",
+    "titulo": "Helpers de SEO e JSON-LD",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-07"
+    ],
+    "status": "entregue",
+    "responsavel": "Sextante",
+    "lease_ate": null,
+    "branch": "agy/W1-11",
+    "pr": "local c923c15",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-16",
+    "titulo": "Dados Human capsules e powders",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-07"
+    ],
+    "status": "entregue",
+    "responsavel": "Grao",
+    "lease_ate": null,
+    "branch": "agy/W1-16",
+    "pr": "local 133a635",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-17",
+    "titulo": "Dados Human tinctures e kits",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-07"
+    ],
+    "status": "entregue",
+    "responsavel": "Seiva",
+    "lease_ate": null,
+    "branch": "agy/W1-17",
+    "pr": "local 133a635",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-18",
+    "titulo": "Dados Pet cães",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-07"
+    ],
+    "status": "entregue",
+    "responsavel": "Faro",
+    "lease_ate": null,
+    "branch": "agy/W1-18",
+    "pr": "local 3f8e037",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-02",
+    "titulo": "Barra de aviso",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Flamula",
+    "lease_ate": "2026-11-14T07:27:29.397Z",
+    "branch": "agy/W1-02",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-03",
+    "titulo": "Cabeçalho",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "entregue",
+    "responsavel": "Timao",
+    "lease_ate": null,
+    "branch": "agy/W1-03",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-04",
+    "titulo": "Rodapé",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "entregue",
+    "responsavel": "Alicerce",
+    "lease_ate": null,
+    "branch": "agy/W1-04",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-05",
+    "titulo": "Seletor de país e moeda",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "entregue",
+    "responsavel": "Bussola",
+    "lease_ate": "2026-11-14T07:29:01.516Z",
+    "branch": "agy/W1-05",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-06",
+    "titulo": "Newsletter",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Carta",
+    "lease_ate": "2026-11-14T07:24:48.418Z",
+    "branch": "agy/W1-06",
+    "pr": "local fbecfc8",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-07",
+    "titulo": "Faixa de confiança",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "entregue",
+    "responsavel": "Selo",
+    "lease_ate": null,
+    "branch": "agy/W1-07",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-08",
+    "titulo": "Banner de cookies e ConsentGate",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Guarda",
+    "lease_ate": "2026-11-14T07:29:05.258Z",
+    "branch": "agy/W1-08",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-12",
+    "titulo": "Card de produto e opções de compra",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Vitrine",
+    "lease_ate": "2026-11-14T07:27:22.640Z",
+    "branch": "agy/W1-12",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-19",
+    "titulo": "Dados Pet gatos, cavalos, kits e agregador",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-16",
+      "W1-17",
+      "W1-18"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Lastro",
+    "lease_ate": "2026-11-14T07:30:48.230Z",
+    "branch": "agy/W1-19",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
   }
 ]
