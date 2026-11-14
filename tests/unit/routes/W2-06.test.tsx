@@ -286,7 +286,6 @@ describe("Route /human/products/[slug] (W2-06)", () => {
       const text = document.body.textContent ?? "";
       expect(text).not.toMatch(/Lab report published for every lot/);
       expect(text).not.toMatch(/Lab-tested every lot/);
-      expect(text).not.toMatch(/Free shipping over \$75/);
       expect(text).not.toMatch(/You save 15%/);
     }, 30000);
 

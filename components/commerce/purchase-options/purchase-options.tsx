@@ -10,6 +10,10 @@ import type { Cart, CartProvider } from "@/lib/contracts/cart";
 import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
 import { useMarket } from "@/lib/market/context";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import {
+  formatFreeShippingLabel,
+  getFreeShippingThreshold,
+} from "@/lib/market/shipping";
 import { Button } from "@/components/ui/button";
 
 export interface PurchaseOptionsProps {
@@ -29,6 +33,8 @@ export function PurchaseOptions({
 }: PurchaseOptionsProps) {
   const componentId = useId();
   const { market } = useMarket();
+  const freeShippingThreshold = getFreeShippingThreshold(market, product.line);
+  const freeShippingLabel = formatFreeShippingLabel(market, product.line);
   const [purchaseType, setPurchaseType] = useState<"subscription" | "one-time">(
     defaultPurchaseType
   );
@@ -362,6 +368,12 @@ export function PurchaseOptions({
                 const expectedTotal = singleJarPrice * variant.jars;
                 const savingsAmount = expectedTotal - variant.price.amount;
                 const isPopular = variant.jars === 2;
+                const shippingText =
+                  freeShippingThreshold && freeShippingLabel
+                    ? variant.price.amount >= freeShippingThreshold.amount
+                      ? "Free shipping"
+                      : freeShippingLabel
+                    : null;
 
                 return (
                   <label
@@ -420,11 +432,11 @@ export function PurchaseOptions({
                         : ""}
                     </div>
 
-                    <div className="text-[10px] font-medium text-fg-muted/80 mt-1">
-                      {variant.price.amount >= 75
-                        ? "Free shipping"
-                        : "Free shipping at $75"}
-                    </div>
+                    {shippingText && (
+                      <div className="text-[10px] font-medium text-fg-muted/80 mt-1">
+                        {shippingText}
+                      </div>
+                    )}
                   </label>
                 );
               })}
