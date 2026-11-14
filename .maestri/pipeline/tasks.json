@@ -930,11 +930,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Caixote",
-    "lease_ate": "2026-11-14T10:32:31.744Z",
+    "lease_ate": null,
     "branch": "agy/W2-14",
-    "pr": "local",
+    "pr": "local c4f3945",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1012,7 +1012,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Painel",
-    "lease_ate": "2026-11-14T17:36:20.940Z",
+    "lease_ate": "2026-11-14T17:41:21.737Z",
     "branch": "agy/W2-19",
     "pr": "local",
     "criterios": [
