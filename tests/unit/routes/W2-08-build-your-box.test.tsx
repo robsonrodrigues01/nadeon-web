@@ -20,6 +20,8 @@ import {
 import { startBoxSubscription } from "@/app/(human)/human/build-your-box/_components/actions";
 import type { BoxProduct } from "@/app/(human)/human/build-your-box/_components/types";
 import { cartProvider, catalogProvider } from "@/lib/providers";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
+import type { Market } from "@/lib/market/types";
 
 const PRODUCTS: BoxProduct[] = [
   {
@@ -28,7 +30,6 @@ const PRODUCTS: BoxProduct[] = [
     technicalName: "NMN 500 mg",
     format: "Capsules",
     color: "#1A0A2C",
-    currencyCode: "USD",
     listPrice: 59,
     plans: [
       { intervalDays: 30, discountPercentage: 15 },
@@ -42,7 +43,6 @@ const PRODUCTS: BoxProduct[] = [
     technicalName: "NAD+ + Resveratrol",
     format: "Capsules",
     color: "#2E0716",
-    currencyCode: "USD",
     listPrice: 65,
     plans: [
       { intervalDays: 30, discountPercentage: 15 },
@@ -56,7 +56,6 @@ const PRODUCTS: BoxProduct[] = [
     technicalName: "Pure NAD+ powder",
     format: "Powders",
     color: "#06241A",
-    currencyCode: "USD",
     listPrice: 49,
     plans: [
       { intervalDays: 30, discountPercentage: 15 },
@@ -72,9 +71,16 @@ function renderBuilder() {
     <BoxBuilder
       products={PRODUCTS}
       frequencies={FREQUENCIES}
-      preselectedSlugs={["biohack", "renew"]}
+      market={DEFAULT_MARKET}
     />
   );
+}
+
+/** Adds BioHack and Renew through the real '+ Add' buttons. */
+function renderWithTwoFormulas() {
+  renderBuilder();
+  fireEvent.click(screen.getByRole("button", { name: "Add BioHack" }));
+  fireEvent.click(screen.getByRole("button", { name: "Add Renew" }));
 }
 
 afterEach(() => {
@@ -94,9 +100,14 @@ describe("W2-08: /human/build-your-box math and formatting", () => {
     expect(totals.savingsCents).toBe(3720);
   });
 
-  it("formats money with the currency from the catalog, never a fixed one", () => {
-    expect(formatCents(21080, "USD")).toBe("$210.80");
-    expect(formatCents(21080, "EUR", "de-DE")).toContain("€");
+  it("formats money with the market currency and locale (rule 14)", () => {
+    expect(formatCents(21080, DEFAULT_MARKET)).toBe("$210.80");
+    const eur: Market = {
+      ...DEFAULT_MARKET,
+      currency: { ...DEFAULT_MARKET.currency, code: "EUR", symbol: "€" },
+      locale: "de-DE",
+    };
+    expect(formatCents(21080, eur)).toContain("€");
   });
 
   it("offers only frequencies every product sells and the subscription allows", () => {
@@ -154,19 +165,20 @@ describe("W2-08: /human/build-your-box route", () => {
 });
 
 describe("W2-08: /human/build-your-box controls (catalog section 5.2)", () => {
-  it("preselects the design state: two formulas added, with Added and Remove buttons", () => {
+  it("starts with no formula selected and the Start button disabled", () => {
     renderBuilder();
+    expect(screen.queryAllByRole("button", { name: "Remove" })).toHaveLength(0);
+    expect(screen.getByRole("button", { name: "Add BioHack" })).toBeTruthy();
     expect(
-      screen.getByRole("button", {
-        name: "BioHack added to box, press to remove",
-      })
-    ).toBeTruthy();
-    expect(
-      screen.getByRole("button", {
-        name: "Renew added to box, press to remove",
-      })
-    ).toBeTruthy();
-    expect(screen.getAllByRole("button", { name: "Remove" })).toHaveLength(2);
+      screen.getByRole("button", { name: "Start my subscription" })
+    ).toHaveProperty("disabled", true);
+  });
+
+  it("does not render Skip, Pause or Cancel controls", () => {
+    renderBuilder();
+    expect(screen.queryByText("Skip, pause or cancel anytime")).toBeNull();
+    expect(screen.queryByText("Pause")).toBeNull();
+    expect(screen.queryByText("Cancel")).toBeNull();
   });
 
   it("'+ Add' adds a formula with the default quantity for the frequency", () => {
@@ -185,7 +197,7 @@ describe("W2-08: /human/build-your-box controls (catalog section 5.2)", () => {
   });
 
   it("'✓ Added' and 'Remove' both take a formula out of the box", () => {
-    renderBuilder();
+    renderWithTwoFormulas();
     fireEvent.click(
       screen.getByRole("button", {
         name: "BioHack added to box, press to remove",
@@ -197,7 +209,7 @@ describe("W2-08: /human/build-your-box controls (catalog section 5.2)", () => {
   });
 
   it("quantity steppers change the line within 1 to 6 jars", () => {
-    renderBuilder();
+    renderWithTwoFormulas();
     const group = screen.getByRole("group", { name: "Quantity of BioHack" });
     fireEvent.click(
       within(group).getByRole("button", { name: "Increase BioHack quantity" })
@@ -230,19 +242,19 @@ describe("W2-08: /human/build-your-box controls (catalog section 5.2)", () => {
   });
 
   it("changing frequency resets quantities to the new supply", () => {
-    renderBuilder();
+    renderWithTwoFormulas();
     fireEvent.click(screen.getByRole("radio", { name: /30 days/ }));
     const group = screen.getByRole("group", { name: "Quantity of BioHack" });
     expect(within(group).getByText("1")).toBeTruthy();
   });
 
   it("'Start my subscription' is a button, disabled with nothing selected", () => {
-    renderBuilder();
+    renderWithTwoFormulas();
     const start = screen.getByRole("button", { name: "Start my subscription" });
     expect(start.tagName).toBe("BUTTON");
     expect(start).toHaveProperty("disabled", false);
     fireEvent.click(screen.getAllByRole("button", { name: "Remove" })[0]);
-    fireEvent.click(screen.getByRole("button", { name: "Remove" }));
+    fireEvent.click(screen.getAllByRole("button", { name: "Remove" })[0]);
     expect(
       screen.getByRole("button", { name: "Start my subscription" })
     ).toHaveProperty("disabled", true);

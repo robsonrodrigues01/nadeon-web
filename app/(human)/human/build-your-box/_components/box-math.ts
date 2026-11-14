@@ -1,3 +1,5 @@
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 import type { BoxPlan, BoxProduct } from "./types";
 
 export const MAX_JARS_PER_LINE = 6;
@@ -65,13 +67,7 @@ export function boxTotals(lines: BoxLine[], intervalDays: number): BoxTotals {
   };
 }
 
-export function formatCents(
-  cents: number,
-  currencyCode: string,
-  locale = "en-US"
-): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currencyCode,
-  }).format(cents / 100);
+/** Renders integer cents in the market currency and locale (rule 14). */
+export function formatCents(cents: number, market: Market): string {
+  return formatMoneyWithMarket(cents / 100, market);
 }

@@ -11,8 +11,7 @@ import {
 import { BoxBuilder } from "./_components/box-builder";
 import { frequencyOptions } from "./_components/box-math";
 import type { BoxFaq, BoxProduct } from "./_components/types";
-
-const PRESELECTED_SLUGS = ["biohack", "renew"];
+import { getDefaultMarket } from "@/lib/market/markets";
 
 const BOX_FAQS: BoxFaq[] = [
   {
@@ -32,6 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BuildYourBoxPage() {
+  const market = getDefaultMarket();
   const [products, capabilities] = await Promise.all([
     catalogProvider.getProducts({ line: "human" }),
     subscriptionProvider.capabilities(),
@@ -47,7 +47,6 @@ export default async function BuildYourBoxPage() {
         technicalName: product.technicalName,
         format: product.format,
         color: product.color,
-        currencyCode: single.price.currencyCode,
         listPrice: single.price.amount,
         plans: product.sellingPlans.map((plan) => ({
           intervalDays: plan.intervalDays,
@@ -122,7 +121,7 @@ export default async function BuildYourBoxPage() {
         <BoxBuilder
           products={boxProducts}
           frequencies={frequencies}
-          preselectedSlugs={PRESELECTED_SLUGS}
+          market={market}
         />
 
         <section

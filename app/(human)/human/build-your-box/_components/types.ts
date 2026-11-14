@@ -9,7 +9,6 @@ export interface BoxProduct {
   technicalName: string;
   format: string;
   color: string;
-  currencyCode: string;
   listPrice: number;
   plans: BoxPlan[];
 }

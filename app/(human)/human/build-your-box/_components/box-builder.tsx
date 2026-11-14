@@ -2,6 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 import { openCartDrawer } from "@/components/commerce/cart-drawer";
+import type { Market } from "@/lib/market/types";
 import type { BoxProduct } from "./types";
 import {
   boxTotals,
@@ -15,8 +16,7 @@ import { startBoxSubscription } from "./actions";
 export interface BoxBuilderProps {
   products: BoxProduct[];
   frequencies: number[];
-  preselectedSlugs?: string[];
-  locale?: string;
+  market: Market;
 }
 
 const FREQUENCY_LABELS: Record<number, { title: string; note: string }> = {
@@ -30,22 +30,11 @@ const FREQUENCY_LABELS: Record<number, { title: string; note: string }> = {
 const STEP_BUTTON_STYLE =
   "min-h-11 min-w-11 inline-flex items-center justify-center rounded-pill px-3 font-bold text-fg";
 
-export function BoxBuilder({
-  products,
-  frequencies,
-  preselectedSlugs = [],
-  locale = "en-US",
-}: BoxBuilderProps) {
+export function BoxBuilder({ products, frequencies, market }: BoxBuilderProps) {
   const [intervalDays, setIntervalDays] = useState<number>(
     frequencies.includes(60) ? 60 : (frequencies[0] ?? 30)
   );
-  const [quantities, setQuantities] = useState<Record<string, number>>(() =>
-    Object.fromEntries(
-      products
-        .filter((p) => preselectedSlugs.includes(p.slug))
-        .map((p) => [p.slug, defaultQuantity(intervalDays)])
-    )
-  );
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [status, setStatus] = useState<"idle" | "error">("idle");
   const [pending, startTransition] = useTransition();
 
@@ -54,11 +43,10 @@ export function BoxBuilder({
     .map((product) => ({ product, quantity: quantities[product.slug] }));
 
   const totals = boxTotals(selectedLines, intervalDays);
-  const currency = products[0]?.currencyCode ?? "USD";
   const activePlan = selectedLines[0]
     ? planFor(selectedLines[0].product, intervalDays)
     : undefined;
-  const fmt = (cents: number) => formatCents(cents, currency, locale);
+  const fmt = (cents: number) => formatCents(cents, market);
 
   function toggle(slug: string) {
     setQuantities((prev) => {
@@ -376,14 +364,6 @@ export function BoxBuilder({
           )}
         </div>
 
-        <p className="mt-4 text-center text-sm font-extrabold">
-          Skip, pause or cancel anytime
-        </p>
-        <ul className="mt-3 flex justify-center gap-7 text-xs font-bold">
-          <li>Skip</li>
-          <li>Pause</li>
-          <li>Cancel</li>
-        </ul>
         <p className="mt-4 text-center text-xs opacity-55">
           60-day money-back guarantee.
         </p>
