@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { accountProvider } from "@/lib/providers";
-import { ProfileInputSchema } from "@/lib/contracts/account";
+import { PetInputSchema, ProfileInputSchema } from "@/lib/contracts/account";
 import { parseBirthday } from "./birthday";
 
 function text(formData: FormData, key: string): string {
@@ -38,4 +38,26 @@ export async function saveProfileAction(formData: FormData): Promise<void> {
 export async function signOutAction(): Promise<void> {
   await accountProvider.signOut();
   redirect("/");
+}
+
+// Devolve true quando salvou, para o formulário fechar só em caso de sucesso.
+export async function savePetAction(formData: FormData): Promise<boolean> {
+  const weight = text(formData, "weightLbs");
+  const birthDate = text(formData, "birthDate");
+  const parsed = PetInputSchema.safeParse({
+    id: text(formData, "id") || undefined,
+    name: text(formData, "name"),
+    species: text(formData, "species"),
+    breed: text(formData, "breed"),
+    birthDate: birthDate || undefined,
+    weightLbs: weight ? Number(weight) : undefined,
+    activityLevel: text(formData, "activityLevel") || undefined,
+    concerns: formData.getAll("concerns").map(String),
+    photoUrl: text(formData, "photoUrl") || undefined,
+  });
+  if (!parsed.success) return false;
+
+  await accountProvider.savePet(parsed.data);
+  revalidatePath("/account/settings");
+  return true;
 }

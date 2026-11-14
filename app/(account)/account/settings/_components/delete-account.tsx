@@ -11,9 +11,8 @@ export function DeleteAccount() {
           Delete account
         </h2>
         <p className="mt-1 text-sm leading-relaxed text-fg/70">
-          Cancels active subscriptions and permanently removes your profile,
-          addresses and reward points. Order records we must keep by law are
-          retained.
+          Cancels active subscriptions and permanently removes your profile and
+          addresses. Order records we must keep by law are retained.
         </p>
       </div>
       <Button variant="link" disabled className="shrink-0">

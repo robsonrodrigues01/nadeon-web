@@ -1,9 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { accountProvider } from "@/lib/providers";
+import { accountProvider, catalogProvider } from "@/lib/providers";
+import { getDefaultMarket, getMarket } from "@/lib/market/markets";
+import { MARKET_COOKIE_NAME } from "@/lib/market/cookies";
 import { buildMetadata } from "@/lib/seo";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
@@ -12,6 +16,13 @@ import { AccountNav } from "./_components/account-nav";
 import { ProfileForm } from "./_components/profile-form";
 import { AddressList } from "./_components/address-list";
 import { DeleteAccount } from "./_components/delete-account";
+import { PetsSection } from "./_components/pets-section";
+import {
+  concernChoices,
+  petConcernOptions,
+  toPetView,
+  toProductView,
+} from "./_components/pet-views";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
@@ -32,8 +43,26 @@ async function readTheme(): Promise<"human" | "pet"> {
   }
 }
 
+// Mercado escolhido pelo cliente, para formatar o preço das recomendações.
+async function readMarket() {
+  try {
+    const store = await cookies();
+    return (
+      getMarket(store.get(MARKET_COOKIE_NAME)?.value) ?? getDefaultMarket()
+    );
+  } catch {
+    return getDefaultMarket();
+  }
+}
+
+// Só fotos que existem em /public são exibidas; as demais caem na inicial.
+function publicFileExists(src: string): boolean {
+  return existsSync(path.join(process.cwd(), "public", src));
+}
+
 export default async function AccountSettingsPage() {
   const theme = await readTheme();
+  const market = await readMarket();
   const session = await accountProvider.getSession();
   const customer = session ? await accountProvider.getCustomer() : null;
 
@@ -42,6 +71,15 @@ export default async function AccountSettingsPage() {
   }
 
   const addresses = await accountProvider.getAddresses();
+  const [pets, petProducts] = await Promise.all([
+    accountProvider.getPets(),
+    catalogProvider.getProducts({ line: "pet" }),
+  ]);
+  const now = new Date();
+  const petViews = pets.map((pet) => toPetView(pet, now, publicFileExists));
+  const productViews = petProducts
+    .map(toProductView)
+    .filter((view) => view !== null);
 
   return (
     <>
@@ -86,6 +124,12 @@ export default async function AccountSettingsPage() {
 
           <div className="flex min-w-0 flex-1 flex-col gap-6">
             <ProfileForm customer={customer} />
+            <PetsSection
+              pets={petViews}
+              products={productViews}
+              concernOptions={concernChoices(petConcernOptions(), pets)}
+              market={market}
+            />
             <AddressList addresses={addresses} />
             <DeleteAccount />
           </div>

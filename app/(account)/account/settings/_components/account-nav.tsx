@@ -5,6 +5,7 @@ const NAV_LINKS = [
   { label: "Overview", href: "/account" },
   { label: "Orders", href: "/account/orders" },
   { label: "Subscriptions", href: "/account/subscriptions" },
+  { label: "My pets", href: "#pets" },
   { label: "Addresses", href: "#addresses" },
   { label: "Profile", href: "/account/settings" },
 ] as const;
