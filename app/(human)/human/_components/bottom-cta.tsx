@@ -1,7 +1,23 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import type { Market } from "@/lib/market";
+import { DEFAULT_MARKET, useMarket } from "@/lib/market";
+import { formatFreeShippingLabel } from "@/lib/market/shipping";
 
-export function BottomCta() {
+export interface BottomCtaProps {
+  market?: Market;
+}
+
+export function BottomCta({ market: marketProp }: BottomCtaProps = {}) {
+  const { market: contextMarket } = useMarket();
+  const market = marketProp ?? contextMarket ?? DEFAULT_MARKET;
+  const shippingLabel = formatFreeShippingLabel(market, "human");
+  const subtext = shippingLabel
+    ? `${shippingLabel} · 60-day guarantee · Cancel anytime`
+    : "60-day guarantee · Cancel anytime";
+
   const formulas = [
     { name: "BioHack", sub: "NMN 500 mg", href: "/human/products/biohack" },
     {
@@ -33,7 +49,7 @@ export function BottomCta() {
           Start your routine today.
         </h2>
         <p className="mt-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-fg-muted">
-          Free shipping over $75 · 60-day guarantee · Cancel anytime
+          {subtext}
         </p>
 
         <div className="mt-10 flex flex-wrap justify-center gap-3">
