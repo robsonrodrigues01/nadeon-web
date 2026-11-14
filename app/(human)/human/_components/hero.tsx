@@ -7,13 +7,19 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Kit } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
 import { Claim } from "@/components/commerce/product-card/claim";
+import type { KitCartLine } from "./kit-lines";
 
 export interface HeroProps {
   energyDuoKit?: Kit | null;
+  kitLines?: KitCartLine[];
   locale?: string;
 }
 
-export function Hero({ energyDuoKit, locale = "en-US" }: HeroProps) {
+export function Hero({
+  energyDuoKit,
+  kitLines = [],
+  locale = "en-US",
+}: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -28,20 +34,18 @@ export function Hero({ energyDuoKit, locale = "en-US" }: HeroProps) {
     setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
   };
 
-  const kitPrice = energyDuoKit?.price ?? { amount: 105, currencyCode: "USD" };
-  const formattedKitPrice = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: kitPrice.currencyCode,
-  }).format(kitPrice.amount);
+  const formattedKitPrice = energyDuoKit
+    ? new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: energyDuoKit.price.currencyCode,
+      }).format(energyDuoKit.price.amount)
+    : null;
 
   const handleAddEnergyDuo = async () => {
     setIsAdding(true);
     setFeedback(null);
     try {
-      await cartProvider.addLines([
-        { variantId: "var_biohack_1", quantity: 1 },
-        { variantId: "var_renew_1", quantity: 1 },
-      ]);
+      await cartProvider.addLines(kitLines);
       setFeedback("Added Energy Duo to cart");
       setTimeout(() => setFeedback(null), 3000);
     } catch {
@@ -195,12 +199,12 @@ export function Hero({ energyDuoKit, locale = "en-US" }: HeroProps) {
                 <button
                   type="button"
                   onClick={handleAddEnergyDuo}
-                  disabled={isAdding}
+                  disabled={isAdding || kitLines.length === 0}
                   className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-accent px-7 py-3 text-sm font-bold uppercase tracking-wider text-accent-fg shadow-card transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-accent disabled:opacity-50"
                 >
                   {isAdding
                     ? "Adding..."
-                    : `Add the Energy Duo · ${formattedKitPrice}`}
+                    : `Add the Energy Duo${formattedKitPrice ? ` · ${formattedKitPrice}` : ""}`}
                 </button>
                 <Link
                   href="#daily-routine"

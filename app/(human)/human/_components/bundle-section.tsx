@@ -5,40 +5,40 @@ import Image from "next/image";
 import type { Kit } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
 import { Claim } from "@/components/commerce/product-card/claim";
+import type { KitCartLine } from "./kit-lines";
 
 export interface BundleSectionProps {
   kit?: Kit | null;
+  kitLines?: KitCartLine[];
   locale?: string;
 }
 
-export function BundleSection({ kit, locale = "en-US" }: BundleSectionProps) {
+export function BundleSection({
+  kit,
+  kitLines = [],
+  locale = "en-US",
+}: BundleSectionProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
 
-  const price = kit?.price ?? { amount: 105, currencyCode: "USD" };
-  const compareAtPrice = kit?.compareAtPrice ?? {
-    amount: 124,
-    currencyCode: "USD",
-  };
+  const formatMoney = (amount: number, currencyCode: string) =>
+    new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: currencyCode,
+    }).format(amount);
 
-  const formattedPrice = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: price.currencyCode,
-  }).format(price.amount);
-
-  const formattedCompareAtPrice = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: compareAtPrice.currencyCode,
-  }).format(compareAtPrice.amount);
+  const price = kit?.price;
+  const compareAt = kit?.compareAtPrice;
+  const savePercent =
+    price && compareAt && compareAt.amount > price.amount
+      ? Math.round((1 - price.amount / compareAt.amount) * 100)
+      : null;
 
   const handleAddDuo = async () => {
     setIsAdding(true);
     setFeedback(null);
     try {
-      await cartProvider.addLines([
-        { variantId: "var_biohack_1", quantity: 1 },
-        { variantId: "var_renew_1", quantity: 1 },
-      ]);
+      await cartProvider.addLines(kitLines);
       setFeedback("Added Energy Duo to cart");
       setTimeout(() => setFeedback(null), 3000);
     } catch {
@@ -74,23 +74,29 @@ export function BundleSection({ kit, locale = "en-US" }: BundleSectionProps) {
                 </Claim>
               </div>
 
-              <div className="mt-6 flex items-baseline gap-3">
-                <span className="font-archivo text-3xl sm:text-4xl font-black text-fg">
-                  {formattedPrice}
-                </span>
-                <span className="text-lg text-fg-muted line-through font-medium">
-                  {formattedCompareAtPrice}
-                </span>
-                <span className="rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent-fg">
-                  SAVE 15%
-                </span>
-              </div>
+              {price && (
+                <div className="mt-6 flex items-baseline gap-3">
+                  <span className="font-archivo text-3xl sm:text-4xl font-black text-fg">
+                    {formatMoney(price.amount, price.currencyCode)}
+                  </span>
+                  {compareAt && (
+                    <span className="text-lg text-fg-muted line-through font-medium">
+                      {formatMoney(compareAt.amount, compareAt.currencyCode)}
+                    </span>
+                  )}
+                  {savePercent !== null && (
+                    <span className="rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent-fg">
+                      SAVE {savePercent}%
+                    </span>
+                  )}
+                </div>
+              )}
 
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <button
                   type="button"
                   onClick={handleAddDuo}
-                  disabled={isAdding}
+                  disabled={isAdding || kitLines.length === 0}
                   className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-accent px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-accent-fg shadow-card transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-accent disabled:opacity-50"
                 >
                   {isAdding ? "Adding..." : "Add the duo"}

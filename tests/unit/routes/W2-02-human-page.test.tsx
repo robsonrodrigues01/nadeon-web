@@ -11,6 +11,7 @@ import {
 } from "@testing-library/react";
 import HumanPage, { generateMetadata } from "@/app/(human)/human/page";
 import { useCartStore, cartProvider } from "@/lib/providers/client";
+import { catalogProvider } from "@/lib/providers";
 
 describe("W2-02 Route: /human (Home Human)", () => {
   beforeEach(() => {
@@ -212,19 +213,76 @@ describe("W2-02 Route: /human (Home Human)", () => {
       });
     }, 15000);
 
-    it("handles lot number lookup submission gracefully with status notice", async () => {
+    it("keeps lot number search disabled until real lots exist", async () => {
       const PageComponent = await HumanPage();
       render(PageComponent);
 
       const lotInput = screen.getByRole("textbox", {
         name: /enter lot number/i,
-      });
-      const searchBtn = screen.getByRole("button", { name: /search/i });
+      }) as HTMLInputElement;
+      const searchBtn = screen.getByRole("button", {
+        name: /search/i,
+      }) as HTMLButtonElement;
 
-      fireEvent.change(lotInput, { target: { value: "NL-2026-001" } });
-      fireEvent.click(searchBtn);
-
+      expect(lotInput.disabled).toBe(true);
+      expect(searchBtn.disabled).toBe(true);
       expect(screen.getByText(/first lots publishing soon/i)).toBeDefined();
+    }, 15000);
+
+    it("moves between format tabs with arrow, Home and End keys", async () => {
+      const PageComponent = await HumanPage();
+      render(PageComponent);
+
+      const tabAll = screen.getByRole("tab", { name: /^all$/i });
+      const tablist = screen.getByRole("tablist");
+
+      fireEvent.keyDown(tablist, { key: "ArrowRight" });
+      const tabCapsules = screen.getByRole("tab", { name: /^capsules$/i });
+      expect(tabCapsules.getAttribute("aria-selected")).toBe("true");
+      expect(document.activeElement).toBe(tabCapsules);
+
+      fireEvent.keyDown(tablist, { key: "End" });
+      expect(
+        screen
+          .getByRole("tab", { name: /^tinctures$/i })
+          .getAttribute("aria-selected")
+      ).toBe("true");
+
+      fireEvent.keyDown(tablist, { key: "ArrowRight" });
+      expect(tabAll.getAttribute("aria-selected")).toBe("true");
+
+      fireEvent.keyDown(tablist, { key: "ArrowLeft" });
+      expect(
+        screen
+          .getByRole("tab", { name: /^tinctures$/i })
+          .getAttribute("aria-selected")
+      ).toBe("true");
+    }, 15000);
+
+    it("points every tab's aria-controls at the rendered tabpanel", async () => {
+      const PageComponent = await HumanPage();
+      render(PageComponent);
+
+      const panel = screen.getByRole("tabpanel");
+      for (const tab of screen.getAllByRole("tab")) {
+        expect(tab.getAttribute("aria-controls")).toBe(panel.id);
+      }
+      expect(panel.getAttribute("aria-labelledby")).toBe("tab-all");
+    }, 15000);
+
+    it("does not render a fallback price when the catalog has no kit", async () => {
+      vi.spyOn(catalogProvider, "getKit").mockResolvedValue(null);
+
+      render(await HumanPage());
+
+      expect(screen.queryByText(/\$105|\$124/)).toBeNull();
+      expect(
+        (
+          screen.getByRole("button", {
+            name: /add the duo/i,
+          }) as HTMLButtonElement
+        ).disabled
+      ).toBe(true);
     }, 15000);
   });
 });

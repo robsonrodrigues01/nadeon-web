@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import type { Product } from "@/lib/contracts/catalog";
 import { ProductCard } from "@/components/commerce/product-card";
@@ -12,12 +12,29 @@ export interface DailyRoutineProps {
 
 const FORMAT_TABS = ["All", "Capsules", "Powders", "Tinctures"] as const;
 type TabType = (typeof FORMAT_TABS)[number];
+const PANEL_ID = "daily-routine-panel";
 
 export function DailyRoutine({
   products,
   locale = "en-US",
 }: DailyRoutineProps) {
   const [activeTab, setActiveTab] = useState<TabType>("All");
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  // WAI-ARIA tabs: arrows move and select, Home/End jump to the ends.
+  const handleTabKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const current = FORMAT_TABS.indexOf(activeTab);
+    let next: number | null = null;
+    if (e.key === "ArrowRight") next = (current + 1) % FORMAT_TABS.length;
+    else if (e.key === "ArrowLeft")
+      next = (current - 1 + FORMAT_TABS.length) % FORMAT_TABS.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = FORMAT_TABS.length - 1;
+    if (next === null) return;
+    e.preventDefault();
+    setActiveTab(FORMAT_TABS[next]);
+    tabRefs.current[next]?.focus();
+  };
 
   const filteredProducts =
     activeTab === "All"
@@ -50,18 +67,23 @@ export function DailyRoutine({
         <div
           role="tablist"
           aria-label="Filter products by format"
+          onKeyDown={handleTabKeyDown}
           className="mt-10 flex flex-wrap justify-center gap-3"
         >
-          {FORMAT_TABS.map((tab) => {
+          {FORMAT_TABS.map((tab, index) => {
             const isSelected = activeTab === tab;
             return (
               <button
                 key={tab}
+                ref={(el) => {
+                  tabRefs.current[index] = el;
+                }}
                 type="button"
                 role="tab"
                 id={`tab-${tab.toLowerCase()}`}
                 aria-selected={isSelected}
-                aria-controls={`tabpanel-${tab.toLowerCase()}`}
+                aria-controls={PANEL_ID}
+                tabIndex={isSelected ? 0 : -1}
                 onClick={() => setActiveTab(tab)}
                 className={`min-h-[44px] min-w-[44px] rounded-full px-6 py-2.5 text-xs font-bold uppercase tracking-wider transition-all focus-visible:outline-2 focus-visible:outline-accent ${
                   isSelected
@@ -77,7 +99,7 @@ export function DailyRoutine({
 
         {/* Product Cards Grid */}
         <div
-          id={`tabpanel-${activeTab.toLowerCase()}`}
+          id={PANEL_ID}
           role="tabpanel"
           aria-labelledby={`tab-${activeTab.toLowerCase()}`}
           className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"

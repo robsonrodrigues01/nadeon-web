@@ -27,6 +27,7 @@ import { ReviewsSection } from "./_components/reviews-section";
 import { JournalSection } from "./_components/journal-section";
 import { FaqAccordion } from "./_components/faq-accordion";
 import { HUMAN_FAQS } from "./_components/faqs-data";
+import { buildKitLines } from "./_components/kit-lines";
 import { CrossLineBanner } from "./_components/cross-line-banner";
 import { BottomCta } from "./_components/bottom-cta";
 
@@ -46,6 +47,7 @@ export default async function HumanPage() {
     campaignConfig.getActiveCampaign(),
   ]);
 
+  const kitLines = buildKitLines(energyDuoKit, products);
   const breadcrumbsLd = buildBreadcrumbJsonLd([
     { name: "Home", url: "/" },
     { name: "Human", url: "/human" },
@@ -54,18 +56,12 @@ export default async function HumanPage() {
 
   return (
     <>
-      <JsonLd
-        data={breadcrumbsLd as unknown as Record<string, unknown>}
-        id="breadcrumb-jsonld"
-      />
-      <JsonLd
-        data={faqLd as unknown as Record<string, unknown>}
-        id="faq-jsonld"
-      />
+      <JsonLd data={{ ...breadcrumbsLd }} id="breadcrumb-jsonld" />
+      <JsonLd data={{ ...faqLd }} id="faq-jsonld" />
       <AnnouncementBar line="human" campaign={activeCampaign} />
-      <Header variant="human" initialCartCount={0} />
+      <Header variant="human" />
       <main id="main-content" className="flex-1">
-        <Hero energyDuoKit={energyDuoKit} />
+        <Hero energyDuoKit={energyDuoKit} kitLines={kitLines} />
         <TrustStrip line="human" />
         <DailyRoutine products={products} />
         <AgeBands />
@@ -73,7 +69,7 @@ export default async function HumanPage() {
         <IngredientsSection />
         <LabelComparison />
         <WhatToExpect />
-        <BundleSection kit={energyDuoKit} />
+        <BundleSection kit={energyDuoKit} kitLines={kitLines} />
         <SubscribeSection />
         <LabResultsSection />
         <OurStory />

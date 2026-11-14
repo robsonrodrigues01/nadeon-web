@@ -1,18 +1,9 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { Search, ShieldCheck } from "lucide-react";
 
+// Lot search stays off until real lots exist (no certificates to show yet).
 export function LabResultsSection() {
-  const [lotInput, setLotInput] = useState("");
-  const [message, setMessage] = useState("first lots publishing soon");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setMessage("first lots publishing soon");
-  };
-
   return (
     <section
       aria-labelledby="lab-results-title"
@@ -35,8 +26,8 @@ export function LabResultsSection() {
               certificate of analysis for that exact batch.
             </p>
 
-            <form
-              onSubmit={handleSearch}
+            <div
+              role="search"
               className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md"
             >
               <div className="flex-1">
@@ -47,27 +38,27 @@ export function LabResultsSection() {
                   <input
                     id="lot-number"
                     type="text"
-                    value={lotInput}
-                    onChange={(e) => setLotInput(e.target.value)}
+                    disabled
                     placeholder="Enter lot number"
-                    className="w-full min-h-[44px] rounded-full border border-border bg-bg-elevated px-5 py-3 text-sm text-fg placeholder:text-fg-muted focus:border-accent focus:outline-none"
+                    className="w-full min-h-[44px] rounded-full border border-border bg-bg-elevated px-5 py-3 text-sm text-fg placeholder:text-fg-muted focus:border-accent focus:outline-none disabled:opacity-50"
                   />
                 </div>
               </div>
               <button
-                type="submit"
-                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-accent-fg shadow-card transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-accent"
+                type="button"
+                disabled
+                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-accent-fg shadow-card transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-accent disabled:opacity-50 disabled:hover:scale-100"
               >
                 <Search className="h-4 w-4" aria-hidden="true" />
                 <span>Search</span>
               </button>
-            </form>
+            </div>
 
             <p
               className="mt-3 text-xs font-semibold uppercase tracking-wider text-accent"
               role="status"
             >
-              {message}
+              first lots publishing soon
             </p>
 
             <div className="mt-8">
