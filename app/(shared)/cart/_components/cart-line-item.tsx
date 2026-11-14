@@ -6,7 +6,7 @@ import {
   cartProvider,
   type CartLineItem as CartLine,
 } from "@/lib/providers/client";
-import { formatPrice } from "./money";
+import { useMarket } from "@/lib/market";
 import type { CartCatalogProduct, RunCartAction } from "./types";
 
 interface CartLineItemProps {
@@ -22,21 +22,23 @@ export function CartLineItem({
   pending,
   run,
 }: CartLineItemProps) {
+  const { formatMoney } = useMarket();
   const [isChanging, setIsChanging] = useState(false);
-  const currency = line.total.currencyCode;
   const title = product
     ? `${product.name} ${product.technicalName}`
     : line.product.title;
   const plan = product?.sellingPlans.find((p) => p.id === line.sellingPlanId);
   const isSubscription = Boolean(line.sellingPlanId);
   const firstPlan = product?.sellingPlans[0];
-  const listUnit = product?.variants.find((v) => v.id === line.variantId)?.price
-    .amount;
-  const showListPrice = listUnit !== undefined && listUnit > line.price.amount;
+  const listPrice = product?.variants.find(
+    (v) => v.id === line.variantId
+  )?.price;
+  const showListPrice =
+    listPrice !== undefined && listPrice.amount > line.price.amount;
   const optionsId = `plan-options-${line.id}`;
 
   return (
-    <li className="flex gap-4 py-5 border-b border-border/40">
+    <li className="flex gap-4 border-b border-border/40 py-5">
       <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-card border border-border/30 bg-bg-elevated">
         {line.product.image && (
           <Image
@@ -51,7 +53,7 @@ export function CartLineItem({
 
       <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:gap-6">
         <div className="min-w-0 flex-1">
-          <h2 className="font-archivo font-extrabold text-base sm:text-lg uppercase leading-tight text-fg">
+          <h2 className="font-archivo text-base font-extrabold uppercase leading-tight text-fg sm:text-lg">
             {title}
           </h2>
           {product && (
@@ -63,9 +65,11 @@ export function CartLineItem({
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-fg-muted">
             {isSubscription && product ? (
               <>
-                <span className="rounded-pill border border-accent/20 bg-accent/15 px-2.5 py-0.5 text-[11px] font-bold text-accent">
-                  Subscribe &amp; save {plan?.discountPercentage ?? 15}%
-                </span>
+                {plan && (
+                  <span className="rounded-pill border border-accent/20 bg-accent/15 px-2.5 py-0.5 text-[11px] font-bold text-accent">
+                    Subscribe &amp; save {plan.discountPercentage}%
+                  </span>
+                )}
                 {plan && (
                   <span>
                     <span aria-hidden="true">↻ </span>Delivered every{" "}
@@ -87,7 +91,7 @@ export function CartLineItem({
                 aria-expanded={isChanging}
                 aria-controls={optionsId}
                 onClick={() => setIsChanging((v) => !v)}
-                className="min-h-11 inline-flex items-center rounded underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="inline-flex min-h-11 items-center rounded underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 Change
               </button>
@@ -101,7 +105,7 @@ export function CartLineItem({
                     cartProvider.setLineSellingPlan(line.id, firstPlan.id)
                   )
                 }
-                className="min-h-11 inline-flex items-center rounded underline text-fg hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
+                className="inline-flex min-h-11 items-center rounded text-fg underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
               >
                 Switch to subscription, save {firstPlan.discountPercentage}%
               </button>
@@ -110,7 +114,7 @@ export function CartLineItem({
               type="button"
               disabled={pending}
               onClick={() => run(() => cartProvider.removeLines([line.id]))}
-              className="min-h-11 inline-flex items-center rounded underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
+              className="inline-flex min-h-11 items-center rounded underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
             >
               Remove
             </button>
@@ -165,11 +169,11 @@ export function CartLineItem({
           <div className="text-right">
             {showListPrice && (
               <div className="text-xs text-fg-muted line-through">
-                {formatPrice(listUnit, currency)}
+                {formatMoney(listPrice)}
               </div>
             )}
             <div className="text-sm font-bold text-fg">
-              {formatPrice(line.price.amount, currency)}
+              {formatMoney(line.price)}
             </div>
           </div>
 
@@ -185,7 +189,7 @@ export function CartLineItem({
                   ])
                 )
               }
-              className="h-11 w-11 text-base font-bold disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-pill"
+              className="h-11 w-11 rounded-pill text-base font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-40"
             >
               <span aria-hidden="true">−</span>
             </button>
@@ -206,14 +210,14 @@ export function CartLineItem({
                   ])
                 )
               }
-              className="h-11 w-11 text-base font-bold disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-pill"
+              className="h-11 w-11 rounded-pill text-base font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-40"
             >
               <span aria-hidden="true">+</span>
             </button>
           </div>
 
           <div className="text-sm font-bold text-fg">
-            {formatPrice(line.total.amount, currency)}
+            {formatMoney(line.total)}
           </div>
         </div>
       </div>

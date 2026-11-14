@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { cartProvider } from "@/lib/providers/client";
-import { formatPrice } from "./money";
+import { useMarket } from "@/lib/market";
 import type { CartCatalogProduct, RunCartAction } from "./types";
 
 interface FrequentlyBoughtProps {
@@ -17,11 +17,13 @@ export function FrequentlyBought({
   pending,
   run,
 }: FrequentlyBoughtProps) {
-  const currency = products[0].variants[0]?.price.currencyCode ?? "USD";
-  const total = products.reduce(
-    (sum, p) => sum + (p.variants[0]?.price.amount ?? 0),
-    0
-  );
+  const { formatMoney } = useMarket();
+  const prices = products.map((p) => p.variants[0].price);
+  const totalAmount = prices.reduce((sum, price) => sum + price.amount, 0);
+  const totalMoney = {
+    amount: Number(totalAmount.toFixed(2)),
+    currencyCode: prices[0].currencyCode,
+  };
   const addAll = () =>
     run(() =>
       cartProvider.addLines(
@@ -39,7 +41,7 @@ export function FrequentlyBought({
       </p>
       <h2
         id="pairs-heading"
-        className="font-archivo font-extrabold uppercase text-xl text-fg"
+        className="font-archivo text-xl font-extrabold uppercase text-fg"
       >
         Frequently bought together
       </h2>
@@ -67,7 +69,7 @@ export function FrequentlyBought({
                 {product.technicalName}
               </p>
               <p className="text-xs font-bold text-fg">
-                {formatPrice(product.variants[0]?.price.amount ?? 0, currency)}
+                {formatMoney(product.variants[0].price)}
               </p>
             </div>
             <button
@@ -94,7 +96,7 @@ export function FrequentlyBought({
           Add all three to your routine{" "}
           <span className="text-fg-muted">
             {products.map((p) => p.name).join(" + ")} ·{" "}
-            {formatPrice(total, currency)}
+            {formatMoney(totalMoney)}
           </span>
         </p>
         <button

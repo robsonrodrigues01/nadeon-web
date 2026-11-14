@@ -3,11 +3,8 @@
 import React, { useState } from "react";
 import { Lock } from "lucide-react";
 import { cartProvider, type Cart } from "@/lib/providers/client";
-import { formatPrice } from "./money";
+import { useMarket } from "@/lib/market";
 import type { CartCatalogProduct, RunCartAction } from "./types";
-
-// Mesmo limite do CartDrawerShippingBar (components/commerce/cart-drawer).
-const FREE_SHIPPING_THRESHOLD = 75;
 
 interface CartSummaryProps {
   cart: Cart;
@@ -17,9 +14,10 @@ interface CartSummaryProps {
 }
 
 export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
+  const { formatMoney } = useMarket();
   const [code, setCode] = useState("");
   const [checkingOut, setCheckingOut] = useState(false);
-  const currency = cart.totalPrice.currencyCode;
+  const currencyCode = cart.totalPrice.currencyCode;
 
   // Subtotal pelo preço de lista; a economia de assinatura é a diferença para o preço da linha.
   let listSubtotal = 0;
@@ -34,10 +32,15 @@ export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
       subscriptionSavings += (listUnit - line.price.amount) * line.quantity;
     }
   }
-  listSubtotal = Number(listSubtotal.toFixed(2));
-  subscriptionSavings = Number(subscriptionSavings.toFixed(2));
+  const subtotalMoney = {
+    amount: Number(listSubtotal.toFixed(2)),
+    currencyCode,
+  };
+  const savingsMoney = {
+    amount: Number(subscriptionSavings.toFixed(2)),
+    currencyCode,
+  };
   const hasSubscription = cart.lines.some((line) => line.sellingPlanId);
-  const freeShipping = cart.subtotalPrice.amount >= FREE_SHIPPING_THRESHOLD;
   const appliedCodes = cart.discountCodes.filter((d) => d.applicable);
 
   const handleApply = (event: React.FormEvent<HTMLFormElement>) => {
@@ -64,7 +67,7 @@ export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
     >
       <h2
         id="order-summary-heading"
-        className="font-archivo font-extrabold uppercase text-lg text-fg"
+        className="font-archivo text-lg font-extrabold uppercase text-fg"
       >
         Order summary
       </h2>
@@ -75,21 +78,17 @@ export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
             Subtotal ({cart.totalQuantity}{" "}
             {cart.totalQuantity === 1 ? "item" : "items"})
           </dt>
-          <dd className="font-bold">{formatPrice(listSubtotal, currency)}</dd>
+          <dd className="font-bold">{formatMoney(subtotalMoney)}</dd>
         </div>
         {subscriptionSavings > 0 && (
           <div className="flex justify-between gap-4 text-accent">
             <dt>Subscription savings</dt>
-            <dd className="font-bold">
-              −{formatPrice(subscriptionSavings, currency)}
-            </dd>
+            <dd className="font-bold">−{formatMoney(savingsMoney)}</dd>
           </div>
         )}
         <div className="flex justify-between gap-4">
           <dt>Shipping</dt>
-          <dd className="font-bold">
-            {freeShipping ? "Free" : "Calculated at checkout"}
-          </dd>
+          <dd>Calculated at checkout</dd>
         </div>
         <div className="flex justify-between gap-4">
           <dt>Estimated tax</dt>
@@ -97,9 +96,7 @@ export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
         </div>
         <div className="flex justify-between gap-4 border-t border-border/50 pt-3 text-base">
           <dt className="font-bold">Total</dt>
-          <dd className="font-extrabold">
-            {formatPrice(cart.totalPrice.amount, currency)}
-          </dd>
+          <dd className="font-extrabold">{formatMoney(cart.totalPrice)}</dd>
         </div>
       </dl>
 

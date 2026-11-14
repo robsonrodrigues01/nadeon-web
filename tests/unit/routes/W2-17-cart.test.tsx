@@ -12,7 +12,7 @@ import {
 import CartPage, { generateMetadata } from "@/app/(shared)/cart/page";
 import { CartView } from "@/app/(shared)/cart/_components/cart-view";
 import { CartEmpty } from "@/app/(shared)/cart/_components/cart-empty";
-import { formatPrice } from "@/app/(shared)/cart/_components/money";
+import { formatMoneyWithMarket, getMarket } from "@/lib/market";
 import { toCartCatalogProduct } from "@/app/(shared)/cart/_components/types";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import {
@@ -20,6 +20,10 @@ import {
   type Cart,
   type CartLineItem,
 } from "@/lib/providers/client";
+
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
 
 const CART_ID = "cart_w217";
 
@@ -279,7 +283,9 @@ describe("W2-17: /cart route", () => {
       const summary = screen.getByRole("region", { name: "Order summary" });
       expect(within(summary).getByText("Total")).toBeTruthy();
       expect(within(summary).getByText("Subscription savings")).toBeTruthy();
-      expect(within(summary).getByText("Free", { exact: false })).toBeTruthy();
+      expect(
+        within(summary).getAllByText("Calculated at checkout").length
+      ).toBe(2);
     });
 
     it("keeps the page free of template placeholders", () => {
@@ -301,10 +307,15 @@ describe("W2-17: /cart route", () => {
   });
 
   describe("money formatting", () => {
-    it("formats with Intl in the currency of the market, never a fixed $", () => {
-      expect(formatPrice(115.15, "USD")).toBe("$115.15");
-      expect(formatPrice(115.15, "EUR")).toContain("€");
-      expect(formatPrice(115.15, "EUR")).not.toContain("$");
+    it("formats cart money with the market formatter and currency", () => {
+      const us = getMarket("us")!;
+      const gb = getMarket("gb")!;
+      expect(
+        formatMoneyWithMarket({ amount: 10, currencyCode: "USD" }, us)
+      ).toBe("$10.00");
+      expect(
+        formatMoneyWithMarket({ amount: 10, currencyCode: "USD" }, gb)
+      ).toBe("£7.90");
     });
   });
 });
