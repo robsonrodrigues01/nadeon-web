@@ -9,11 +9,20 @@ import { Button } from "@/components/ui/button";
 import { CatFilters, type CatFilterOption } from "./_components/cat-filters";
 import { CatKitCard } from "./_components/cat-kit-card";
 import {
-  concernOf,
   savePercent,
   type CatKitView,
   type CatSort,
 } from "./_components/cat-query";
+
+// Design copy: the only FAQ in the cat board with an answer. The other four
+// questions have no answer text in the design, so they stay out of the page.
+const CAT_FAQS: { question: string; answer: string }[] = [
+  {
+    question: "How do I give drops to my cat?",
+    answer:
+      "Follow the weight chart on the label and ask your vet before starting.",
+  },
+];
 
 export const metadata = buildMetadata({
   title: "Shop for cats",
@@ -37,7 +46,6 @@ export default async function CatsPage({
   searchParams: Promise<SearchParams>;
 }) {
   const params = await searchParams;
-  const concern = one(params.concern);
   const format = one(params.format).toLowerCase();
   const sort: CatSort =
     one(params.sort) === "best-selling" ? "best-selling" : "featured";
@@ -60,29 +68,17 @@ export default async function CatsPage({
   const catProducts: Product[] = collection.products;
   const total = catProducts.length;
 
-  const concernLabels = distinct(catProducts.map(concernOf));
-  const concerns: CatFilterOption[] = concernLabels.map((label) => ({
-    value: label,
-    label,
-    count: catProducts.filter((p) => concernOf(p) === label).length,
-  }));
-
-  const formatLabels = distinct([
-    ...catProducts.map((p) => p.format),
-    "Treats",
-  ]);
-  const formats: CatFilterOption[] = formatLabels.map((label) => ({
+  // Format options come only from the catalog data, never from fixed labels.
+  const formats: CatFilterOption[] = distinct(
+    catProducts.map((p) => p.format)
+  ).map((label) => ({
     value: label.toLowerCase(),
     label,
-    count: catProducts.filter(
-      (p) => p.format.toLowerCase() === label.toLowerCase()
-    ).length,
+    count: catProducts.filter((p) => p.format === label).length,
   }));
 
   const visibleProducts = catProducts.filter(
-    (p) =>
-      (!format || p.format.toLowerCase() === format) &&
-      (!concern || concernOf(p).toLowerCase() === concern.toLowerCase())
+    (p) => !format || p.format.toLowerCase() === format
   );
 
   const bySlug = new Map(petProducts.map((p) => [p.slug, p]));
@@ -117,6 +113,9 @@ export default async function CatsPage({
       },
     ];
   });
+
+  // The first kit feeds the "[Kit name] kits" banner; the card grid lists all.
+  const featuredKit = catKits[0];
 
   const breadcrumb = buildBreadcrumbJsonLd([
     { name: "Pet", url: "/pet" },
@@ -173,11 +172,9 @@ export default async function CatsPage({
 
       <CatFilters
         basePath="/pet/cats"
-        concern={concern}
         format={format}
         sort={sort}
         total={total}
-        concerns={concerns}
         formats={formats}
       />
 
@@ -209,8 +206,37 @@ export default async function CatsPage({
         </Button>
       </section>
 
+      {featuredKit && (
+        <section
+          aria-labelledby="cat-kit-banner-title"
+          className="mt-6 flex flex-col gap-4 rounded-card border border-border bg-bg-elevated p-6 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <h2
+              id="cat-kit-banner-title"
+              className="title text-2xl font-extrabold uppercase tracking-tight text-fg"
+            >
+              {featuredKit.name} kits
+            </h2>
+            {featuredKit.savePercent !== null &&
+              featuredKit.productNames.length === 2 && (
+                <p className="text-sm text-fg-muted">
+                  Pair two formulas and save {featuredKit.savePercent}%.
+                </p>
+              )}
+          </div>
+          <Button href="#cat-kits" variant="primary">
+            See kits
+          </Button>
+        </section>
+      )}
+
       {catKits.length > 0 && (
-        <section aria-labelledby="cat-kits-title" className="mt-12">
+        <section
+          id="cat-kits"
+          aria-labelledby="cat-kits-title"
+          className="mt-12"
+        >
           <p className="label text-xs font-bold uppercase tracking-wider text-accent">
             Kits · Bundle &amp; save
           </p>
@@ -259,8 +285,8 @@ export default async function CatsPage({
                 Picky eaters
               </h3>
               <p className="mt-2 text-sm text-fg-muted">
-                {distinct(catProducts.map((p) => p.format)).join(", ")} that mix
-                into wet food without changing taste.
+                {distinct(catProducts.map((p) => p.format)).join(", ")} that
+                mixes into wet food without changing taste.
               </p>
             </div>
             <div>
@@ -301,6 +327,30 @@ export default async function CatsPage({
         <Button href="/pet/quiz" variant="primary">
           Take the quiz
         </Button>
+      </section>
+
+      <section aria-labelledby="cat-faq-title" className="mt-12">
+        <p className="label text-xs font-bold uppercase tracking-wider text-accent">
+          FAQ
+        </p>
+        <h2
+          id="cat-faq-title"
+          className="title mb-6 text-3xl font-extrabold uppercase tracking-tight text-fg"
+        >
+          Cat questions
+        </h2>
+        <ul className="flex flex-col gap-3">
+          {CAT_FAQS.map((item) => (
+            <li key={item.question}>
+              <details className="rounded-card border border-border bg-bg-elevated p-4">
+                <summary className="min-h-11 cursor-pointer text-base font-bold text-fg">
+                  {item.question}
+                </summary>
+                <p className="mt-3 text-sm text-fg-muted">{item.answer}</p>
+              </details>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   );

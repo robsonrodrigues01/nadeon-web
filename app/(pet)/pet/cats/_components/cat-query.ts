@@ -14,18 +14,11 @@ export interface CatKitView {
   lines: { variantId: string; quantity: number }[];
 }
 
-/** Concern is the first segment of technicalName, e.g. "Joints · drops" → "Joints". */
-export function concernOf(product: { technicalName: string }): string {
-  return product.technicalName.split("·")[0].trim();
-}
-
 export function toQueryString(state: {
-  concern?: string;
   format?: string;
   sort?: string;
 }): string {
   const params = new URLSearchParams();
-  if (state.concern) params.set("concern", state.concern);
   if (state.format) params.set("format", state.format);
   if (state.sort && state.sort !== "featured") params.set("sort", state.sort);
   const query = params.toString();

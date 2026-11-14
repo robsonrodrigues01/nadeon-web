@@ -88,27 +88,50 @@ describe("W2-10 Route: /pet/cats", () => {
     expect(notices).toHaveLength(2);
   });
 
-  it("exposes the format and concern filters as fieldsets with legends and radios", async () => {
+  it("exposes the format filter as a fieldset with legend and radios, derived from data", async () => {
     await renderCats();
 
-    const concern = screen.getByRole("group", { name: "Concern" });
     const format = screen.getByRole("group", { name: "Format" });
-
-    const concernRadios = within(concern).getAllByRole("radio");
-    expect(concernRadios.map((r) => r.getAttribute("value"))).toEqual([
-      "",
-      "Joints",
-      "Calm",
-    ]);
-
     const formatRadios = within(format).getAllByRole("radio");
+    // Only formats that exist in the catalog data: no fixed "Treats" option.
     expect(formatRadios.map((r) => r.getAttribute("value"))).toEqual([
       "",
       "drops",
-      "treats",
     ]);
     expect(
       within(format).getByRole("radio", { name: /Drops 2/ })
+    ).toBeDefined();
+    expect(screen.queryByRole("group", { name: "Concern" })).toBeNull();
+    expect(screen.queryByRole("radio", { name: /Treats/ })).toBeNull();
+  });
+
+  it("renders the design FAQ with its answer and the kit banner with See kits", async () => {
+    await renderCats();
+
+    const faq = screen.getByRole("heading", { name: "Cat questions" });
+    expect(faq).toBeDefined();
+    expect(
+      screen.getByText("How do I give drops to my cat?").closest("details")
+    ).not.toBeNull();
+    expect(
+      screen.getByText(
+        "Follow the weight chart on the label and ask your vet before starting."
+      )
+    ).toBeDefined();
+
+    const banner = screen.getByRole("heading", { name: "Cat Care kits" });
+    expect(banner).toBeDefined();
+    expect(screen.getByText(/Pair two formulas and save \d+%\./)).toBeDefined();
+    expect(
+      screen.getByRole("link", { name: "See kits" }).getAttribute("href")
+    ).toBe("#cat-kits");
+  });
+
+  it("uses the design wording 'that mixes into wet food'", async () => {
+    await renderCats();
+
+    expect(
+      screen.getByText(/that mixes into wet food without changing taste\./)
     ).toBeDefined();
   });
 
@@ -122,18 +145,6 @@ describe("W2-10 Route: /pet/cats", () => {
       "Featured",
       "Best sellers",
     ]);
-  });
-
-  it("filters products by concern from the URL", async () => {
-    await renderCats({ concern: "Calm" });
-
-    const products = screen.getByRole("region", { name: "Products" });
-    expect(
-      within(products).getByRole("heading", { name: "Purr Mode" })
-    ).toBeDefined();
-    expect(
-      within(products).queryByRole("heading", { name: "High Jump" })
-    ).toBeNull();
   });
 
   it("filters products by format from the URL", async () => {

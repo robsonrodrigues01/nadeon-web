@@ -11,11 +11,9 @@ export interface CatFilterOption {
 
 export interface CatFiltersProps {
   basePath: string;
-  concern: string;
   format: string;
   sort: CatSort;
   total: number;
-  concerns: CatFilterOption[];
   formats: CatFilterOption[];
 }
 
@@ -25,24 +23,18 @@ const optionClass =
 /** Filters update the URL, so the Server Component re-reads the product list. */
 export function CatFilters({
   basePath,
-  concern,
   format,
   sort,
   total,
-  concerns,
   formats,
 }: CatFiltersProps) {
   const router = useRouter();
 
-  function go(next: { concern?: string; format?: string; sort?: string }) {
-    const state = { concern, format, sort, ...next };
+  function go(next: { format?: string; sort?: string }) {
+    const state = { format, sort, ...next };
     router.push(`${basePath}${toQueryString(state)}`);
   }
 
-  const concernOptions: CatFilterOption[] = [
-    { value: "", label: "All", count: total },
-    ...concerns,
-  ];
   const formatOptions: CatFilterOption[] = [
     { value: "", label: "All", count: total },
     ...formats,
@@ -50,29 +42,6 @@ export function CatFilters({
 
   return (
     <div className="flex flex-col gap-6 border-b border-border pb-6">
-      <fieldset className="flex flex-col gap-2">
-        <legend className="label mb-2 text-xs font-bold uppercase tracking-wider text-fg-muted">
-          Concern
-        </legend>
-        <div className="flex flex-wrap gap-2">
-          {concernOptions.map((option) => (
-            <label key={`concern-${option.value}`} className={optionClass}>
-              <input
-                type="radio"
-                name="concern"
-                value={option.value}
-                className="sr-only"
-                checked={concern.toLowerCase() === option.value.toLowerCase()}
-                onChange={() => go({ concern: option.value })}
-              />
-              <span>
-                {option.label} {option.count}
-              </span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-
       <fieldset className="flex flex-col gap-2">
         <legend className="label mb-2 text-xs font-bold uppercase tracking-wider text-fg-muted">
           Format
