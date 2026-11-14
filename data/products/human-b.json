@@ -1,0 +1,332 @@
+{
+  "products": [
+    {
+      "slug": "powerhouse",
+      "handle": "powerhouse",
+      "name": "Powerhouse",
+      "technicalName": "Mito Oil",
+      "line": "human",
+      "species": null,
+      "format": "Tinctures",
+      "color": "#FF9A5C",
+      "images": ["/images/products/powerhouse-front.webp"],
+      "actives": [
+        {
+          "name": "Ubiquinol CoQ10",
+          "amount": "100 mg"
+        },
+        {
+          "name": "Astaxanthin",
+          "amount": "4 mg"
+        },
+        {
+          "name": "Tocotrienols",
+          "amount": "10 mg"
+        }
+      ],
+      "serving": "1 ml daily (one full dropper)",
+      "servingsPerJar": 30,
+      "netWeight": "30 ml (1 fl oz)",
+      "variants": [
+        {
+          "id": "var_powerhouse_1",
+          "jars": 1,
+          "title": "1 Bottle (30 days)",
+          "price": {
+            "amount": 45,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 45,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-HUM-POW-1"
+        },
+        {
+          "id": "var_powerhouse_2",
+          "jars": 2,
+          "title": "2 Bottles (60 days)",
+          "price": {
+            "amount": 81,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 90,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-HUM-POW-2"
+        },
+        {
+          "id": "var_powerhouse_3",
+          "jars": 3,
+          "title": "3 Bottles (90 days)",
+          "price": {
+            "amount": 115,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 135,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-HUM-POW-3"
+        }
+      ],
+      "sellingPlans": [
+        {
+          "id": "plan_powerhouse_30d",
+          "name": "Delivery every 30 days (15% off)",
+          "intervalDays": 30,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_powerhouse_60d",
+          "name": "Delivery every 60 days (15% off)",
+          "intervalDays": 60,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_powerhouse_90d",
+          "name": "Delivery every 90 days (15% off)",
+          "intervalDays": 90,
+          "discountPercentage": 15
+        }
+      ],
+      "benefits": [
+        "Ubiquinol, astaxanthin, tocotrienols*",
+        "Mitochondrial energy and antioxidant protection*",
+        "Pure lipid formula in MCT oil"
+      ],
+      "howToUse": "Take 1 ml (one full dropper) daily directly under the tongue or mixed into a morning drink.",
+      "faq": [],
+      "related": ["biohack", "renew"],
+      "claims": [
+        {
+          "text": "Supports mitochondrial health and cellular energy production*",
+          "isClaim": true
+        },
+        {
+          "text": "Tested lot by lot in our Clifton, NJ lab",
+          "isClaim": false
+        }
+      ],
+      "dosingByWeight": []
+    },
+    {
+      "slug": "daylight",
+      "handle": "daylight",
+      "name": "Daylight",
+      "technicalName": "D3 + K2",
+      "line": "human",
+      "species": null,
+      "format": "Tinctures",
+      "color": "#F3CC62",
+      "images": ["/images/products/daylight-front.webp"],
+      "actives": [
+        {
+          "name": "Vitamin D3 (Cholecalciferol)",
+          "amount": "2,000 IU"
+        },
+        {
+          "name": "Vitamin K2 (MK-7)",
+          "amount": "100 mcg"
+        }
+      ],
+      "serving": "1 ml daily (one full dropper)",
+      "servingsPerJar": 30,
+      "netWeight": "30 ml (1 fl oz)",
+      "variants": [
+        {
+          "id": "var_daylight_1",
+          "jars": 1,
+          "title": "1 Bottle (30 days)",
+          "price": {
+            "amount": 29,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 29,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-HUM-DAY-1"
+        },
+        {
+          "id": "var_daylight_2",
+          "jars": 2,
+          "title": "2 Bottles (60 days)",
+          "price": {
+            "amount": 52,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 58,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-HUM-DAY-2"
+        },
+        {
+          "id": "var_daylight_3",
+          "jars": 3,
+          "title": "3 Bottles (90 days)",
+          "price": {
+            "amount": 74,
+            "currencyCode": "USD"
+          },
+          "compareAtPrice": {
+            "amount": 87,
+            "currencyCode": "USD"
+          },
+          "sku": "NAD-HUM-DAY-3"
+        }
+      ],
+      "sellingPlans": [
+        {
+          "id": "plan_daylight_30d",
+          "name": "Delivery every 30 days (15% off)",
+          "intervalDays": 30,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_daylight_60d",
+          "name": "Delivery every 60 days (15% off)",
+          "intervalDays": 60,
+          "discountPercentage": 15
+        },
+        {
+          "id": "plan_daylight_90d",
+          "name": "Delivery every 90 days (15% off)",
+          "intervalDays": 90,
+          "discountPercentage": 15
+        }
+      ],
+      "benefits": [
+        "Vitamin D3 2,000 IU with K2 MK-7*",
+        "Synergistic bone, immune and cardiovascular support*",
+        "Convenient daily tincture drops"
+      ],
+      "howToUse": "Take 1 ml (one full dropper) daily with a meal or morning drink.",
+      "faq": [],
+      "related": ["biohack"],
+      "claims": [
+        {
+          "text": "Supports bone health and immune system balance*",
+          "isClaim": true
+        },
+        {
+          "text": "Tested lot by lot in our Clifton, NJ lab",
+          "isClaim": false
+        }
+      ],
+      "dosingByWeight": []
+    }
+  ],
+  "kits": [
+    {
+      "slug": "energy-duo",
+      "handle": "energy-duo",
+      "name": "Energy Duo",
+      "line": "human",
+      "description": "BioHack for daily NMN plus Renew for direct NAD+.*",
+      "products": [
+        {
+          "productSlug": "biohack",
+          "quantity": 1
+        },
+        {
+          "productSlug": "renew",
+          "quantity": 1
+        }
+      ],
+      "price": {
+        "amount": 105,
+        "currencyCode": "USD"
+      },
+      "compareAtPrice": {
+        "amount": 124,
+        "currencyCode": "USD"
+      },
+      "images": ["/images/kits/energy-duo.webp"]
+    },
+    {
+      "slug": "beauty-duo",
+      "handle": "beauty-duo",
+      "name": "Beauty Duo",
+      "line": "human",
+      "description": "Glow collagen with NMN plus Prime pure NAD+ powder.*",
+      "products": [
+        {
+          "productSlug": "glow",
+          "quantity": 1
+        },
+        {
+          "productSlug": "prime",
+          "quantity": 1
+        }
+      ],
+      "price": {
+        "amount": 92,
+        "currencyCode": "USD"
+      },
+      "compareAtPrice": {
+        "amount": 108,
+        "currencyCode": "USD"
+      },
+      "images": ["/images/kits/beauty-duo.webp"]
+    },
+    {
+      "slug": "morning-stack",
+      "handle": "morning-stack",
+      "name": "Morning Stack",
+      "line": "human",
+      "description": "Your morning NMN plus vitamin D3 and K2 drops.*",
+      "products": [
+        {
+          "productSlug": "biohack",
+          "quantity": 1
+        },
+        {
+          "productSlug": "daylight",
+          "quantity": 1
+        }
+      ],
+      "price": {
+        "amount": 75,
+        "currencyCode": "USD"
+      },
+      "compareAtPrice": {
+        "amount": 88,
+        "currencyCode": "USD"
+      },
+      "images": ["/images/kits/morning-stack.webp"]
+    },
+    {
+      "slug": "full-routine",
+      "handle": "full-routine",
+      "name": "Full Routine",
+      "line": "human",
+      "description": "NMN, NAD+ and Mito Oil: the complete daily stack.*",
+      "products": [
+        {
+          "productSlug": "biohack",
+          "quantity": 1
+        },
+        {
+          "productSlug": "renew",
+          "quantity": 1
+        },
+        {
+          "productSlug": "powerhouse",
+          "quantity": 1
+        }
+      ],
+      "price": {
+        "amount": 144,
+        "currencyCode": "USD"
+      },
+      "compareAtPrice": {
+        "amount": 169,
+        "currencyCode": "USD"
+      },
+      "images": ["/images/kits/full-routine.webp"]
+    }
+  ]
+}
