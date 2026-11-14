@@ -1,7 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { catalogProvider, reviewsProvider } from "@/lib/providers";
+import { DEFAULT_MARKET, getMarket } from "@/lib/market/markets";
+import { MARKET_COOKIE_NAME } from "@/lib/market/cookies";
 import {
   buildMetadata,
   buildProductJsonLd,
@@ -41,8 +44,8 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
   if (!product || product.line !== "pet") {
     return buildMetadata({
-      title: "Pet Product Not Found",
-      description: "The requested pet product could not be located.",
+      title: "Product not found",
+      description: "This product is not available.",
       noIndex: true,
     });
   }
@@ -68,6 +71,10 @@ export default async function PetProductDetailPage(props: PageProps) {
   if (!product || product.line !== "pet") {
     notFound();
   }
+
+  // Market from the cookie set by the country selector; default when absent
+  const marketId = (await cookies()).get(MARKET_COOKIE_NAME)?.value;
+  const market = getMarket(marketId) ?? DEFAULT_MARKET;
 
   // Only kits that include this product. No fallback to other kits.
   const petKits = await catalogProvider.getKits("pet");
@@ -141,6 +148,7 @@ export default async function PetProductDetailPage(props: PageProps) {
                 <PetPurchaseCard
                   product={product}
                   reviewSummary={reviewSummary}
+                  market={market}
                 />
               )}
             </div>
@@ -151,7 +159,7 @@ export default async function PetProductDetailPage(props: PageProps) {
         <PetScienceSection product={product} />
         <PetExpectSection />
         <PetVetSection />
-        <PetKitsSection kits={relatedKits} />
+        <PetKitsSection kits={relatedKits} market={market} />
         <PetReviewsSection
           summary={reviewSummary}
           reviews={reviewList.reviews}
@@ -159,7 +167,7 @@ export default async function PetProductDetailPage(props: PageProps) {
         <PetLabSearch />
         <PetFaqSection product={product} />
 
-        {hasVariants && <PetStickyBar product={product} />}
+        {hasVariants && <PetStickyBar product={product} market={market} />}
       </main>
     </>
   );

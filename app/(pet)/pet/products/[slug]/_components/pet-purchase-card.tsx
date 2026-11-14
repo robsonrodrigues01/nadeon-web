@@ -3,12 +3,13 @@
 import React, { useId, useMemo, useState } from "react";
 import type {
   Product,
-  Money,
   ProductVariant,
   SellingPlan,
 } from "@/lib/contracts/catalog";
 import type { ReviewSummary } from "@/lib/contracts/reviews";
 import { cartProvider } from "@/lib/providers/client";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 import { Button } from "@/components/ui/button";
 import {
   Claim,
@@ -18,15 +19,8 @@ import {
 export interface PetPurchaseCardProps {
   product: Product;
   reviewSummary: ReviewSummary;
-  locale?: string;
+  market: Market;
   className?: string;
-}
-
-export function formatMoney(money: Money, locale = "en-US"): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
 }
 
 // Weight bands come from product.dosingByWeight. Jars per band is the store rule.
@@ -46,7 +40,7 @@ function buildWeightBands(
 export function PetPurchaseCard({
   product,
   reviewSummary,
-  locale = "en-US",
+  market,
   className = "",
 }: PetPurchaseCardProps) {
   const componentId = useId();
@@ -132,15 +126,15 @@ export function PetPurchaseCard({
     return basePrice;
   }, [selectedVariant, purchaseType, selectedSellingPlan]);
 
-  const formattedTotalPrice = formatMoney(
+  const formattedTotalPrice = formatMoneyWithMarket(
     { amount: currentPriceAmount, currencyCode },
-    locale
+    market
   );
 
   const shopPayQuarterAmount = Math.round((currentPriceAmount / 4) * 100) / 100;
-  const formattedQuarterPrice = formatMoney(
+  const formattedQuarterPrice = formatMoneyWithMarket(
     { amount: shopPayQuarterAmount, currencyCode },
-    locale
+    market
   );
 
   // Undefined when the product has no 1-jar variant: no one-jar price is shown
@@ -292,13 +286,19 @@ export function PetPurchaseCard({
       <div className="flex items-baseline gap-2 flex-wrap">
         <span className="text-2xl sm:text-3xl font-extrabold text-fg">
           {singleJarBasePrice !== undefined &&
-            formatMoney({ amount: singleJarBasePrice, currencyCode }, locale)}
+            formatMoneyWithMarket(
+              { amount: singleJarBasePrice, currencyCode },
+              market
+            )}
         </span>
         <span className="text-sm font-bold text-fg/70">
           or{" "}
           <strong className="text-fg">
             {singleJarSubPrice !== undefined &&
-              formatMoney({ amount: singleJarSubPrice, currencyCode }, locale)}
+              formatMoneyWithMarket(
+                { amount: singleJarSubPrice, currencyCode },
+                market
+              )}
           </strong>{" "}
           with Subscribe &amp; Save
         </span>
@@ -444,24 +444,25 @@ export function PetPurchaseCard({
 
                   {uniquePlans.map((plan) => {
                     const isPlanSelected = selectedSellingPlanId === plan.id;
-                    const correspondingVariant =
-                      product.variants.find(
-                        (v) =>
-                          (plan.intervalDays === 30 && v.jars === 1) ||
-                          (plan.intervalDays === 60 && v.jars === 2) ||
-                          (plan.intervalDays === 90 && v.jars === 3)
-                      ) || selectedVariant;
+                    const correspondingVariant = product.variants.find(
+                      (v) =>
+                        (plan.intervalDays === 30 && v.jars === 1) ||
+                        (plan.intervalDays === 60 && v.jars === 2) ||
+                        (plan.intervalDays === 90 && v.jars === 3)
+                    );
+                    // No variant for this plan: no price, so the option is not shown
+                    if (!correspondingVariant) return null;
 
-                    const baseAmount = correspondingVariant?.price.amount ?? 44;
+                    const baseAmount = correspondingVariant.price.amount;
                     const discountedAmount = Number(
                       (
                         baseAmount *
                         (1 - plan.discountPercentage / 100)
                       ).toFixed(2)
                     );
-                    const formattedPlanPrice = formatMoney(
+                    const formattedPlanPrice = formatMoneyWithMarket(
                       { amount: discountedAmount, currencyCode },
-                      locale
+                      market
                     );
 
                     const isRecommended = plan.intervalDays === 60;
@@ -614,22 +615,22 @@ export function PetPurchaseCard({
                         </div>
 
                         <div className="text-lg font-extrabold text-fg my-1">
-                          {formatMoney(variant.price, locale)}
+                          {formatMoneyWithMarket(variant.price, market)}
                         </div>
 
                         <div className="text-[11px] text-fg-muted">
-                          {formatMoney(
+                          {formatMoneyWithMarket(
                             { amount: unitPrice, currencyCode },
-                            locale
+                            market
                           )}{" "}
                           / jar
                         </div>
 
                         <div className="min-h-4 text-[11px] font-bold text-accent mt-1">
                           {savings > 0
-                            ? `Save ${formatMoney(
+                            ? `Save ${formatMoneyWithMarket(
                                 { amount: savings, currencyCode },
-                                locale
+                                market
                               )}`
                             : ""}
                         </div>

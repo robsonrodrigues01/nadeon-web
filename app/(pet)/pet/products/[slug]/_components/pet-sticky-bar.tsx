@@ -1,23 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import type { Product, Money } from "@/lib/contracts/catalog";
+import type { Product } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 import { Button } from "@/components/ui/button";
 
 export interface PetStickyBarProps {
   product: Product;
-  locale?: string;
+  market: Market;
 }
 
-function formatMoney(money: Money, locale = "en-US"): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
-}
-
-export function PetStickyBar({ product, locale = "en-US" }: PetStickyBarProps) {
+export function PetStickyBar({ product, market }: PetStickyBarProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -49,9 +44,9 @@ export function PetStickyBar({ product, locale = "en-US" }: PetStickyBarProps) {
     (baseAmount * (1 - discountRate / 100)).toFixed(2)
   );
 
-  const formattedPrice = formatMoney(
+  const formattedPrice = formatMoneyWithMarket(
     { amount: discountedAmount, currencyCode },
-    locale
+    market
   );
 
   const handleAddToCart = async () => {

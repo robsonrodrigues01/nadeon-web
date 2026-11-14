@@ -14,18 +14,22 @@ import PetProductDetailPage, {
   generateStaticParams,
 } from "@/app/(pet)/pet/products/[slug]/page";
 import { cartProvider } from "@/lib/providers/client";
+import { catalogProvider, reviewsProvider } from "@/lib/providers";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
+import { PetPurchaseCard } from "@/app/(pet)/pet/products/[slug]/_components/pet-purchase-card";
 
 // Mock next/navigation notFound
 const mockNotFound = vi.fn();
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
+
 vi.mock("next/navigation", () => ({
   notFound: () => {
     mockNotFound();
     throw new Error("NEXT_NOT_FOUND");
   },
 }));
-
-// The page renders a large client tree; keep the timeout above the full-suite load.
-vi.setConfig({ testTimeout: 30000 });
 
 describe("Route W2-12: /pet/products/[slug]", () => {
   beforeEach(() => {
@@ -165,10 +169,16 @@ describe("Route W2-12: /pet/products/[slug]", () => {
       checkoutUrl: "https://mock.checkout",
     });
 
-    const pageJsx = await PetProductDetailPage({
-      params: Promise.resolve({ slug: "more-good-years" }),
-    });
-    render(pageJsx);
+    // Card rendered on its own: the full page is covered by the other tests
+    const product = await catalogProvider.getProduct("more-good-years");
+    const reviewSummary = await reviewsProvider.summary("more-good-years");
+    render(
+      <PetPurchaseCard
+        product={product!}
+        reviewSummary={reviewSummary}
+        market={DEFAULT_MARKET}
+      />
+    );
 
     // Title and badges
     expect(

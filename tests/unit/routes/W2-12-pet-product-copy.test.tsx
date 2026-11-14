@@ -7,13 +7,19 @@ import PetProductDetailPage, {
 } from "@/app/(pet)/pet/products/[slug]/page";
 import { catalogProvider } from "@/lib/providers";
 
+const marketCookie = vi.hoisted(() => ({
+  value: undefined as string | undefined,
+}));
+
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => ({ value: marketCookie.value }) }),
+}));
+
 vi.mock("next/navigation", () => ({
   notFound: () => {
     throw new Error("NEXT_NOT_FOUND");
   },
 }));
-
-vi.setConfig({ testTimeout: 30000 });
 
 describe("Route W2-12: copy and price rules", () => {
   afterEach(() => {
@@ -74,6 +80,21 @@ describe("Route W2-12: copy and price rules", () => {
     ).toBeTruthy();
     expect(text).not.toMatch(/Senior dogs 7\+/);
     expect(text).not.toMatch(/Is More Good Years right/);
+  });
+
+  it("formats prices with the market from the cookie, not a fixed locale", async () => {
+    marketCookie.value = "eu";
+    try {
+      const jsx = await PetProductDetailPage({
+        params: Promise.resolve({ slug: "more-good-years" }),
+      });
+      const { container } = render(jsx);
+      const text = container.textContent ?? "";
+
+      expect(text).toMatch(/€/);
+    } finally {
+      marketCookie.value = undefined;
+    }
   });
 
   it("gives metadata per product", async () => {

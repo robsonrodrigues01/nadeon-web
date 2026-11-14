@@ -1,27 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
-import type { Kit, Money } from "@/lib/contracts/catalog";
+import type { Kit } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 import { Button } from "@/components/ui/button";
 import { Claim } from "@/components/commerce/product-card/claim";
 
 export interface PetKitsSectionProps {
   kits: Kit[];
-  locale?: string;
+  market: Market;
   className?: string;
-}
-
-function formatMoney(money: Money, locale = "en-US"): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
 }
 
 export function PetKitsSection({
   kits,
-  locale = "en-US",
+  market,
   className = "",
 }: PetKitsSectionProps) {
   const [addingKitSlug, setAddingKitSlug] = useState<string | null>(null);
@@ -72,9 +67,9 @@ export function PetKitsSection({
           {displayKits.map((kit, idx) => {
             const isFavorite = idx === 1;
             const badgeText = isFavorite ? "PET PARENT FAVORITE" : "SAVE 15%";
-            const formattedPrice = formatMoney(kit.price, locale);
+            const formattedPrice = formatMoneyWithMarket(kit.price, market);
             const formattedCompare = kit.compareAtPrice
-              ? formatMoney(kit.compareAtPrice, locale)
+              ? formatMoneyWithMarket(kit.compareAtPrice, market)
               : null;
 
             return (
