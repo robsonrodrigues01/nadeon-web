@@ -569,10 +569,170 @@
       "W1-13",
       "W1-19"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Enigma",
-    "lease_ate": "2026-11-14T09:58:12.664Z",
+    "lease_ate": null,
     "branch": "agy/W1-15",
+    "pr": "local addc4e2",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-22",
+    "titulo": "Integração final da onda 1 (layouts human e pet, gaveta e dev-kit)",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-14"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Remendo",
+    "lease_ate": "2026-11-14T10:06:52.414Z",
+    "branch": "agy/W1-22",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-01",
+    "titulo": "Rota W2-01",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Portal",
+    "lease_ate": "2026-11-14T10:06:23.920Z",
+    "branch": "agy/W2-01",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-02",
+    "titulo": "Rota W2-02",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Aurora",
+    "lease_ate": "2026-11-14T10:05:42.740Z",
+    "branch": "agy/W2-02",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-03",
+    "titulo": "Rota W2-03",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Matilha",
+    "lease_ate": "2026-11-14T10:07:43.458Z",
+    "branch": "agy/W2-03",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-04",
+    "titulo": "Rota W2-04",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Prateleira",
+    "lease_ate": "2026-11-14T10:06:42.255Z",
+    "branch": "agy/W2-04",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-06",
+    "titulo": "Rota W2-06",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Capsula",
+    "lease_ate": "2026-11-14T10:06:57.820Z",
+    "branch": "agy/W2-06",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-09",
+    "titulo": "Rota W2-09",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Focinho",
+    "lease_ate": "2026-11-14T10:06:33.978Z",
+    "branch": "agy/W2-09",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-12",
+    "titulo": "Rota W2-12",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Coleira",
+    "lease_ate": "2026-11-14T10:06:11.826Z",
+    "branch": "agy/W2-12",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
