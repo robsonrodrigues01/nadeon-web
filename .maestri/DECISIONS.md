@@ -132,3 +132,4 @@
 - Board do design vale como fonte de dado quando o catálogo não tem o campo (ex.: tabela de dose dos cavalos), desde que conferido e citado no DONE.
 - Defeito de componente compartilhado não reprova a rota; vira tarefa própria.
 - 14/11 W2-29 (/science): revisor Grifo pediu fontes científicas para a queda de NAD+ com a idade, o transporte de NMN e os benefícios dos 4 ingredientes. Todo o texto vem do board Science e usa `<Claim>` com aviso FDA, então a rota foi aprovada pelo Maestro. A substanciação científica das alegações entra na revisão de conteúdo e jurídica do Robson antes do lançamento (ver status/W2-29/REVIEW.md).
+- 14/11 W2-27 (/help): revisor Ourives apontou que "Track order" sempre responde pending e que "Send me a copy" não é enviado. Os dois dependem do contrato (não há consulta de pedido nem campo `copy` em ContactInput). Aprovada pelo Maestro; entram na tarefa de contrato antes da onda 4, junto com Copy link, Reorder e /track estado B.
