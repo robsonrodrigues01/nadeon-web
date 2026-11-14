@@ -6,6 +6,7 @@ import { getQuiz } from "@/lib/quiz";
 import { catalogProvider } from "@/lib/providers";
 import type { Product, Kit } from "@/lib/contracts/catalog";
 import { PetQuizClient } from "./_components/pet-quiz-client";
+import { PetRegulatoryNotice } from "../_components/pet-regulatory-notice";
 
 // Textos do quiz vêm de data/quiz.json (proposta, aguardando aprovação do Robson).
 const petQuiz = getQuiz("dog");
@@ -55,6 +56,7 @@ export default async function PetQuizPage() {
         productsMap={productsMap}
         kitsMap={kitsMap}
       />
+      <PetRegulatoryNotice />
     </>
   );
 }
