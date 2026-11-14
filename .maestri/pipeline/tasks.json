@@ -769,11 +769,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Formato",
     "lease_ate": null,
     "branch": "agy/W2-05",
-    "pr": "local",
+    "pr": "local 6e4f64a",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1172,7 +1172,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Duvida",
-    "lease_ate": "2026-11-14T18:06:31.655Z",
+    "lease_ate": "2026-11-14T18:07:44.399Z",
     "branch": "agy/W2-26",
     "pr": "local",
     "criterios": [
@@ -1212,7 +1212,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Laudo",
-    "lease_ate": "2026-11-14T18:06:39.541Z",
+    "lease_ate": "2026-11-14T18:08:31.620Z",
     "branch": "agy/W2-28",
     "pr": "local",
     "criterios": [
@@ -1232,7 +1232,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Ciencia",
-    "lease_ate": "2026-11-14T18:06:32.112Z",
+    "lease_ate": "2026-11-14T18:07:36.340Z",
     "branch": "agy/W2-29",
     "pr": "local",
     "criterios": [
