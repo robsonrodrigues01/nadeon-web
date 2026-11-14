@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect, afterEach, vi, beforeEach } from "vitest";
 import {
   render,
   screen,
@@ -12,6 +12,12 @@ import PetKitsPage, { metadata } from "@/app/(pet)/pet/kits/page";
 import PetKitPage, { generateMetadata } from "@/app/(pet)/pet/kits/[slug]/page";
 import { buildKitView } from "@/app/(pet)/pet/kits/_components/kit-format";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
+import { DEFAULT_MARKET, getMarket } from "@/lib/market/markets";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import { cookies } from "next/headers";
+import { getRequestMarket } from "@/app/(pet)/pet/kits/_components/request-market";
+
+vi.mock("next/headers", () => ({ cookies: vi.fn() }));
 
 const PET_KIT_SLUGS = [
   "chew-oil",
@@ -244,10 +250,62 @@ describe("W2-13: /pet/kits/[slug] Route Suite", () => {
         (await mockCatalogProvider.getProduct("more-good-years-oil"))!,
       ],
     ]);
-    const view = buildKitView(kit, map);
+    const view = buildKitView(kit, map, DEFAULT_MARKET);
 
     expect(view.productCount).toBe(2);
     expect(view.savings).toBe("$13.00");
     expect(view.badge).toBe("SAVE 15%");
+  });
+});
+
+describe("W2-13: market from nadeon_market cookie (Rule 14)", () => {
+  beforeEach(() => {
+    vi.mocked(cookies).mockResolvedValue({
+      get: () => undefined,
+    } as unknown as Awaited<ReturnType<typeof cookies>>);
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
+
+  it("falls back to the default market when the cookie is absent", async () => {
+    expect((await getRequestMarket()).id).toBe(DEFAULT_MARKET.id);
+  });
+
+  it("reads the market from the cookie and formats prices in its currency", async () => {
+    const ca = getMarket("ca")!;
+    vi.mocked(cookies).mockResolvedValue({
+      get: (name: string) =>
+        name === "nadeon_market" ? { value: "ca" } : undefined,
+    } as unknown as Awaited<ReturnType<typeof cookies>>);
+
+    const market = await getRequestMarket();
+    expect(market.id).toBe(ca.id);
+
+    const kit = (await mockCatalogProvider.getKit("chew-oil"))!;
+    const map = new Map([
+      [
+        "more-good-years",
+        (await mockCatalogProvider.getProduct("more-good-years"))!,
+      ],
+      [
+        "more-good-years-oil",
+        (await mockCatalogProvider.getProduct("more-good-years-oil"))!,
+      ],
+    ]);
+    const view = buildKitView(kit, map, market);
+    // Canadian market converts the USD catalog price by the market rate (75 USD -> ~102 CAD).
+    expect(view.price).toBe(
+      formatMoneyWithMarket({ amount: 75, currencyCode: "USD" }, ca)
+    );
+    expect(view.price).toMatch(/102/);
+  });
+
+  it("falls back to the default market for an unknown cookie value", async () => {
+    vi.mocked(cookies).mockResolvedValue({
+      get: () => ({ value: "xx" }),
+    } as unknown as Awaited<ReturnType<typeof cookies>>);
+    expect((await getRequestMarket()).id).toBe(DEFAULT_MARKET.id);
   });
 });

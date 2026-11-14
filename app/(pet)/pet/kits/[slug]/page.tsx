@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
-import { buildMetadata, JsonLd } from "@/lib/seo";
+import { buildMetadata, DEFAULT_SITE_URL, JsonLd } from "@/lib/seo";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -13,6 +13,7 @@ import {
   buildKitView,
   formatKitMoney,
 } from "@/app/(pet)/pet/kits/_components/kit-format";
+import { getRequestMarket } from "@/app/(pet)/pet/kits/_components/request-market";
 
 interface PetKitPageProps {
   params: Promise<{ slug: string }>;
@@ -37,23 +38,24 @@ export default async function PetKitPage({ params }: PetKitPageProps) {
   const kit = await catalogProvider.getKit(slug);
   if (!kit || kit.line !== "pet") notFound();
 
+  const market = await getRequestMarket();
   const products = await catalogProvider.getProducts({ line: "pet" });
   const productsBySlug = new Map<string, Product>(
     products.map((product) => [product.slug, product] as const)
   );
-  const view = buildKitView(kit, productsBySlug);
+  const view = buildKitView(kit, productsBySlug, market);
 
   const jsonLdData = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: kit.name,
     description: kit.description,
-    url: `https://nadeonlabs.com/pet/kits/${kit.slug}`,
+    url: `${DEFAULT_SITE_URL}/pet/kits/${kit.slug}`,
     offers: {
       "@type": "Offer",
       price: kit.price.amount,
       priceCurrency: kit.price.currencyCode,
-      url: `https://nadeonlabs.com/pet/kits/${kit.slug}`,
+      url: `${DEFAULT_SITE_URL}/pet/kits/${kit.slug}`,
     },
   };
 
@@ -153,7 +155,7 @@ export default async function PetKitPage({ params }: PetKitPageProps) {
                     </span>
                     {product.variants[0] && (
                       <span className="text-sm font-bold text-fg">
-                        {formatKitMoney(product.variants[0].price)}
+                        {formatKitMoney(product.variants[0].price, market)}
                       </span>
                     )}
                   </Link>

@@ -1,12 +1,6 @@
 import type { Kit, Money, Product } from "@/lib/contracts/catalog";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
-import { getDefaultMarket } from "@/lib/market/markets";
-
-// Badge text is design copy keyed by kit slug; discount values are derived from catalog prices.
-const KIT_TAG_BADGES: Readonly<Record<string, string>> = {
-  "chew-good-days": "PET PARENT PICK",
-  "cat-care": "FOR CATS",
-};
+import type { Market } from "@/lib/market/types";
 
 export interface KitProductView {
   slug: string;
@@ -27,9 +21,9 @@ export interface KitView {
   savings: string | null;
 }
 
-/** Formats a catalog Money in the market currency and locale (Rule 14). */
-export function formatKitMoney(money: Money): string {
-  return formatMoneyWithMarket(money, getDefaultMarket());
+/** Formats a catalog Money in the visitor's market currency and locale (Rule 14). */
+export function formatKitMoney(money: Money, market: Market): string {
+  return formatMoneyWithMarket(money, market);
 }
 
 /** Percentage saved against compare-at prices, rounded; null when no kit has a compare-at price. */
@@ -56,12 +50,15 @@ export function averageKitSavingsPercent(kits: readonly Kit[]): number | null {
 /** Builds the serializable view a kit card needs. Products missing from the catalog are dropped. */
 export function buildKitView(
   kit: Kit,
-  productsBySlug: ReadonlyMap<string, Product>
+  productsBySlug: ReadonlyMap<string, Product>,
+  market: Market
 ): KitView {
   const products: KitProductView[] = [];
+  const kitProducts: Product[] = [];
   for (const ref of kit.products) {
     const product = productsBySlug.get(ref.productSlug);
     if (product) {
+      kitProducts.push(product);
       products.push({
         slug: product.slug,
         name: product.name,
@@ -69,6 +66,9 @@ export function buildKitView(
       });
     }
   }
+  // Badge comes from product data (species), never from a per-slug table.
+  const forCats =
+    kitProducts.length > 0 && kitProducts.every((p) => p.species === "cat");
 
   const savingsAmount = kit.compareAtPrice
     ? kit.compareAtPrice.amount - kit.price.amount
@@ -82,19 +82,20 @@ export function buildKitView(
     productCount: kit.products.reduce((sum, ref) => sum + ref.quantity, 0),
     productNames: products.map((p) => p.name).join(" + "),
     products,
-    badge:
-      KIT_TAG_BADGES[kit.slug] ??
-      (percent !== null ? `SAVE ${percent}%` : null),
-    price: formatKitMoney(kit.price),
+    badge: forCats ? "FOR CATS" : percent !== null ? `SAVE ${percent}%` : null,
+    price: formatKitMoney(kit.price, market),
     compareAtPrice: kit.compareAtPrice
-      ? formatKitMoney(kit.compareAtPrice)
+      ? formatKitMoney(kit.compareAtPrice, market)
       : null,
     savings:
       savingsAmount !== null && savingsAmount > 0
-        ? formatKitMoney({
-            amount: savingsAmount,
-            currencyCode: kit.price.currencyCode,
-          })
+        ? formatKitMoney(
+            {
+              amount: savingsAmount,
+              currencyCode: kit.price.currencyCode,
+            },
+            market
+          )
         : null,
   };
 }
