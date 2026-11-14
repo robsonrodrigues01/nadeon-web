@@ -2,16 +2,26 @@ import type { CatalogSort, Product } from "@/lib/contracts/catalog";
 import { ProductCard } from "@/components/commerce/product-card";
 import { Button } from "@/components/ui/button";
 import type { ShopFormat } from "./format-config";
+import { GoalFilter, type GoalFilterItem } from "./goal-filter";
 import { SortSelect } from "./sort-select";
 
 export interface ShopProductsProps {
   format: ShopFormat;
   products: Product[];
   sort: CatalogSort;
+  goals: GoalFilterItem[];
+  activeGoal: string | null;
 }
 
-export function ShopProducts({ format, products, sort }: ShopProductsProps) {
+export function ShopProducts({
+  format,
+  products,
+  sort,
+  goals,
+  activeGoal,
+}: ShopProductsProps) {
   const headingId = `shop-${format.slug}-heading`;
+  const basePath = `/human/shop/${format.slug}`;
 
   return (
     <section
@@ -28,11 +38,22 @@ export function ShopProducts({ format, products, sort }: ShopProductsProps) {
         Shop {format.label.toLowerCase()}
       </h2>
 
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+      {goals.length > 0 && (
+        <div className="mt-8">
+          <GoalFilter
+            basePath={basePath}
+            goals={goals}
+            active={activeGoal}
+            sort={sort}
+          />
+        </div>
+      )}
+
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
         <p className="text-sm text-fg-muted">
           {products.length} {format.label.toLowerCase()}
         </p>
-        <SortSelect value={sort} />
+        <SortSelect value={sort} goal={activeGoal} />
       </div>
 
       <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">

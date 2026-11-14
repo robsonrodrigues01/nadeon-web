@@ -18,6 +18,7 @@ import {
   getShopFormat,
   type ShopFormat,
 } from "./_components/format-config";
+import { getHumanShopGoals } from "./_components/format-goals";
 import { FormatHero } from "./_components/format-hero";
 import { ShopProducts } from "./_components/shop-products";
 import { CompareFormats } from "./_components/compare-formats";
@@ -27,7 +28,10 @@ import { FormatFaq } from "./_components/format-faq";
 type RouteParams = { format: string };
 type PageProps = {
   params: Promise<RouteParams>;
-  searchParams: Promise<{ sort?: string | string[] }>;
+  searchParams: Promise<{
+    sort?: string | string[];
+    goal?: string | string[];
+  }>;
 };
 
 export function generateStaticParams(): RouteParams[] {
@@ -80,7 +84,8 @@ export default async function ShopByFormatPage({
   const current = getShopFormat(formatSlug);
   if (!current) notFound();
 
-  const sort = parseSort((await searchParams).sort);
+  const query = await searchParams;
+  const sort = parseSort(query.sort);
 
   const [collection, humanProducts] = await Promise.all([
     catalogProvider.getCollection(
@@ -93,6 +98,17 @@ export default async function ShopByFormatPage({
   if (!collection) notFound();
 
   const products = collection.products;
+  // Objetivo válido e com produtos neste formato; qualquer outro valor vira "All".
+  const goals = getHumanShopGoals()
+    .map((goal) => ({
+      ...goal,
+      count: products.filter((p) => goal.productSlugs.has(p.slug)).length,
+    }))
+    .filter((goal) => goal.count > 0);
+  const activeGoal = goals.find((goal) => goal.id === query.goal) ?? null;
+  const shownProducts = activeGoal
+    ? products.filter((p) => activeGoal.productSlugs.has(p.slug))
+    : products;
   const tabs = SHOP_FORMATS.map((format) => ({
     format,
     count: countFor(humanProducts, format),
@@ -123,7 +139,13 @@ export default async function ShopByFormatPage({
         tabs={tabs}
         jarNames={products.slice(0, 3).map((p) => p.name)}
       />
-      <ShopProducts format={current} products={products} sort={sort} />
+      <ShopProducts
+        format={current}
+        products={shownProducts}
+        sort={sort}
+        goals={goals.map(({ id, label }) => ({ id, label }))}
+        activeGoal={activeGoal?.id ?? null}
+      />
       <CompareFormats current={current} formats={SHOP_FORMATS} />
       <QuizTeaser />
       <FormatFaq title={current.faqTitle} faqs={faqs} />

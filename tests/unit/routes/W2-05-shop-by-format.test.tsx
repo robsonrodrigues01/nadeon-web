@@ -23,6 +23,71 @@ async function renderFormat(format: string, sort?: string) {
   return render(element);
 }
 
+async function renderWithQuery(format: string, query: Record<string, string>) {
+  const element = await ShopByFormatPage({
+    params: Promise.resolve({ format }),
+    searchParams: Promise.resolve(query),
+  });
+  return render(element);
+}
+
+describe("W2-05 goal filter (objetivo derivado do quiz human)", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it("lists only goals that have products in the format, as links", async () => {
+    await renderWithQuery("capsules", {});
+
+    const nav = screen.getByRole("navigation", { name: "Filter by goal" });
+    const links = within(nav).getAllByRole("link");
+    expect(links.map((l) => l.textContent)).toEqual([
+      "All",
+      "Daily energy",
+      "Healthy aging",
+      "Focus and recovery",
+    ]);
+    expect(
+      within(nav)
+        .getByRole("link", { name: "All" })
+        .getAttribute("aria-current")
+    ).toBe("true");
+  });
+
+  it("narrows the product list to the chosen goal", async () => {
+    await renderWithQuery("capsules", { goal: "focus-recovery" });
+
+    const names = screen
+      .getAllByRole("article")
+      .map((a) => within(a).getByRole("heading", { level: 3 }).textContent);
+    expect(names).toEqual(["BioHack", "Full Charge"]);
+    const nav = screen.getByRole("navigation", { name: "Filter by goal" });
+    expect(
+      within(nav)
+        .getByRole("link", { name: "Focus and recovery" })
+        .getAttribute("aria-current")
+    ).toBe("true");
+  });
+
+  it("ignores a goal that is unknown or has no products in the format", async () => {
+    await renderWithQuery("capsules", { goal: "skin-hair-nails" });
+    expect(screen.getAllByRole("article")).toHaveLength(3);
+    cleanup();
+    await renderWithQuery("capsules", { goal: "not-a-goal" });
+    expect(screen.getAllByRole("article")).toHaveLength(3);
+  });
+
+  it("keeps the sort order in the goal links", async () => {
+    await renderWithQuery("capsules", { sort: "price-desc" });
+    const nav = screen.getByRole("navigation", { name: "Filter by goal" });
+    expect(
+      within(nav)
+        .getByRole("link", { name: "Healthy aging" })
+        .getAttribute("href")
+    ).toBe("/human/shop/capsules?sort=price-desc&goal=healthy-aging");
+  });
+});
+
 describe("W2-05 Route: Shop by format (/human/shop/[format])", () => {
   afterEach(() => {
     cleanup();

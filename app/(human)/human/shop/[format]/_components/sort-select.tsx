@@ -3,6 +3,7 @@
 import { useId } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import type { CatalogSort } from "@/lib/contracts/catalog";
+import { goalHref } from "./shop-url";
 
 const OPTIONS: ReadonlyArray<{ value: CatalogSort; label: string }> = [
   { value: "featured", label: "Featured" },
@@ -11,7 +12,13 @@ const OPTIONS: ReadonlyArray<{ value: CatalogSort; label: string }> = [
   { value: "title-asc", label: "Title: A to Z" },
 ];
 
-export function SortSelect({ value }: { value: CatalogSort }) {
+export function SortSelect({
+  value,
+  goal,
+}: {
+  value: CatalogSort;
+  goal: string | null;
+}) {
   const id = useId();
   const router = useRouter();
   const pathname = usePathname();
@@ -26,9 +33,9 @@ export function SortSelect({ value }: { value: CatalogSort }) {
         value={value}
         onChange={(event) => {
           const next = event.target.value;
-          const url =
-            next === "featured" ? pathname : `${pathname}?sort=${next}`;
-          router.push(url, { scroll: false });
+          router.push(goalHref(pathname, goal, next as CatalogSort), {
+            scroll: false,
+          });
         }}
         className="min-h-11 rounded-field border border-border bg-bg-elevated px-3 text-sm font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
