@@ -1,0 +1,1530 @@
+[
+  {
+    "slug": "more-good-years",
+    "handle": "more-good-years",
+    "name": "More Good Years",
+    "technicalName": "Senior · NMN 75 mg",
+    "line": "pet",
+    "species": "dog",
+    "format": "Soft chews",
+    "color": "#ffc35a",
+    "images": [
+      "/images/products/more-good-years-front.webp",
+      "/images/products/more-good-years-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "75 mg"
+      },
+      {
+        "name": "Omega-3 (EPA + DHA)",
+        "amount": "60 mg"
+      },
+      {
+        "name": "CoQ10",
+        "amount": "15 mg"
+      },
+      {
+        "name": "Vitamin E",
+        "amount": "10 IU"
+      }
+    ],
+    "serving": "1 to 4 soft chews depending on canine weight",
+    "servingsPerJar": 60,
+    "netWeight": "60 soft chews",
+    "variants": [
+      {
+        "id": "var_more_good_years_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-MGY-1"
+      },
+      {
+        "id": "var_more_good_years_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 80,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-MGY-2"
+      },
+      {
+        "id": "var_more_good_years_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 108,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 132,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-MGY-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_more_good_years_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_more_good_years_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_more_good_years_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Supports NAD+ levels in senior dogs*",
+      "Supports energy for daily walks*",
+      "NMN, omega-3 and CoQ10 in every chew"
+    ],
+    "howToUse": "Give with or after a meal based on dog weight: 1 chew daily up to 20 lbs, 2 chews for 21 to 50 lbs, 3 chews for 51 to 90 lbs, 4 chews over 90 lbs. Ask your vet if your dog takes medication.",
+    "faq": [
+      {
+        "question": "How many chews a day for my dog's weight?",
+        "answer": "Chews are dosed by weight: 1 chew daily for dogs up to 20 lbs, 2 chews for 21 to 50 lbs, 3 chews for 51 to 90 lbs, and 4 chews for dogs over 90 lbs."
+      },
+      {
+        "question": "Can I combine chews and oils?",
+        "answer": "Yes. Many pet parents use chews for the morning routine and drops on food in the evening or on picky days."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Every lot is independently third-party tested with public lab reports published online."
+      }
+    ],
+    "related": ["more-good-years-oil", "good-days", "golden-years"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Supports NAD+ levels in senior dogs*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports energy for daily walks*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "1 chew daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "2 chews daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "3 chews daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "4 chews daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "golden-years",
+    "handle": "golden-years",
+    "name": "Golden Years",
+    "technicalName": "Joints · NMN 50 mg",
+    "line": "pet",
+    "species": "dog",
+    "format": "Soft chews",
+    "color": "#ff6b6b",
+    "images": [
+      "/images/products/golden-years-front.webp",
+      "/images/products/golden-years-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "50 mg"
+      },
+      {
+        "name": "Glucosamine HCl",
+        "amount": "250 mg"
+      },
+      {
+        "name": "Chondroitin Sulfate",
+        "amount": "100 mg"
+      },
+      {
+        "name": "MSM",
+        "amount": "100 mg"
+      }
+    ],
+    "serving": "1 to 4 soft chews depending on canine weight",
+    "servingsPerJar": 60,
+    "netWeight": "60 soft chews",
+    "variants": [
+      {
+        "id": "var_golden_years_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GYR-1"
+      },
+      {
+        "id": "var_golden_years_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 80,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GYR-2"
+      },
+      {
+        "id": "var_golden_years_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 108,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 132,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GYR-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_golden_years_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_golden_years_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_golden_years_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Hips, joints and NAD+ levels*",
+      "Supports mobility and joint comfort in active and aging dogs*",
+      "Dosed by weight, vet-reviewed formula"
+    ],
+    "howToUse": "Give with or after a meal based on dog weight: 1 chew daily up to 20 lbs, 2 chews for 21 to 50 lbs, 3 chews for 51 to 90 lbs, 4 chews over 90 lbs. Ask your vet if your dog takes medication.",
+    "faq": [
+      {
+        "question": "How many chews a day for my dog's weight?",
+        "answer": "Chews are dosed by weight: 1 chew daily for dogs up to 20 lbs, 2 chews for 21 to 50 lbs, 3 chews for 51 to 90 lbs, and 4 chews for dogs over 90 lbs."
+      },
+      {
+        "question": "Can I give Golden Years and More Good Years together?",
+        "answer": "Yes, you can pair the joint chews with daily longevity drops or alternate routines."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["golden-years-oil", "more-good-years", "second-wind"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Hips, joints and NAD+ levels*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports joint comfort and everyday mobility*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "1 chew daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "2 chews daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "3 chews daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "4 chews daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "still-sharp",
+    "handle": "still-sharp",
+    "name": "Still Sharp",
+    "technicalName": "Calm · NMN 50 mg",
+    "line": "pet",
+    "species": "dog",
+    "format": "Soft chews",
+    "color": "#b892ff",
+    "images": [
+      "/images/products/still-sharp-front.webp",
+      "/images/products/still-sharp-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "50 mg"
+      },
+      {
+        "name": "L-Theanine",
+        "amount": "50 mg"
+      },
+      {
+        "name": "Chamomile Extract",
+        "amount": "50 mg"
+      },
+      {
+        "name": "Ashwagandha Extract",
+        "amount": "25 mg"
+      }
+    ],
+    "serving": "1 to 4 soft chews depending on canine weight",
+    "servingsPerJar": 60,
+    "netWeight": "60 soft chews",
+    "variants": [
+      {
+        "id": "var_still_sharp_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-STP-1"
+      },
+      {
+        "id": "var_still_sharp_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 80,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-STP-2"
+      },
+      {
+        "id": "var_still_sharp_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 108,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 132,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-STP-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_still_sharp_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_still_sharp_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_still_sharp_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Calm, relaxed behavior*",
+      "Supports normal emotional balance and cognitive health*",
+      "Non-drowsy daytime or evening calm"
+    ],
+    "howToUse": "Give with or after a meal based on dog weight: 1 chew daily up to 20 lbs, 2 chews for 21 to 50 lbs, 3 chews for 51 to 90 lbs, 4 chews over 90 lbs. Ask your vet if your dog takes medication.",
+    "faq": [
+      {
+        "question": "Does Still Sharp cause drowsiness?",
+        "answer": "No. It is formulated to promote normal relaxed behavior and cognitive focus without sedating your dog."
+      },
+      {
+        "question": "How many chews should I give my dog?",
+        "answer": "Chews are dosed by weight: 1 chew up to 20 lbs, 2 chews for 21 to 50 lbs, 3 chews for 51 to 90 lbs, 4 chews over 90 lbs."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["still-sharp-oil", "more-good-years", "good-days"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Calm, relaxed behavior*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports cognitive function and normal emotional balance*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "1 chew daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "2 chews daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "3 chews daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "4 chews daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "shine-on",
+    "handle": "shine-on",
+    "name": "Shine On",
+    "technicalName": "Skin & coat · NMN 50 mg",
+    "line": "pet",
+    "species": "dog",
+    "format": "Soft chews",
+    "color": "#ff8fc0",
+    "images": [
+      "/images/products/shine-on-front.webp",
+      "/images/products/shine-on-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "50 mg"
+      },
+      {
+        "name": "Wild Alaskan Salmon Oil",
+        "amount": "150 mg"
+      },
+      {
+        "name": "Biotin",
+        "amount": "500 mcg"
+      },
+      {
+        "name": "Zinc",
+        "amount": "5 mg"
+      }
+    ],
+    "serving": "1 to 4 soft chews depending on canine weight",
+    "servingsPerJar": 60,
+    "netWeight": "60 soft chews",
+    "variants": [
+      {
+        "id": "var_shine_on_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SHN-1"
+      },
+      {
+        "id": "var_shine_on_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 80,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SHN-2"
+      },
+      {
+        "id": "var_shine_on_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 108,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 132,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SHN-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_shine_on_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_shine_on_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_shine_on_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Healthy skin and a shiny coat*",
+      "Supports seasonal allergy response and moisture retention*",
+      "Dosed by weight, vet-reviewed formula"
+    ],
+    "howToUse": "Give with or after a meal based on dog weight: 1 chew daily up to 20 lbs, 2 chews for 21 to 50 lbs, 3 chews for 51 to 90 lbs, 4 chews over 90 lbs. Ask your vet if your dog takes medication.",
+    "faq": [
+      {
+        "question": "How long until I see results in my dog's coat?",
+        "answer": "Pet parents typically notice skin hydration and coat gloss within 3 to 6 weeks of daily use."
+      },
+      {
+        "question": "How many chews should my dog take?",
+        "answer": "Chews are dosed by weight: 1 chew up to 20 lbs, 2 chews for 21 to 50 lbs, 3 chews for 51 to 90 lbs, 4 chews over 90 lbs."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["shine-on-oil", "more-good-years", "golden-years"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Healthy skin and a shiny coat*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports seasonal skin health and moisture retention*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "1 chew daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "2 chews daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "3 chews daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "4 chews daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "good-days",
+    "handle": "good-days",
+    "name": "Good Days",
+    "technicalName": "Treats · NMN 30 mg",
+    "line": "pet",
+    "species": "dog",
+    "format": "Treats",
+    "color": "#7cc4ff",
+    "images": [
+      "/images/products/good-days-front.webp",
+      "/images/products/good-days-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "30 mg"
+      }
+    ],
+    "serving": "1 to 4 treats depending on canine weight",
+    "servingsPerJar": 60,
+    "netWeight": "60 treats",
+    "variants": [
+      {
+        "id": "var_good_days_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 29,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 29,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GDY-1"
+      },
+      {
+        "id": "var_good_days_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 52,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 58,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GDY-2"
+      },
+      {
+        "id": "var_good_days_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 72,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 87,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GDY-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_good_days_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_good_days_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_good_days_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "A daily reward for healthy aging*",
+      "Great for training, rewards, and daily cellular support*",
+      "NMN 30 mg in every treat"
+    ],
+    "howToUse": "Feed as a daily reward or training treat based on weight: 1 treat up to 20 lbs, 2 treats for 21 to 50 lbs, 3 treats for 51 to 90 lbs, 4 treats over 90 lbs.",
+    "faq": [
+      {
+        "question": "Can puppies have Good Days treats?",
+        "answer": "Good Days treats are formulated for adult dogs. Check with your vet before giving any supplement to puppies under 1 year."
+      },
+      {
+        "question": "Can I give Good Days with daily chews?",
+        "answer": "Yes, Good Days treats pair easily with your dog's daily chew routine for training and walks."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["more-good-years", "second-wind", "golden-years"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "A daily reward for healthy aging*",
+        "isClaim": true
+      },
+      {
+        "text": "A delicious training reward that supports vitality*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "1 treat daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "2 treats daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "3 treats daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "4 treats daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "second-wind",
+    "handle": "second-wind",
+    "name": "Second Wind",
+    "technicalName": "Powder · NMN 75 mg",
+    "line": "pet",
+    "species": "dog",
+    "format": "Powder",
+    "color": "#7fe0b0",
+    "images": [
+      "/images/products/second-wind-front.webp",
+      "/images/products/second-wind-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "75 mg"
+      }
+    ],
+    "serving": "1 to 4 scoops depending on canine weight",
+    "servingsPerJar": 60,
+    "netWeight": "240 g powder",
+    "variants": [
+      {
+        "id": "var_second_wind_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 39,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 39,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SWD-1"
+      },
+      {
+        "id": "var_second_wind_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 70,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 78,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SWD-2"
+      },
+      {
+        "id": "var_second_wind_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 96,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 117,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SWD-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_second_wind_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_second_wind_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_second_wind_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Mix into any meal*",
+      "Ideal for dogs of any size and picky eaters*",
+      "Pure NMN powder for effortless daily dosing"
+    ],
+    "howToUse": "Mix into your dog's regular meal daily: 1 scoop up to 20 lbs, 2 scoops for 21 to 50 lbs, 3 scoops for 51 to 90 lbs, 4 scoops over 90 lbs.",
+    "faq": [
+      {
+        "question": "How do I mix Second Wind?",
+        "answer": "Simply sprinkle over wet food, kibble with warm water, or broth once daily."
+      },
+      {
+        "question": "How many scoops should I give?",
+        "answer": "Scoops are dosed by weight: 1 scoop up to 20 lbs, 2 scoops for 21 to 50 lbs, 3 scoops for 51 to 90 lbs, 4 scoops over 90 lbs."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["more-good-years", "good-days", "golden-years"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Mix into any meal*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports cellular vitality and NAD+ replenishment*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "1 scoop daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "2 scoops daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "3 scoops daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "4 scoops daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "more-good-years-oil",
+    "handle": "more-good-years-oil",
+    "name": "More Good Years Oil",
+    "technicalName": "Longevity · drops",
+    "line": "pet",
+    "species": "dog",
+    "format": "Oils",
+    "color": "#ffc35a",
+    "images": [
+      "/images/products/more-good-years-oil-front.webp",
+      "/images/products/more-good-years-oil-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "75 mg per 1 mL"
+      }
+    ],
+    "serving": "0.5 mL per 20 lbs body weight daily",
+    "servingsPerJar": 60,
+    "netWeight": "60 mL (2 fl oz)",
+    "variants": [
+      {
+        "id": "var_more_good_years_oil_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-MGYO-1"
+      },
+      {
+        "id": "var_more_good_years_oil_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 80,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-MGYO-2"
+      },
+      {
+        "id": "var_more_good_years_oil_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 108,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 132,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-MGYO-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_more_good_years_oil_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_more_good_years_oil_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_more_good_years_oil_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Drops on food, dosed by weight*",
+      "Pairs with the chews for picky days and routine flexibility*",
+      "Adjustable 0.5 mL per 20 lbs"
+    ],
+    "howToUse": "Administer orally or drop onto food: 0.5 mL per 20 lbs of body weight daily (0.5 mL up to 20 lbs, 1 mL for 21 to 50 lbs, 1.5 to 2 mL for 51 to 90 lbs, 2.5 mL over 90 lbs).",
+    "faq": [
+      {
+        "question": "How do I dose the oil?",
+        "answer": "Dose is 0.5 mL per 20 lbs of dog body weight. Use the calibrated dropper to dispense onto food or directly in mouth."
+      },
+      {
+        "question": "Can I combine More Good Years Oil with chews?",
+        "answer": "Yes. Chews for the daily routine, drops for picky days or extra support."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["more-good-years", "golden-years-oil", "good-days"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Drops on food, dosed by weight*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports NAD+ levels in senior dogs*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "0.5 mL daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "1 mL daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "1.5 to 2 mL daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "2.5 mL daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "golden-years-oil",
+    "handle": "golden-years-oil",
+    "name": "Golden Years Oil",
+    "technicalName": "Joints · drops",
+    "line": "pet",
+    "species": "dog",
+    "format": "Oils",
+    "color": "#ff6b6b",
+    "images": [
+      "/images/products/golden-years-oil-front.webp",
+      "/images/products/golden-years-oil-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "50 mg per 1 mL"
+      }
+    ],
+    "serving": "0.5 mL per 20 lbs body weight daily",
+    "servingsPerJar": 60,
+    "netWeight": "60 mL (2 fl oz)",
+    "variants": [
+      {
+        "id": "var_golden_years_oil_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GYRO-1"
+      },
+      {
+        "id": "var_golden_years_oil_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 80,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GYRO-2"
+      },
+      {
+        "id": "var_golden_years_oil_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 108,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 132,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-GYRO-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_golden_years_oil_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_golden_years_oil_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_golden_years_oil_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Drops on food, dosed by weight*",
+      "Joint and mobility support for picky eaters*",
+      "Adjustable 0.5 mL per 20 lbs"
+    ],
+    "howToUse": "Administer orally or drop onto food: 0.5 mL per 20 lbs of body weight daily (0.5 mL up to 20 lbs, 1 mL for 21 to 50 lbs, 1.5 to 2 mL for 51 to 90 lbs, 2.5 mL over 90 lbs).",
+    "faq": [
+      {
+        "question": "How do I dose Golden Years Oil?",
+        "answer": "Dose is 0.5 mL per 20 lbs of dog body weight. Use the graduated dropper on your dog's meal."
+      },
+      {
+        "question": "Can I pair it with the Golden Years chews?",
+        "answer": "Yes, the Chew + Oil bundle combines daily chews with drops for picky days."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["golden-years", "more-good-years-oil", "more-good-years"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Drops on food, dosed by weight*",
+        "isClaim": true
+      },
+      {
+        "text": "Hips, joints and NAD+ levels*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "0.5 mL daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "1 mL daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "1.5 to 2 mL daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "2.5 mL daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "still-sharp-oil",
+    "handle": "still-sharp-oil",
+    "name": "Still Sharp Oil",
+    "technicalName": "Calm · drops",
+    "line": "pet",
+    "species": "dog",
+    "format": "Oils",
+    "color": "#b892ff",
+    "images": [
+      "/images/products/still-sharp-oil-front.webp",
+      "/images/products/still-sharp-oil-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "50 mg per 1 mL"
+      }
+    ],
+    "serving": "0.5 mL per 20 lbs body weight daily",
+    "servingsPerJar": 60,
+    "netWeight": "60 mL (2 fl oz)",
+    "variants": [
+      {
+        "id": "var_still_sharp_oil_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-STPO-1"
+      },
+      {
+        "id": "var_still_sharp_oil_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 80,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-STPO-2"
+      },
+      {
+        "id": "var_still_sharp_oil_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 108,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 132,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-STPO-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_still_sharp_oil_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_still_sharp_oil_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_still_sharp_oil_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Drops on food, dosed by weight*",
+      "Calm, relaxed behavior for sensitive or picky dogs*",
+      "Adjustable 0.5 mL per 20 lbs"
+    ],
+    "howToUse": "Administer orally or drop onto food: 0.5 mL per 20 lbs of body weight daily (0.5 mL up to 20 lbs, 1 mL for 21 to 50 lbs, 1.5 to 2 mL for 51 to 90 lbs, 2.5 mL over 90 lbs).",
+    "faq": [
+      {
+        "question": "How quickly does Still Sharp Oil take effect?",
+        "answer": "Many pet parents report calmer demeanors during storms, travel or evening routines within 30 to 60 minutes."
+      },
+      {
+        "question": "How much should I give?",
+        "answer": "0.5 mL per 20 lbs of body weight directly into food or mouth."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["still-sharp", "more-good-years-oil", "more-good-years"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Drops on food, dosed by weight*",
+        "isClaim": true
+      },
+      {
+        "text": "Calm, relaxed behavior*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "0.5 mL daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "1 mL daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "1.5 to 2 mL daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "2.5 mL daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  },
+  {
+    "slug": "shine-on-oil",
+    "handle": "shine-on-oil",
+    "name": "Shine On Oil",
+    "technicalName": "Skin & coat · drops",
+    "line": "pet",
+    "species": "dog",
+    "format": "Oils",
+    "color": "#ff8fc0",
+    "images": [
+      "/images/products/shine-on-oil-front.webp",
+      "/images/products/shine-on-oil-label.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN",
+        "amount": "50 mg per 1 mL"
+      }
+    ],
+    "serving": "0.5 mL per 20 lbs body weight daily",
+    "servingsPerJar": 60,
+    "netWeight": "60 mL (2 fl oz)",
+    "variants": [
+      {
+        "id": "var_shine_on_oil_1",
+        "jars": 1,
+        "title": "1 Jar",
+        "price": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 44,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SHNO-1"
+      },
+      {
+        "id": "var_shine_on_oil_2",
+        "jars": 2,
+        "title": "2 Jars",
+        "price": {
+          "amount": 80,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SHNO-2"
+      },
+      {
+        "id": "var_shine_on_oil_3",
+        "jars": 3,
+        "title": "3 Jars",
+        "price": {
+          "amount": 108,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 132,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-PET-SHNO-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_shine_on_oil_30d",
+        "name": "Delivery every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_shine_on_oil_60d",
+        "name": "Delivery every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_shine_on_oil_90d",
+        "name": "Delivery every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Drops on food, dosed by weight*",
+      "Skin and coat cellular support dropped right into dinner*",
+      "Adjustable 0.5 mL per 20 lbs"
+    ],
+    "howToUse": "Administer orally or drop onto food: 0.5 mL per 20 lbs of body weight daily (0.5 mL up to 20 lbs, 1 mL for 21 to 50 lbs, 1.5 to 2 mL for 51 to 90 lbs, 2.5 mL over 90 lbs).",
+    "faq": [
+      {
+        "question": "How do I use Shine On Oil?",
+        "answer": "Simply measure 0.5 mL per 20 lbs of your dog's weight using the dropper and drizzle over food once daily."
+      },
+      {
+        "question": "Can I combine Shine On Oil with Shine On chews?",
+        "answer": "Yes, combining chews with drops allows you to tailor intake and support picky eating days."
+      },
+      {
+        "question": "Where is it made and tested?",
+        "answer": "Made in Clifton, NJ in our own lab. Tested every lot with public lab reports published online."
+      }
+    ],
+    "related": ["shine-on", "more-good-years-oil", "golden-years"],
+    "claims": [
+      {
+        "text": "For animal use only.",
+        "isClaim": false
+      },
+      {
+        "text": "Drops on food, dosed by weight*",
+        "isClaim": true
+      },
+      {
+        "text": "Healthy skin and a shiny coat*",
+        "isClaim": true
+      }
+    ],
+    "dosingByWeight": [
+      {
+        "minWeightLbs": 0,
+        "maxWeightLbs": 20,
+        "dose": "0.5 mL daily",
+        "servingDescription": "Up to 20 lbs"
+      },
+      {
+        "minWeightLbs": 21,
+        "maxWeightLbs": 50,
+        "dose": "1 mL daily",
+        "servingDescription": "21 to 50 lbs"
+      },
+      {
+        "minWeightLbs": 51,
+        "maxWeightLbs": 90,
+        "dose": "1.5 to 2 mL daily",
+        "servingDescription": "51 to 90 lbs"
+      },
+      {
+        "minWeightLbs": 91,
+        "maxWeightLbs": null,
+        "dose": "2.5 mL daily",
+        "servingDescription": "Over 90 lbs"
+      }
+    ]
+  }
+]
