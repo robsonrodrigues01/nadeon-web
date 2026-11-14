@@ -8,13 +8,16 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run --exclude 'tests/e2e/**'",
+    "test:e2e": "playwright test",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "data:check": "node -e \"process.exit(0)\"",
+    "data:check": "node scripts/check-placeholders.mjs",
     "tokens:check": "node scripts/check-tokens.mjs",
     "tokens:audit": "node scripts/design-audit.mjs",
-    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && pnpm data:check"
+    "security:audit": "pnpm audit --audit-level=high --ignore GHSA-2464-fhr4-w9xw --ignore GHSA-673q-mjm6-r5xr --ignore GHSA-p3m5-59mp-jv5r",
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && pnpm data:check",
+    "gate": "pnpm verify && pnpm build"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.6",
