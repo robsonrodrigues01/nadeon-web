@@ -143,9 +143,9 @@
       "W0-04",
       "W0-07"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Catraca",
-    "lease_ate": "2026-11-14T06:31:10.087Z",
+    "lease_ate": null,
     "branch": "agy/W0-09",
     "pr": "local",
     "criterios": [
@@ -1010,11 +1010,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Painel",
-    "lease_ate": "2026-11-14T17:41:21.737Z",
+    "lease_ate": null,
     "branch": "agy/W2-19",
-    "pr": "local",
+    "pr": "local e3a0de7",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1030,9 +1030,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Pedidos",
-    "lease_ate": "2026-11-14T17:51:14.370Z",
+    "lease_ate": null,
     "branch": "agy/W2-20",
     "pr": "local",
     "criterios": [
@@ -1052,7 +1052,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Assina",
-    "lease_ate": "2026-11-14T17:50:16.731Z",
+    "lease_ate": "2026-11-14T17:59:11.632Z",
     "branch": "agy/W2-21",
     "pr": "local",
     "criterios": [
@@ -1072,7 +1072,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Ajustes",
-    "lease_ate": "2026-11-14T17:50:26.961Z",
+    "lease_ate": "2026-11-14T17:59:38.506Z",
     "branch": "agy/W2-22",
     "pr": "local",
     "criterios": [
@@ -1090,9 +1090,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Farejo",
-    "lease_ate": "2026-11-14T17:49:15.599Z",
+    "lease_ate": null,
     "branch": "agy/W2-24",
     "pr": "local",
     "criterios": [
@@ -1110,10 +1110,50 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "entregue",
+    "status": "para_revisao",
     "responsavel": "Origem",
     "lease_ate": null,
     "branch": "agy/W2-25",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-24",
+    "titulo": "Carrinho com kit e ProductCard pelo mercado (W1-24 e W1-25)",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-07"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Preco",
+    "lease_ate": null,
+    "branch": "agy/W1-24",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-26",
+    "titulo": "Frete grátis por mercado",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W0-07"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Busca",
+    "lease_ate": null,
+    "branch": "agy/W1-26",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
