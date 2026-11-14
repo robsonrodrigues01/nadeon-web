@@ -16,6 +16,12 @@ import { QuizBanner } from "@/app/(human)/human/shop/_components/quiz-banner";
 import { ShoppingFaqSection } from "@/app/(human)/human/shop/_components/shopping-faq";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import { cartProvider } from "@/lib/providers/client";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
+
+// Páginas de servidor leem o cookie de mercado; o teste não tem requisição.
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
 
 describe("W2-04: /human/shop Route & Components", () => {
   beforeEach(() => {
@@ -285,7 +291,13 @@ describe("W2-04: /human/shop Route & Components", () => {
         mockCatalogProvider.getProducts({ line: "human" }),
       ]);
 
-      render(<BetterTogetherSection kits={kits} products={products} />);
+      render(
+        <BetterTogetherSection
+          kits={kits}
+          products={products}
+          market={DEFAULT_MARKET}
+        />
+      );
 
       expect(screen.getByText("BUNDLE & SAVE")).toBeTruthy();
       expect(

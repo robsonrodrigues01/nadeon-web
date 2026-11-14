@@ -15,6 +15,11 @@ import { catalogProvider } from "@/lib/providers";
 import { formatMarketPrice } from "@/lib/market/formatter";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
 
+// Página de servidor lê o cookie de mercado; o teste não tem requisição.
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
+
 const mockNotFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });

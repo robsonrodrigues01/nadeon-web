@@ -1,3 +1,4 @@
+import { getVisitorMarket } from "@/lib/market/visitor";
 import React from "react";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
@@ -28,6 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HumanShopPage() {
+  const market = await getVisitorMarket();
   const [products, kits] = await Promise.all([
     catalogProvider.getProducts({ line: "human" }),
     catalogProvider.getKits("human"),
@@ -57,7 +59,11 @@ export default async function HumanShopPage() {
       <main id="main-content" className="flex-1">
         <ShopHero />
         <ShopCollection products={products} />
-        <BetterTogetherSection kits={kits} products={products} />
+        <BetterTogetherSection
+          kits={kits}
+          products={products}
+          market={market}
+        />
         <QuizBanner />
         <ShoppingFaqSection />
       </main>

@@ -7,6 +7,7 @@ import { Claim } from "@/components/commerce/product-card/claim";
 import { KitAddToCart } from "./kit-add-to-cart";
 import { KitPrice } from "./kit-price";
 import type { KitView } from "./kit-view";
+import type { Market } from "@/lib/market/types";
 
 type Filter = "all" | "duo" | "trio";
 
@@ -21,10 +22,11 @@ const FILTERS: Array<{
 ];
 
 export interface KitsBrowserProps {
+  market: Market;
   kits: KitView[];
 }
 
-export function KitsBrowser({ kits }: KitsBrowserProps) {
+export function KitsBrowser({ kits, market }: KitsBrowserProps) {
   const [filter, setFilter] = useState<Filter>("all");
   const active = FILTERS.find((f) => f.id === filter) ?? FILTERS[0];
   const visible = kits.filter(active.matches);
@@ -99,6 +101,7 @@ export function KitsBrowser({ kits }: KitsBrowserProps) {
                   <Claim>{kit.description}</Claim>
                 </p>
                 <KitPrice
+                  market={market}
                   price={kit.price}
                   compareAtPrice={kit.compareAtPrice}
                   savings={kit.savings}

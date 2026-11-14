@@ -20,6 +20,11 @@ import { catalogProvider } from "@/lib/providers";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
 
+// Páginas de servidor leem o cookie de mercado; o teste não tem requisição.
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
+
 const PLACEHOLDERS = /\[X\]|\$XX|\(example\)/i;
 
 async function renderList() {

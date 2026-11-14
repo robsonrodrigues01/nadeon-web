@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
 import type { CartProvider } from "@/lib/contracts/cart";
 import { Button } from "@/components/ui/button";
+import type { Kit } from "@/lib/contracts/catalog";
+import type { Market } from "@/lib/market/types";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
 
 export interface BundleItem {
   id: string;
@@ -13,10 +16,7 @@ export interface BundleItem {
   chewDesc: string;
   oilName: string;
   oilDesc: string;
-  price: { amount: number; currencyCode: string };
-  compareAtPrice: { amount: number; currencyCode: string };
-  variantIds: string[];
-  // Kit do catálogo com o mesmo conteúdo; sem kit usa as variantes avulsas.
+  // Kit do catálogo com o mesmo conteúdo: preço e desconto vêm dele. Sem kit, o bundle não aparece.
   kitSlug?: string;
 }
 
@@ -29,9 +29,6 @@ export const DOG_BUNDLES: readonly BundleItem[] = [
     chewDesc: "Senior · NMN 75 mg",
     oilName: "More Good Years Oil",
     oilDesc: "Longevity · drops",
-    price: { amount: 75, currencyCode: "USD" },
-    compareAtPrice: { amount: 88, currencyCode: "USD" },
-    variantIds: ["var_more_good_years_1", "var_more_good_years_oil_1"],
     kitSlug: "chew-oil",
   },
   {
@@ -42,9 +39,6 @@ export const DOG_BUNDLES: readonly BundleItem[] = [
     chewDesc: "Joints · NMN 50 mg",
     oilName: "Golden Years Oil",
     oilDesc: "Joints · drops",
-    price: { amount: 75, currencyCode: "USD" },
-    compareAtPrice: { amount: 88, currencyCode: "USD" },
-    variantIds: ["var_golden_years_1", "var_golden_years_oil_1"],
   },
   {
     id: "bundle-still-sharp",
@@ -54,9 +48,6 @@ export const DOG_BUNDLES: readonly BundleItem[] = [
     chewDesc: "Calm · NMN 50 mg",
     oilName: "Still Sharp Oil",
     oilDesc: "Calm · drops",
-    price: { amount: 75, currencyCode: "USD" },
-    compareAtPrice: { amount: 88, currencyCode: "USD" },
-    variantIds: ["var_still_sharp_1", "var_still_sharp_oil_1"],
   },
   {
     id: "bundle-shine-on",
@@ -66,49 +57,34 @@ export const DOG_BUNDLES: readonly BundleItem[] = [
     chewDesc: "Skin & coat · NMN 50 mg",
     oilName: "Shine On Oil",
     oilDesc: "Skin & coat · drops",
-    price: { amount: 75, currencyCode: "USD" },
-    compareAtPrice: { amount: 88, currencyCode: "USD" },
-    variantIds: ["var_shine_on_1", "var_shine_on_oil_1"],
   },
-] as const;
-
-function formatBundlePrice(
-  amount: number,
-  currencyCode = "USD",
-  locale = "en-US"
-): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currencyCode,
-  }).format(amount);
-}
+];
 
 export interface BundlesSectionProps {
+  kits: Kit[];
+  market: Market;
   cartProvider?: CartProvider;
-  locale?: string;
 }
 
 export function BundlesSection({
+  kits,
+  market,
   cartProvider = defaultCartProvider,
-  locale = "en-US",
 }: BundlesSectionProps) {
   const [addingId, setAddingId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Record<string, string>>({});
+  const kitsBySlug = new Map(kits.map((kit) => [kit.slug, kit]));
+  // Só aparece bundle com kit no catálogo: preço e desconto vêm do kit
+  const bundles = DOG_BUNDLES.flatMap((bundle) => {
+    const kit = bundle.kitSlug ? kitsBySlug.get(bundle.kitSlug) : undefined;
+    return kit ? [{ bundle, kit }] : [];
+  });
 
-  const handleAddBundle = async (bundle: BundleItem) => {
+  const handleAddBundle = async (bundle: BundleItem, kitSlug: string) => {
     setAddingId(bundle.id);
     setFeedback((prev) => ({ ...prev, [bundle.id]: "" }));
     try {
-      if (bundle.kitSlug) {
-        await cartProvider.addKit(bundle.kitSlug, 1);
-      } else {
-        await cartProvider.addLines(
-          bundle.variantIds.map((variantId) => ({
-            variantId,
-            quantity: 1,
-          }))
-        );
-      }
+      await cartProvider.addKit(kitSlug, 1);
       setFeedback((prev) => ({
         ...prev,
         [bundle.id]: `Added ${bundle.name} to cart`,
@@ -153,17 +129,11 @@ export function BundlesSection({
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {DOG_BUNDLES.map((bundle) => {
-            const formattedPrice = formatBundlePrice(
-              bundle.price.amount,
-              bundle.price.currencyCode,
-              locale
-            );
-            const formattedCompare = formatBundlePrice(
-              bundle.compareAtPrice.amount,
-              bundle.compareAtPrice.currencyCode,
-              locale
-            );
+          {bundles.map(({ bundle, kit }) => {
+            const formattedPrice = formatMoneyWithMarket(kit.price, market);
+            const formattedCompare = kit.compareAtPrice
+              ? formatMoneyWithMarket(kit.compareAtPrice, market)
+              : null;
             const isAdding = addingId === bundle.id;
             const message = feedback[bundle.id];
 
@@ -204,9 +174,11 @@ export function BundlesSection({
                     <span className="text-xl font-extrabold text-fg">
                       {formattedPrice}
                     </span>
-                    <span className="text-sm font-semibold text-fg-muted line-through">
-                      {formattedCompare}
-                    </span>
+                    {formattedCompare && (
+                      <span className="text-sm font-semibold text-fg-muted line-through">
+                        {formattedCompare}
+                      </span>
+                    )}
                   </div>
 
                   <Button
@@ -216,7 +188,7 @@ export function BundlesSection({
                     className="w-full"
                     isLoading={isAdding}
                     loadingText="Adding bundle..."
-                    onClick={() => handleAddBundle(bundle)}
+                    onClick={() => handleAddBundle(bundle, kit.slug)}
                     aria-label={`Add ${bundle.name} bundle for ${formattedPrice}`}
                   >
                     Add bundle

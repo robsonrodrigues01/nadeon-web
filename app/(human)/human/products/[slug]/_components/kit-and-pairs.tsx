@@ -4,17 +4,22 @@ import React, { useState } from "react";
 import Link from "next/link";
 import type { Kit, Product } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
-import { formatMarketPrice } from "@/lib/market/formatter";
-import { DEFAULT_MARKET } from "@/lib/market/markets";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 import { Button } from "@/components/ui/button";
 import { Claim } from "@/components/commerce/product-card/claim";
 
 export interface KitAndPairsProps {
   kit: Kit | null;
+  market: Market;
   relatedProducts: Product[];
 }
 
-export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
+export function KitAndPairs({
+  kit,
+  relatedProducts,
+  market,
+}: KitAndPairsProps) {
   const [isAddingKit, setIsAddingKit] = useState(false);
   const [addingSlug, setAddingSlug] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -58,17 +63,18 @@ export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
   };
 
   const kitPrice = kit?.price
-    ? formatMarketPrice(
-        kit.price.amount,
-        kit.price.currencyCode,
-        DEFAULT_MARKET.locale
+    ? formatMoneyWithMarket(
+        { amount: kit.price.amount, currencyCode: kit.price.currencyCode },
+        market
       )
     : null;
   const kitComparePrice = kit?.compareAtPrice
-    ? formatMarketPrice(
-        kit.compareAtPrice.amount,
-        kit.compareAtPrice.currencyCode,
-        DEFAULT_MARKET.locale
+    ? formatMoneyWithMarket(
+        {
+          amount: kit.compareAtPrice.amount,
+          currencyCode: kit.compareAtPrice.currencyCode,
+        },
+        market
       )
     : null;
 
@@ -179,10 +185,9 @@ export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
             {relatedProducts.slice(0, 4).map((product) => {
               const price = product.variants[0]?.price;
               const formattedPrice = price
-                ? formatMarketPrice(
-                    price.amount,
-                    price.currencyCode,
-                    DEFAULT_MARKET.locale
+                ? formatMoneyWithMarket(
+                    { amount: price.amount, currencyCode: price.currencyCode },
+                    market
                   )
                 : null;
               const discountRate = product.sellingPlans[0]?.discountPercentage;

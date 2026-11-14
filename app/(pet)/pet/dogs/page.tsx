@@ -1,3 +1,4 @@
+import { getVisitorMarket } from "@/lib/market/visitor";
 import React from "react";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
@@ -21,6 +22,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function DogsPage() {
+  const market = await getVisitorMarket();
+  const bundleKits = await catalogProvider.getKits("pet");
   const [dogProducts, catProducts, horseProducts] = await Promise.all([
     catalogProvider.getProducts({ species: "dog" }),
     catalogProvider.getProducts({ species: "cat" }),
@@ -66,7 +69,7 @@ export default async function DogsPage() {
         <DoseByWeightSection />
 
         {/* 4. Chew + oil bundles */}
-        <BundlesSection />
+        <BundlesSection kits={bundleKits} market={market} />
 
         {/* 5. Cats and Horses Section */}
         <CatsAndHorsesSection products={[...catProducts, ...horseProducts]} />

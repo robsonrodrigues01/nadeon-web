@@ -10,8 +10,8 @@ import { Footer } from "@/components/layout/footer";
 import { TrustStrip } from "@/components/brand/trust-strip";
 import { PurchaseOptions } from "@/components/commerce/purchase-options";
 import { Claim } from "@/components/commerce/product-card/claim";
-import { formatMarketPrice } from "@/lib/market/formatter";
-import { DEFAULT_MARKET } from "@/lib/market/markets";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import { getVisitorMarket } from "@/lib/market/visitor";
 
 import { Gallery } from "./_components/gallery";
 import { DetailsTabs } from "./_components/details-tabs";
@@ -57,6 +57,7 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
+  const market = await getVisitorMarket();
   const product = await catalogProvider.getProduct(slug);
 
   if (!product || product.line !== "human") {
@@ -78,19 +79,24 @@ export default async function ProductPage({ params }: PageProps) {
   const primaryPlan = product.sellingPlans[0];
   const price = primaryVariant?.price;
   const formattedBasePrice = price
-    ? formatMarketPrice(price.amount, price.currencyCode, DEFAULT_MARKET.locale)
+    ? formatMoneyWithMarket(
+        { amount: price.amount, currencyCode: price.currencyCode },
+        market
+      )
     : null;
   const formattedDiscountedPrice =
     price && primaryPlan
-      ? formatMarketPrice(
-          Number(
-            (
-              price.amount *
-              ((100 - primaryPlan.discountPercentage) / 100)
-            ).toFixed(2)
-          ),
-          price.currencyCode,
-          DEFAULT_MARKET.locale
+      ? formatMoneyWithMarket(
+          {
+            amount: Number(
+              (
+                price.amount *
+                ((100 - primaryPlan.discountPercentage) / 100)
+              ).toFixed(2)
+            ),
+            currencyCode: price.currencyCode,
+          },
+          market
         )
       : null;
 
@@ -280,7 +286,11 @@ export default async function ProductPage({ params }: PageProps) {
         <AudienceComparison productName={product.name} />
 
         {/* Section 6: Kit & Pairs Well With */}
-        <KitAndPairs kit={kit} relatedProducts={relatedProducts} />
+        <KitAndPairs
+          kit={kit}
+          relatedProducts={relatedProducts}
+          market={market}
+        />
 
         {/* Section 7: Reviews */}
         <ReviewsSection productName={product.name} />
@@ -296,7 +306,7 @@ export default async function ProductPage({ params }: PageProps) {
       <Footer line="human" />
 
       {/* Sticky Bottom Bar on Scroll */}
-      <StickyBar product={product} />
+      <StickyBar product={product} market={market} />
     </>
   );
 }

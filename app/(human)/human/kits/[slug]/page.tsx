@@ -1,3 +1,4 @@
+import { getVisitorMarket } from "@/lib/market/visitor";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { catalogProvider } from "@/lib/providers";
@@ -31,6 +32,7 @@ export async function generateMetadata({ params }: KitPageProps) {
 // Detail page has no design board yet (catalog 5.2 notes it as not drawn);
 // it renders only catalog data and the components already used on the list.
 export default async function HumanKitPage({ params }: KitPageProps) {
+  const market = await getVisitorMarket();
   const { slug } = await params;
   const kit = await loadHumanKit(slug);
   if (!kit) notFound();
@@ -83,6 +85,7 @@ export default async function HumanKitPage({ params }: KitPageProps) {
             <Claim>{kit.description}</Claim>
           </p>
           <KitPrice
+            market={market}
             price={view.price}
             compareAtPrice={view.compareAtPrice}
             savings={view.savings}
