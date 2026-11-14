@@ -950,11 +950,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Busca",
-    "lease_ate": "2026-11-14T10:33:15.922Z",
+    "lease_ate": null,
     "branch": "agy/W2-16",
-    "pr": "local",
+    "pr": "local ce4a22c",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
