@@ -6,11 +6,11 @@
     "papel": "Frontend + CI/CD Engineer",
     "preset": "Gemini 3.8 Flash (AGY)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Forja",
-    "lease_ate": "2026-11-14T06:00:00.000Z",
+    "lease_ate": null,
     "branch": "main",
-    "pr": null,
+    "pr": "https://github.com/robsonrodrigues01/nadeon-web/commit/f5f1231902cf86d5e3e9491a54d77a298fb9c158",
     "criterios": "pnpm verify verde em clone limpo, repo no GitHub, prévia da Vercel abrindo a página provisória."
   },
   {
@@ -66,7 +66,7 @@
     "responsavel": "Abaco",
     "lease_ate": "2026-11-14T06:00:00.000Z",
     "branch": "agy/W0-05",
-    "pr": null,
+    "pr": "https://github.com/robsonrodrigues01/nadeon-web/pull/3",
     "criterios": "CLI testado, /pipeline mostrando as 7 tarefas da onda 0 em desenvolvimento e 404 em produção."
   },
   {
@@ -76,11 +76,11 @@
     "papel": "Documentation/Handoff",
     "preset": "Luna 6 Low (GPT)",
     "depende_de": ["W0-01"],
-    "status": "bloqueada",
+    "status": "para_revisao",
     "responsavel": "Pena",
     "lease_ate": null,
-    "branch": "luna/W0-06",
-    "pr": null,
+    "branch": "agy/W0-06",
+    "pr": "https://github.com/robsonrodrigues01/nadeon-web/pull/1",
     "criterios": "AGENTS.md revisado por outro agente e coerente com as seções 1.4 e 0 do plano v3."
   },
   {
