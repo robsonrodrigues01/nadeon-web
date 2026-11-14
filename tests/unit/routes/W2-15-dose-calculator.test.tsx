@@ -9,16 +9,21 @@ import {
   within,
 } from "@testing-library/react";
 
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
+
 import DoseCalculatorPage, {
   metadata,
 } from "@/app/(pet)/pet/dose-calculator/page";
 import {
   DoseCalculator,
+  findDosingProductForSpecies,
   findProductForSpecies,
-  formatPrice,
 } from "@/app/(pet)/pet/dose-calculator/_components/dose-calculator";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import { cartProvider } from "@/lib/providers/client";
+import { getMarket, getDefaultMarket } from "@/lib/market/markets";
 import type { Product } from "@/lib/contracts/catalog";
 
 describe("W2-15: /pet/dose-calculator Route Suite", () => {
@@ -32,6 +37,23 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
     cleanup();
     vi.restoreAllMocks();
   });
+
+  const renderCalc = (
+    overrides: Partial<React.ComponentProps<typeof DoseCalculator>> = {}
+  ) =>
+    render(
+      <DoseCalculator
+        products={petProducts}
+        market={getDefaultMarket()}
+        productImages={{}}
+        {...overrides}
+      />
+    );
+
+  const enterWeight = (value: string) =>
+    fireEvent.change(screen.getByRole("spinbutton", { name: /pet weight/i }), {
+      target: { value },
+    });
 
   describe("Metadata & SEO", () => {
     it("exposes title, description and canonical for the route", () => {
@@ -49,23 +71,20 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
       expect(
         screen.getByRole("heading", { level: 1, name: /find the right dose/i })
       ).toBeTruthy();
-
-      const ld = document.getElementById("dose-calculator-breadcrumb-ld");
-      expect(ld?.textContent).toContain("Dose calculator");
-
+      expect(
+        document.getElementById("dose-calculator-breadcrumb-ld")?.textContent
+      ).toContain("Dose calculator");
       expect(screen.getByRole("main")).toBeTruthy();
       expect(
         screen.getByRole("button", { name: "Calculate dose" })
       ).toBeTruthy();
-      expect(
-        screen.getByText(/for animal use only/i, { exact: false })
-      ).toBeTruthy();
+      expect(screen.getByText(/for animal use only/i)).toBeTruthy();
     });
   });
 
   describe("Inputs (semantic elements)", () => {
     it("renders species, age and activity as labelled radio groups", () => {
-      render(<DoseCalculator products={petProducts} />);
+      renderCalc();
 
       for (const name of ["Dog", "Cat", "Horse"]) {
         expect(screen.getByRole("radio", { name })).toBeTruthy();
@@ -76,14 +95,13 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
       for (const name of ["Low", "Moderate", "High"]) {
         expect(screen.getByRole("radio", { name })).toBeTruthy();
       }
-
       for (const name of ["Species", "Age", "Activity level"]) {
         expect(screen.getByRole("group", { name })).toBeTruthy();
       }
     });
 
     it("exposes the weight field with an associated label and the lb/kg switch", () => {
-      render(<DoseCalculator products={petProducts} />);
+      renderCalc();
 
       const weight = screen.getByRole("spinbutton", {
         name: "Pet weight in lb",
@@ -91,19 +109,21 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
       expect(weight.tagName).toBe("INPUT");
 
       const group = screen.getByRole("group", { name: "Weight unit" });
-      const lb = within(group).getByRole("button", { name: "lb" });
-      const kg = within(group).getByRole("button", { name: "kg" });
-      expect(lb.getAttribute("aria-pressed")).toBe("true");
-      expect(kg.getAttribute("aria-pressed")).toBe("false");
+      expect(
+        within(group)
+          .getByRole("button", { name: "lb" })
+          .getAttribute("aria-pressed")
+      ).toBe("true");
+      expect(
+        within(group)
+          .getByRole("button", { name: "kg" })
+          .getAttribute("aria-pressed")
+      ).toBe("false");
     });
 
     it("converts the entered weight when the unit switches", () => {
-      render(<DoseCalculator products={petProducts} />);
-
-      const weight = screen.getByRole("spinbutton", {
-        name: "Pet weight in lb",
-      }) as HTMLInputElement;
-      fireEvent.change(weight, { target: { value: "35" } });
+      renderCalc();
+      enterWeight("35");
 
       const group = screen.getByRole("group", { name: "Weight unit" });
       fireEvent.click(within(group).getByRole("button", { name: "kg" }));
@@ -115,7 +135,7 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
     });
 
     it("offers the species switch for the dose table as buttons", () => {
-      render(<DoseCalculator products={petProducts} />);
+      renderCalc();
 
       const group = screen.getByRole("group", {
         name: "Species for dose table",
@@ -133,14 +153,10 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
     });
   });
 
-  describe("Calculation", () => {
-    it("calculates the dose and shows the recommended product on submit", () => {
-      render(<DoseCalculator products={petProducts} />);
-
-      fireEvent.change(
-        screen.getByRole("spinbutton", { name: "Pet weight in lb" }),
-        { target: { value: "35" } }
-      );
+  describe("Dose comes from the product dosingByWeight", () => {
+    it("calculates the dog dose from the product range on submit", () => {
+      renderCalc();
+      enterWeight("35");
       fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
 
       const result = screen
@@ -151,12 +167,61 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
       expect(
         screen.getByRole("heading", { name: /more good years/i })
       ).toBeTruthy();
-      expect(screen.getByRole("button", { name: "Add to cart" })).toBeTruthy();
     });
 
-    it("shows a validation message and no result when the weight is missing", () => {
-      render(<DoseCalculator products={petProducts} />);
+    it("shows the dog table rows from the product dosingByWeight", () => {
+      renderCalc();
+      const table = screen.getByRole("table");
+      const dogProduct = findDosingProductForSpecies(petProducts, "dog");
+      expect(dogProduct?.dosingByWeight.length).toBeGreaterThan(0);
+      expect(within(table).getByText("Up to 20 lbs")).toBeTruthy();
+      expect(within(table).getByText("1 chew daily")).toBeTruthy();
+    });
 
+    it("shows no dose for cats and horses, since their products have no dosingByWeight", () => {
+      renderCalc();
+      const group = screen.getByRole("group", {
+        name: "Species for dose table",
+      });
+      fireEvent.click(within(group).getByRole("button", { name: "Cats" }));
+
+      expect(screen.queryByRole("table")).toBeNull();
+      expect(
+        screen.getByText("No dose data in the catalog for cats yet.")
+      ).toBeTruthy();
+      // no hardcoded cat dose from the old lib constants
+      expect(screen.queryByText("1 mL daily")).toBeNull();
+
+      fireEvent.click(within(group).getByRole("button", { name: "Horses" }));
+      expect(
+        screen.getByText("No dose data in the catalog for horses yet.")
+      ).toBeTruthy();
+    });
+
+    it("shows no dose in the result for a species whose product has no dosingByWeight", () => {
+      renderCalc();
+      fireEvent.click(screen.getByRole("radio", { name: "Cat" }));
+      enterWeight("8");
+      fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
+
+      expect(
+        screen.getByText("No dose data in the catalog for this product yet.")
+      ).toBeTruthy();
+      expect(screen.queryByText("0.5 mL daily")).toBeNull();
+      expect(screen.getByRole("heading", { name: /high jump/i })).toBeTruthy();
+    });
+
+    it("picks the recommended product per species", () => {
+      expect(findProductForSpecies(petProducts, "cat")?.species).toBe("cat");
+      expect(findProductForSpecies(petProducts, "horse")?.species).toBe(
+        "horse"
+      );
+    });
+  });
+
+  describe("Validation and cart", () => {
+    it("shows a validation message and no result when the weight is missing", () => {
+      renderCalc();
       fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
 
       expect(screen.getByRole("alert").textContent).toContain(
@@ -170,11 +235,8 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
         .spyOn(cartProvider, "addLines")
         .mockResolvedValue({} as never);
 
-      render(<DoseCalculator products={petProducts} />);
-      fireEvent.change(
-        screen.getByRole("spinbutton", { name: "Pet weight in lb" }),
-        { target: { value: "35" } }
-      );
+      renderCalc();
+      enterWeight("35");
       fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
       fireEvent.click(screen.getByRole("button", { name: "Add to cart" }));
 
@@ -188,33 +250,49 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
         },
       ]);
     });
+  });
 
-    it("switches the quick reference table between species", () => {
-      render(<DoseCalculator products={petProducts} />);
+  describe("Price in market currency", () => {
+    it("formats the price with the market currency and locale, not en-US", () => {
+      const gb = getMarket("gb");
+      expect(gb).toBeDefined();
+      renderCalc({ market: gb! });
+      enterWeight("35");
+      fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
 
-      const group = screen.getByRole("group", {
-        name: "Species for dose table",
-      });
-      fireEvent.click(within(group).getByRole("button", { name: "Cats" }));
+      // 44 USD * 0.79 GBP rate = 34.76 GBP
+      expect(screen.getByText("£34.76")).toBeTruthy();
+      expect(screen.queryByText(/^\$/)).toBeNull();
+    });
 
-      const table = screen.getByRole("table");
-      expect(within(table).getByText("Up to 10 lbs")).toBeTruthy();
-      expect(within(table).getByText("1 mL daily")).toBeTruthy();
+    it("uses the default US market price when no other market is set", () => {
+      renderCalc();
+      enterWeight("35");
+      fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
+      expect(screen.getByText("$44.00")).toBeTruthy();
     });
   });
 
-  describe("Helpers", () => {
-    it("picks the first pet product for the selected species", () => {
-      expect(findProductForSpecies(petProducts, "cat")?.species).toBe("cat");
-      expect(findProductForSpecies(petProducts, "horse")?.species).toBe(
-        "horse"
-      );
+  describe("Product image", () => {
+    it("renders the recommended product image with next/image when the file exists", () => {
+      renderCalc({
+        productImages: {
+          "more-good-years": "/images/products/more-good-years-front.webp",
+        },
+      });
+      enterWeight("35");
+      fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
+
+      const img = screen.getByRole("img", { name: "More Good Years" });
+      expect(img.getAttribute("src")).toContain("more-good-years-front");
     });
 
-    it("formats prices with the catalog currency, not a hardcoded symbol", () => {
-      expect(formatPrice(44, "USD")).toBe("$44.00");
-      expect(formatPrice(44, "EUR")).toContain("44");
-      expect(formatPrice(44, "EUR")).not.toContain("$");
+    it("renders no image when the product image is not available", () => {
+      renderCalc({ productImages: {} });
+      enterWeight("35");
+      fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
+
+      expect(screen.queryByRole("img")).toBeNull();
     });
   });
 });

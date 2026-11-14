@@ -1,26 +1,30 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import type { Product } from "@/lib/contracts/catalog";
+import type { DosingRange, Product } from "@/lib/contracts/catalog";
 import type { AddCartLineInput } from "@/lib/contracts/cart";
 import { cartProvider } from "@/lib/providers/client";
 import { Button } from "@/components/ui/button";
 import {
-  calculateDose,
   convertKgToLb,
   convertLbToKg,
   formatWeight,
-  getSpeciesDosingTable,
+  getDoseForProduct,
   type ActivityLevel,
-  type DoseResult,
   type PetAgeGroup,
   type PetSpecies,
   type WeightUnit,
 } from "@/lib/dosing";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 
 export interface DoseCalculatorProps {
   products: Product[];
+  market: Market;
+  /** Product image paths that exist in /public, keyed by product slug. */
+  productImages: Record<string, string>;
 }
 
 interface CalculationResult {
@@ -30,7 +34,7 @@ interface CalculationResult {
   age: PetAgeGroup;
   activity: ActivityLevel;
   product: Product | null;
-  dose: DoseResult;
+  range: DosingRange | null;
 }
 
 const SPECIES_OPTIONS: { value: PetSpecies; label: string }[] = [
@@ -61,7 +65,7 @@ const CHOICE_OFF = "border-border bg-bg text-fg hover:border-fg/40";
 const TOGGLE_BASE =
   "flex min-h-[44px] min-w-[44px] items-center justify-center rounded-pill px-3.5 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
-/** Catalog product used for the recommendation: first pet product of the species. */
+/** Recommended product: first pet product of the species in the catalog. */
 export function findProductForSpecies(
   products: Product[],
   species: PetSpecies
@@ -69,15 +73,23 @@ export function findProductForSpecies(
   return products.find((p) => p.species === species) ?? null;
 }
 
-/** Formats a catalog price with its own currency. */
-export function formatPrice(amount: number, currencyCode: string): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: currencyCode,
-  }).format(amount);
+/** Product whose catalog dosingByWeight drives the dose table for a species. */
+export function findDosingProductForSpecies(
+  products: Product[],
+  species: PetSpecies
+): Product | null {
+  return (
+    products.find(
+      (p) => p.species === species && p.dosingByWeight.length > 0
+    ) ?? null
+  );
 }
 
-export function DoseCalculator({ products }: DoseCalculatorProps) {
+export function DoseCalculator({
+  products,
+  market,
+  productImages,
+}: DoseCalculatorProps) {
   const [species, setSpecies] = useState<PetSpecies>("dog");
   const [unit, setUnit] = useState<WeightUnit>("lb");
   const [weightInput, setWeightInput] = useState<string>("");
@@ -108,17 +120,13 @@ export function DoseCalculator({ products }: DoseCalculatorProps) {
       return;
     }
     const product = findProductForSpecies(products, species);
-    const dose = calculateDose({
-      species,
-      weight,
-      unit,
-      age,
-      activity,
-      product,
-    });
+    const range =
+      product && product.dosingByWeight.length > 0
+        ? getDoseForProduct(product, weight, unit)
+        : null;
     setError(null);
     setCartStatus(null);
-    setResult({ species, weight, unit, age, activity, product, dose });
+    setResult({ species, weight, unit, age, activity, product, range });
   };
 
   const handleAddToCart = async (product: Product) => {
@@ -137,7 +145,7 @@ export function DoseCalculator({ products }: DoseCalculatorProps) {
     }
   };
 
-  const tableRows = getSpeciesDosingTable(tableSpecies);
+  const tableProduct = findDosingProductForSpecies(products, tableSpecies);
   const tableLabel =
     SPECIES_OPTIONS.find((s) => s.value === tableSpecies)?.label ?? "Dog";
 
@@ -315,16 +323,17 @@ export function DoseCalculator({ products }: DoseCalculatorProps) {
       </form>
 
       {/* Result */}
-      <div className="space-y-6 lg:col-span-5 lg:sticky lg:top-24">
-        <section className="rounded-card border border-border bg-bg-elevated p-6 shadow-card sm:p-8">
-          <div className="flex items-center justify-between">
-            <h2
-              id="dose-result-heading"
-              className="text-xs font-extrabold tracking-[0.12em] text-accent"
-            >
-              YOUR RESULT
-            </h2>
-          </div>
+      <div className="space-y-6 lg:sticky lg:top-24 lg:col-span-5">
+        <section
+          aria-labelledby="dose-result-heading"
+          className="rounded-card border border-border bg-bg-elevated p-6 shadow-card sm:p-8"
+        >
+          <h2
+            id="dose-result-heading"
+            className="text-xs font-extrabold tracking-[0.12em] text-accent"
+          >
+            YOUR RESULT
+          </h2>
 
           {result ? (
             <ResultBody result={result} />
@@ -339,6 +348,8 @@ export function DoseCalculator({ products }: DoseCalculatorProps) {
           <RecommendedProduct
             product={result.product}
             species={result.species}
+            market={market}
+            imageSrc={productImages[result.product.slug] ?? null}
             onAddToCart={handleAddToCart}
             cartStatus={cartStatus}
           />
@@ -404,40 +415,43 @@ export function DoseCalculator({ products }: DoseCalculatorProps) {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-card border border-border bg-bg-elevated">
-          <table className="w-full min-w-[480px] text-left text-sm">
-            <caption className="sr-only">
-              Dose by weight for {tableLabel.toLowerCase()}s
-            </caption>
-            <thead className="border-b border-border text-xs font-extrabold uppercase tracking-wider text-fg-muted">
-              <tr>
-                <th scope="col" className="px-5 py-4">
-                  Weight
-                </th>
-                <th scope="col" className="px-5 py-4">
-                  Dose
-                </th>
-                <th scope="col" className="px-5 py-4">
-                  Notes
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableRows.map((row) => (
-                <tr
-                  key={row.bandLabel}
-                  className="border-b border-border/60 last:border-b-0"
-                >
-                  <th scope="row" className="px-5 py-4 font-bold">
-                    {row.bandLabel}
+        {tableProduct ? (
+          <div className="overflow-x-auto rounded-card border border-border bg-bg-elevated">
+            <table className="w-full min-w-[360px] text-left text-sm">
+              <caption className="sr-only">
+                Dose by weight for {tableLabel.toLowerCase()}s, from{" "}
+                {tableProduct.name}
+              </caption>
+              <thead className="border-b border-border text-xs font-extrabold uppercase tracking-wider text-fg-muted">
+                <tr>
+                  <th scope="col" className="px-5 py-4">
+                    Weight
                   </th>
-                  <td className="px-5 py-4 font-extrabold">{row.dose}</td>
-                  <td className="px-5 py-4 text-fg-muted">{row.notes}</td>
+                  <th scope="col" className="px-5 py-4">
+                    Dose
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {tableProduct.dosingByWeight.map((range) => (
+                  <tr
+                    key={`${range.minWeightLbs}-${range.maxWeightLbs}`}
+                    className="border-b border-border/60 last:border-b-0"
+                  >
+                    <th scope="row" className="px-5 py-4 font-bold">
+                      {range.servingDescription}
+                    </th>
+                    <td className="px-5 py-4 font-extrabold">{range.dose}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-sm text-fg-muted">
+            No dose data in the catalog for {tableLabel.toLowerCase()}s yet.
+          </p>
+        )}
       </section>
     </div>
   );
@@ -455,7 +469,6 @@ function StepNumber({ n }: { n: number }) {
 }
 
 function ResultBody({ result }: { result: CalculationResult }) {
-  const { dose } = result;
   const speciesLabel =
     SPECIES_OPTIONS.find((s) => s.value === result.species)?.label ?? "";
   const ageLabel = AGE_OPTIONS.find((a) => a.value === result.age)?.label ?? "";
@@ -469,44 +482,19 @@ function ResultBody({ result }: { result: CalculationResult }) {
         {activityLabel.toLowerCase()} activity
       </p>
 
-      <div>
-        <p className="title text-4xl font-extrabold leading-none tracking-tight sm:text-5xl">
-          {dose.dose}
-        </p>
-        <p className="mt-2 text-xs font-bold uppercase tracking-wider text-fg-muted">
-          {dose.servingDescription}
-        </p>
-      </div>
-
-      {dose.dailySchedule && (
-        <div className="space-y-2 rounded-card border border-border bg-bg p-5">
-          <p className="text-[11px] font-extrabold uppercase tracking-wider text-fg-muted">
-            Daily schedule
+      {result.range ? (
+        <div>
+          <p className="title text-4xl font-extrabold leading-none tracking-tight sm:text-5xl">
+            {result.range.dose}
           </p>
-          <div className="flex items-center justify-between gap-4 border-b border-border/50 py-2 text-sm">
-            <span className="font-bold">Morning</span>
-            <span className="text-right font-extrabold">
-              {dose.dailySchedule.morning}
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-4 py-2 text-sm">
-            <span className="font-bold">Evening</span>
-            <span className="text-right font-extrabold">
-              {dose.dailySchedule.evening}
-            </span>
-          </div>
-        </div>
-      )}
-
-      {dose.starterGuideline && (
-        <div className="space-y-2">
-          <p className="text-[11px] font-extrabold uppercase tracking-wider text-fg-muted">
-            First week
-          </p>
-          <p className="text-sm leading-relaxed text-fg-muted">
-            {dose.starterGuideline}
+          <p className="mt-2 text-xs font-bold uppercase tracking-wider text-fg-muted">
+            {result.range.servingDescription}
           </p>
         </div>
+      ) : (
+        <p className="text-base font-bold text-fg-muted">
+          No dose data in the catalog for this product yet.
+        </p>
       )}
     </div>
   );
@@ -515,11 +503,15 @@ function ResultBody({ result }: { result: CalculationResult }) {
 function RecommendedProduct({
   product,
   species,
+  market,
+  imageSrc,
   onAddToCart,
   cartStatus,
 }: {
   product: Product;
   species: PetSpecies;
+  market: Market;
+  imageSrc: string | null;
   onAddToCart: (product: Product) => void;
   cartStatus: string | null;
 }) {
@@ -531,52 +523,63 @@ function RecommendedProduct({
   return (
     <section
       aria-labelledby="dose-recommended-heading"
-      className="rounded-card border border-border bg-bg-elevated p-5 sm:p-6"
+      className="flex gap-4 rounded-card border border-border bg-bg-elevated p-5 sm:p-6"
     >
-      <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-fg-muted">
-        Recommended for your {speciesLabel.toLowerCase()}
-      </p>
-      <h2
-        id="dose-recommended-heading"
-        className="title mt-1 text-lg font-extrabold uppercase leading-tight"
-      >
-        <Link
-          href={`/pet/products/${product.slug}`}
-          className="underline underline-offset-4 hover:text-accent"
+      {imageSrc && (
+        <Image
+          src={imageSrc}
+          alt={product.name}
+          width={96}
+          height={96}
+          className="h-24 w-24 shrink-0 rounded-field object-contain"
+        />
+      )}
+      <div className="min-w-0 flex-1">
+        <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-fg-muted">
+          Recommended for your {speciesLabel.toLowerCase()}
+        </p>
+        <h2
+          id="dose-recommended-heading"
+          className="title mt-1 text-lg font-extrabold uppercase leading-tight"
         >
-          {product.name}
-        </Link>
-      </h2>
-      <p className="mt-1 text-sm text-fg-muted">
-        {product.format} · {product.servingsPerJar} servings per jar
-      </p>
-
-      {variant && (
-        <p className="mt-3 text-xl font-extrabold">
-          {formatPrice(variant.price.amount, variant.price.currencyCode)}
+          <Link
+            href={`/pet/products/${product.slug}`}
+            className="underline underline-offset-4 hover:text-accent"
+          >
+            {product.name}
+          </Link>
+        </h2>
+        <p className="mt-1 text-sm text-fg-muted">
+          {product.format} · {product.servingsPerJar} servings per jar
         </p>
-      )}
-      {plan && (
-        <p className="mt-1 text-xs text-fg-muted">
-          Subscribe &amp; save {plan.discountPercentage}% · ships every{" "}
-          {plan.intervalDays} days
-        </p>
-      )}
 
-      {variant && (
-        <div className="mt-4">
-          <Button type="button" onClick={() => onAddToCart(product)}>
-            Add to cart
-          </Button>
-        </div>
-      )}
-      <p
-        role="status"
-        aria-live="polite"
-        className="mt-2 min-h-[1.25rem] text-sm font-bold"
-      >
-        {cartStatus}
-      </p>
+        {variant && (
+          <p className="mt-3 text-xl font-extrabold">
+            {formatMoneyWithMarket(variant.price, market)}
+          </p>
+        )}
+        {plan && (
+          <p className="mt-1 text-xs text-fg-muted">
+            Subscribe &amp; save {plan.discountPercentage}% · ships every{" "}
+            {plan.intervalDays} days
+          </p>
+        )}
+
+        {variant && (
+          <div className="mt-4">
+            <Button type="button" onClick={() => onAddToCart(product)}>
+              Add to cart
+            </Button>
+          </div>
+        )}
+        <p
+          role="status"
+          aria-live="polite"
+          className="mt-2 min-h-[1.25rem] text-sm font-bold"
+        >
+          {cartStatus}
+        </p>
+      </div>
     </section>
   );
 }

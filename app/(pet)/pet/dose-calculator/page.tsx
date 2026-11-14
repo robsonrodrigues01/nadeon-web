@@ -1,8 +1,13 @@
 import React from "react";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { catalogProvider } from "@/lib/providers";
 import { buildBreadcrumbJsonLd, buildMetadata, JsonLd } from "@/lib/seo";
+import { getDefaultMarket, getMarket } from "@/lib/market/markets";
+import { MARKET_COOKIE_NAME } from "@/lib/market/cookies";
 import { PetRegulatoryNotice } from "../_components/pet-regulatory-notice";
 import { DoseCalculator } from "./_components/dose-calculator";
 
@@ -15,6 +20,19 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function DoseCalculatorPage() {
   const petProducts = await catalogProvider.getProducts({ line: "pet" });
+
+  const cookieStore = await cookies();
+  const market =
+    getMarket(cookieStore.get(MARKET_COOKIE_NAME)?.value) ?? getDefaultMarket();
+
+  // Only images that exist in /public are passed on; missing files are not rendered.
+  const productImages: Record<string, string> = {};
+  for (const product of petProducts) {
+    const src = product.images[0];
+    if (src && existsSync(path.join(process.cwd(), "public", src))) {
+      productImages[product.slug] = src;
+    }
+  }
 
   const breadcrumbLd = buildBreadcrumbJsonLd([
     { name: "Pet", url: "/pet" },
@@ -60,7 +78,11 @@ export default async function DoseCalculatorPage() {
 
       <div className="px-5 py-12 sm:px-8 lg:px-16">
         <div className="mx-auto max-w-7xl">
-          <DoseCalculator products={petProducts} />
+          <DoseCalculator
+            products={petProducts}
+            market={market}
+            productImages={productImages}
+          />
         </div>
       </div>
 
