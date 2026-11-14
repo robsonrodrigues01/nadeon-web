@@ -12,6 +12,7 @@ export interface Task {
   status:
     "backlog" | "em_andamento" | "para_revisao" | "entregue" | "bloqueada";
   responsavel: string | null;
+  revisor?: string | null;
   lease_ate: string | null;
   branch: string | null;
   pr: string | null;
@@ -335,6 +336,11 @@ export function PipelineDashboard({ tasks, events }: PipelineDashboardProps) {
                             <span className="font-medium text-zinc-300">
                               {task.responsavel || "Não atribuído"}
                             </span>
+                            {task.revisor && (
+                              <span className="text-amber-400">
+                                · revisor {task.revisor}
+                              </span>
+                            )}
                           </div>
 
                           {task.pr && (
@@ -414,7 +420,7 @@ export function PipelineDashboard({ tasks, events }: PipelineDashboardProps) {
                   </td>
                 </tr>
               ) : (
-                events.map((ev) => {
+                events.map((ev, i) => {
                   let badgeColor = "bg-zinc-800 text-zinc-300";
                   if (ev.type === "claim")
                     badgeColor =
@@ -432,7 +438,10 @@ export function PipelineDashboard({ tasks, events }: PipelineDashboardProps) {
                     badgeColor = "bg-zinc-800 text-zinc-400";
 
                   return (
-                    <tr key={ev.event_id} className="hover:bg-zinc-800/30">
+                    <tr
+                      key={`${ev.event_id ?? ev.ts}-${i}`}
+                      className="hover:bg-zinc-800/30"
+                    >
                       <td
                         suppressHydrationWarning
                         className="py-2.5 px-3 font-mono text-zinc-400 whitespace-nowrap"

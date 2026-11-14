@@ -124,3 +124,10 @@
 - **Status:** Aceito
 - **Contexto:** Virada de tráfego do domínio nadeonlabs.com.
 - **Decisão:** Página provisória atual mantida até o corte final. No dia da abertura, apontamento do DNS no Cloudflare em modo DNS-only direto para a Vercel.
+
+## Decisões do Maestro na onda 2 (14/11/2026)
+- Rewards fica fora do lançamento (onda D do plano); rotas mostram só o que o contrato tem.
+- Copy link, Reorder, consulta de pedido de visitante (/track estado B) e miniaturas de pedido dependem de campos novos em lib/contracts: ficam para uma tarefa de contrato antes da onda 4, não bloqueiam a rota.
+- Frete grátis vem de lib/market (W1-26), nunca escrito na página.
+- Board do design vale como fonte de dado quando o catálogo não tem o campo (ex.: tabela de dose dos cavalos), desde que conferido e citado no DONE.
+- Defeito de componente compartilhado não reprova a rota; vira tarefa própria.
