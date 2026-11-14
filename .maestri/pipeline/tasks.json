@@ -669,11 +669,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Prateleira",
-    "lease_ate": "2026-11-14T10:16:52.582Z",
+    "lease_ate": null,
     "branch": "agy/W2-04",
-    "pr": "local",
+    "pr": "local fd917ad",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -811,7 +811,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Bigode",
-    "lease_ate": "2026-11-14T10:27:37.857Z",
+    "lease_ate": "2026-11-14T10:28:25.327Z",
     "branch": "agy/W2-10",
     "pr": "local",
     "criterios": [
@@ -851,7 +851,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Crina",
-    "lease_ate": "2026-11-14T10:23:04.894Z",
+    "lease_ate": "2026-11-14T10:28:01.686Z",
     "branch": "agy/W2-11",
     "pr": "local",
     "criterios": [
