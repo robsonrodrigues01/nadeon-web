@@ -148,4 +148,21 @@ describe("maestri-task CLI e reserva atômica", () => {
     const list = await listTasks(tmpDir);
     expect(list).toHaveLength(1);
   });
+
+  it("done preserva o conteúdo anterior do arquivo DONE se já existir", async () => {
+    await claimTask(tmpDir, "W0-07", "AgentAuthor");
+
+    const statusDir = path.join(tmpDir, "status", "W0-07");
+    fs.mkdirSync(statusDir, { recursive: true });
+    const initialDoneContent = "SHA: 1234567\npnpm verify: ok\n";
+    fs.writeFileSync(path.join(statusDir, "DONE"), initialDoneContent, "utf8");
+
+    await doneTask(tmpDir, "W0-07");
+
+    const donePath = path.join(statusDir, "DONE");
+    const finalContent = fs.readFileSync(donePath, "utf8");
+
+    expect(finalContent.startsWith(initialDoneContent)).toBe(true);
+    expect(finalContent).toContain("Entregue em:");
+  });
 });
