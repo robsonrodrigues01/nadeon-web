@@ -8,3 +8,6 @@ O arquivo `AGENTS.md` existe e foi gerado automaticamente pelo Next.js 16.3 atra
 ### 2. Nome do antigo middleware no Next.js 16.3
 No Next.js 16, a convenção `middleware` foi descontinuada e renomeada para `proxy`.
 O arquivo passa a ser `proxy.ts` (ou `proxy.js`), com a exportação da função nomeada `proxy`. O runtime padrão do `proxy` é `nodejs`.
+
+### 3. Integração e Deploy na Vercel
+O repositório `nadeon-web` possui Git próprio e independente na pasta `nadeon-web/`, conectado ao GitHub em `robsonrodrigues01/nadeon-web` e ao projeto Vercel `robsoncoffys-projects/nadeon-web`. Commits subsequentes utilizam o autor associado à conta Vercel (`robsonccr@gmail.com`).
