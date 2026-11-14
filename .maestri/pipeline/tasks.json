@@ -510,7 +510,7 @@
     "responsavel": "Convite",
     "lease_ate": null,
     "branch": "agy/W1-09",
-    "pr": "local",
+    "pr": "local 04780ee",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -548,11 +548,11 @@
     "depende_de": [
       "W1-19"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Rotulo",
-    "lease_ate": "2026-11-14T09:54:49.583Z",
+    "lease_ate": null,
     "branch": "agy/W1-20",
-    "pr": "local ece32bf",
+    "pr": "local 04780ee",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
