@@ -177,5 +177,19 @@ describe("W1-06 Newsletter Component", () => {
         ).toBeDefined();
       });
     });
+
+    it("submits using server action when provider prop is omitted", async () => {
+      render(<Newsletter variant="human" />);
+
+      const input = screen.getByLabelText(/email address/i);
+      fireEvent.change(input, { target: { value: "action.user@example.com" } });
+
+      const button = screen.getByRole("button", { name: /get 10% off/i });
+      fireEvent.click(button);
+
+      await waitFor(() => {
+        expect(screen.getByText(/thank you for subscribing/i)).toBeDefined();
+      });
+    });
   });
 });

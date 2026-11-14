@@ -137,9 +137,7 @@ describe("ProductCard component (W1-12)", () => {
 
     // Claim with asterisk
     expect(
-      screen.getByText(
-        /Supports healthy cellular metabolism and joint comfort in mature dogs\*/i
-      )
+      screen.getByText(/Supports NAD\+ levels in senior dogs\*/i)
     ).toBeTruthy();
 
     // Chews format

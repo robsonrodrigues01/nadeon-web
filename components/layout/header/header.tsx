@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Search, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
-import { useCartStore } from "@/lib/providers/mock/cart";
+import { useCartStore } from "@/lib/providers/client";
 
 export interface HeaderProps {
   variant?: "human" | "pet";

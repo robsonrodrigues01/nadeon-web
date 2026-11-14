@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Product, Money } from "@/lib/contracts/catalog";
 import type { Cart, CartProvider } from "@/lib/contracts/cart";
-import { cartProvider as defaultCartProvider } from "@/lib/providers";
+import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
 import { Button } from "@/components/ui/button";
 import { Claim } from "./claim";
 

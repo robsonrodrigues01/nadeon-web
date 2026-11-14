@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
-import { formsProvider } from "@/lib/providers";
+import { subscribeNewsletter } from "./actions";
 import type {
   FormsProvider,
   FormSubmissionResult,
@@ -33,7 +33,7 @@ export function Newsletter({
   title,
   subtitle,
   buttonText = "Get 10% off",
-  provider = formsProvider,
+  provider,
   className,
   id,
   onSuccess,
@@ -72,7 +72,9 @@ export function Newsletter({
     setServerError(null);
     try {
       // Newsletter requires affirmative acceptance of terms and privacy policy
-      const result = await provider.subscribe(resolvedList, data.email, true);
+      const result = provider
+        ? await provider.subscribe(resolvedList, data.email, true)
+        : await subscribeNewsletter(resolvedList, data.email, true);
       if (result.success) {
         setSuccessResult(result);
         reset();

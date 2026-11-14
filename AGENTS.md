@@ -141,3 +141,10 @@ que foi executada. Documentação exige o diff como evidência, sem screenshots.
 
 - Certo: `DONE` com SHA, verify verde e evidências; Maestro obtém revisão antes do merge local.
 - Errado: declarar verify verde sem executar, fazer merge sem revisão ou usar mocks como prova de integração real.
+
+### 13. Providers no cliente
+
+Componente cliente (`"use client"`) só importa de `lib/providers/client`. Nunca importe de `lib/providers` em componente cliente. Submissões e mutações usam Server Actions.
+
+- Certo: `import { cartProvider } from "@/lib/providers/client"` em componente cliente e server action para formulários.
+- Errado: `import { formsProvider } from "@/lib/providers"` dentro de arquivo com `"use client"`.
