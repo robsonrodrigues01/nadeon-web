@@ -631,7 +631,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Aurora",
-    "lease_ate": "2026-11-14T14:17:56.547Z",
+    "lease_ate": "2026-11-14T14:26:54.364Z",
     "branch": "agy/W2-02",
     "pr": "local",
     "criterios": [
@@ -691,7 +691,7 @@
     ],
     "status": "entregue",
     "responsavel": "Capsula",
-    "lease_ate": "2026-11-14T10:21:21.251Z",
+    "lease_ate": "2026-11-14T14:31:43.774Z",
     "branch": "agy/W2-06",
     "pr": "local",
     "criterios": [
@@ -811,7 +811,7 @@
     ],
     "status": "para_revisao",
     "responsavel": "Bigode",
-    "lease_ate": null,
+    "lease_ate": "2026-11-14T14:18:37.771Z",
     "branch": "agy/W2-10",
     "pr": "local",
     "criterios": [
@@ -829,16 +829,16 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Agulha",
     "branch": "agy/W1-23",
-    "pr": "local",
+    "pr": "local 76d3bed",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ],
-    "lease_ate": "2026-11-14T10:28:40.452Z",
+    "lease_ate": null,
     "blocked": false
   },
   {
@@ -852,7 +852,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Crina",
-    "lease_ate": "2026-11-14T10:31:01.895Z",
+    "lease_ate": "2026-11-14T14:28:43.509Z",
     "branch": "agy/W2-11",
     "pr": "local",
     "criterios": [
@@ -872,7 +872,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Kit",
-    "lease_ate": "2026-11-14T14:18:07.232Z",
+    "lease_ate": "2026-11-14T14:28:08.207Z",
     "branch": "agy/W2-13",
     "pr": "local",
     "criterios": [
@@ -910,11 +910,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Caixa",
-    "lease_ate": "2026-11-14T10:32:32.012Z",
+    "lease_ate": null,
     "branch": "agy/W2-08",
-    "pr": "local",
+    "pr": "local 6e624c9",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -972,7 +972,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Carrinho",
-    "lease_ate": "2026-11-14T14:16:18.670Z",
+    "lease_ate": "2026-11-14T14:29:07.943Z",
     "branch": "agy/W2-17",
     "pr": "local",
     "criterios": [
