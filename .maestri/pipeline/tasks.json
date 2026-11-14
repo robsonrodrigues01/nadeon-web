@@ -990,11 +990,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Rastreio",
-    "lease_ate": "2026-11-14T14:44:07.069Z",
+    "lease_ate": null,
     "branch": "agy/W2-18",
-    "pr": "local",
+    "pr": "local 2a8161b",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1110,9 +1110,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Origem",
-    "lease_ate": "2026-11-14T17:52:57.991Z",
+    "lease_ate": null,
     "branch": "agy/W2-25",
     "pr": "local",
     "criterios": [
