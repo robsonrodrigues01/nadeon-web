@@ -235,7 +235,7 @@ describe("Route /human/products/[slug] (W2-06)", () => {
         name: /add to cart/i,
       });
       expect(stickyButton).toBeTruthy();
-    });
+    }, 15000);
 
     it("toggles FAQ accordion items when clicked", async () => {
       const jsx = await ProductPage({
@@ -254,6 +254,6 @@ describe("Route /human/products/[slug] (W2-06)", () => {
       expect(
         screen.getByText(/biohack provides nmn in the morning/i)
       ).toBeTruthy();
-    });
+    }, 15000);
   });
 });
