@@ -1030,7 +1030,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Pedidos",
     "lease_ate": null,
     "branch": "agy/W2-20",
@@ -1039,8 +1039,7 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ],
-    "revisor": "Malha"
+    ]
   },
   {
     "id": "W2-21",
@@ -1211,7 +1210,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Laudo",
     "lease_ate": null,
     "branch": "agy/W2-28",
@@ -1220,8 +1219,7 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ],
-    "revisor": "Sonda"
+    ]
   },
   {
     "id": "W2-29",
@@ -1241,7 +1239,8 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Grifo"
   },
   {
     "id": "W2-30",
