@@ -850,11 +850,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Crina",
-    "lease_ate": "2026-11-14T14:28:43.509Z",
+    "lease_ate": null,
     "branch": "agy/W2-11",
-    "pr": "local",
+    "pr": "local 5434c30",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
