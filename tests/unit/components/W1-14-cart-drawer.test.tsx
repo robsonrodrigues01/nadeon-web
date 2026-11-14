@@ -71,6 +71,7 @@ describe("CartDrawer Component (W1-14)", () => {
       get: vi.fn().mockResolvedValue(mockCart),
       create: vi.fn().mockResolvedValue(mockCart),
       addLines: vi.fn().mockResolvedValue(mockCart),
+      addKit: vi.fn().mockResolvedValue(mockCart),
       updateLines: vi.fn().mockResolvedValue(mockCart),
       removeLines: vi.fn().mockResolvedValue(mockCart),
       applyDiscount: vi.fn().mockResolvedValue(mockCart),
