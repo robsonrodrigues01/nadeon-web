@@ -14,10 +14,7 @@ export interface SearchResultItemProps {
   priceLabel?: string;
 }
 
-const FALLBACK_IMAGE = {
-  human: "/images/products/biohack-front.webp",
-  pet: "/images/products/more-good-years-front.webp",
-} as const;
+const FALLBACK_IMAGE = "/images/products/biohack-front.webp";
 
 export function SearchResultItem({
   product,
@@ -27,9 +24,8 @@ export function SearchResultItem({
   const [feedback, setFeedback] = useState<string | null>(null);
 
   const variant = product.variants[0];
-  const isPet = product.line === "pet";
-  const href = `/${isPet ? "pet" : "human"}/products/${product.slug}`;
-  const imageSrc = product.images[0] || FALLBACK_IMAGE[product.line];
+  const href = `/human/products/${product.slug}`;
+  const imageSrc = product.images[0] || FALLBACK_IMAGE;
   const benefit =
     product.claims.find((claim) => claim.isClaim)?.text ?? product.benefits[0];
   const discount = product.sellingPlans[0]?.discountPercentage;
@@ -83,17 +79,6 @@ export function SearchResultItem({
               ✓
             </span>
             <Claim>{benefit}</Claim>
-          </p>
-        )}
-
-        {isPet && (
-          <p className="mt-2 text-xs font-semibold text-accent" role="note">
-            For animal use only.
-            {product.species === "horse" && (
-              <span className="block">
-                Equine products: not for horses intended for food.
-              </span>
-            )}
           </p>
         )}
       </div>

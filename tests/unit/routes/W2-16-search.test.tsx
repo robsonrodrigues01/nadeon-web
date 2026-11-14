@@ -85,11 +85,25 @@ describe("W2-16: /search route", () => {
     ).toBeGreaterThan(0);
   });
 
-  it("shows the pet notice for pet products matched by query", async () => {
+  it("keeps Pet products out of the Human search results", async () => {
+    // "High Jump" is a Pet product in the mock catalog
     await renderSearch("High Jump");
-    expect(screen.getAllByText("For animal use only.").length).toBeGreaterThan(
-      0
-    );
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: /0 results for “High Jump”/i,
+      })
+    ).toBeTruthy();
+    expect(
+      screen.queryByRole("heading", { level: 3, name: "High Jump" })
+    ).toBeNull();
+    expect(screen.queryByText("For animal use only.")).toBeNull();
+  });
+
+  it("shows only products: no Articles tab or article results", async () => {
+    await renderSearch("nmn");
+    expect(screen.queryByText(/articles/i)).toBeNull();
+    expect(screen.getByRole("link", { name: /^All \(/ })).toBeTruthy();
   });
 
   it("filters results by format with semantic links and aria-current", async () => {
