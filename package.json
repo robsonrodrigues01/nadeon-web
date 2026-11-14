@@ -12,7 +12,9 @@
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "data:check": "node -e \"process.exit(0)\"",
-    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm data:check"
+    "tokens:check": "node scripts/check-tokens.mjs",
+    "tokens:audit": "node scripts/design-audit.mjs",
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && pnpm data:check"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.6",
