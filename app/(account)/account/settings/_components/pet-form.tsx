@@ -1,6 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import type { Pet } from "@/lib/contracts/account";
 import { savePetAction } from "./actions";
 import type { PetView } from "./pet-views";
 
@@ -27,7 +29,7 @@ export interface PetFormProps {
   pet?: PetView;
   concernOptions: string[];
   onCancel: () => void;
-  onSaved: () => void;
+  onSaved: (pet: Pet) => void;
 }
 
 export function PetForm({
@@ -36,11 +38,15 @@ export function PetForm({
   onCancel,
   onSaved,
 }: PetFormProps) {
+  const router = useRouter();
   const headingId = "pet-form-heading";
 
   async function submit(formData: FormData) {
     const saved = await savePetAction(formData);
-    if (saved) onSaved();
+    if (saved) {
+      onSaved(saved);
+      router.refresh();
+    }
   }
 
   return (

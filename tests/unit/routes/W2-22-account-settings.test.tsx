@@ -22,7 +22,17 @@ const redirectMock = vi.hoisted(() =>
 );
 const revalidatePathMock = vi.hoisted(() => vi.fn());
 
-vi.mock("next/navigation", () => ({ redirect: redirectMock }));
+vi.mock("next/navigation", () => ({
+  redirect: redirectMock,
+  useRouter: () => ({
+    refresh: vi.fn(),
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+  }),
+}));
 vi.mock("next/cache", () => ({ revalidatePath: revalidatePathMock }));
 vi.mock("next/headers", () => ({
   cookies: async () => ({ get: () => undefined }),

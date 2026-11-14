@@ -72,7 +72,7 @@ export function ageInYears(
 export function toPetView(
   pet: Pet,
   now: Date,
-  photoExists: (src: string) => boolean
+  photoExists: (src: string) => boolean = (src) => Boolean(src)
 ): PetView {
   const photoSrc =
     pet.photoUrl && photoExists(pet.photoUrl) ? pet.photoUrl : undefined;

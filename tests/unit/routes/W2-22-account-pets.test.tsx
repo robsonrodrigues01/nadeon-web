@@ -19,8 +19,19 @@ const redirectMock = vi.hoisted(() =>
     throw new Error(`NEXT_REDIRECT ${url}`);
   })
 );
+const routerRefreshMock = vi.hoisted(() => vi.fn());
 
-vi.mock("next/navigation", () => ({ redirect: redirectMock }));
+vi.mock("next/navigation", () => ({
+  redirect: redirectMock,
+  useRouter: () => ({
+    refresh: routerRefreshMock,
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+  }),
+}));
 vi.mock("next/cache", () => ({ revalidatePath: vi.fn() }));
 vi.mock("next/headers", () => ({
   cookies: async () => ({ get: () => undefined }),
@@ -53,6 +64,7 @@ function petsSection() {
 describe("W2-22 /account/settings: perfil pet", () => {
   beforeEach(() => {
     redirectMock.mockClear();
+    routerRefreshMock.mockClear();
   });
 
   afterEach(() => {
@@ -274,6 +286,109 @@ describe("W2-22 /account/settings: perfil pet", () => {
     const nav = screen.getByRole("navigation", { name: "Account" });
     expect(nav.textContent ?? "").not.toMatch(/reward/i);
   });
+
+  it("submeter a edição do formulário montado atualiza o cartão, a recomendação e chama router.refresh()", async () => {
+    const saveSpy = vi.spyOn(mockAccountProvider, "savePet").mockResolvedValue({
+      id: "pet_cooper",
+      name: "Cooper",
+      species: "dog",
+      breed: "Golden Retriever",
+      birthDate: "2019-06-15",
+      weightLbs: 72,
+      activityLevel: "moderate",
+      concerns: ["Joint comfort"],
+    });
+
+    await renderPage();
+    const section = petsSection();
+
+    fireEvent.click(
+      within(section).getByRole("button", { name: "Edit profile" })
+    );
+
+    const weightInput = within(section).getByRole("spinbutton", {
+      name: "Weight",
+    });
+    fireEvent.change(weightInput, { target: { value: "72" } });
+
+    const submitBtn = within(section).getByRole("button", {
+      name: "Save pet",
+    });
+    fireEvent.click(submitBtn);
+
+    await vi.waitFor(() => {
+      expect(saveSpy).toHaveBeenCalledTimes(1);
+      expect(routerRefreshMock).toHaveBeenCalledTimes(1);
+      expect(
+        within(section).queryByRole("heading", {
+          level: 3,
+          name: "Edit profile",
+        })
+      ).toBeNull();
+      expect(within(section).getByText("72 lb")).toBeTruthy();
+      expect(
+        within(section).getByText(
+          /Based on Cooper's weight \(72 lb\), age and health focus\./
+        )
+      ).toBeTruthy();
+    });
+  });
+
+  it("submeter a inclusão do formulário montado adiciona o novo pet ao cartão e ao seletor", async () => {
+    const saveSpy = vi.spyOn(mockAccountProvider, "savePet").mockResolvedValue({
+      id: "pet_luna",
+      name: "Luna",
+      species: "dog",
+      breed: "Husky",
+      birthDate: "2021-04-10",
+      weightLbs: 50,
+      activityLevel: "high",
+      concerns: [],
+    });
+
+    await renderPage();
+    const section = petsSection();
+
+    fireEvent.click(within(section).getByRole("button", { name: "+ Add pet" }));
+
+    const nameInput = within(section).getByRole("textbox", {
+      name: "Pet name",
+    });
+    const breedInput = within(section).getByRole("textbox", { name: "Breed" });
+    const weightInput = within(section).getByRole("spinbutton", {
+      name: "Weight",
+    });
+
+    fireEvent.change(nameInput, { target: { value: "Luna" } });
+    fireEvent.change(breedInput, { target: { value: "Husky" } });
+    fireEvent.change(weightInput, { target: { value: "50" } });
+
+    const submitBtn = within(section).getByRole("button", {
+      name: "Save pet",
+    });
+    fireEvent.click(submitBtn);
+
+    await vi.waitFor(() => {
+      expect(saveSpy).toHaveBeenCalledTimes(1);
+      expect(routerRefreshMock).toHaveBeenCalledTimes(1);
+      expect(
+        within(section).queryByRole("heading", {
+          level: 3,
+          name: "Add a pet",
+        })
+      ).toBeNull();
+      expect(
+        within(section).getByRole("heading", { level: 3, name: "Luna" })
+      ).toBeTruthy();
+      expect(within(section).getByText("50 lb")).toBeTruthy();
+
+      const switcher = within(section).getByRole("combobox", {
+        name: "Switch pet",
+      }) as HTMLSelectElement;
+      const options = Array.from(switcher.options).map((opt) => opt.text);
+      expect(options).toContain("Luna");
+    });
+  });
 });
 
 describe("W2-22 savePetAction", () => {
@@ -297,12 +412,23 @@ describe("W2-22 savePetAction", () => {
     photoUrl: "/images/pets/cooper.webp",
   };
 
-  it("salva o pet pelo provider e devolve true", async () => {
+  it("salva o pet pelo provider e devolve o pet salvo", async () => {
+    const fakePet = {
+      id: "pet_cooper",
+      name: "Cooper",
+      species: "dog" as const,
+      breed: "Golden Retriever",
+      birthDate: "2019-06-15",
+      weightLbs: 68,
+      activityLevel: "moderate" as const,
+      concerns: ["Joint comfort", "Healthy aging"],
+      photoUrl: "/images/pets/cooper.webp",
+    };
     const save = vi
       .spyOn(mockAccountProvider, "savePet")
-      .mockResolvedValue({} as Pet);
-    const ok = await savePetAction(petForm(VALID));
-    expect(ok).toBe(true);
+      .mockResolvedValue(fakePet);
+    const saved = await savePetAction(petForm(VALID));
+    expect(saved).toEqual(fakePet);
     expect(save).toHaveBeenCalledWith({
       name: "Cooper",
       species: "dog",
@@ -325,15 +451,13 @@ describe("W2-22 savePetAction", () => {
     );
   });
 
-  it("não salva e devolve false sem nome, sem raça ou com espécie inválida", async () => {
+  it("não salva e devolve null sem nome, sem raça ou com espécie inválida", async () => {
     const save = vi
       .spyOn(mockAccountProvider, "savePet")
       .mockResolvedValue({} as Pet);
-    expect(await savePetAction(petForm({ ...VALID, name: "" }))).toBe(false);
-    expect(await savePetAction(petForm({ ...VALID, breed: "" }))).toBe(false);
-    expect(await savePetAction(petForm({ ...VALID, species: "fish" }))).toBe(
-      false
-    );
+    expect(await savePetAction(petForm({ ...VALID, name: "" }))).toBeNull();
+    expect(await savePetAction(petForm({ ...VALID, breed: "" }))).toBeNull();
+    expect(await savePetAction(petForm({ ...VALID, species: "fish" }))).toBeNull();
     expect(save).not.toHaveBeenCalled();
   });
 

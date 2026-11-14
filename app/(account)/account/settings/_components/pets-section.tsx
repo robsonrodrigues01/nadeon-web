@@ -5,9 +5,10 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { PetRegulatoryNotice } from "@/app/(pet)/pet/_components/pet-regulatory-notice";
 import type { Market } from "@/lib/market/types";
+import type { Pet } from "@/lib/contracts/account";
 import { PetForm } from "./pet-form";
 import { PetRecommendations } from "./pet-recommendations";
-import type { PetView, ProductView } from "./pet-views";
+import { toPetView, type PetView, type ProductView } from "./pet-views";
 
 const SPECIES_LABEL = { dog: "Dog", cat: "Cat", horse: "Horse" } as const;
 const ACTIVITY_LABEL = {
@@ -26,14 +27,37 @@ export interface PetsSectionProps {
 type Editing = PetView | "new" | null;
 
 export function PetsSection({
-  pets,
+  pets: initialPets,
   products,
   concernOptions,
   market,
 }: PetsSectionProps) {
+  const [prevInitialPets, setPrevInitialPets] = useState(initialPets);
+  const [pets, setPets] = useState<PetView[]>(initialPets);
+  if (initialPets !== prevInitialPets) {
+    setPrevInitialPets(initialPets);
+    setPets(initialPets);
+  }
   const [editing, setEditing] = useState<Editing>(null);
-  const [selectedId, setSelectedId] = useState<string | undefined>(pets[0]?.id);
+  const [selectedId, setSelectedId] = useState<string | undefined>(
+    initialPets[0]?.id
+  );
   const formOpen = editing !== null;
+
+  function handleSaved(savedPet: Pet) {
+    const view = toPetView(savedPet, new Date());
+    setPets((current) => {
+      const index = current.findIndex((p) => p.id === view.id);
+      if (index >= 0) {
+        const next = [...current];
+        next[index] = view;
+        return next;
+      }
+      return [...current, view];
+    });
+    setSelectedId((current) => current ?? view.id);
+    setEditing(null);
+  }
 
   return (
     <section
@@ -150,7 +174,7 @@ export function PetsSection({
             pet={editing === "new" ? undefined : editing}
             concernOptions={concernOptions}
             onCancel={() => setEditing(null)}
-            onSaved={() => setEditing(null)}
+            onSaved={handleSaved}
           />
         </div>
       ) : null}
