@@ -61,13 +61,13 @@ export function KitsBrowser({ kits }: KitsBrowserProps) {
               className="flex h-full flex-col overflow-hidden rounded-card border border-border bg-bg-elevated shadow-card"
             >
               {kit.image && (
-                <div className="relative">
+                <div className="relative aspect-[4/3] bg-bg">
                   <Image
                     src={kit.image}
                     alt={kit.name}
                     width={640}
                     height={480}
-                    className="h-auto w-full"
+                    className="h-full w-full object-contain"
                   />
                 </div>
               )}

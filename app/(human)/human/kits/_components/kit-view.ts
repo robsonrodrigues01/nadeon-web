@@ -29,7 +29,18 @@ export function formatKitMoney(money: Money): string {
  * shortcut: each formula is added at its first variant's price, so the kit
  * discount is not applied in the cart until CatalogProvider exposes kit variants.
  */
-export function buildKitViews(kits: Kit[], products: Product[]): KitView[] {
+function renderFor(kit: Kit, available: ReadonlySet<string>): string | null {
+  const slug = kit.products.find((ref) =>
+    available.has(ref.productSlug)
+  )?.productSlug;
+  return slug ? `/renders/${slug}.png` : null;
+}
+
+export function buildKitViews(
+  kits: Kit[],
+  products: Product[],
+  availableRenders: ReadonlySet<string> = new Set()
+): KitView[] {
   const bySlug = new Map(products.map((p) => [p.slug, p]));
   const savingsOf = (kit: Kit) =>
     kit.compareAtPrice ? kit.compareAtPrice.amount - kit.price.amount : 0;
@@ -54,7 +65,8 @@ export function buildKitViews(kits: Kit[], products: Product[]): KitView[] {
       slug: kit.slug,
       name: kit.name,
       description: kit.description,
-      image: kit.images[0] ?? null,
+      // Kit art is not in public/: use the first formula's render that exists, else no image.
+      image: renderFor(kit, availableRenders),
       itemCount: kit.products.reduce((sum, ref) => sum + ref.quantity, 0),
       itemsLabel: members
         .flatMap(({ product }) =>

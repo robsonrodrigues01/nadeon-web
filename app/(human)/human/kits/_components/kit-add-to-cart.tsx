@@ -23,10 +23,14 @@ export function KitAddToCart({
   const handleClick = async () => {
     setStatus("adding");
     try {
+      // TODO(W1-24): switch to the kit-level addKit once it lands on main;
+      // until then the kit's formulas are added line by line (kit price not applied).
       await cartProvider.addLines(cartLines);
       setStatus("added");
+      setTimeout(() => setStatus("idle"), 3000);
     } catch {
       setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
     }
   };
 

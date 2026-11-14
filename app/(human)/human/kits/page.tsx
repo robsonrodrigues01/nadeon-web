@@ -4,6 +4,7 @@ import { buildBreadcrumbJsonLd, buildMetadata, JsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { averageSavingsPercent, buildKitViews } from "./_components/kit-view";
 import { KitsBrowser } from "./_components/kits-browser";
+import { listProductRenders } from "./_components/kit-renders";
 
 export const metadata = buildMetadata({
   title: "Kits & bundles",
@@ -17,7 +18,7 @@ export default async function HumanKitsPage() {
     catalogProvider.getKits("human"),
     catalogProvider.getProducts({ line: "human" }),
   ]);
-  const views = buildKitViews(kits, products);
+  const views = buildKitViews(kits, products, listProductRenders());
   const averageSavings = averageSavingsPercent(views);
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
@@ -90,7 +91,7 @@ export default async function HumanKitsPage() {
         <h2 id="how-kits-work" className="text-3xl font-bold text-fg">
           How kits work
         </h2>
-        <dl className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <dl className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {averageSavings !== null && (
             <div className="rounded-card border border-border p-6">
               <dt className="text-3xl font-bold text-accent">
@@ -103,6 +104,12 @@ export default async function HumanKitsPage() {
               </dd>
             </div>
           )}
+          <div className="rounded-card border border-border p-6">
+            <dt className="text-3xl font-bold text-accent">Free shipping</dt>
+            <dd className="mt-2 text-sm text-fg-muted">
+              On one-time orders over $75.
+            </dd>
+          </div>
           <div className="rounded-card border border-border p-6">
             <dt className="text-3xl font-bold text-accent">60 Day guarantee</dt>
             <dd className="mt-2 text-sm text-fg-muted">

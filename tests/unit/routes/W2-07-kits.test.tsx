@@ -152,6 +152,45 @@ describe("W2-07 Route: Kits (`/human/kits`)", () => {
     expect(screen.getByText("60 Day guarantee")).toBeDefined();
   });
 
+  it("shows the free shipping card with the design copy", async () => {
+    await renderList();
+    expect(screen.getByText("Free shipping")).toBeDefined();
+    expect(screen.getByText("On one-time orders over $75.")).toBeDefined();
+  });
+
+  it("uses an existing product render as kit image and omits the image when none exists", () => {
+    const kits = [
+      {
+        slug: "a",
+        name: "A",
+        description: "",
+        images: ["/images/kits/a.webp"],
+        line: "human",
+        price: { amount: 10, currencyCode: "USD" },
+        products: [{ productSlug: "biohack", quantity: 1 }],
+      },
+    ] as never;
+    const products = [
+      {
+        slug: "biohack",
+        name: "BioHack",
+        technicalName: "",
+        variants: [
+          {
+            id: "v",
+            jars: 1,
+            title: "",
+            price: { amount: 10, currencyCode: "USD" },
+          },
+        ],
+      },
+    ] as never;
+    expect(buildKitViews(kits, products, new Set(["biohack"]))[0].image).toBe(
+      "/renders/biohack.png"
+    );
+    expect(buildKitViews(kits, products)[0].image).toBeNull();
+  });
+
   it("does not leave placeholders, example markers or dollar placeholders in the text", async () => {
     await renderList();
     expect(document.body.textContent ?? "").not.toMatch(PLACEHOLDERS);
