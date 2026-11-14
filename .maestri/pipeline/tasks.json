@@ -789,11 +789,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Combo",
     "lease_ate": null,
     "branch": "agy/W2-07",
-    "pr": "local",
+    "pr": "local 4d2503a",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
