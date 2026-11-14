@@ -53,8 +53,15 @@ export async function generateMetadata({
   });
 }
 
-function formatPriceString(amount: number, currencyCode: string): string {
-  return new Intl.NumberFormat("en-US", {
+// shortcut: one market locale until CatalogProvider takes a market param (Shopify Markets, onda 4)
+const MARKET_LOCALE = "en-US";
+
+function formatPriceString(
+  amount: number,
+  currencyCode: string,
+  locale: string
+): string {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: currencyCode,
   }).format(amount);
@@ -78,20 +85,23 @@ export default async function ProductPage({ params }: PageProps) {
   );
   const jsonLdData = buildProductJsonLd(product);
 
+  // Price only from the catalog; a missing variant or plan hides that price
   const primaryVariant = product.variants[0];
   const primaryPlan = product.sellingPlans[0];
-  const basePriceAmount = primaryVariant?.price.amount ?? 59;
-  const currency = primaryVariant?.price.currencyCode ?? "USD";
-  const discountRate = primaryPlan?.discountPercentage ?? 15;
-  const discountedPriceAmount = Number(
-    (basePriceAmount * ((100 - discountRate) / 100)).toFixed(2)
-  );
-
-  const formattedBasePrice = formatPriceString(basePriceAmount, currency);
-  const formattedDiscountedPrice = formatPriceString(
-    discountedPriceAmount,
-    currency
-  );
+  const price = primaryVariant?.price;
+  const formattedBasePrice = price
+    ? formatPriceString(price.amount, price.currencyCode, MARKET_LOCALE)
+    : null;
+  const formattedDiscountedPrice =
+    price && primaryPlan
+      ? formatPriceString(
+          Number(
+            (price.amount * ((100 - primaryPlan.discountPercentage) / 100)).toFixed(2)
+          ),
+          price.currencyCode,
+          MARKET_LOCALE
+        )
+      : null;
 
   return (
     <>
@@ -195,18 +205,22 @@ export default async function ProductPage({ params }: PageProps) {
                   |
                 </span>
                 <span className="text-fg-muted">
-                  Lab report published for every lot
+                  first lots publishing soon
                 </span>
               </div>
 
               {/* Price Headline */}
               <div className="flex items-baseline gap-2 py-1">
-                <span className="font-archivo text-2xl sm:text-3xl font-black text-fg">
-                  {formattedBasePrice}
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-fg-muted">
-                  or {formattedDiscountedPrice} with Subscribe &amp; Save
-                </span>
+                {formattedBasePrice && (
+                  <span className="font-archivo text-2xl sm:text-3xl font-black text-fg">
+                    {formattedBasePrice}
+                  </span>
+                )}
+                {formattedDiscountedPrice && (
+                  <span className="text-xs sm:text-sm font-semibold text-fg-muted">
+                    or {formattedDiscountedPrice} with Subscribe &amp; Save
+                  </span>
+                )}
               </div>
 
               {/* Bullet Points / Claims */}
@@ -220,7 +234,7 @@ export default async function ProductPage({ params }: PageProps) {
                       ✓
                     </span>
                     {claim.isClaim ? (
-                      <Claim showDisclaimer={false}>{claim.text}</Claim>
+                      <Claim showDisclaimer>{claim.text}</Claim>
                     ) : (
                       <span className="text-fg-muted">{claim.text}</span>
                     )}
@@ -256,11 +270,7 @@ export default async function ProductPage({ params }: PageProps) {
                 </div>
 
                 <div className="flex items-center justify-between gap-2 pt-2 text-[11px] font-semibold text-fg-muted/80 flex-wrap">
-                  <span>Free shipping over $75</span>
-                  <span>·</span>
                   <span>60-day guarantee</span>
-                  <span>·</span>
-                  <span>Third-party tested</span>
                   <span>·</span>
                   <span>Made in Clifton, NJ</span>
                 </div>
@@ -279,7 +289,11 @@ export default async function ProductPage({ params }: PageProps) {
         <AudienceComparison productName={product.name} />
 
         {/* Section 6: Kit & Pairs Well With */}
-        <KitAndPairs kit={kit} relatedProducts={relatedProducts} />
+        <KitAndPairs
+          kit={kit}
+          relatedProducts={relatedProducts}
+          locale={MARKET_LOCALE}
+        />
 
         {/* Section 7: Reviews */}
         <ReviewsSection productName={product.name} />
@@ -295,7 +309,7 @@ export default async function ProductPage({ params }: PageProps) {
       <Footer line="human" />
 
       {/* Sticky Bottom Bar on Scroll */}
-      <StickyBar product={product} />
+      <StickyBar product={product} locale={MARKET_LOCALE} />
     </>
   );
 }
