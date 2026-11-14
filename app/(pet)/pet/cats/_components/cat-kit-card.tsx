@@ -21,7 +21,7 @@ export function CatKitCard({ kit, market }: CatKitCardProps) {
     setIsAdding(true);
     setFailed(false);
     try {
-      await cartProvider.addLines(kit.lines);
+      await cartProvider.addKit(kit.slug, 1);
     } catch {
       setFailed(true);
     } finally {

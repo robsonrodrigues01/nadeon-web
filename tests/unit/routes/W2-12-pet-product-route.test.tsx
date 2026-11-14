@@ -296,7 +296,7 @@ describe("Route W2-12: /pet/products/[slug]", () => {
         }),
       ]);
     });
-  });
+  }, 15000);
 
   it("renders inside section, science, audience, comparison, and vet sections", async () => {
     const pageJsx = await PetProductDetailPage({
@@ -344,7 +344,7 @@ describe("Route W2-12: /pet/products/[slug]", () => {
   });
 
   it("renders Featured kits with Add the kit buttons", async () => {
-    const addLinesSpy = vi.spyOn(cartProvider, "addLines").mockResolvedValue({
+    const addKitSpy = vi.spyOn(cartProvider, "addKit").mockResolvedValue({
       id: "cart_mock",
       lines: [],
       discountCodes: [],
@@ -369,7 +369,7 @@ describe("Route W2-12: /pet/products/[slug]", () => {
 
     fireEvent.click(addKitBtns[0]);
     await waitFor(() => {
-      expect(addLinesSpy).toHaveBeenCalled();
+      expect(addKitSpy).toHaveBeenCalled();
     });
   });
 

@@ -90,7 +90,7 @@ export default async function HumanKitPage({ params }: KitPageProps) {
           <div className="max-w-sm">
             <KitAddToCart
               kitName={kit.name}
-              cartLines={view.cartLines}
+              kitSlug={view.slug}
               disabled={!view.canAddToCart}
             />
           </div>

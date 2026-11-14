@@ -11,7 +11,6 @@ export interface CatKitView {
   price: Money;
   compareAtPrice?: Money;
   savePercent: number | null;
-  lines: { variantId: string; quantity: number }[];
 }
 
 export function toQueryString(state: {

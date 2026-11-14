@@ -30,6 +30,8 @@ export const CartLineItemSchema = z.object({
   kit: CartKitSchema.optional(),
   // Preço sem plano por unidade; vem do catálogo e só existe com sellingPlanId.
   compareAtPrice: MoneySchema.optional(),
+  // Desconto do plano da linha (ou do primeiro plano do produto na compra avulsa): alimenta os textos de assinatura da gaveta.
+  subscriptionDiscountPercentage: z.number().min(0).max(100).optional(),
   price: MoneySchema,
   total: MoneySchema,
   customAttributes: z.record(z.string(), z.string()).optional(),

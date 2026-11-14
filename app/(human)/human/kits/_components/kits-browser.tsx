@@ -106,7 +106,7 @@ export function KitsBrowser({ kits }: KitsBrowserProps) {
                 <div className="mt-auto flex flex-col gap-2 pt-2">
                   <KitAddToCart
                     kitName={kit.name}
-                    cartLines={kit.cartLines}
+                    kitSlug={kit.slug}
                     disabled={!kit.canAddToCart}
                   />
                   <Button

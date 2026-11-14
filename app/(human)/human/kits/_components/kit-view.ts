@@ -1,4 +1,3 @@
-import type { AddCartLineInput } from "@/lib/contracts/cart";
 import type { Kit, Money, Product } from "@/lib/contracts/catalog";
 
 export interface KitView {
@@ -13,14 +12,11 @@ export interface KitView {
   savings: Money | null;
   savingsPercent: number;
   isBestValue: boolean;
-  cartLines: AddCartLineInput[];
   canAddToCart: boolean;
 }
 
 /**
  * Turns catalog kits into plain, serializable view models for the UI.
- * shortcut: each formula is added at its first variant's price, so the kit
- * discount is not applied in the cart until CatalogProvider exposes kit variants.
  */
 function renderFor(kit: Kit, available: ReadonlySet<string>): string | null {
   const slug = kit.products.find((ref) =>
@@ -45,10 +41,6 @@ export function buildKitViews(
       ref,
       product: bySlug.get(ref.productSlug),
     }));
-    const cartLines = members.flatMap(({ ref, product }) => {
-      const variantId = product?.variants[0]?.id;
-      return variantId ? [{ variantId, quantity: ref.quantity }] : [];
-    });
     const savingsAmount = savingsOf(kit);
     const isBestValue =
       !bestValueMarked && maxSavings > 0 && savingsAmount === maxSavings;
@@ -82,8 +74,9 @@ export function buildKitViews(
         ? Math.round((savingsAmount / kit.compareAtPrice.amount) * 100)
         : 0,
       isBestValue,
-      cartLines,
-      canAddToCart: cartLines.length === members.length && cartLines.length > 0,
+      canAddToCart:
+        members.length > 0 &&
+        members.every(({ product }) => Boolean(product?.variants[0])),
     };
   });
 }

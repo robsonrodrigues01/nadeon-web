@@ -12,6 +12,7 @@ const mockHumanCart: Cart = {
       variantId: "var_biohack_1",
       quantity: 1,
       sellingPlanId: "plan_biohack_30d",
+      subscriptionDiscountPercentage: 15,
       sellingPlanTitle: "1 jar every 30 days (15% off)",
       product: {
         id: "biohack",
@@ -27,6 +28,7 @@ const mockHumanCart: Cart = {
       variantId: "var_renew_1",
       quantity: 1,
       sellingPlanId: null,
+      subscriptionDiscountPercentage: 15,
       product: {
         id: "renew",
         title: "Renew",
@@ -53,6 +55,7 @@ const mockPetCart: Cart = {
       variantId: "var_mgy_1",
       quantity: 1,
       sellingPlanId: "plan_more_good_years_30d",
+      subscriptionDiscountPercentage: 15,
       sellingPlanTitle: "Delivery every 30 days (15% off)",
       product: {
         id: "more-good-years",
@@ -68,6 +71,7 @@ const mockPetCart: Cart = {
       variantId: "var_good_days_1",
       quantity: 1,
       sellingPlanId: null,
+      subscriptionDiscountPercentage: 15,
       product: {
         id: "good-days",
         title: "Good Days",

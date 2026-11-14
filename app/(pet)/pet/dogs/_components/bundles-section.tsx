@@ -16,6 +16,8 @@ export interface BundleItem {
   price: { amount: number; currencyCode: string };
   compareAtPrice: { amount: number; currencyCode: string };
   variantIds: string[];
+  // Kit do catálogo com o mesmo conteúdo; sem kit usa as variantes avulsas.
+  kitSlug?: string;
 }
 
 export const DOG_BUNDLES: readonly BundleItem[] = [
@@ -30,6 +32,7 @@ export const DOG_BUNDLES: readonly BundleItem[] = [
     price: { amount: 75, currencyCode: "USD" },
     compareAtPrice: { amount: 88, currencyCode: "USD" },
     variantIds: ["var_more_good_years_1", "var_more_good_years_oil_1"],
+    kitSlug: "chew-oil",
   },
   {
     id: "bundle-golden-years",
@@ -96,12 +99,16 @@ export function BundlesSection({
     setAddingId(bundle.id);
     setFeedback((prev) => ({ ...prev, [bundle.id]: "" }));
     try {
-      await cartProvider.addLines(
-        bundle.variantIds.map((variantId) => ({
-          variantId,
-          quantity: 1,
-        }))
-      );
+      if (bundle.kitSlug) {
+        await cartProvider.addKit(bundle.kitSlug, 1);
+      } else {
+        await cartProvider.addLines(
+          bundle.variantIds.map((variantId) => ({
+            variantId,
+            quantity: 1,
+          }))
+        );
+      }
       setFeedback((prev) => ({
         ...prev,
         [bundle.id]: `Added ${bundle.name} to cart`,

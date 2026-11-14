@@ -23,6 +23,8 @@ export function CartDrawerItem({
   const { market } = useMarket();
 
   const isSubscription = Boolean(item.sellingPlanId);
+  // Desconto vem do plano no catálogo (via linha), nunca fixo aqui
+  const discount = item.subscriptionDiscountPercentage;
 
   // Deriva o slug / handle para buscar o selling plan adequado
   const handleOrSlug = item.product.handle || item.product.id || "";
@@ -148,7 +150,7 @@ export function CartDrawerItem({
         <div className="mt-2 flex flex-wrap items-center gap-2">
           {isSubscription ? (
             <span className="inline-block bg-accent/15 text-accent border border-accent/20 rounded-full px-2.5 py-0.5 text-[11px] font-bold tracking-wide">
-              Subscribe &amp; save 15%
+              Subscribe &amp; save {discount}%
             </span>
           ) : (
             <span className="inline-block bg-fg/10 text-fg rounded-full px-2.5 py-0.5 text-[11px] font-bold tracking-wide">
@@ -158,7 +160,7 @@ export function CartDrawerItem({
         </div>
 
         {/* Action link: Change or Switch to subscription. Kit lines have no selling plans in the catalog yet, so the switch is hidden. */}
-        {!item.kit && (
+        {!item.kit && discount !== undefined && (
           <div className="text-xs text-fg-muted mt-1.5 flex flex-wrap items-center gap-2">
             {isSubscription ? (
               <>
@@ -177,10 +179,10 @@ export function CartDrawerItem({
               <button
                 type="button"
                 onClick={() => handleSwitchToSubscription()}
-                aria-label={`Switch ${item.product.title} to subscription and save 15%`}
+                aria-label={`Switch ${item.product.title} to subscription and save ${discount}%`}
                 className="underline text-fg hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
               >
-                Switch to subscription, save 15%
+                Switch to subscription, save {discount}%
               </button>
             )}
           </div>
@@ -198,7 +200,7 @@ export function CartDrawerItem({
                 }
                 className="text-left px-2 py-1.5 rounded hover:bg-fg/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent flex items-center justify-between"
               >
-                <span>Delivery every 30 days (15% off)</span>
+                <span>Delivery every 30 days ({discount}% off)</span>
                 <span className="text-accent font-bold">Standard</span>
               </button>
               <button
@@ -208,7 +210,7 @@ export function CartDrawerItem({
                 }
                 className="text-left px-2 py-1.5 rounded hover:bg-fg/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                Delivery every 60 days (15% off)
+                Delivery every 60 days ({discount}% off)
               </button>
               <button
                 type="button"
@@ -217,7 +219,7 @@ export function CartDrawerItem({
                 }
                 className="text-left px-2 py-1.5 rounded hover:bg-fg/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                Delivery every 90 days (15% off)
+                Delivery every 90 days ({discount}% off)
               </button>
               <button
                 type="button"

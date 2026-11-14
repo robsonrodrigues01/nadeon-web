@@ -23,31 +23,11 @@ export function KitAndPairs({ kit, relatedProducts }: KitAndPairsProps) {
     setIsAddingKit(true);
     setFeedback(null);
     try {
-      // Find variants for the products in kit if available, otherwise primary variants
-      const linesToAdd =
-        kit?.products.map((ref) => {
-          const matchedProduct = relatedProducts.find(
-            (p) => p.slug === ref.productSlug
-          );
-          const variantId =
-            matchedProduct?.variants[0]?.id || `var_${ref.productSlug}_1`;
-          return {
-            variantId,
-            quantity: ref.quantity,
-          };
-        }) || [];
-
-      if (linesToAdd.length > 0) {
-        await cartProvider.addLines(linesToAdd);
-      } else {
-        await cartProvider.addLines([
-          { variantId: "var_biohack_1", quantity: 1 },
-          { variantId: "var_renew_1", quantity: 1 },
-        ]);
+      if (kit) {
+        await cartProvider.addKit(kit.slug, 1);
+        setFeedback(`Added ${kit.name} to cart`);
+        setTimeout(() => setFeedback(null), 3500);
       }
-
-      setFeedback("Added The Energy Duo to cart");
-      setTimeout(() => setFeedback(null), 3500);
     } catch {
       setFeedback("Failed to add duo to cart");
     } finally {

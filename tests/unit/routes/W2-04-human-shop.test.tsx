@@ -323,9 +323,14 @@ describe("W2-04: /human/shop Route & Components", () => {
       expect(addBeautyDuoBtn).toBeTruthy();
 
       // Click Add Energy Duo
+      const addKitSpy = vi
+        .spyOn(cartProvider, "addKit")
+        .mockResolvedValue(
+          {} as Awaited<ReturnType<typeof cartProvider.addKit>>
+        );
       fireEvent.click(addEnergyDuoBtn);
       await waitFor(() => {
-        expect(cartProvider.addLines).toHaveBeenCalled();
+        expect(addKitSpy).toHaveBeenCalledWith("energy-duo", 1);
       });
     });
   });

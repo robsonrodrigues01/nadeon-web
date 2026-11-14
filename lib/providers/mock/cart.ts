@@ -19,7 +19,7 @@ function resolveKitPrice(
   kit: Kit,
   products: Product[],
   sellingPlanId: string | null | undefined
-): { amount: number; planName?: string } {
+): { amount: number; planName?: string; discountPercentage?: number } {
   if (!sellingPlanId) return { amount: kit.price.amount };
   const plan = kit.products
     .map((ref) => products.find((p) => p.slug === ref.productSlug))
@@ -33,6 +33,7 @@ function resolveKitPrice(
       (kit.price.amount * ((100 - plan.discountPercentage) / 100)).toFixed(2)
     ),
     planName: plan.name,
+    discountPercentage: plan.discountPercentage,
   };
 }
 
@@ -192,6 +193,8 @@ export class MockCartProvider implements CartProvider {
 
       let linePriceAmount = matchedVariant.price.amount;
       let sellingPlanTitle: string | undefined;
+      let subscriptionDiscountPercentage =
+        matchedProduct.sellingPlans[0]?.discountPercentage;
 
       if (input.sellingPlanId) {
         const plan = matchedProduct.sellingPlans.find(
@@ -199,6 +202,7 @@ export class MockCartProvider implements CartProvider {
         );
         if (plan) {
           sellingPlanTitle = plan.name;
+          subscriptionDiscountPercentage = plan.discountPercentage;
           const discountMultiplier = (100 - plan.discountPercentage) / 100;
           linePriceAmount = Number(
             (linePriceAmount * discountMultiplier).toFixed(2)
@@ -232,6 +236,7 @@ export class MockCartProvider implements CartProvider {
           sellingPlanId: input.sellingPlanId || null,
           sellingPlanTitle,
           compareAtPrice: sellingPlanTitle ? matchedVariant.price : undefined,
+          subscriptionDiscountPercentage,
           product: {
             id: matchedProduct.slug,
             title: matchedProduct.name,
@@ -271,7 +276,11 @@ export class MockCartProvider implements CartProvider {
 
     const allProducts = await mockCatalogProvider.getProducts();
     const plan = sellingPlanId || null;
-    const { amount, planName } = resolveKitPrice(kit, allProducts, plan);
+    const { amount, planName, discountPercentage } = resolveKitPrice(
+      kit,
+      allProducts,
+      plan
+    );
     const variantId = `${KIT_VARIANT_PREFIX}${kit.slug}`;
 
     const currentCart = useCartStore.getState().cart;
@@ -299,6 +308,7 @@ export class MockCartProvider implements CartProvider {
         sellingPlanId: plan,
         sellingPlanTitle: planName,
         compareAtPrice: planName ? kit.price : undefined,
+        subscriptionDiscountPercentage: discountPercentage,
         product: {
           id: kit.slug,
           title: kit.name,
@@ -359,7 +369,7 @@ export class MockCartProvider implements CartProvider {
         // Linha de kit: o preço base é o do kit, nunca o das fórmulas
         const kit = await mockCatalogProvider.getKit(currentLine.kit.slug);
         if (!kit) throw new Error(`Kit not found: ${currentLine.kit.slug}`);
-        const { amount, planName } = resolveKitPrice(
+        const { amount, planName, discountPercentage } = resolveKitPrice(
           kit,
           allProducts,
           newSellingPlanId
@@ -370,6 +380,7 @@ export class MockCartProvider implements CartProvider {
           sellingPlanId: newSellingPlanId || null,
           sellingPlanTitle: planName,
           compareAtPrice: planName ? kit.price : undefined,
+          subscriptionDiscountPercentage: discountPercentage,
           price: { amount, currencyCode: currentLine.price.currencyCode },
           total: {
             amount: Number((amount * newQty).toFixed(2)),
@@ -383,6 +394,7 @@ export class MockCartProvider implements CartProvider {
       let unitPrice = currentLine.price.amount;
       let sellingPlanTitle = currentLine.sellingPlanTitle;
       let compareAtPrice: CartLineItem["compareAtPrice"];
+      let subscriptionDiscountPercentage: number | undefined;
 
       // look up base variant price
       for (const prod of allProducts) {
@@ -391,6 +403,8 @@ export class MockCartProvider implements CartProvider {
         );
         if (v) {
           unitPrice = v.price.amount;
+          subscriptionDiscountPercentage =
+            prod.sellingPlans[0]?.discountPercentage;
           if (newSellingPlanId) {
             const plan = prod.sellingPlans.find(
               (sp) => sp.id === newSellingPlanId
@@ -398,6 +412,7 @@ export class MockCartProvider implements CartProvider {
             if (plan) {
               sellingPlanTitle = plan.name;
               compareAtPrice = v.price;
+              subscriptionDiscountPercentage = plan.discountPercentage;
               unitPrice = Number(
                 (
                   v.price.amount *
@@ -418,6 +433,7 @@ export class MockCartProvider implements CartProvider {
         sellingPlanId: newSellingPlanId || null,
         sellingPlanTitle,
         compareAtPrice,
+        subscriptionDiscountPercentage,
         price: { amount: unitPrice, currencyCode: "USD" },
         total: {
           amount: Number((unitPrice * newQty).toFixed(2)),

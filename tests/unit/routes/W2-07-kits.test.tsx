@@ -101,9 +101,9 @@ describe("W2-07 Route: Kits (`/human/kits`)", () => {
     ]);
   });
 
-  it("adds the kit's formulas to the cart through the client provider", async () => {
+  it("adds the kit through addKit so the kit price applies", async () => {
     const spy = vi
-      .spyOn(cartProvider, "addLines")
+      .spyOn(cartProvider, "addKit")
       .mockResolvedValue(
         {} as Awaited<ReturnType<typeof cartProvider.addLines>>
       );
@@ -113,10 +113,7 @@ describe("W2-07 Route: Kits (`/human/kits`)", () => {
       within(card).getByRole("button", { name: "Add kit to cart" })
     );
     await screen.findByText("Added Energy Duo to cart");
-    expect(spy).toHaveBeenCalledWith([
-      expect.objectContaining({ quantity: 1 }),
-      expect.objectContaining({ quantity: 1 }),
-    ]);
+    expect(spy).toHaveBeenCalledWith("energy-duo", 1);
   });
 
   it("shows prices formatted through the market formatter and savings badges from catalog data", async () => {

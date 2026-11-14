@@ -30,12 +30,7 @@ export function PetKitsSection({
     setAddingKitSlug(kit.slug);
     setStatusMessage(null);
     try {
-      // Add each product in the kit to the cart
-      const lines = kit.products.map((p) => ({
-        variantId: `var_${p.productSlug.replace(/-/g, "_")}_1`,
-        quantity: p.quantity,
-      }));
-      await cartProvider.addLines(lines);
+      await cartProvider.addKit(kit.slug, 1);
       setStatusMessage(`Added ${kit.name} to cart`);
       setTimeout(() => setStatusMessage(null), 3000);
     } catch {

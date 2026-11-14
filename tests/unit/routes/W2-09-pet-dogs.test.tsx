@@ -329,7 +329,7 @@ describe("W2-09: /pet/dogs Route Suite", () => {
       expect(prices.length).toBeGreaterThanOrEqual(4);
     });
 
-    it("calls cartProvider.addLines with variantIds when clicking Add bundle", async () => {
+    it("calls cartProvider.addKit with the chew-oil kit when clicking Add bundle", async () => {
       render(
         <BundlesSection
           cartProvider={mockCartProviderInstance}
@@ -345,10 +345,10 @@ describe("W2-09: /pet/dogs Route Suite", () => {
       fireEvent.click(button);
 
       await waitFor(() => {
-        expect(mockCartProviderInstance.addLines).toHaveBeenCalledWith([
-          { variantId: "var_more_good_years_1", quantity: 1 },
-          { variantId: "var_more_good_years_oil_1", quantity: 1 },
-        ]);
+        expect(mockCartProviderInstance.addKit).toHaveBeenCalledWith(
+          "chew-oil",
+          1
+        );
       });
 
       // Accessible polite feedback
