@@ -32,6 +32,7 @@ describe("PurchaseOptions component (W1-12)", () => {
       get: vi.fn().mockResolvedValue(sampleCart),
       create: vi.fn().mockResolvedValue(sampleCart),
       addLines: vi.fn().mockResolvedValue(sampleCart),
+      addKit: vi.fn().mockResolvedValue(sampleCart),
       updateLines: vi.fn().mockResolvedValue(sampleCart),
       removeLines: vi.fn().mockResolvedValue(sampleCart),
       applyDiscount: vi.fn().mockResolvedValue(sampleCart),
