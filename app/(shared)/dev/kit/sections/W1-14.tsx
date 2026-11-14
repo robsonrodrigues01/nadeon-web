@@ -97,7 +97,7 @@ const mockEmptyCart: Cart = {
   checkoutUrl: "https://checkout.nadeon.com/mock/cart_empty_demo",
 };
 
-export default function W114Section() {
+function CartDrawerShowcase() {
   const { setCart } = useCartStore();
   const [activeTheme, setActiveTheme] = useState<"human" | "pet">("human");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -245,4 +245,8 @@ export default function W114Section() {
       />
     </section>
   );
+}
+
+export default function W114Section() {
+  return <CartDrawerShowcase />;
 }
