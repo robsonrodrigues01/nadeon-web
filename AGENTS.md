@@ -24,14 +24,16 @@ A cada 60 s, renove a reserva pelo comando `heartbeat <task_id>` do mesmo CLI e
 grave `status/<task_id>/heartbeat` no estado central com data, passo e último
 comando. Se travar, registre `BLOCKED` nessa pasta com motivo e o que destrava,
 e use `block <task_id> <motivo>`; se o CLI faltar, registre o bloqueio no arquivo.
-Abra PR para `main` com resumo, riscos, comandos, saídas e evidências; registre-o
-com `review <task_id> <pr>`. Cumprida a regra 12, grave `DONE` com o link do PR,
-atualize o CLI com `done <task_id>` e salve checkpoint em
-`agents/states/<agent_id>.json` no estado central. O orquestrador cuida do merge.
+Por decisão do Robson, o fluxo vigente é local e prevalece sobre o fluxo GitHub
+do plano: faça commit no próprio branch `agy/<task_id>`, sem `git push`, sem abrir
+PR e sem usar `gh pr`. Cumprida a entrega do autor na regra 12, grave `DONE` com
+o SHA do commit, a saída do `pnpm verify`, resumo, riscos e evidências; salve
+checkpoint em `agents/states/<agent_id>.json` no estado central. O Maestro atribui
+a revisão e faz o merge no `main` local após aprovação.
 `vercel --prod`, domínio, DNS, credenciais de produção, pagamentos reais e gastos
 exigem aprovação explícita do Robson. Segredos ficam fora do Git.
 
-- Certo: reservar `W0-06`, renovar heartbeat e entregar PR com evidência.
+- Certo: reservar `W0-06`, renovar heartbeat e entregar commit local com SHA e verify no `DONE`.
 - Errado: trabalhar no checkout de outro agente ou marcar `DONE` com gate falhando.
 
 ### 2. Escopo
@@ -127,12 +129,15 @@ se alguma faltar, registre a ausência e siga as regras do projeto.
 
 ### 12. Pronto
 
-Exija `pnpm verify` verde no worktree, diff dentro do escopo, PR para `main` com
-evidências, revisão aprovada por outro agente e CI verde no PR. Para interface,
-anexe screenshots em 375, 768 e 1280 px em `status/<task_id>/shots` no estado
-central. Playwright, Lighthouse e axe rodam só no CI do GitHub. Documentação exige
-o diff como evidência, sem screenshots de interface. Só então conclua o fluxo da
-regra 1; aprovação da revisão e CI verde precedem o merge pelo orquestrador.
+Para a entrega do autor, exija `pnpm verify` verde no worktree, diff dentro do
+escopo e `DONE` com SHA do commit local e saída da verificação. A revisão por outro
+agente é atribuída pelo Maestro e exige aprovação antes do merge local. Revisores
+usam `git -C /Users/robsoncoffy/Documents/Nadeon/Website/nadeon-web diff main...agy/<task_id>`
+e respondem `APROVADO` ou `MUDANÇAS`, com os achados, somente ao Maestro.
+Para interface, anexe screenshots em 375, 768 e 1280 px em
+`status/<task_id>/shots` no estado central. Playwright, Lighthouse e axe continuam
+restritos ao CI; enquanto indisponível, registre a evidência pendente sem afirmar
+que foi executada. Documentação exige o diff como evidência, sem screenshots.
 
-- Certo: PR com saída do `pnpm verify`, revisão independente e as capturas aplicáveis.
-- Errado: declarar pronto com CI vermelho, sem revisão ou usando mocks como prova de integração real.
+- Certo: `DONE` com SHA, verify verde e evidências; Maestro obtém revisão antes do merge local.
+- Errado: declarar verify verde sem executar, fazer merge sem revisão ou usar mocks como prova de integração real.
