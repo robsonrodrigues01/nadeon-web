@@ -28,6 +28,8 @@ export const CartLineItemSchema = z.object({
   }),
   // Presente só em linhas de kit: preço e itens vêm do kit, não das fórmulas avulsas.
   kit: CartKitSchema.optional(),
+  // Preço sem plano por unidade; vem do catálogo e só existe com sellingPlanId.
+  compareAtPrice: MoneySchema.optional(),
   price: MoneySchema,
   total: MoneySchema,
   customAttributes: z.record(z.string(), z.string()).optional(),

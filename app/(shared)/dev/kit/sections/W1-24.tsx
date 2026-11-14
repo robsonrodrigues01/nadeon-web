@@ -1,58 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CartDrawerItem } from "@/components/commerce/cart-drawer/cart-drawer-item";
 import { cartProvider, type CartLineItem } from "@/lib/providers/client";
 
-// Linhas de kit com o preço do kit (catálogo: Energy Duo $105, Chew + Oil $75).
-const humanKitLine: CartLineItem = {
-  id: "line_energy_duo",
-  variantId: "kit:energy-duo",
-  quantity: 1,
-  sellingPlanId: null,
-  product: {
-    id: "energy-duo",
-    title: "Energy Duo",
-    handle: "energy-duo",
-    line: "human",
-  },
-  kit: {
-    slug: "energy-duo",
-    name: "Energy Duo",
-    items: [
-      { title: "BioHack", quantity: 1 },
-      { title: "Renew", quantity: 1 },
-    ],
-  },
-  price: { amount: 105, currencyCode: "USD" },
-  total: { amount: 105, currencyCode: "USD" },
-};
-
-const petKitLine: CartLineItem = {
-  id: "line_chew_oil",
-  variantId: "kit:chew-oil",
-  quantity: 1,
-  sellingPlanId: "plan_more_good_years_30d",
-  sellingPlanTitle: "Delivery every 30 days (15% off)",
-  product: {
-    id: "chew-oil",
-    title: "Chew + Oil",
-    handle: "chew-oil",
-    line: "pet",
-  },
-  kit: {
-    slug: "chew-oil",
-    name: "Chew + Oil",
-    items: [
-      { title: "More Good Years", quantity: 1 },
-      { title: "More Good Years Oil", quantity: 1 },
-    ],
-  },
-  price: { amount: 63.75, currencyCode: "USD" },
-  total: { amount: 63.75, currencyCode: "USD" },
-};
+// Preços e itens vêm do CartProvider (catálogo), não de valores fixos aqui.
+const HUMAN_KIT = { slug: "energy-duo", plan: null };
+const PET_KIT = { slug: "chew-oil", plan: "plan_more_good_years_30d" };
 
 export default function W124Section() {
+  const [lines, setLines] = useState<CartLineItem[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      // create() zera o carrinho do navegador, assim a vitrine não acumula quantidades
+      await cartProvider.create();
+      await cartProvider.addKit(HUMAN_KIT.slug, 1, HUMAN_KIT.plan);
+      const cart = await cartProvider.addKit(PET_KIT.slug, 1, PET_KIT.plan);
+      if (active) setLines(cart.lines);
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const humanLine = lines.find((l) => l.kit?.slug === HUMAN_KIT.slug);
+  const petLine = lines.find((l) => l.kit?.slug === PET_KIT.slug);
+
   return (
     <section
       aria-labelledby="section-w1-24-title"
@@ -86,13 +61,15 @@ export default function W124Section() {
             aria-label="Human kit cart lines"
             className="divide-y divide-border/20"
           >
-            <li>
-              <CartDrawerItem
-                item={humanKitLine}
-                cartProvider={cartProvider}
-                theme="human"
-              />
-            </li>
+            {humanLine && (
+              <li>
+                <CartDrawerItem
+                  item={humanLine}
+                  cartProvider={cartProvider}
+                  theme="human"
+                />
+              </li>
+            )}
           </ul>
         </div>
 
@@ -107,13 +84,15 @@ export default function W124Section() {
             aria-label="Pet kit cart lines"
             className="divide-y divide-border/20"
           >
-            <li>
-              <CartDrawerItem
-                item={petKitLine}
-                cartProvider={cartProvider}
-                theme="pet"
-              />
-            </li>
+            {petLine && (
+              <li>
+                <CartDrawerItem
+                  item={petLine}
+                  cartProvider={cartProvider}
+                  theme="pet"
+                />
+              </li>
+            )}
           </ul>
         </div>
       </div>

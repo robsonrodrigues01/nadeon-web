@@ -231,6 +231,7 @@ export class MockCartProvider implements CartProvider {
           quantity: input.quantity,
           sellingPlanId: input.sellingPlanId || null,
           sellingPlanTitle,
+          compareAtPrice: sellingPlanTitle ? matchedVariant.price : undefined,
           product: {
             id: matchedProduct.slug,
             title: matchedProduct.name,
@@ -297,6 +298,7 @@ export class MockCartProvider implements CartProvider {
         quantity,
         sellingPlanId: plan,
         sellingPlanTitle: planName,
+        compareAtPrice: planName ? kit.price : undefined,
         product: {
           id: kit.slug,
           title: kit.name,
@@ -367,6 +369,7 @@ export class MockCartProvider implements CartProvider {
           quantity: newQty,
           sellingPlanId: newSellingPlanId || null,
           sellingPlanTitle: planName,
+          compareAtPrice: planName ? kit.price : undefined,
           price: { amount, currencyCode: currentLine.price.currencyCode },
           total: {
             amount: Number((amount * newQty).toFixed(2)),
@@ -379,6 +382,7 @@ export class MockCartProvider implements CartProvider {
       // recalculate price based on variant and selling plan
       let unitPrice = currentLine.price.amount;
       let sellingPlanTitle = currentLine.sellingPlanTitle;
+      let compareAtPrice: CartLineItem["compareAtPrice"];
 
       // look up base variant price
       for (const prod of allProducts) {
@@ -393,6 +397,7 @@ export class MockCartProvider implements CartProvider {
             );
             if (plan) {
               sellingPlanTitle = plan.name;
+              compareAtPrice = v.price;
               unitPrice = Number(
                 (
                   v.price.amount *
@@ -412,6 +417,7 @@ export class MockCartProvider implements CartProvider {
         quantity: newQty,
         sellingPlanId: newSellingPlanId || null,
         sellingPlanTitle,
+        compareAtPrice,
         price: { amount: unitPrice, currencyCode: "USD" },
         total: {
           amount: Number((unitPrice * newQty).toFixed(2)),

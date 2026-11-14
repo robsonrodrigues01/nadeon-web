@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { CartLineItem, CartProvider } from "@/lib/providers/client";
-import { formatMoney } from "./money";
+import { useMarket } from "@/lib/market/context";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
 
 export interface CartDrawerItemProps {
   item: CartLineItem;
@@ -19,6 +20,7 @@ export function CartDrawerItem({
 }: CartDrawerItemProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [showPlanSelector, setShowPlanSelector] = useState(false);
+  const { market } = useMarket();
 
   const isSubscription = Boolean(item.sellingPlanId);
 
@@ -76,13 +78,13 @@ export function CartDrawerItem({
     }
   };
 
-  // Se for subscription, o compare price de 1 unidade é price / 0.85
-  const originalUnitPrice = isSubscription
-    ? Number((item.price.amount / 0.85).toFixed(2))
-    : item.price.amount;
-  const originalTotalPrice = Number(
-    (originalUnitPrice * item.quantity).toFixed(2)
-  );
+  // Preço sem plano vem da linha (catálogo), sem desconto escrito no código
+  const originalTotalPrice = item.compareAtPrice
+    ? {
+        amount: Number((item.compareAtPrice.amount * item.quantity).toFixed(2)),
+        currencyCode: item.compareAtPrice.currencyCode,
+      }
+    : null;
 
   return (
     <div className="flex gap-3.5 py-4.5 border-b border-border/40">
@@ -132,14 +134,11 @@ export function CartDrawerItem({
 
           <div className="text-right shrink-0">
             <div className="font-bold text-sm sm:text-base text-fg">
-              {formatMoney(item.total)}
+              {formatMoneyWithMarket(item.total, market)}
             </div>
-            {isSubscription && (
+            {isSubscription && originalTotalPrice && (
               <div className="text-xs text-fg-muted line-through">
-                {formatMoney({
-                  amount: originalTotalPrice,
-                  currencyCode: item.total.currencyCode,
-                })}
+                {formatMoneyWithMarket(originalTotalPrice, market)}
               </div>
             )}
           </div>
