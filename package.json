@@ -12,7 +12,7 @@
     "test:e2e": "playwright test",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "data:check": "node scripts/check-placeholders.mjs",
+    "data:check": "node scripts/check-placeholders.mjs && node scripts/data-check.mjs",
     "tokens:check": "node scripts/check-tokens.mjs",
     "tokens:audit": "node scripts/design-audit.mjs",
     "security:audit": "pnpm audit --audit-level=high --ignore GHSA-2464-fhr4-w9xw --ignore GHSA-673q-mjm6-r5xr --ignore GHSA-p3m5-59mp-jv5r",
