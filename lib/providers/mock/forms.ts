@@ -1,5 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
 import {
   type ApplicationInput,
   type ApplicationType,
@@ -13,7 +11,10 @@ import {
   PrivacyRequestInputSchema,
 } from "@/lib/contracts/forms";
 
-function logMockSubmission(type: string, data: Record<string, unknown>): void {
+async function logMockSubmission(
+  type: string,
+  data: Record<string, unknown>
+): Promise<void> {
   const isDev =
     process.env.NODE_ENV === "development" ||
     process.env.NODE_ENV === "test" ||
@@ -32,16 +33,20 @@ function logMockSubmission(type: string, data: Record<string, unknown>): void {
   // Log to console in development
   console.log(`[FormsMock] ${type}:`, JSON.stringify(logEntry));
 
-  // Write to .maestri/logs/forms-mock.jsonl
-  try {
-    const logDir = path.resolve(process.cwd(), ".maestri/logs");
-    if (!fs.existsSync(logDir)) {
-      fs.mkdirSync(logDir, { recursive: true });
+  // Write to .maestri/logs/forms-mock.jsonl only on server
+  if (typeof window === "undefined") {
+    try {
+      const fs = await import("node:fs");
+      const path = await import("node:path");
+      const logDir = path.resolve(process.cwd(), ".maestri/logs");
+      if (!fs.existsSync(logDir)) {
+        fs.mkdirSync(logDir, { recursive: true });
+      }
+      const filePath = path.join(logDir, "forms-mock.jsonl");
+      fs.appendFileSync(filePath, `${JSON.stringify(logEntry)}\n`, "utf-8");
+    } catch (err) {
+      console.error("[FormsMock] Failed writing log entry:", err);
     }
-    const filePath = path.join(logDir, "forms-mock.jsonl");
-    fs.appendFileSync(filePath, `${JSON.stringify(logEntry)}\n`, "utf-8");
-  } catch (err) {
-    console.error("[FormsMock] Failed writing log entry:", err);
   }
 }
 
@@ -59,7 +64,7 @@ export class MockFormsProvider implements FormsProvider {
     }
 
     const id = `sub_${Math.random().toString(36).substring(2, 9)}`;
-    logMockSubmission("subscribe", { list, email, consent, id });
+    await logMockSubmission("subscribe", { list, email, consent, id });
 
     return FormSubmissionResultSchema.parse({
       success: true,
@@ -71,7 +76,7 @@ export class MockFormsProvider implements FormsProvider {
   async sendContact(payload: ContactInput): Promise<FormSubmissionResult> {
     const validated = ContactInputSchema.parse(payload);
     const id = `contact_${Math.random().toString(36).substring(2, 9)}`;
-    logMockSubmission("contact", { ...validated, id });
+    await logMockSubmission("contact", { ...validated, id });
 
     return FormSubmissionResultSchema.parse({
       success: true,
@@ -85,7 +90,7 @@ export class MockFormsProvider implements FormsProvider {
   ): Promise<FormSubmissionResult> {
     const validated = PrivacyRequestInputSchema.parse(payload);
     const id = `privacy_${Math.random().toString(36).substring(2, 9)}`;
-    logMockSubmission("privacy_request", { ...validated, id });
+    await logMockSubmission("privacy_request", { ...validated, id });
 
     return FormSubmissionResultSchema.parse({
       success: true,
@@ -100,7 +105,7 @@ export class MockFormsProvider implements FormsProvider {
   ): Promise<FormSubmissionResult> {
     const validated = ApplicationInputSchema.parse(payload);
     const id = `app_${type}_${Math.random().toString(36).substring(2, 9)}`;
-    logMockSubmission(`application:${type}`, { ...validated, id });
+    await logMockSubmission(`application:${type}`, { ...validated, id });
 
     return FormSubmissionResultSchema.parse({
       success: true,
@@ -114,7 +119,7 @@ export class MockFormsProvider implements FormsProvider {
     email: string | null,
     properties?: Record<string, unknown>
   ): Promise<{ success: boolean }> {
-    logMockSubmission("track_event", { name, email, properties });
+    await logMockSubmission("track_event", { name, email, properties });
     return { success: true };
   }
 }

@@ -5,7 +5,7 @@ import React from "react";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { Header } from "@/components/layout/header";
-import { useCartStore } from "@/lib/providers/mock/cart";
+import { useCartStore } from "@/lib/providers/client";
 
 describe("W1-03 Header Component", () => {
   beforeEach(() => {
