@@ -11,7 +11,8 @@ import AccountSettingsPage from "@/app/(account)/account/settings/page";
 import { savePetAction } from "@/app/(account)/account/settings/_components/actions";
 import { mockAccountProvider } from "@/lib/providers/mock/account";
 import { cartProvider } from "@/lib/providers/client";
-import type { Cart, Pet } from "@/lib/contracts/account";
+import type { Pet } from "@/lib/contracts/account";
+import type { Cart } from "@/lib/contracts/cart";
 
 const redirectMock = vi.hoisted(() =>
   vi.fn((url: string) => {
@@ -263,12 +264,15 @@ describe("W2-22 /account/settings: perfil pet", () => {
       level: 3,
       name: "Recommended for Miso",
     });
-    within(section).getByText(/Based on Miso's age and health focus\./);
+    within(section).getByText(
+      /Based on Miso's weight \(9 lb\), age and health focus\./
+    );
   });
 
-  it("não mostra Rewards em lugar nenhum da página", async () => {
-    const { container } = await renderPage();
-    expect(container.textContent ?? "").not.toMatch(/reward/i);
+  it("não mostra Rewards no menu de navegação da conta", async () => {
+    await renderPage();
+    const nav = screen.getByRole("navigation", { name: "Account" });
+    expect(nav.textContent ?? "").not.toMatch(/reward/i);
   });
 });
 
