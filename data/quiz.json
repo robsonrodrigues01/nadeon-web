@@ -1,0 +1,719 @@
+{
+  "status": "proposta",
+  "quizzes": {
+    "human": {
+      "id": "human",
+      "line": "human",
+      "species": null,
+      "title": "Human NAD+ Routine Quiz",
+      "promiseHeadline": "Find your personalized NAD+ routine",
+      "supportingText": "Answer 5 quick questions about your goal, age and lifestyle, and get a routine built around you.",
+      "estimatedMinutes": 1,
+      "questions": [
+        {
+          "id": "age-range",
+          "stepNumber": 1,
+          "stepTitle": "Your age",
+          "title": "What is your age range?",
+          "subtitle": "NAD+ levels decline significantly as we age. This sets your baseline.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "18-to-34",
+              "label": "18 to 34",
+              "description": "Foundational cellular protection and active recovery"
+            },
+            {
+              "id": "35-to-44",
+              "label": "35 to 44",
+              "description": "Maintaining energy metabolism and resilience"
+            },
+            {
+              "id": "45-to-54",
+              "label": "45 to 54",
+              "description": "Replenishing natural NAD+ decline and vitality"
+            },
+            {
+              "id": "55-plus",
+              "label": "55+",
+              "description": "Comprehensive healthy aging and DNA repair support"
+            }
+          ]
+        },
+        {
+          "id": "goal",
+          "stepNumber": 2,
+          "stepTitle": "Your goal",
+          "title": "What is your main goal?",
+          "subtitle": "Pick the one that matters most right now. You can add more later.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "daily-energy",
+              "label": "Daily energy",
+              "description": "Steady energy from morning to evening*"
+            },
+            {
+              "id": "healthy-aging",
+              "label": "Healthy aging",
+              "description": "Support NAD+ levels as you get older*"
+            },
+            {
+              "id": "skin-hair-nails",
+              "label": "Skin, hair and nails",
+              "description": "Glow from the inside, with collagen*"
+            },
+            {
+              "id": "focus-recovery",
+              "label": "Focus and recovery",
+              "description": "Clear head at work, bounce back after training*"
+            }
+          ]
+        },
+        {
+          "id": "afternoon-slump",
+          "stepNumber": 3,
+          "stepTitle": "Energy rhythm",
+          "title": "Do you experience an afternoon slump?",
+          "subtitle": "Helps us pinpoint when your cellular energy needs the most support.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "most-days",
+              "label": "Most days",
+              "description": "Noticeable energy dip 2 to 4 hours after lunch"
+            },
+            {
+              "id": "sometimes",
+              "label": "Sometimes",
+              "description": "Depends on sleep, stress or workload"
+            },
+            {
+              "id": "rarely",
+              "label": "Rarely",
+              "description": "Energy stays consistent through the day"
+            }
+          ]
+        },
+        {
+          "id": "format",
+          "stepNumber": 4,
+          "stepTitle": "Routine preference",
+          "title": "How do you prefer to take supplements?",
+          "subtitle": "Choose the daily habit that fits naturally into your routine.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "capsules",
+              "label": "Capsules",
+              "description": "Simple, tasteless and quick with morning water"
+            },
+            {
+              "id": "powders-drops",
+              "label": "Powders & Drops",
+              "description": "Sublingual absorption or easy stir into drinks"
+            },
+            {
+              "id": "no-preference",
+              "label": "No preference",
+              "description": "Recommend the most effective combination"
+            }
+          ]
+        },
+        {
+          "id": "takes-nmn",
+          "stepNumber": 5,
+          "stepTitle": "NMN experience",
+          "title": "Do you currently take NMN or NAD+ supplements?",
+          "subtitle": "Tells us whether to start with foundational dosing or an advanced stack.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "no",
+              "label": "No, I am new to NMN",
+              "description": "Looking for a clean, single-ingredient starting point"
+            },
+            {
+              "id": "yes",
+              "label": "Yes, I take NMN regularly",
+              "description": "Looking to upgrade potency or add synergistic compounds"
+            }
+          ]
+        }
+      ],
+      "recommendationRules": [
+        {
+          "id": "human-daily-energy",
+          "match": {
+            "goal": "daily-energy"
+          },
+          "recommendedKitSlug": "energy-duo",
+          "recommendedProductSlug": "biohack",
+          "secondaryProductSlug": "renew",
+          "headline": "Based on your answers, we suggest the Energy Duo: NMN in the morning and direct NAD+ with lunch.*",
+          "reasons": [
+            "You chose daily energy: 500 mg of NMN per serving supports cellular energy.*",
+            "Midday boost: direct NAD+ with lunch powers through the afternoon slump.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Choose Full Charge",
+              "description": "Prefer one formula? Full Charge combines NMN, TMG, resveratrol and quercetin in one capsule.*",
+              "type": "product",
+              "slug": "full-charge"
+            },
+            {
+              "title": "Just BioHack",
+              "description": "A single pure NMN capsule each morning to build your cellular baseline.",
+              "type": "product",
+              "slug": "biohack"
+            }
+          ]
+        },
+        {
+          "id": "human-skin-hair-nails",
+          "match": {
+            "goal": "skin-hair-nails"
+          },
+          "recommendedKitSlug": "beauty-duo",
+          "recommendedProductSlug": "glow",
+          "secondaryProductSlug": "prime",
+          "headline": "Based on your answers, we suggest the Beauty Duo: collagen and NMN morning support.*",
+          "reasons": [
+            "You chose skin, hair and nails: Glow combines clean NMN with marine collagen peptides.*",
+            "Cellular radiance: Prime adds pure NAD+ for mitochondrial support and dermal hydration.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Just Glow",
+              "description": "Target skin elasticity and hair strength with our signature NMN + collagen blend.",
+              "type": "product",
+              "slug": "glow"
+            },
+            {
+              "title": "Choose Full Routine",
+              "description": "The complete 3-step cellular vitality routine.",
+              "type": "kit",
+              "slug": "full-routine"
+            }
+          ]
+        },
+        {
+          "id": "human-healthy-aging",
+          "match": {
+            "goal": "healthy-aging"
+          },
+          "recommendedKitSlug": "full-routine",
+          "recommendedProductSlug": "biohack",
+          "secondaryProductSlug": "renew",
+          "headline": "Based on your answers, we suggest the Full Routine: comprehensive NAD+ and longevity support.*",
+          "reasons": [
+            "You chose healthy aging: complete coverage with NMN, direct NAD+ and cellular cofactors.*",
+            "Formulated to replenish age-related declines in NAD+ across tissues.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Choose Energy Duo",
+              "description": "The essential two-bottle stack for daily vitality.",
+              "type": "kit",
+              "slug": "energy-duo"
+            },
+            {
+              "title": "Choose Full Charge",
+              "description": "All-in-one 4-in-1 capsule with resveratrol, quercetin and TMG.",
+              "type": "product",
+              "slug": "full-charge"
+            }
+          ]
+        },
+        {
+          "id": "human-focus-recovery",
+          "match": {
+            "goal": "focus-recovery"
+          },
+          "recommendedKitSlug": "morning-stack",
+          "recommendedProductSlug": "biohack",
+          "secondaryProductSlug": "daylight",
+          "headline": "Based on your answers, we suggest the Morning Stack: clean NMN paired with Daylight drops.*",
+          "reasons": [
+            "You chose focus and recovery: supports fast mental clarity and restorative cycles.*",
+            "Daylight drops provide rapid morning absorption to reset circadian rhythm.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Choose Full Charge",
+              "description": "NMN 4-in-1 for athletic recovery and mental sharpness.",
+              "type": "product",
+              "slug": "full-charge"
+            },
+            {
+              "title": "Just BioHack",
+              "description": "Single-ingredient pure NMN 500 mg capsules.",
+              "type": "product",
+              "slug": "biohack"
+            }
+          ]
+        }
+      ],
+      "defaultRecommendation": {
+        "id": "human-default",
+        "match": {},
+        "recommendedKitSlug": "energy-duo",
+        "recommendedProductSlug": "biohack",
+        "secondaryProductSlug": "renew",
+        "headline": "Based on your answers, we suggest the Energy Duo: NMN in the morning and direct NAD+ with lunch.*",
+        "reasons": [
+          "500 mg pure NMN in the morning to fuel cellular energy reserves.*",
+          "Renew with lunch to sustain afternoon focus and vitality.*"
+        ],
+        "alternatives": [
+          {
+            "title": "Choose Full Charge",
+            "description": "NMN 4-in-1 capsule.",
+            "type": "product",
+            "slug": "full-charge"
+          },
+          {
+            "title": "Just BioHack",
+            "description": "Pure NMN 500 mg capsules.",
+            "type": "product",
+            "slug": "biohack"
+          }
+        ]
+      }
+    },
+    "dog": {
+      "id": "dog",
+      "line": "pet",
+      "species": "dog",
+      "title": "Dog NAD+ & Longevity Quiz",
+      "promiseHeadline": "The right longevity plan for your dog",
+      "supportingText": "A few questions about age, size and primary concern, then a daily plan you can follow.",
+      "estimatedMinutes": 1,
+      "questions": [
+        {
+          "id": "dog-profile",
+          "stepNumber": 1,
+          "stepTitle": "About your dog",
+          "title": "Tell us about your dog",
+          "subtitle": "Three quick details so we can match the right formula and dose.",
+          "type": "pet-profile",
+          "options": [
+            {
+              "id": "puppy",
+              "label": "Puppy",
+              "description": "Under 1 year"
+            },
+            {
+              "id": "adult",
+              "label": "Adult",
+              "description": "1 to 6 years"
+            },
+            {
+              "id": "senior",
+              "label": "Senior",
+              "description": "7+ years"
+            }
+          ],
+          "helpText": "Not sure of the exact weight? Use their last vet visit weight. We use it to set the daily dose."
+        },
+        {
+          "id": "concern",
+          "stepNumber": 2,
+          "stepTitle": "Health priority",
+          "title": "What is the primary focus for your dog?",
+          "subtitle": "Select the area where you want to see the most noticeable improvement.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "joints-mobility",
+              "label": "Joints and mobility",
+              "description": "Hip comfort, ease getting up, stairs and longer walks"
+            },
+            {
+              "id": "daily-energy",
+              "label": "Daily energy & vitality",
+              "description": "Playfulness, stamina and youthful spark"
+            },
+            {
+              "id": "cognitive-sharpness",
+              "label": "Cognitive clarity",
+              "description": "Sharpness, focus and calm night sleep cycles"
+            },
+            {
+              "id": "calm-composure",
+              "label": "Calm & composure",
+              "description": "Separation anxiety, thunder, travel or fireworks"
+            }
+          ]
+        },
+        {
+          "id": "picky-eater",
+          "stepNumber": 3,
+          "stepTitle": "Eating habits",
+          "title": "Is your dog a picky eater?",
+          "subtitle": "Helps us choose between soft chew treats or liquid drops for meal toppers.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "no",
+              "label": "No, eats almost anything",
+              "description": "Takes delicious hickory smoked chews right from hand"
+            },
+            {
+              "id": "yes",
+              "label": "Yes, somewhat picky",
+              "description": "Prefers savory drops or oil drizzled directly onto food"
+            }
+          ]
+        }
+      ],
+      "recommendationRules": [
+        {
+          "id": "dog-senior-joints",
+          "match": {
+            "ageGroup": "senior",
+            "concern": "joints-mobility"
+          },
+          "recommendedKitSlug": "chew-oil",
+          "recommendedProductSlug": "more-good-years",
+          "secondaryProductSlug": "golden-years-oil",
+          "headline": "A daily senior chew plus a joint oil on food, dosed specifically by weight.*",
+          "reasons": [
+            "Formulated for senior dogs 7+: 75 mg NMN per chew supports cellular NAD+ levels.*",
+            "Golden Years Oil: glucosamine and omegas drizzle directly over breakfast for hip comfort.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Senior Starter Bundle",
+              "description": "Comprehensive pack with daily chews, joint drops and calming treats.",
+              "type": "kit",
+              "slug": "senior-starter"
+            },
+            {
+              "title": "Just More Good Years",
+              "description": "The standalone daily senior NAD+ chew.",
+              "type": "product",
+              "slug": "more-good-years"
+            }
+          ]
+        },
+        {
+          "id": "dog-calm",
+          "match": {
+            "concern": "calm-composure"
+          },
+          "recommendedKitSlug": "chew-good-days",
+          "recommendedProductSlug": "more-good-years",
+          "secondaryProductSlug": "good-days",
+          "headline": "A daily longevity chew paired with Good Days calming treats for peaceful days.*",
+          "reasons": [
+            "Good Days calming chew: L-theanine and chamomile support relaxed composure.*",
+            "More Good Years chew: sustains baseline mitochondrial energy and cellular health.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Just Good Days",
+              "description": "Natural calming treats for high-stress events.",
+              "type": "product",
+              "slug": "good-days"
+            }
+          ]
+        },
+        {
+          "id": "dog-cognitive",
+          "match": {
+            "concern": "cognitive-sharpness"
+          },
+          "recommendedKitSlug": "chew-oil",
+          "recommendedProductSlug": "still-sharp",
+          "secondaryProductSlug": "still-sharp-oil",
+          "headline": "Still Sharp cognitive support formula matched to your dog's age and weight.*",
+          "reasons": [
+            "Lion's Mane and NMN support canine neural plasticity and mental alertness.*",
+            "Still Sharp drops on dinner support restful sleep cycles and calm nights.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Just Still Sharp Chews",
+              "description": "Tasty daily chews for canine brain support.",
+              "type": "product",
+              "slug": "still-sharp"
+            }
+          ]
+        }
+      ],
+      "defaultRecommendation": {
+        "id": "dog-default",
+        "match": {},
+        "recommendedKitSlug": "chew-oil",
+        "recommendedProductSlug": "more-good-years",
+        "secondaryProductSlug": "golden-years-oil",
+        "headline": "A daily longevity chew plus nutrient-dense oil on food, dosed for optimal weight support.*",
+        "reasons": [
+          "More Good Years delivers pure NMN to support cellular repair and healthy aging.*",
+          "Liquid oil ensures complete absorption with your dog's daily meal.*"
+        ],
+        "alternatives": [
+          {
+            "title": "Senior Starter Bundle",
+            "description": "3-in-1 longevity starter pack for dogs.",
+            "type": "kit",
+            "slug": "senior-starter"
+          },
+          {
+            "title": "Just More Good Years",
+            "description": "Daily NMN soft chews.",
+            "type": "product",
+            "slug": "more-good-years"
+          }
+        ]
+      }
+    },
+    "cat": {
+      "id": "cat",
+      "line": "pet",
+      "species": "cat",
+      "title": "Cat NAD+ & Longevity Quiz",
+      "promiseHeadline": "The right longevity plan for your cat",
+      "supportingText": "A few questions about age, weight and daily habits, then a personalized drops routine.",
+      "estimatedMinutes": 1,
+      "questions": [
+        {
+          "id": "cat-profile",
+          "stepNumber": 1,
+          "stepTitle": "About your cat",
+          "title": "Tell us about your cat",
+          "subtitle": "Details to tailor the exact drops dose for your cat's weight.",
+          "type": "pet-profile",
+          "options": [
+            {
+              "id": "kitten",
+              "label": "Kitten",
+              "description": "Under 1 year"
+            },
+            {
+              "id": "adult",
+              "label": "Adult",
+              "description": "1 to 7 years"
+            },
+            {
+              "id": "senior",
+              "label": "Senior",
+              "description": "8+ years"
+            }
+          ],
+          "helpText": "Most adult cats weigh between 7 and 14 lbs."
+        },
+        {
+          "id": "concern",
+          "stepNumber": 2,
+          "stepTitle": "Primary goal",
+          "title": "What would benefit your cat the most?",
+          "subtitle": "Cat formulas use palatable dropper bottles that mix seamlessly into wet food.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "joints-jumping",
+              "label": "Hips, joints & high jumps",
+              "description": "Comfort jumping on counters, cat trees and sofa perches"
+            },
+            {
+              "id": "calm-stress",
+              "label": "Calm & stress support",
+              "description": "Grooming peace, visitor ease and contented purring"
+            },
+            {
+              "id": "overall-vitality",
+              "label": "Overall cellular vitality",
+              "description": "Daily NMN drops for healthy aging and coat shine"
+            }
+          ]
+        }
+      ],
+      "recommendationRules": [
+        {
+          "id": "cat-calm-rule",
+          "match": {
+            "concern": "calm-stress"
+          },
+          "recommendedKitSlug": "cat-care",
+          "recommendedProductSlug": "purr-mode",
+          "secondaryProductSlug": "high-jump",
+          "headline": "A gentle daily drops routine featuring Purr Mode calm support.*",
+          "reasons": [
+            "Purr Mode: feline-specific botanical blend supports calm demeanor and reduced stress.*",
+            "Liquid drops mix invisibly into morning wet food or broth."
+          ],
+          "alternatives": [
+            {
+              "title": "Just Purr Mode",
+              "description": "Feline calming drops with dropper pipette.",
+              "type": "product",
+              "slug": "purr-mode"
+            }
+          ]
+        },
+        {
+          "id": "cat-joints-rule",
+          "match": {
+            "concern": "joints-jumping"
+          },
+          "recommendedKitSlug": "cat-care",
+          "recommendedProductSlug": "high-jump",
+          "secondaryProductSlug": "purr-mode",
+          "headline": "Targeted hip and joint drops to restore effortless agility and jumping.*",
+          "reasons": [
+            "High Jump drops deliver concentrated joint nutrients tailored for feline metabolism.*",
+            "Cat Care kit provides comprehensive dual protection for agility and relaxation.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Just High Jump",
+              "description": "Feline hip & joint liquid drops.",
+              "type": "product",
+              "slug": "high-jump"
+            }
+          ]
+        }
+      ],
+      "defaultRecommendation": {
+        "id": "cat-default",
+        "match": {},
+        "recommendedKitSlug": "cat-care",
+        "recommendedProductSlug": "high-jump",
+        "secondaryProductSlug": "purr-mode",
+        "headline": "The Cat Care daily drops kit: joint agility plus serene calm support.*",
+        "reasons": [
+          "Complete feline wellness combining High Jump joint drops and Purr Mode calming drops.*",
+          "Easily measured dropper bottle calibrated for cats."
+        ],
+        "alternatives": [
+          {
+            "title": "Just High Jump",
+            "description": "Feline mobility drops.",
+            "type": "product",
+            "slug": "high-jump"
+          }
+        ]
+      }
+    },
+    "horse": {
+      "id": "horse",
+      "line": "pet",
+      "species": "horse",
+      "title": "Horse Performance & Longevity Quiz",
+      "promiseHeadline": "The right longevity plan for your horse",
+      "supportingText": "Answer a few questions about activity level, age and joint needs for a tailored powder routine.",
+      "estimatedMinutes": 1,
+      "questions": [
+        {
+          "id": "horse-profile",
+          "stepNumber": 1,
+          "stepTitle": "About your horse",
+          "title": "Tell us about your horse",
+          "subtitle": "Powder servings are calibrated by weight and work intensity.",
+          "type": "pet-profile",
+          "options": [
+            {
+              "id": "pleasure",
+              "label": "Pleasure & trail",
+              "description": "Light to moderate riding and turnout"
+            },
+            {
+              "id": "sport",
+              "label": "Performance & sport",
+              "description": "High exertion, competition and training"
+            },
+            {
+              "id": "senior",
+              "label": "Senior & retired",
+              "description": "Pasture comfort and golden years vitality"
+            }
+          ],
+          "helpText": "Standard pleasure horse weight is approximately 1,000 to 1,100 lbs."
+        },
+        {
+          "id": "concern",
+          "stepNumber": 2,
+          "stepTitle": "Equine focus",
+          "title": "What is the primary goal for your horse?",
+          "subtitle": "Equine formulas are pure powders that blend directly into morning feed.",
+          "type": "single-choice",
+          "options": [
+            {
+              "id": "joint-stride",
+              "label": "Joint mobility & long stride",
+              "description": "Hock, stifle and fetlock comfort with fluid movement"
+            },
+            {
+              "id": "foundation-vitality",
+              "label": "Daily longevity & senior vitality",
+              "description": "Cellular NAD+ replenishment for veteran equines"
+            }
+          ]
+        }
+      ],
+      "recommendationRules": [
+        {
+          "id": "horse-senior-rule",
+          "match": {
+            "lifeStage": "senior"
+          },
+          "recommendedProductSlug": "solid-ground",
+          "headline": "Solid Ground equine senior powder formulated for golden years comfort.*",
+          "reasons": [
+            "High-potency cellular NAD+ support specifically formulated for aging horses.*",
+            "Easily mixed into daily morning feed ration."
+          ],
+          "alternatives": [
+            {
+              "title": "Long Stride Joint Powder",
+              "description": "Intensive joint mobility formula.",
+              "type": "product",
+              "slug": "long-stride"
+            }
+          ]
+        },
+        {
+          "id": "horse-sport-rule",
+          "match": {
+            "concern": "joint-stride"
+          },
+          "recommendedProductSlug": "long-stride",
+          "headline": "Long Stride joint support powder for athletic fluid movement and rapid recovery.*",
+          "reasons": [
+            "Advanced joint matrix to protect cartilage under heavy training loads.*",
+            "Supports quick post-training recovery and free forward stride.*"
+          ],
+          "alternatives": [
+            {
+              "title": "Solid Ground Senior Powder",
+              "description": "Senior equine longevity support.",
+              "type": "product",
+              "slug": "solid-ground"
+            }
+          ]
+        }
+      ],
+      "defaultRecommendation": {
+        "id": "horse-default",
+        "match": {},
+        "recommendedProductSlug": "long-stride",
+        "headline": "Long Stride equine powder: foundational joint and cellular performance.*",
+        "reasons": [
+          "Clinically dosed powder measured in convenient scoops.",
+          "Formulated to maintain peak athletic movement and cartilage health.*"
+        ],
+        "alternatives": [
+          {
+            "title": "Solid Ground",
+            "description": "Equine senior longevity powder.",
+            "type": "product",
+            "slug": "solid-ground"
+          }
+        ]
+      }
+    }
+  }
+}
