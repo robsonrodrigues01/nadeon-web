@@ -1,0 +1,33 @@
+import {
+  ViewItemPayloadSchema,
+  AddToCartPayloadSchema,
+  BeginCheckoutPayloadSchema,
+  SubscribeNewsletterPayloadSchema,
+  QuizCompletePayloadSchema,
+  PurchasePayloadSchema,
+  ViewItemListPayloadSchema,
+  SelectItemPayloadSchema,
+  RemoveFromCartPayloadSchema,
+  ViewCartPayloadSchema,
+  SignUpPayloadSchema,
+  QuizStartPayloadSchema,
+  LabLookupPayloadSchema,
+  SearchPayloadSchema,
+} from "./types";
+
+export const AnalyticsEventSchemas = {
+  view_item: ViewItemPayloadSchema,
+  add_to_cart: AddToCartPayloadSchema,
+  begin_checkout: BeginCheckoutPayloadSchema,
+  subscribe_newsletter: SubscribeNewsletterPayloadSchema,
+  quiz_complete: QuizCompletePayloadSchema,
+  purchase: PurchasePayloadSchema,
+  view_item_list: ViewItemListPayloadSchema,
+  select_item: SelectItemPayloadSchema,
+  remove_from_cart: RemoveFromCartPayloadSchema,
+  view_cart: ViewCartPayloadSchema,
+  sign_up: SignUpPayloadSchema,
+  quiz_start: QuizStartPayloadSchema,
+  lab_lookup: LabLookupPayloadSchema,
+  search: SearchPayloadSchema,
+} as const;
