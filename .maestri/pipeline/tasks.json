@@ -629,7 +629,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Vela",
     "lease_ate": "2026-11-14T23:05:04.037Z",
     "branch": "agy/W2-02",
@@ -1239,8 +1239,7 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ],
-    "revisor": "Grifo"
+    ]
   },
   {
     "id": "W2-30",
