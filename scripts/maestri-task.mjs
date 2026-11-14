@@ -344,12 +344,14 @@ export async function doneTask(maestriDir, taskId, options = {}) {
       pr: task.pr || null,
     });
 
-    updateStatusFile(
-      maestriDir,
-      taskId,
-      "DONE",
-      `PR: ${task.pr || "N/A"}\nEntregue em: ${new Date().toISOString()}\n`
-    );
+    const donePath = path.join(maestriDir, "status", taskId, "DONE");
+    const doneContent = `PR: ${task.pr || "N/A"}\nEntregue em: ${new Date().toISOString()}\n`;
+
+    if (fs.existsSync(donePath)) {
+      fs.appendFileSync(donePath, doneContent, "utf8");
+    } else {
+      updateStatusFile(maestriDir, taskId, "DONE", doneContent);
+    }
 
     return task;
   });
