@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Campaign } from "@/lib/contracts/campaign";
+import { useMarket } from "@/lib/market/context";
+import { formatFreeShippingLabel } from "@/lib/market/shipping";
 import { CountdownTimer } from "./countdown-timer";
 import type { AnnouncementBarProps } from "./types";
 
@@ -21,6 +23,7 @@ export function AnnouncementBar({
   now,
   className = "",
 }: AnnouncementBarProps) {
+  const { market } = useMarket();
   const [fetchedCampaign, setFetchedCampaign] = useState<
     Campaign | null | undefined
   >(undefined);
@@ -132,9 +135,8 @@ export function AnnouncementBar({
     ? "bg-bg-elevated text-product-amber"
     : "bg-product-amber text-accent-fg";
 
-  const freeShippingText = isHuman
-    ? "FREE SHIPPING OVER $75"
-    : "FREE SHIPPING OVER $49";
+  // Threshold comes from the market (Rule 14); null means no free shipping is advertised.
+  const freeShippingText = formatFreeShippingLabel(market, line);
   const quizText = isHuman ? "TAKE THE QUIZ" : "FIND THE RIGHT FORMULA";
 
   return (
@@ -146,16 +148,20 @@ export function AnnouncementBar({
         aria-label="Announcement notices"
         className="flex items-center justify-center flex-wrap gap-2 md:gap-3"
       >
-        <Link
-          href={targetShippingHref}
-          className="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm py-0.5 px-1"
-        >
-          {freeShippingText}
-        </Link>
+        {freeShippingText && (
+          <>
+            <Link
+              href={targetShippingHref}
+              className="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm py-0.5 px-1"
+            >
+              {freeShippingText.toUpperCase()}
+            </Link>
 
-        <span className="opacity-50 select-none" aria-hidden="true">
-          ·
-        </span>
+            <span className="opacity-50 select-none" aria-hidden="true">
+              ·
+            </span>
+          </>
+        )}
 
         <Link
           href={targetSubscribeHref}

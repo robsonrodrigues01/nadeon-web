@@ -15,6 +15,7 @@ export const SUPPORTED_MARKETS: Market[] = [
     locale: "en-US",
     rate: 1.0,
     flag: "🇺🇸",
+    freeShipping: { human: 75, pet: 49 },
     taxNotice: "Sales tax calculated at checkout where applicable.",
   },
   {
@@ -31,6 +32,7 @@ export const SUPPORTED_MARKETS: Market[] = [
     locale: "en-CA",
     rate: 1.36,
     flag: "🇨🇦",
+    freeShipping: null,
     taxNotice: "Import duties and GST/HST paid by recipient upon delivery.",
   },
   {
@@ -47,6 +49,7 @@ export const SUPPORTED_MARKETS: Market[] = [
     locale: "en-GB",
     rate: 0.79,
     flag: "🇬🇧",
+    freeShipping: null,
     taxNotice: "Import duties and VAT paid by recipient upon delivery.",
   },
   {
@@ -63,6 +66,7 @@ export const SUPPORTED_MARKETS: Market[] = [
     locale: "en-IE",
     rate: 0.92,
     flag: "🇪🇺",
+    freeShipping: null,
     taxNotice: "Import duties and local VAT paid by recipient upon delivery.",
   },
   {
@@ -79,6 +83,7 @@ export const SUPPORTED_MARKETS: Market[] = [
     locale: "en-AU",
     rate: 1.52,
     flag: "🇦🇺",
+    freeShipping: null,
     taxNotice: "Import duties and GST paid by recipient upon delivery.",
   },
   {
@@ -95,6 +100,7 @@ export const SUPPORTED_MARKETS: Market[] = [
     locale: "ja-JP",
     rate: 155,
     flag: "🇯🇵",
+    freeShipping: null,
     taxNotice: "Import consumption taxes paid by recipient upon delivery.",
   },
   {
@@ -111,6 +117,7 @@ export const SUPPORTED_MARKETS: Market[] = [
     locale: "de-CH",
     rate: 0.88,
     flag: "🇨🇭",
+    freeShipping: null,
     taxNotice: "Import duties and Swiss VAT paid by recipient upon delivery.",
   },
 ];

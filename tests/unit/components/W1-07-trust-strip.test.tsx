@@ -2,11 +2,8 @@
 import React from "react";
 import { describe, it, expect, afterEach } from "vitest";
 import { render, screen, within, cleanup } from "@testing-library/react";
-import {
-  TrustStrip,
-  HUMAN_TRUST_ITEMS,
-  PET_TRUST_ITEMS,
-} from "@/components/brand/trust-strip";
+import { TrustStrip, getTrustItems } from "@/components/brand/trust-strip";
+import { DEFAULT_MARKET, getMarket } from "@/lib/market";
 import TrustStripSection from "@/app/(shared)/dev/kit/sections/W1-07";
 
 describe("W1-07: TrustStrip Component", () => {
@@ -122,12 +119,23 @@ describe("W1-07: TrustStrip Component", () => {
     expect(screen.getByText("Preserved potency")).toBeTruthy();
   });
 
-  it("exports HUMAN_TRUST_ITEMS and PET_TRUST_ITEMS constants matching specifications", () => {
-    expect(HUMAN_TRUST_ITEMS).toHaveLength(4);
-    expect(PET_TRUST_ITEMS).toHaveLength(4);
+  it("builds Human and Pet items from the market threshold ($75 / $49 in the US)", () => {
+    const human = getTrustItems("human", DEFAULT_MARKET);
+    const pet = getTrustItems("pet", DEFAULT_MARKET);
 
-    expect(HUMAN_TRUST_ITEMS[2].description).toBe("Over $75");
-    expect(PET_TRUST_ITEMS[2].description).toBe("Over $49");
+    expect(human).toHaveLength(4);
+    expect(pet).toHaveLength(4);
+    expect(human[2].description).toBe("Over $75");
+    expect(pet[2].description).toBe("Over $49");
+  });
+
+  it("drops the free shipping item in a market that advertises none", () => {
+    const gb = getMarket("gb");
+    expect(gb).toBeDefined();
+    const items = getTrustItems("human", gb!);
+
+    expect(items).toHaveLength(3);
+    expect(items.some((item) => item.title === "Free shipping")).toBe(false);
   });
 });
 
