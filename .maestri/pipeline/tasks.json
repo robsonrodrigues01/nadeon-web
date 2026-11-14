@@ -613,7 +613,7 @@
     "responsavel": "Portal",
     "lease_ate": null,
     "branch": "agy/W2-01",
-    "pr": "local",
+    "pr": "local 6585fe2",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -631,7 +631,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Aurora",
-    "lease_ate": "2026-11-14T10:16:16.928Z",
+    "lease_ate": "2026-11-14T10:17:11.115Z",
     "branch": "agy/W2-02",
     "pr": "local",
     "criterios": [
@@ -649,9 +649,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Matilha",
-    "lease_ate": "2026-11-14T10:16:21.675Z",
+    "lease_ate": null,
     "branch": "agy/W2-03",
     "pr": "local",
     "criterios": [
@@ -671,7 +671,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prateleira",
-    "lease_ate": "2026-11-14T10:12:28.603Z",
+    "lease_ate": "2026-11-14T10:16:52.582Z",
     "branch": "agy/W2-04",
     "pr": "local",
     "criterios": [
@@ -691,7 +691,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Capsula",
-    "lease_ate": "2026-11-14T10:15:46.853Z",
+    "lease_ate": "2026-11-14T10:18:03.086Z",
     "branch": "agy/W2-06",
     "pr": "local",
     "criterios": [
