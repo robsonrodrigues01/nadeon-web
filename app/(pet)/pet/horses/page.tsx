@@ -4,11 +4,8 @@ import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
 import { buildMetadata, JsonLd, DEFAULT_SITE_URL } from "@/lib/seo";
 import { getDefaultMarket } from "@/lib/market";
-import { getSpeciesDosingTable } from "@/lib/dosing";
 
 import { HorseProductsSection } from "./_components/horse-products-section";
-
-const HORSE_DOSE_BANDS = getSpeciesDosingTable("horse");
 
 export const metadata: Metadata = buildMetadata({
   title: "Shop Horse Formulas - Nadeon Pet",
@@ -112,56 +109,14 @@ export default async function HorsesPage() {
 
       <HorseProductsSection products={products} locale={locale} />
 
-      <section
-        aria-labelledby="dose-band-heading"
-        className="mx-auto max-w-7xl px-4 pb-10 sm:px-8"
-      >
-        <h2
-          id="dose-band-heading"
-          className="title text-2xl font-extrabold uppercase text-fg"
-        >
-          Dose by weight band
-        </h2>
-        <p className="mt-2 text-sm text-fg-muted">Per day, on feed.</p>
-
-        <div className="mt-6 overflow-x-auto rounded-card border border-border bg-bg-elevated">
-          <table className="w-full min-w-[320px] text-left text-sm">
-            <caption className="sr-only">
-              Dose by weight band for horses
-            </caption>
-            <thead className="border-b border-border text-xs font-extrabold uppercase tracking-wider text-fg-muted">
-              <tr>
-                <th scope="col" className="px-5 py-4">
-                  Weight
-                </th>
-                <th scope="col" className="px-5 py-4">
-                  Dose
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {HORSE_DOSE_BANDS.map((row) => (
-                <tr
-                  key={row.bandLabel}
-                  className="border-b border-border/60 last:border-b-0"
-                >
-                  <th scope="row" className="px-5 py-4 font-bold">
-                    {row.bandLabel}
-                  </th>
-                  <td className="px-5 py-4 font-extrabold">{row.dose}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
+      <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-8">
         <Link
           href="/pet/dose-calculator"
-          className="mt-6 min-h-11 inline-flex items-center rounded-pill bg-fg px-6 text-sm font-bold text-bg"
+          className="min-h-11 inline-flex items-center rounded-pill bg-fg px-6 text-sm font-bold text-bg"
         >
           Dose calculator
         </Link>
-      </section>
+      </div>
 
       <section
         aria-labelledby="barn-notes-heading"
