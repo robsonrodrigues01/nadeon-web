@@ -589,11 +589,11 @@
     "depende_de": [
       "W1-14"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Remendo",
-    "lease_ate": "2026-11-14T10:06:52.414Z",
+    "lease_ate": "2026-11-14T10:14:02.027Z",
     "branch": "agy/W1-22",
-    "pr": "local",
+    "pr": "local 8ee1d60",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -609,9 +609,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Portal",
-    "lease_ate": "2026-11-14T10:06:23.920Z",
+    "lease_ate": null,
     "branch": "agy/W2-01",
     "pr": "local",
     "criterios": [
@@ -631,7 +631,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Aurora",
-    "lease_ate": "2026-11-14T10:05:42.740Z",
+    "lease_ate": "2026-11-14T10:16:16.928Z",
     "branch": "agy/W2-02",
     "pr": "local",
     "criterios": [
@@ -651,7 +651,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Matilha",
-    "lease_ate": "2026-11-14T10:07:43.458Z",
+    "lease_ate": "2026-11-14T10:16:21.675Z",
     "branch": "agy/W2-03",
     "pr": "local",
     "criterios": [
@@ -671,7 +671,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prateleira",
-    "lease_ate": "2026-11-14T10:06:42.255Z",
+    "lease_ate": "2026-11-14T10:12:28.603Z",
     "branch": "agy/W2-04",
     "pr": "local",
     "criterios": [
@@ -691,7 +691,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Capsula",
-    "lease_ate": "2026-11-14T10:06:57.820Z",
+    "lease_ate": "2026-11-14T10:15:46.853Z",
     "branch": "agy/W2-06",
     "pr": "local",
     "criterios": [
@@ -709,9 +709,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Focinho",
-    "lease_ate": "2026-11-14T10:06:33.978Z",
+    "lease_ate": null,
     "branch": "agy/W2-09",
     "pr": "local",
     "criterios": [
@@ -731,7 +731,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Coleira",
-    "lease_ate": "2026-11-14T10:06:11.826Z",
+    "lease_ate": "2026-11-14T10:16:08.942Z",
     "branch": "agy/W2-12",
     "pr": "local",
     "criterios": [
@@ -739,5 +739,25 @@
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ]
+  },
+  {
+    "id": "W2-23",
+    "titulo": "Rota /human/quiz",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-15"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Trilha",
+    "branch": "agy/W2-23",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "lease_ate": "2026-11-14T10:15:48.800Z"
   }
 ]
