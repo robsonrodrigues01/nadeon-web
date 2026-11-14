@@ -28,6 +28,14 @@ import { CatsAndHorsesSection } from "@/app/(pet)/pet/dogs/_components/cats-and-
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import type { Cart, CartProvider } from "@/lib/contracts/cart";
 import type { Product } from "@/lib/contracts/catalog";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
+import { getAllKits } from "@/data/products";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+
+// Página de servidor lê o cookie de mercado; o teste não tem requisição.
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
 
 describe("W2-09: /pet/dogs Route Suite", () => {
   let dogProducts: Product[];
@@ -56,6 +64,7 @@ describe("W2-09: /pet/dogs Route Suite", () => {
       get: vi.fn().mockResolvedValue(mockCart),
       create: vi.fn().mockResolvedValue(mockCart),
       addLines: vi.fn().mockResolvedValue(mockCart),
+      addKit: vi.fn().mockResolvedValue(mockCart),
       updateLines: vi.fn().mockResolvedValue(mockCart),
       removeLines: vi.fn().mockResolvedValue(mockCart),
       applyDiscount: vi.fn().mockResolvedValue(mockCart),
@@ -301,11 +310,12 @@ describe("W2-09: /pet/dogs Route Suite", () => {
   });
 
   describe("BundlesSection Component", () => {
-    it("renders 4 chew + oil bundles with formatted prices and Add bundle buttons", () => {
+    it("renders only the bundles that have a catalog kit, priced from the kit", () => {
       render(
         <BundlesSection
           cartProvider={mockCartProviderInstance}
-          locale="en-US"
+          kits={getAllKits()}
+          market={DEFAULT_MARKET}
         />
       );
 
@@ -313,26 +323,39 @@ describe("W2-09: /pet/dogs Route Suite", () => {
         screen.getByRole("heading", { level: 2, name: /chew \+ oil, by need/i })
       ).toBeTruthy();
 
-      DOG_BUNDLES.forEach((bundle) => {
+      const kitSlugs = new Set(getAllKits().map((kit) => kit.slug));
+      const withKit = DOG_BUNDLES.filter(
+        (bundle) => bundle.kitSlug && kitSlugs.has(bundle.kitSlug)
+      );
+      const withoutKit = DOG_BUNDLES.filter(
+        (bundle) => !withKit.includes(bundle)
+      );
+      expect(withKit.length).toBeGreaterThan(0);
+
+      withKit.forEach((bundle) => {
         expect(screen.getByText(bundle.name)).toBeTruthy();
         expect(screen.getByText(bundle.category)).toBeTruthy();
+      });
+      withoutKit.forEach((bundle) => {
+        expect(screen.queryByText(bundle.name)).toBeNull();
       });
 
       const addButtons = screen.getAllByRole("button", {
         name: /add .* bundle/i,
       });
-      expect(addButtons).toHaveLength(4);
+      expect(addButtons).toHaveLength(withKit.length);
 
-      // Verify formatted prices ($75.00, $88.00)
-      const prices = screen.getAllByText("$75.00");
-      expect(prices.length).toBeGreaterThanOrEqual(4);
+      const chewOil = getAllKits().find((kit) => kit.slug === "chew-oil");
+      const expected = formatMoneyWithMarket(chewOil!.price, DEFAULT_MARKET);
+      expect(screen.getAllByText(expected).length).toBeGreaterThanOrEqual(1);
     });
 
-    it("calls cartProvider.addLines with variantIds when clicking Add bundle", async () => {
+    it("calls cartProvider.addKit with the chew-oil kit when clicking Add bundle", async () => {
       render(
         <BundlesSection
           cartProvider={mockCartProviderInstance}
-          locale="en-US"
+          kits={getAllKits()}
+          market={DEFAULT_MARKET}
         />
       );
 
@@ -344,10 +367,10 @@ describe("W2-09: /pet/dogs Route Suite", () => {
       fireEvent.click(button);
 
       await waitFor(() => {
-        expect(mockCartProviderInstance.addLines).toHaveBeenCalledWith([
-          { variantId: "var_more_good_years_1", quantity: 1 },
-          { variantId: "var_more_good_years_oil_1", quantity: 1 },
-        ]);
+        expect(mockCartProviderInstance.addKit).toHaveBeenCalledWith(
+          "chew-oil",
+          1
+        );
       });
 
       // Accessible polite feedback

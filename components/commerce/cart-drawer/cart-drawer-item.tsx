@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { CartLineItem, CartProvider } from "@/lib/providers/client";
-import { formatMoney } from "./money";
+import { useMarket } from "@/lib/market/context";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
 
 export interface CartDrawerItemProps {
   item: CartLineItem;
@@ -19,8 +20,11 @@ export function CartDrawerItem({
 }: CartDrawerItemProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [showPlanSelector, setShowPlanSelector] = useState(false);
+  const { market } = useMarket();
 
   const isSubscription = Boolean(item.sellingPlanId);
+  // Desconto vem do plano no catálogo (via linha), nunca fixo aqui
+  const discount = item.subscriptionDiscountPercentage;
 
   // Deriva o slug / handle para buscar o selling plan adequado
   const handleOrSlug = item.product.handle || item.product.id || "";
@@ -76,13 +80,13 @@ export function CartDrawerItem({
     }
   };
 
-  // Se for subscription, o compare price de 1 unidade é price / 0.85
-  const originalUnitPrice = isSubscription
-    ? Number((item.price.amount / 0.85).toFixed(2))
-    : item.price.amount;
-  const originalTotalPrice = Number(
-    (originalUnitPrice * item.quantity).toFixed(2)
-  );
+  // Preço sem plano vem da linha (catálogo), sem desconto escrito no código
+  const originalTotalPrice = item.compareAtPrice
+    ? {
+        amount: Number((item.compareAtPrice.amount * item.quantity).toFixed(2)),
+        currencyCode: item.compareAtPrice.currencyCode,
+      }
+    : null;
 
   return (
     <div className="flex gap-3.5 py-4.5 border-b border-border/40">
@@ -114,20 +118,29 @@ export function CartDrawerItem({
               {item.product.title}
             </h3>
             <p className="text-xs text-fg-muted mt-0.5 capitalize">
-              {item.product.line} routine
+              {item.kit ? "Kit" : `${item.product.line} routine`}
             </p>
+            {item.kit && (
+              <ul
+                aria-label={`Items in ${item.kit.name}`}
+                className="text-xs text-fg-muted mt-1 space-y-0.5"
+              >
+                {item.kit.items.map((kitItem) => (
+                  <li key={kitItem.title}>
+                    {kitItem.quantity}× {kitItem.title}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="text-right shrink-0">
             <div className="font-bold text-sm sm:text-base text-fg">
-              {formatMoney(item.total)}
+              {formatMoneyWithMarket(item.total, market)}
             </div>
-            {isSubscription && (
+            {isSubscription && originalTotalPrice && (
               <div className="text-xs text-fg-muted line-through">
-                {formatMoney({
-                  amount: originalTotalPrice,
-                  currencyCode: item.total.currencyCode,
-                })}
+                {formatMoneyWithMarket(originalTotalPrice, market)}
               </div>
             )}
           </div>
@@ -137,7 +150,7 @@ export function CartDrawerItem({
         <div className="mt-2 flex flex-wrap items-center gap-2">
           {isSubscription ? (
             <span className="inline-block bg-accent/15 text-accent border border-accent/20 rounded-full px-2.5 py-0.5 text-[11px] font-bold tracking-wide">
-              Subscribe &amp; save 15%
+              Subscribe &amp; save {discount}%
             </span>
           ) : (
             <span className="inline-block bg-fg/10 text-fg rounded-full px-2.5 py-0.5 text-[11px] font-bold tracking-wide">
@@ -146,32 +159,34 @@ export function CartDrawerItem({
           )}
         </div>
 
-        {/* Action link: Change or Switch to subscription */}
-        <div className="text-xs text-fg-muted mt-1.5 flex flex-wrap items-center gap-2">
-          {isSubscription ? (
-            <>
-              <span>↻ Delivered every 30 days</span>
+        {/* Action link: Change or Switch to subscription. Kit lines have no selling plans in the catalog yet, so the switch is hidden. */}
+        {!item.kit && discount !== undefined && (
+          <div className="text-xs text-fg-muted mt-1.5 flex flex-wrap items-center gap-2">
+            {isSubscription ? (
+              <>
+                <span>↻ Delivered every 30 days</span>
+                <button
+                  type="button"
+                  onClick={() => setShowPlanSelector((prev) => !prev)}
+                  aria-expanded={showPlanSelector}
+                  aria-label={`Change subscription frequency for ${item.product.title}`}
+                  className="underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
+                >
+                  Change
+                </button>
+              </>
+            ) : (
               <button
                 type="button"
-                onClick={() => setShowPlanSelector((prev) => !prev)}
-                aria-expanded={showPlanSelector}
-                aria-label={`Change subscription frequency for ${item.product.title}`}
-                className="underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
+                onClick={() => handleSwitchToSubscription()}
+                aria-label={`Switch ${item.product.title} to subscription and save ${discount}%`}
+                className="underline text-fg hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
               >
-                Change
+                Switch to subscription, save {discount}%
               </button>
-            </>
-          ) : (
-            <button
-              type="button"
-              onClick={() => handleSwitchToSubscription()}
-              aria-label={`Switch ${item.product.title} to subscription and save 15%`}
-              className="underline text-fg hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
-            >
-              Switch to subscription, save 15%
-            </button>
-          )}
-        </div>
+            )}
+          </div>
+        )}
 
         {/* Frequência dropdown / selector acessível se clicou em Change */}
         {showPlanSelector && (
@@ -185,7 +200,7 @@ export function CartDrawerItem({
                 }
                 className="text-left px-2 py-1.5 rounded hover:bg-fg/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent flex items-center justify-between"
               >
-                <span>Delivery every 30 days (15% off)</span>
+                <span>Delivery every 30 days ({discount}% off)</span>
                 <span className="text-accent font-bold">Standard</span>
               </button>
               <button
@@ -195,7 +210,7 @@ export function CartDrawerItem({
                 }
                 className="text-left px-2 py-1.5 rounded hover:bg-fg/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                Delivery every 60 days (15% off)
+                Delivery every 60 days ({discount}% off)
               </button>
               <button
                 type="button"
@@ -204,7 +219,7 @@ export function CartDrawerItem({
                 }
                 className="text-left px-2 py-1.5 rounded hover:bg-fg/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                Delivery every 90 days (15% off)
+                Delivery every 90 days ({discount}% off)
               </button>
               <button
                 type="button"

@@ -32,6 +32,7 @@ describe("ProductCard component (W1-12)", () => {
       get: vi.fn().mockResolvedValue(sampleCart),
       create: vi.fn().mockResolvedValue(sampleCart),
       addLines: vi.fn().mockResolvedValue(sampleCart),
+      addKit: vi.fn().mockResolvedValue(sampleCart),
       updateLines: vi.fn().mockResolvedValue(sampleCart),
       removeLines: vi.fn().mockResolvedValue(sampleCart),
       applyDiscount: vi.fn().mockResolvedValue(sampleCart),
@@ -44,16 +45,12 @@ describe("ProductCard component (W1-12)", () => {
     cleanup();
   });
 
-  it("renders BioHack card with semantic elements, image alt, technical name and Intl formatted price", async () => {
+  it("renders BioHack card with semantic elements, image alt, technical name and market formatted price", async () => {
     const biohack = await mockCatalogProvider.getProduct("biohack");
     expect(biohack).not.toBeNull();
 
     render(
-      <ProductCard
-        product={biohack!}
-        cartProvider={mockCartProviderInstance}
-        locale="en-US"
-      />
+      <ProductCard product={biohack!} cartProvider={mockCartProviderInstance} />
     );
 
     // Semantic article container

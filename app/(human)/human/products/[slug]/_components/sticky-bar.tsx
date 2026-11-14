@@ -3,15 +3,16 @@
 import React, { useState, useEffect } from "react";
 import type { Product } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
-import { formatMarketPrice } from "@/lib/market/formatter";
-import { DEFAULT_MARKET } from "@/lib/market/markets";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 import { Button } from "@/components/ui/button";
 
 export interface StickyBarProps {
   product: Product;
+  market: Market;
 }
 
-export function StickyBar({ product }: StickyBarProps) {
+export function StickyBar({ product, market }: StickyBarProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [added, setAdded] = useState(false);
@@ -66,10 +67,9 @@ export function StickyBar({ product }: StickyBarProps) {
       2
     )
   );
-  const formattedPrice = formatMarketPrice(
-    subscriptionPriceAmount,
-    price.currencyCode,
-    DEFAULT_MARKET.locale
+  const formattedPrice = formatMoneyWithMarket(
+    { amount: subscriptionPriceAmount, currencyCode: price.currencyCode },
+    market
   );
 
   return (

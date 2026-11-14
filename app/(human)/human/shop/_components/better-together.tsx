@@ -5,19 +5,16 @@ import type { Kit, Product } from "@/lib/contracts/catalog";
 import { cartProvider } from "@/lib/providers/client";
 import { Claim } from "@/components/commerce/product-card/claim";
 import { Button } from "@/components/ui/button";
-import { formatMoney } from "./money";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import type { Market } from "@/lib/market/types";
 
 export interface BetterTogetherProps {
   kits: Kit[];
   products: Product[];
-  locale?: string;
+  market: Market;
 }
 
-export function BetterTogetherSection({
-  kits,
-  products,
-  locale = "en-US",
-}: BetterTogetherProps) {
+export function BetterTogetherSection({ kits, market }: BetterTogetherProps) {
   const [addingSlug, setAddingSlug] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
 
@@ -34,27 +31,9 @@ export function BetterTogetherSection({
     setFeedback(null);
 
     try {
-      // Find variants for all products in this kit
-      const lineInputs = kit.products
-        .map((ref) => {
-          const product = products.find((p) => p.slug === ref.productSlug);
-          const primaryVariant = product?.variants[0];
-          if (!primaryVariant) return null;
-          return {
-            variantId: primaryVariant.id,
-            quantity: ref.quantity,
-          };
-        })
-        .filter(
-          (item): item is { variantId: string; quantity: number } =>
-            item !== null
-        );
-
-      if (lineInputs.length > 0) {
-        await cartProvider.addLines(lineInputs);
-        setFeedback(`Added ${kit.name} to cart`);
-        setTimeout(() => setFeedback(null), 3000);
-      }
+      await cartProvider.addKit(kit.slug, 1);
+      setFeedback(`Added ${kit.name} to cart`);
+      setTimeout(() => setFeedback(null), 3000);
     } catch {
       setFeedback(`Failed to add ${kit.name} to cart`);
     } finally {
@@ -93,9 +72,9 @@ export function BetterTogetherSection({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {duoKits.map((kit) => {
             const isEnergy = kit.slug === "energy-duo";
-            const formattedPrice = formatMoney(kit.price, locale);
+            const formattedPrice = formatMoneyWithMarket(kit.price, market);
             const formattedCompare = kit.compareAtPrice
-              ? formatMoney(kit.compareAtPrice, locale)
+              ? formatMoneyWithMarket(kit.compareAtPrice, market)
               : null;
             const isAdding = addingSlug === kit.slug;
 

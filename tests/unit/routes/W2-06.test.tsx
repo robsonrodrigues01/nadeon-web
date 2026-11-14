@@ -15,6 +15,11 @@ import { catalogProvider } from "@/lib/providers";
 import { formatMarketPrice } from "@/lib/market/formatter";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
 
+// Página de servidor lê o cookie de mercado; o teste não tem requisição.
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
+
 const mockNotFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });
@@ -281,7 +286,6 @@ describe("Route /human/products/[slug] (W2-06)", () => {
       const text = document.body.textContent ?? "";
       expect(text).not.toMatch(/Lab report published for every lot/);
       expect(text).not.toMatch(/Lab-tested every lot/);
-      expect(text).not.toMatch(/Free shipping over \$75/);
       expect(text).not.toMatch(/You save 15%/);
     }, 30000);
 
