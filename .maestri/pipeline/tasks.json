@@ -631,7 +631,7 @@
     ],
     "status": "para_revisao",
     "responsavel": "Vela",
-    "lease_ate": "2026-11-14T23:05:04.037Z",
+    "lease_ate": null,
     "branch": "agy/W2-02",
     "pr": "local",
     "criterios": [
@@ -1070,16 +1070,17 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Cardo",
-    "lease_ate": "2026-11-14T23:10:21.948Z",
+    "lease_ate": null,
     "branch": "agy/W2-22",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Crivo"
   },
   {
     "id": "W2-24",
@@ -1170,9 +1171,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": "Duvida",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Brisa",
+    "lease_ate": "2026-11-14T23:10:39.138Z",
     "branch": "agy/W2-26",
     "pr": "local",
     "criterios": [
@@ -1190,9 +1191,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": "Socorro",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Fio",
+    "lease_ate": "2026-11-14T23:11:11.464Z",
     "branch": "agy/W2-27",
     "pr": "local",
     "criterios": [
