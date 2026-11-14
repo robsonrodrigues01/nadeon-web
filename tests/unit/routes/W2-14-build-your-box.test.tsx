@@ -27,6 +27,7 @@ import {
   isIntervalAvailable,
   planFor,
   oneJarVariant,
+  doseGuide,
 } from "@/app/(pet)/pet/build-your-box/_components/box-helpers";
 import { STANDARD_WEIGHT_BANDS } from "@/lib/dosing/bands";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
@@ -83,6 +84,29 @@ describe("W2-14: pure box helpers", () => {
     expect(buildBoxLines([cat], 30, BAND_21_TO_50)[0].dose).toBeNull();
   });
 
+  it("builds the serving guide from dosingByWeight, one row per weight band", () => {
+    const guide = doseGuide(products);
+    const chews = guide.find((g) => g.format === "Soft chews");
+    expect(chews).toBeDefined();
+    expect(chews!.ranges.map((r) => r.label)).toEqual(
+      STANDARD_WEIGHT_BANDS.map((b) => b.labelLbs)
+    );
+    expect(chews!.ranges.find((r) => r.label === "21 to 50 lbs")?.dose).toBe(
+      "2 chews daily"
+    );
+    expect(guide.some((g) => g.format === "Oils")).toBe(true);
+    expect(guide.every((g) => g.ranges.every((r) => r.dose !== null))).toBe(
+      true
+    );
+  });
+
+  it("renders the dose FAQ answer from catalog data, not fixed numbers", async () => {
+    await renderPage();
+    fireEvent.click(screen.getByText("How do you work out the dose?"));
+    expect(screen.getByText("Up to 20 lbs: 1 chew daily")).toBeTruthy();
+    expect(screen.getByText("Over 90 lbs: 4 chews daily")).toBeTruthy();
+  });
+
   it("disables a frequency only when a picked product has no plan for it", () => {
     const dog = products.find((p) => p.slug === "more-good-years")!;
     expect(isIntervalAvailable([], 120)).toBe(true);
@@ -93,7 +117,8 @@ describe("W2-14: pure box helpers", () => {
   });
 });
 
-describe("W2-14: /pet/build-your-box route", () => {
+// Full-page role queries are slow when the suite runs in parallel workers.
+describe("W2-14: /pet/build-your-box route", { timeout: 30000 }, () => {
   beforeEach(() => {
     addLines.mockReset();
     addLines.mockResolvedValue({});
@@ -260,6 +285,7 @@ describe("W2-14: /pet/build-your-box route", () => {
         products={products}
         intervals={[30, 60, 90, 120, 180]}
         savePercentage={15}
+        doseGuide={doseGuide(products)}
       />
     );
     expect(screen.getAllByRole("button", { name: /^Add / })).toHaveLength(

@@ -5,6 +5,7 @@ import type {
   SellingPlan,
 } from "@/lib/contracts/catalog";
 import { getDoseForProduct } from "@/lib/dosing/calculator";
+import { STANDARD_WEIGHT_BANDS } from "@/lib/dosing/bands";
 import type { PetSpecies, WeightBand } from "@/lib/dosing/types";
 
 export const SPECIES_OPTIONS: {
@@ -115,4 +116,27 @@ export function isIntervalAvailable(
     chosen.length === 0 ||
     chosen.every((p) => planFor(p, intervalDays) !== undefined)
   );
+}
+
+export interface DoseGuideEntry {
+  format: string;
+  ranges: { label: string; dose: string | null }[];
+}
+
+/** Serving guide built from catalog dosingByWeight: one entry per format, one row per weight band. */
+export function doseGuide(products: Product[]): DoseGuideEntry[] {
+  const firstByFormat = new Map<string, Product>();
+  for (const product of products) {
+    if (product.dosingByWeight.length === 0) continue;
+    if (!firstByFormat.has(product.format)) {
+      firstByFormat.set(product.format, product);
+    }
+  }
+  return [...firstByFormat.values()].map((product) => ({
+    format: product.format,
+    ranges: STANDARD_WEIGHT_BANDS.map((band) => ({
+      label: band.labelLbs,
+      dose: getDoseForProduct(product, band.minWeightLbs)?.dose ?? null,
+    })),
+  }));
 }

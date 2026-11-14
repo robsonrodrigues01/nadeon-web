@@ -19,6 +19,7 @@ import {
   frequencyHint,
   isIntervalAvailable,
   type BoxLine,
+  type DoseGuideEntry,
   type PetAge,
 } from "./box-helpers";
 
@@ -30,6 +31,7 @@ export interface BoxBuilderProps {
   products: Product[];
   intervals: number[];
   savePercentage: number;
+  doseGuide: DoseGuideEntry[];
 }
 
 const groupClass = "border-0 p-0 m-0 min-w-0";
@@ -42,6 +44,7 @@ export function BoxBuilder({
   products,
   intervals,
   savePercentage,
+  doseGuide,
 }: BoxBuilderProps) {
   const [name, setName] = useState("");
   const [species, setSpecies] = useState<PetSpecies>("dog");
@@ -508,11 +511,26 @@ export function BoxBuilder({
           <summary className="cursor-pointer font-bold text-fg min-h-11 flex items-center">
             How do you work out the dose?
           </summary>
-          <p className="mt-3 text-fg-muted">
-            From your pet&apos;s species and weight, using the serving guide on
-            each label. Chews: 1 per day up to 20 lbs, 2 for 21 to 50 lbs, 3 for
-            51 to 90 lbs, 4 over 90 lbs. Oils: 0.5 mL per 20 lbs.
-          </p>
+          <div className="mt-3 space-y-3 text-fg-muted">
+            <p>
+              From your pet&apos;s species and weight, using the serving guide
+              on each label.
+            </p>
+            {doseGuide.map((entry) => (
+              <div key={entry.format}>
+                <p className="font-bold text-fg">{entry.format}</p>
+                <ul className="list-disc pl-5">
+                  {entry.ranges
+                    .filter((range) => range.dose !== null)
+                    .map((range) => (
+                      <li key={range.label}>
+                        {range.label}: {range.dose}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </details>
       </section>
     </div>

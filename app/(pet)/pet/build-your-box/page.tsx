@@ -4,6 +4,7 @@ import { catalogProvider, subscriptionProvider } from "@/lib/providers";
 import { buildBreadcrumbJsonLd, buildMetadata, JsonLd } from "@/lib/seo";
 import { PetRegulatoryNotice } from "../_components/pet-regulatory-notice";
 import { BoxBuilder } from "./_components/box-builder";
+import { doseGuide } from "./_components/box-helpers";
 
 export const metadata: Metadata = buildMetadata({
   title: "Build your box - Nadeon Pet",
@@ -40,6 +41,7 @@ export default async function BuildYourBoxPage() {
         products={products}
         intervals={intervals}
         savePercentage={savePercentage}
+        doseGuide={doseGuide(products)}
       />
       <PetRegulatoryNotice />
     </main>
