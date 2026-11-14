@@ -1050,9 +1050,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Assina",
-    "lease_ate": "2026-11-14T17:59:11.632Z",
+    "lease_ate": null,
     "branch": "agy/W2-21",
     "pr": "local",
     "criterios": [
@@ -1070,9 +1070,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Ajustes",
-    "lease_ate": "2026-11-14T17:59:38.506Z",
+    "lease_ate": null,
     "branch": "agy/W2-22",
     "pr": "local",
     "criterios": [
@@ -1130,7 +1130,7 @@
     "depende_de": [
       "W0-07"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Preco",
     "lease_ate": null,
     "branch": "agy/W1-24",
@@ -1150,11 +1150,11 @@
     "depende_de": [
       "W0-07"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Busca",
     "lease_ate": null,
     "branch": "agy/W1-26",
-    "pr": "local",
+    "pr": "local d4c304f",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
