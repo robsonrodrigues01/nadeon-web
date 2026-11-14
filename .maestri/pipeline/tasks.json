@@ -629,9 +629,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Aurora",
-    "lease_ate": "2026-11-14T14:26:54.364Z",
+    "lease_ate": null,
     "branch": "agy/W2-02",
     "pr": "local",
     "criterios": [
@@ -1030,7 +1030,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "entregue",
+    "status": "para_revisao",
     "responsavel": "Pedidos",
     "lease_ate": null,
     "branch": "agy/W2-20",
@@ -1092,7 +1092,7 @@
     ],
     "status": "para_revisao",
     "responsavel": "Farejo",
-    "lease_ate": "2026-11-14T18:06:39.195Z",
+    "lease_ate": null,
     "branch": "agy/W2-24",
     "pr": "local",
     "criterios": [
@@ -1170,9 +1170,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "backlog",
     "responsavel": "Duvida",
-    "lease_ate": "2026-11-14T22:25:32.474Z",
+    "lease_ate": null,
     "branch": "agy/W2-26",
     "pr": "local",
     "criterios": [
@@ -1190,9 +1190,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "backlog",
     "responsavel": "Socorro",
-    "lease_ate": "2026-11-14T22:21:40.364Z",
+    "lease_ate": null,
     "branch": "agy/W2-27",
     "pr": "local",
     "criterios": [
@@ -1210,9 +1210,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Laudo",
-    "lease_ate": "2026-11-14T22:25:17.452Z",
+    "lease_ate": null,
     "branch": "agy/W2-28",
     "pr": "local",
     "criterios": [
@@ -1230,7 +1230,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "entregue",
+    "status": "para_revisao",
     "responsavel": "Ciencia",
     "lease_ate": null,
     "branch": "agy/W2-29",
