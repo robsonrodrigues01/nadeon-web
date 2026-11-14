@@ -890,11 +890,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Dosador",
-    "lease_ate": "2026-11-14T10:31:13.579Z",
+    "lease_ate": null,
     "branch": "agy/W2-15",
-    "pr": "local",
+    "pr": "local 38f21c2",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
