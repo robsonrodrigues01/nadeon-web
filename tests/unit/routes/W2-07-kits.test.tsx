@@ -15,9 +15,10 @@ import { cartProvider } from "@/lib/providers/client";
 import {
   buildKitViews,
   averageSavingsPercent,
-  formatKitMoney,
 } from "@/app/(human)/human/kits/_components/kit-view";
 import { catalogProvider } from "@/lib/providers";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import { DEFAULT_MARKET } from "@/lib/market/markets";
 
 const PLACEHOLDERS = /\[X\]|\$XX|\(example\)/i;
 
@@ -118,12 +119,15 @@ describe("W2-07 Route: Kits (`/human/kits`)", () => {
     ]);
   });
 
-  it("shows prices formatted with Intl and savings badges from catalog data", async () => {
+  it("shows prices formatted through the market formatter and savings badges from catalog data", async () => {
     await renderList();
     const card = screen.getByRole("article", { name: "Energy Duo" });
     expect(
       within(card).getByText(
-        formatKitMoney({ amount: 105, currencyCode: "USD" })
+        formatMoneyWithMarket(
+          { amount: 105, currencyCode: "USD" },
+          DEFAULT_MARKET
+        )
       )
     ).toBeDefined();
     expect(within(card).getByText("You save $19.00")).toBeDefined();
@@ -155,7 +159,7 @@ describe("W2-07 Route: Kits (`/human/kits`)", () => {
   it("shows the free shipping card with the design copy", async () => {
     await renderList();
     expect(screen.getByText("Free shipping")).toBeDefined();
-    expect(screen.getByText("On one-time orders over $75.")).toBeDefined();
+    expect(screen.getByText("On one-time orders.")).toBeDefined();
   });
 
   it("uses an existing product render as kit image and omits the image when none exists", () => {

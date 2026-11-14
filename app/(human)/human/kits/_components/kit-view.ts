@@ -17,13 +17,6 @@ export interface KitView {
   canAddToCart: boolean;
 }
 
-export function formatKitMoney(money: Money): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
-}
-
 /**
  * Turns catalog kits into plain, serializable view models for the UI.
  * shortcut: each formula is added at its first variant's price, so the kit

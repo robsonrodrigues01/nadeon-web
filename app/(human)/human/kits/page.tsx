@@ -9,7 +9,7 @@ import { listProductRenders } from "./_components/kit-renders";
 export const metadata = buildMetadata({
   title: "Kits & bundles",
   description:
-    "Formulas that work well together, priced about 15% below buying them one by one. Made and tested in our Clifton, NJ lab.",
+    "Formulas that work well together, priced below buying them one by one. Made and tested in our Clifton, NJ lab.",
   pathname: "/human/kits",
 });
 
@@ -59,8 +59,11 @@ export default async function HumanKitsPage() {
           Kits &amp; bundles
         </h1>
         <p className="text-base text-fg-muted">
-          Formulas that work well together, priced about 15% below buying them
-          one by one. Made and tested in our Clifton, NJ lab.
+          Formulas that work well together,{" "}
+          {averageSavings !== null
+            ? `priced about ${averageSavings}% below`
+            : "priced below"}{" "}
+          buying them one by one. Made and tested in our Clifton, NJ lab.
         </p>
       </header>
 
@@ -77,8 +80,9 @@ export default async function HumanKitsPage() {
           Build your own kit
         </h2>
         <p className="max-w-2xl text-base text-fg-muted">
-          Pick any formulas, set how often they arrive and save 15% on every
-          box, with free shipping every time.
+          {averageSavings !== null
+            ? `Pick any formulas, set how often they arrive and save ${averageSavings}% on every box, with free shipping every time.`
+            : "Pick any formulas, set how often they arrive and save on every box, with free shipping every time."}
         </p>
         <div>
           <Button variant="primary" href="/human/build-your-box">
@@ -106,9 +110,7 @@ export default async function HumanKitsPage() {
           )}
           <div className="rounded-card border border-border p-6">
             <dt className="text-3xl font-bold text-accent">Free shipping</dt>
-            <dd className="mt-2 text-sm text-fg-muted">
-              On one-time orders over $75.
-            </dd>
+            <dd className="mt-2 text-sm text-fg-muted">On one-time orders.</dd>
           </div>
           <div className="rounded-card border border-border p-6">
             <dt className="text-3xl font-bold text-accent">60 Day guarantee</dt>
