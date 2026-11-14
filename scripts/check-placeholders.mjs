@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import ts from "typescript";
 
 const TARGET_DIRS = ["app", "components", "content"];
@@ -48,7 +49,7 @@ function getFiles(dir) {
   return files;
 }
 
-function checkRenderedString(text, filePath, line, issues) {
+export function checkRenderedString(text, filePath, line, issues) {
   if (!text || typeof text !== "string") return;
   const trimmed = text.trim();
   if (!trimmed) return;
@@ -65,8 +66,8 @@ function checkRenderedString(text, filePath, line, issues) {
   }
 }
 
-function checkMarkdownFile(filePath, issues) {
-  const content = fs.readFileSync(filePath, "utf8");
+export function checkMarkdown(content, filePath) {
+  const issues = [];
   const lines = content.split("\n");
 
   lines.forEach((rawLine, index) => {
@@ -77,10 +78,12 @@ function checkMarkdownFile(filePath, issues) {
 
     checkRenderedString(sanitizedLine, filePath, index + 1, issues);
   });
+
+  return issues;
 }
 
-function checkCodeFile(filePath, issues) {
-  const content = fs.readFileSync(filePath, "utf8");
+export function checkCode(content, filePath) {
+  const issues = [];
   const sourceFile = ts.createSourceFile(
     filePath,
     content,
@@ -96,7 +99,12 @@ function checkCodeFile(filePath, issues) {
   }
 
   function visit(node) {
-    // 1. Direct JSX text: <div>[Hello]</div>
+    // Ignore all JSX attributes (e.g. className="text-[10px]", class, id, style, etc.)
+    if (ts.isJsxAttribute(node)) {
+      return;
+    }
+
+    // 1. Direct rendered JSX text children: <div>[Hello]</div>
     if (ts.isJsxText(node)) {
       checkRenderedString(
         node.getText(sourceFile),
@@ -106,23 +114,13 @@ function checkCodeFile(filePath, issues) {
       );
     }
 
-    // 2. JSX attribute string values: title="[Hello]" or alt="$XX"
-    if (ts.isJsxAttribute(node) && node.initializer) {
-      if (ts.isStringLiteral(node.initializer)) {
-        checkRenderedString(
-          node.initializer.text,
-          filePath,
-          getLine(node.initializer.getStart(sourceFile)),
-          issues
-        );
-      }
-    }
-
-    // 3. String literal inside JSX expression container: <div>{"[Hello]"}</div>
+    // 2. String literal inside JSX expression container child: <div>{"[Hello]"}</div>
     if (
       ts.isJsxExpression(node) &&
       node.expression &&
-      ts.isStringLiteral(node.expression)
+      ts.isStringLiteral(node.expression) &&
+      node.parent &&
+      (ts.isJsxElement(node.parent) || ts.isJsxFragment(node.parent))
     ) {
       checkRenderedString(
         node.expression.text,
@@ -132,7 +130,7 @@ function checkCodeFile(filePath, issues) {
       );
     }
 
-    // 4. Metadata exports: export const metadata = { title: "[...]" }
+    // 3. Metadata content strings: export const metadata = { title: "[...]" }
     if (
       ts.isPropertyAssignment(node) &&
       node.name &&
@@ -153,17 +151,19 @@ function checkCodeFile(filePath, issues) {
   }
 
   visit(sourceFile);
+  return issues;
 }
 
-function main() {
+export function main() {
   const allFiles = TARGET_DIRS.flatMap((dir) => getFiles(dir));
   const issues = [];
 
   for (const file of allFiles) {
+    const content = fs.readFileSync(file, "utf8");
     if (file.endsWith(".md") || file.endsWith(".mdx")) {
-      checkMarkdownFile(file, issues);
+      issues.push(...checkMarkdown(content, file));
     } else {
-      checkCodeFile(file, issues);
+      issues.push(...checkCode(content, file));
     }
   }
 
@@ -186,4 +186,7 @@ function main() {
   process.exit(0);
 }
 
-main();
+const currentFile = fileURLToPath(import.meta.url);
+if (process.argv[1] && path.resolve(process.argv[1]) === currentFile) {
+  main();
+}
