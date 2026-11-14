@@ -1072,7 +1072,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Cardo",
-    "lease_ate": "2026-11-14T23:06:47.754Z",
+    "lease_ate": "2026-11-14T23:10:21.948Z",
     "branch": "agy/W2-22",
     "pr": "local",
     "criterios": [
@@ -1230,7 +1230,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Ciencia",
     "lease_ate": null,
     "branch": "agy/W2-29",
