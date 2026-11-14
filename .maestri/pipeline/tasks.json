@@ -729,11 +729,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Coleira",
     "lease_ate": null,
     "branch": "agy/W2-12",
-    "pr": "local",
+    "pr": "local bf778ad",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
