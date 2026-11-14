@@ -144,7 +144,11 @@ que foi executada. Documentação exige o diff como evidência, sem screenshots.
 
 ### 13. Providers no cliente
 
-Componente cliente (`"use client"`) só importa de `lib/providers/client`. Nunca importe de `lib/providers` em componente cliente. Submissões e mutações usam Server Actions.
+Componente cliente (`"use client"`) só importa de `lib/providers/client`. Nunca importe de `lib/providers` em componente cliente. Formulários (newsletter, contato, e-mail do quiz) usam Server Actions. O carrinho é exceção: ele vive no navegador, então adicionar, alterar e remover itens usa `cartProvider` de `lib/providers/client` direto no cliente, no mesmo padrão do ProductCard.
+
+### 14. Preço e moeda
+
+Todo preço exibido passa por `formatMoneyWithMarket` ou `formatMarketPrice` de `lib/market/formatter.ts`, com a moeda do mercado. Proibido `Intl.NumberFormat("en-US")` fixo, helper de preço local e qualquer valor de preço, frete ou desconto escrito no código: tudo vem dos dados ou do mercado.
 
 - Certo: `import { cartProvider } from "@/lib/providers/client"` em componente cliente e server action para formulários.
 - Errado: `import { formsProvider } from "@/lib/providers"` dentro de arquivo com `"use client"`.
