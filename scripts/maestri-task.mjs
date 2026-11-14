@@ -15,14 +15,15 @@ export function getMaestriDir(customDir) {
   if (customDir) return path.resolve(customDir);
   if (process.env.MAESTRI_HOME) return path.resolve(process.env.MAESTRI_HOME);
 
+  // O estado central vence a cópia versionada em .maestri/ de cada worktree.
+  const central =
+    "/Users/robsoncoffy/Documents/Nadeon/Website/nadeon-web/.maestri";
+  if (fs.existsSync(central)) return central;
+
   const local = path.resolve(process.cwd(), ".maestri");
   if (fs.existsSync(path.join(local, "pipeline", "tasks.json"))) {
     return local;
   }
-
-  const central =
-    "/Users/robsoncoffy/Documents/Nadeon/Website/nadeon-web/.maestri";
-  if (fs.existsSync(central)) return central;
 
   return local;
 }

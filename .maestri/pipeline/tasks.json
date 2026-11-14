@@ -1070,8 +1070,8 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
-    "responsavel": "Cardo",
+    "status": "backlog",
+    "responsavel": null,
     "lease_ate": null,
     "branch": "agy/W2-22",
     "pr": "local",
@@ -1080,7 +1080,7 @@
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ],
-    "revisor": "Crivo"
+    "nota": "MUDANÇAS do Crivo: estado do pet não atualiza após salvar; aguarda construtor"
   },
   {
     "id": "W2-24",
@@ -1131,7 +1131,7 @@
     "depende_de": [
       "W0-07"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Remo",
     "lease_ate": "2026-11-14T23:05:04.005Z",
     "branch": "agy/W1-24",
@@ -1140,7 +1140,8 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lente"
   },
   {
     "id": "W1-26",
@@ -1173,7 +1174,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Brisa",
-    "lease_ate": "2026-11-14T23:12:31.737Z",
+    "lease_ate": "2026-11-14T23:14:50.466Z",
     "branch": "agy/W2-26",
     "pr": "local",
     "criterios": [
@@ -1193,7 +1194,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Fio",
-    "lease_ate": "2026-11-14T23:11:11.464Z",
+    "lease_ate": "2026-11-14T23:13:32.550Z",
     "branch": "agy/W2-27",
     "pr": "local",
     "criterios": [
