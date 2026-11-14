@@ -528,11 +528,11 @@
       "W1-12",
       "W1-21"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Sacola",
-    "lease_ate": "2026-11-14T09:54:05.296Z",
+    "lease_ate": null,
     "branch": "agy/W1-14",
-    "pr": "local",
+    "pr": "local 9570677",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
