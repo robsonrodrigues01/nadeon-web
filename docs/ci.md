@@ -1,49 +1,48 @@
 # Pipeline de CI e Gates de Merge
 
-Este documento descreve a arquitetura de integracao continua (CI), as politicas de protecao de branch, os comandos para reproducao local e o procedimento de reversao (rollback) em producao na Vercel.
+Este documento descreve a arquitetura de integracao continua (CI), os gates de merge locais e remotos, os comandos para execucao e o procedimento de reversao (rollback) em producao na Vercel.
 
 ## 1. Visao Geral dos Gates
 
-Nenhum codigo entra no branch principal (`main`) sem validacao previa. O pipeline e executado no GitHub Actions a cada abertura ou atualizacao de Pull Request e em pushes diretos no `main`.
+A integridade do branch principal (`main`) e garantida por gates estritos de qualidade. Nenhum codigo entra no `main` sem aprovacao completa.
 
-O merge automatico e disparado quando todos os gates obrigatorios sao concluidos com sucesso.
+### Workflows do GitHub Actions (.github/workflows/ci.yml)
 
-Os jobs configurados sao:
+A suite remota do GitHub Actions permanece pronta e versionada no repositorio para quando os servicos remotos forem reativados. Ela contempla quatro jobs:
 
-1. **ci**:
-   - Valida estilo de codigo (`pnpm format:check`).
-   - Executa analise estatica (`pnpm lint`).
-   - Verifica tipos TypeScript (`pnpm typecheck`).
-   - Executa testes unitarios (`pnpm test`).
-   - Valida ausencia de placeholders em textos renderizados (`pnpm data:check`).
-   - Compila a aplicacao Next.js (`pnpm build`).
+1. **ci**: executa format:check, lint, typecheck, testes unitarios, data:check e build.
+2. **e2e**: executa build, sobe servidor local e roda testes Playwright com axe core.
+3. **security**: executa Gitleaks e auditoria de vulnerabilidades de dependencias.
+4. **lighthouse**: roda em modo aviso no PR contra a previa de deploy da Vercel.
 
-2. **e2e**:
-   - Executa o build da aplicacao.
-   - Inicia o servidor local via `pnpm start`.
-   - Roda testes end to end com Playwright.
-   - Executa analise de acessibilidade automatizada com `@axe-core/playwright` em cada pagina visitada, garantindo conformidade com WCAG sem violacoes.
+### Gate Real Local (Fluxo Atual da Onda 0)
 
-3. **security**:
-   - Executa varredura profunda de segredos no historico Git via Gitleaks.
-   - Audita dependencias npm com nivel critico e alto (`pnpm security:audit`).
+Devido a restricoes de cobranca e cota remota no GitHub, o gate mandatorio e executado localmente antes de qualquer integracao. O comando oficial e:
 
-4. **lighthouse** (em modo aviso ate a onda 3):
-   - Aguarda o deploy da previa gerada pela Vercel no PR via API do GitHub.
-   - Executa o Lighthouse CI contra a URL de previa.
-   - Avalia metas de performance (85), acessibilidade (95), SEO (95) e boas praticas (95).
+```bash
+pnpm gate
+```
+
+Este comando encadeia em sequencia estrita:
+`pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm data:check && pnpm build`
+
+Se qualquer etapa falhar, o build e abortado imediatamente e o merge e impedido.
 
 ## 2. Como Rodar Localmente
 
-Antes de enviar commits para o repositorio remoto, todos os gates podem ser reproduzidos na estacao de trabalho:
+### Gate de Merge Local
 
-### Validacao completa padrao
+```bash
+pnpm gate
+```
+
+### Validacao Rapida de Codigo (sem build)
 
 ```bash
 pnpm verify
 ```
 
-### Executar cada etapa individualmente
+### Comandos Individuais
 
 ```bash
 # Verificacao de formatacao
@@ -68,36 +67,36 @@ pnpm data:check
 pnpm build
 ```
 
-### Testes End to End (E2E e Acessibilidade)
+Observacao importante: Playwright, Lighthouse e Axe rodam exclusivamente no ambiente de CI remoto do GitHub Actions, nunca na maquina local de desenvolvimento.
 
-```bash
-# Instalar navegadores do Playwright caso necessario
-pnpm exec playwright install chromium
+## 3. Procedimento de Merge Local
 
-# Executar testes E2E
-pnpm test:e2e
-```
+Com a adocao do fluxo de desenvolvimento local, a integracao segue os seguintes passos:
 
-### Auditoria de seguranca e vulnerabilidades
+1. **Finalizacao no Worktree**: o autor conclui os commits no branch `agy/<task_id>` e garante que `pnpm gate` esteja 100% verde.
+2. **Revisao de Codigo**: revisores avaliam o diff localmente a partir do diretorio principal:
+   ```bash
+   git -C /Users/robsoncoffy/Documents/Nadeon/Website/nadeon-web diff main...agy/<task_id>
+   ```
+3. **Veredito**: os revisores respondem diretamente ao Maestro com `APROVADO` ou solicitam mudancas.
+4. **Merge no Main**: o Maestro valida o `pnpm gate` verde e realiza o merge do branch no `main` localmente, sem `git push` nem `gh pr`.
 
-```bash
-pnpm security:audit
-```
+## 4. Registro de Branch Protection e Prova com PR Vermelho
 
-## 3. Politica de Branch Protection e Auto-merge
+### Status: Nao Aplicaveis nesta fase
 
-O branch `main` e estritamente protegido via configuracoes da API do GitHub:
+As etapas originais de ativacao de Branch Protection via API do GitHub e de abertura de PR de teste quebrado para prova de bloqueio remoto foram classificadas como **Nao Aplicaveis** pelas seguintes razoes tecnicas:
 
-- Push direto e desabilitado para qualquer usuario.
-- Required Status Checks ativos: `ci`, `e2e` e `security` devem estar estritamente verdes antes da integracao.
-- O branch deve estar atualizado com o `main` antes do merge (`strict: true`).
-- Aprovacao humana nao e exigida nesta fase para permitir merge automatico agil via `gh pr merge --auto`.
+1. **Conta GitHub no plano Free com repositorio privado**: a API do GitHub restringe Branch Protection e Rulesets para repositorios publicos ou organizacoes no plano GitHub Pro (retornando HTTP 403).
+2. **Limite de faturamento de GitHub Actions atingido**: a conta remota suspendeu execucoes de runners do GitHub Actions ate regularizacao de spending limit.
 
-## 4. Procedimento de Reversao (Rollback da Vercel)
+A seguranca do projeto permanece preservada pelo gate local mandatorio (`pnpm gate`) e pela aprovacao humana centralizada pelo Maestro antes de qualquer merge no `main`.
+
+## 5. Procedimento de Reversao (Rollback da Vercel)
 
 Se uma versao integrada ao `main` apresentar instabilidade ou incidente critico em producao, utilize um dos metodos abaixo:
 
-### Metodo 1: Rollback instantaneo pelo Dashboard da Vercel
+### Metodo 1: Rollback Instantaneo pelo Dashboard da Vercel
 
 1. Acesse o projeto no painel: `https://vercel.com/robsoncoffys-projects/nadeon-web`.
 2. Navegue ate a aba **Deployments**.
@@ -128,4 +127,4 @@ git revert <COMMIT_HASH_DO_PROBLEMA> -m 1
 git push origin main
 ```
 
-O pipeline de CI rodara a validacao automatica e a Vercel executara o deploy da versao revertida.
+Quando o pipeline de CI estiver ativo, a Vercel executara o deploy da versao revertida automaticamente.
