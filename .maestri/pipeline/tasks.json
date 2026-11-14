@@ -631,7 +631,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Aurora",
-    "lease_ate": "2026-11-14T14:17:56.547Z",
+    "lease_ate": "2026-11-14T14:26:54.364Z",
     "branch": "agy/W2-02",
     "pr": "local",
     "criterios": [
@@ -691,9 +691,9 @@
     ],
     "status": "entregue",
     "responsavel": "Capsula",
-    "lease_ate": "2026-11-14T10:21:21.251Z",
+    "lease_ate": null,
     "branch": "agy/W2-06",
-    "pr": "local",
+    "pr": "local a2e9f14",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -729,11 +729,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Coleira",
     "lease_ate": null,
     "branch": "agy/W2-12",
-    "pr": "local",
+    "pr": "local bf778ad",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -789,11 +789,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Combo",
     "lease_ate": null,
     "branch": "agy/W2-07",
-    "pr": "local",
+    "pr": "local 4d2503a",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -809,11 +809,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Bigode",
     "lease_ate": null,
     "branch": "agy/W2-10",
-    "pr": "local",
+    "pr": "local 2c122c8",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -829,16 +829,16 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Agulha",
     "branch": "agy/W1-23",
-    "pr": "local",
+    "pr": "local 76d3bed",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ],
-    "lease_ate": "2026-11-14T10:28:40.452Z",
+    "lease_ate": null,
     "blocked": false
   },
   {
@@ -850,11 +850,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Crina",
-    "lease_ate": "2026-11-14T10:31:01.895Z",
+    "lease_ate": null,
     "branch": "agy/W2-11",
-    "pr": "local",
+    "pr": "local 5434c30",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -870,11 +870,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Kit",
-    "lease_ate": "2026-11-14T14:18:07.232Z",
+    "lease_ate": null,
     "branch": "agy/W2-13",
-    "pr": "local",
+    "pr": "local b86c02b",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -890,11 +890,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Dosador",
-    "lease_ate": "2026-11-14T10:31:13.579Z",
+    "lease_ate": null,
     "branch": "agy/W2-15",
-    "pr": "local",
+    "pr": "local 38f21c2",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -910,11 +910,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Caixa",
-    "lease_ate": "2026-11-14T10:32:32.012Z",
+    "lease_ate": null,
     "branch": "agy/W2-08",
-    "pr": "local",
+    "pr": "local 6e624c9",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -930,11 +930,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Caixote",
-    "lease_ate": "2026-11-14T10:32:31.744Z",
+    "lease_ate": null,
     "branch": "agy/W2-14",
-    "pr": "local",
+    "pr": "local c4f3945",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -950,11 +950,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Busca",
-    "lease_ate": "2026-11-14T10:33:15.922Z",
+    "lease_ate": null,
     "branch": "agy/W2-16",
-    "pr": "local",
+    "pr": "local ce4a22c",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -970,10 +970,150 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Carrinho",
-    "lease_ate": "2026-11-14T14:16:18.670Z",
+    "lease_ate": null,
     "branch": "agy/W2-17",
+    "pr": "local c19fff5",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-18",
+    "titulo": "Rota W2-18",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "entregue",
+    "responsavel": "Rastreio",
+    "lease_ate": null,
+    "branch": "agy/W2-18",
+    "pr": "local 2a8161b",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-19",
+    "titulo": "Rota W2-19",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Painel",
+    "lease_ate": "2026-11-14T17:41:21.737Z",
+    "branch": "agy/W2-19",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-20",
+    "titulo": "Rota W2-20",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Pedidos",
+    "lease_ate": "2026-11-14T17:51:14.370Z",
+    "branch": "agy/W2-20",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-21",
+    "titulo": "Rota W2-21",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Assina",
+    "lease_ate": "2026-11-14T17:50:16.731Z",
+    "branch": "agy/W2-21",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-22",
+    "titulo": "Rota W2-22",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Ajustes",
+    "lease_ate": "2026-11-14T17:50:26.961Z",
+    "branch": "agy/W2-22",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-24",
+    "titulo": "Rota W2-24",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Farejo",
+    "lease_ate": "2026-11-14T17:49:15.599Z",
+    "branch": "agy/W2-24",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W2-25",
+    "titulo": "Rota W2-25",
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Claude Haiku 5.5 (fallback)",
+    "depende_de": [
+      "W1-22"
+    ],
+    "status": "entregue",
+    "responsavel": "Origem",
+    "lease_ate": null,
+    "branch": "agy/W2-25",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
