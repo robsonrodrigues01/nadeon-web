@@ -1070,7 +1070,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Tear",
     "lease_ate": null,
     "branch": "agy/W2-22",
@@ -1079,8 +1079,7 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ],
-    "revisor": "Agulheiro"
+    ]
   },
   {
     "id": "W2-24",
@@ -1171,9 +1170,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
-    "responsavel": "Brisa",
-    "lease_ate": "2026-11-14T23:23:51.054Z",
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-14T23:40:03.603Z",
     "branch": "agy/W2-26",
     "pr": "local",
     "criterios": [
@@ -1251,16 +1250,17 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Selim",
-    "lease_ate": "2026-11-14T23:26:42.187Z",
+    "lease_ate": null,
     "branch": "agy/W2-30",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Esteio"
   },
   {
     "id": "W2-31",
@@ -1273,7 +1273,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Ferradura",
-    "lease_ate": "2026-11-14T23:25:22.149Z",
+    "lease_ate": "2026-11-14T23:38:44.269Z",
     "branch": "agy/W2-31",
     "pr": null,
     "criterios": [
@@ -1291,9 +1291,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Rota",
+    "lease_ate": "2026-11-14T23:38:57.642Z",
     "branch": "agy/W2-32",
     "pr": null,
     "criterios": [
