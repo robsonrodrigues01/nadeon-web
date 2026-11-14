@@ -5,32 +5,58 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Dados
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O acesso a todos os dados externos da aplicacao e feito exclusivamente por meio de contratos definidos em `lib/contracts/` e acessados via `lib/providers/`.
 
-## Learn More
+### Variavel de ambiente `PROVIDERS`
 
-To learn more about Next.js, take a look at the following resources:
+A selecao da implementacao e controlada pela variavel de ambiente `PROVIDERS`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Padrao: executa com dados realistas e estado local (mock)
+PROVIDERS=mock
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Modo integracao real: utiliza as APIs externas (Shopify Storefront, Customer Account, Mailyte, etc.)
+PROVIDERS=live
+```
 
-## Deploy on Vercel
+No modo `mock` (padrao), a aplicacao utiliza dados realistas baseados nas especificacoes de design (cliente Alex, assinaturas BioHack e More Good Years, carrinho persistente via Zustand).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+No modo `live`, metodos reais previstos para a onda 4 estao declarados como stubs que lancam erro informando que serao implementados na onda 4.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Exemplo de importacao direta:
+
+```typescript
+import {
+  catalogProvider,
+  cartProvider,
+  accountProvider,
+  subscriptionProvider,
+  reviewsProvider,
+  formsProvider,
+  labsProvider,
+  campaignConfig,
+} from "@/lib/providers";
+```
+
+Consulte a documentacao completa dos contratos em [docs/contracts.md](file:///Users/robsoncoffy/Documents/Nadeon/Website/worktrees/W0-03/docs/contracts.md).
+
+## Verificacao e Testes
+
+Para rodar a suite completa de verificacao:
+
+```bash
+pnpm verify
+```
+
+Para rodar apenas os testes unitarios de contrato:
+
+```bash
+pnpm test
+```
