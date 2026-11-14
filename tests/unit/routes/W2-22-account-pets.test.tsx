@@ -457,7 +457,9 @@ describe("W2-22 savePetAction", () => {
       .mockResolvedValue({} as Pet);
     expect(await savePetAction(petForm({ ...VALID, name: "" }))).toBeNull();
     expect(await savePetAction(petForm({ ...VALID, breed: "" }))).toBeNull();
-    expect(await savePetAction(petForm({ ...VALID, species: "fish" }))).toBeNull();
+    expect(
+      await savePetAction(petForm({ ...VALID, species: "fish" }))
+    ).toBeNull();
     expect(save).not.toHaveBeenCalled();
   });
 
