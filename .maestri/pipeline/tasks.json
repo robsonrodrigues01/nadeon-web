@@ -263,11 +263,11 @@
     "depende_de": [
       "W1-01"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Flamula",
-    "lease_ate": "2026-11-14T07:27:29.397Z",
+    "lease_ate": null,
     "branch": "agy/W1-02",
-    "pr": "local",
+    "pr": "local fc65f0d",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -367,7 +367,7 @@
     "responsavel": "Selo",
     "lease_ate": null,
     "branch": "agy/W1-07",
-    "pr": "local",
+    "pr": "local fc65f0d",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
