@@ -1,0 +1,629 @@
+[
+  {
+    "slug": "biohack",
+    "handle": "biohack",
+    "name": "BioHack",
+    "technicalName": "NMN 500 mg",
+    "line": "human",
+    "species": null,
+    "format": "Capsules",
+    "color": "#1A0A2C",
+    "images": [
+      "/images/products/biohack-front.webp",
+      "/images/products/biohack-back.webp"
+    ],
+    "actives": [
+      {
+        "name": "NMN (β-nicotinamide mononucleotide)",
+        "amount": "500 mg"
+      }
+    ],
+    "serving": "2 capsules daily with water, in the morning",
+    "servingsPerJar": 30,
+    "netWeight": "60 capsules",
+    "variants": [
+      {
+        "id": "var_biohack_1",
+        "jars": 1,
+        "title": "1 jar",
+        "price": {
+          "amount": 59,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 59,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-BIO-1"
+      },
+      {
+        "id": "var_biohack_2",
+        "jars": 2,
+        "title": "2 jars",
+        "price": {
+          "amount": 106,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 118,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-BIO-2"
+      },
+      {
+        "id": "var_biohack_3",
+        "jars": 3,
+        "title": "3 jars",
+        "price": {
+          "amount": 150,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 177,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-BIO-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_biohack_30d",
+        "name": "1 jar every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_biohack_60d",
+        "name": "2 jars every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_biohack_90d",
+        "name": "3 jars every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Supports cellular energy and NAD+ levels*",
+      "Supports healthy aging from the inside*",
+      "500 mg NMN per serving, no proprietary blend",
+      "Third-party tested, lot number on every jar"
+    ],
+    "howToUse": "Take 2 capsules daily with water, in the morning. Consistency matters more than any single dose. Talk to your doctor if pregnant, nursing or on medication.",
+    "faq": [
+      {
+        "question": "How is NMN different from NAD+?",
+        "answer": "NMN is a building block your cells use to make NAD+. BioHack gives you NMN; Renew gives you NAD+ directly. Many people pair them. Talk to your doctor before starting any supplement.*"
+      },
+      {
+        "question": "Can I take BioHack with Renew?",
+        "answer": "Yes. BioHack provides NMN in the morning and Renew provides direct NAD+ with lunch for comprehensive routine support."
+      },
+      {
+        "question": "What time of day should I take it?",
+        "answer": "Take 2 capsules each morning with a glass of water for optimal cellular circadian alignment."
+      },
+      {
+        "question": "Is BioHack third-party lab tested?",
+        "answer": "Yes. Every lot is independently verified for purity, potency, heavy metals, and microbiological safety."
+      }
+    ],
+    "related": ["full-charge", "renew", "glow"],
+    "claims": [
+      {
+        "text": "Supports cellular energy and NAD+ levels*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports healthy aging from the inside*",
+        "isClaim": true
+      },
+      {
+        "text": "500 mg NMN per serving, no proprietary blend",
+        "isClaim": false
+      },
+      {
+        "text": "Third-party tested, lot number on every jar",
+        "isClaim": false
+      }
+    ],
+    "dosingByWeight": []
+  },
+  {
+    "slug": "full-charge",
+    "handle": "full-charge",
+    "name": "Full Charge",
+    "technicalName": "NMN 4-in-1",
+    "line": "human",
+    "species": null,
+    "format": "Capsules",
+    "color": "#16100C",
+    "images": ["/images/products/full-charge-front.webp"],
+    "actives": [
+      {
+        "name": "NMN (β-nicotinamide mononucleotide)",
+        "amount": "500 mg"
+      },
+      {
+        "name": "Trans-Resveratrol",
+        "amount": "100 mg"
+      },
+      {
+        "name": "TMG (Trimethylglycine)",
+        "amount": "250 mg"
+      },
+      {
+        "name": "Quercetin",
+        "amount": "100 mg"
+      }
+    ],
+    "serving": "2 capsules daily with water, in the morning",
+    "servingsPerJar": 30,
+    "netWeight": "60 capsules",
+    "variants": [
+      {
+        "id": "var_full_charge_1",
+        "jars": 1,
+        "title": "1 jar",
+        "price": {
+          "amount": 69,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 69,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-FC-1"
+      },
+      {
+        "id": "var_full_charge_2",
+        "jars": 2,
+        "title": "2 jars",
+        "price": {
+          "amount": 124,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 138,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-FC-2"
+      },
+      {
+        "id": "var_full_charge_3",
+        "jars": 3,
+        "title": "3 jars",
+        "price": {
+          "amount": 175,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 207,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-FC-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_full_charge_30d",
+        "name": "1 jar every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_full_charge_60d",
+        "name": "2 jars every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_full_charge_90d",
+        "name": "3 jars every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "NMN, TMG, resveratrol and quercetin*",
+      "Supports normal methylation, which NMN metabolism relies on*",
+      "All-in-one cellular vitality and healthy aging routine*",
+      "Third-party tested, lot number on every jar"
+    ],
+    "howToUse": "Take 2 capsules daily with water in the morning with a light meal. Consistency matters more than any single dose. Talk to your doctor if pregnant, nursing or on medication.",
+    "faq": [
+      {
+        "question": "Why does Full Charge include TMG and resveratrol?",
+        "answer": "TMG supports normal methylation during NMN conversion, while trans-resveratrol and quercetin provide synergistic polyphenol support for healthy aging routines.*"
+      },
+      {
+        "question": "Can I take Full Charge with BioHack?",
+        "answer": "Both contain a full daily dose of NMN. Choose Full Charge for an all-in-one 4-in-1 synergistic formula, or BioHack for pure single-ingredient NMN."
+      }
+    ],
+    "related": ["biohack", "renew", "glow"],
+    "claims": [
+      {
+        "text": "NMN, TMG, resveratrol and quercetin*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports normal methylation, which NMN metabolism relies on*",
+        "isClaim": true
+      },
+      {
+        "text": "Third-party tested, lot number on every jar",
+        "isClaim": false
+      }
+    ],
+    "dosingByWeight": []
+  },
+  {
+    "slug": "renew",
+    "handle": "renew",
+    "name": "Renew",
+    "technicalName": "NAD+ + Resveratrol",
+    "line": "human",
+    "species": null,
+    "format": "Capsules",
+    "color": "#2E0716",
+    "images": ["/images/products/renew-front.webp"],
+    "actives": [
+      {
+        "name": "Direct NAD+ (Nicotinamide Adenine Dinucleotide)",
+        "amount": "500 mg"
+      },
+      {
+        "name": "Trans-Resveratrol",
+        "amount": "250 mg"
+      }
+    ],
+    "serving": "2 capsules daily with water, with lunch",
+    "servingsPerJar": 30,
+    "netWeight": "60 capsules",
+    "variants": [
+      {
+        "id": "var_renew_1",
+        "jars": 1,
+        "title": "1 jar",
+        "price": {
+          "amount": 65,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 65,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-REN-1"
+      },
+      {
+        "id": "var_renew_2",
+        "jars": 2,
+        "title": "2 jars",
+        "price": {
+          "amount": 117,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 130,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-REN-2"
+      },
+      {
+        "id": "var_renew_3",
+        "jars": 3,
+        "title": "3 jars",
+        "price": {
+          "amount": 165,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 195,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-REN-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_renew_30d",
+        "name": "1 jar every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_renew_60d",
+        "name": "2 jars every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_renew_90d",
+        "name": "3 jars every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Direct NAD+ with trans-resveratrol*",
+      "Cellular renewal support and antioxidant defense*",
+      "Third-party tested, lot number on every jar"
+    ],
+    "howToUse": "Take 2 capsules daily with water, ideally with lunch or your midday meal. Talk to your doctor if pregnant, nursing or on medication.",
+    "faq": [
+      {
+        "question": "Can I take BioHack and Renew together?",
+        "answer": "Yes. Many customers take BioHack (NMN) in the morning and Renew (direct NAD+) with lunch as part of The Energy Duo."
+      },
+      {
+        "question": "What is the difference between NMN and NAD+ in Renew?",
+        "answer": "NMN is an oral precursor converted intracellularly to NAD+, while Renew delivers direct NAD+ combined with trans-resveratrol for complementary cellular uptake.*"
+      }
+    ],
+    "related": ["biohack", "full-charge", "prime"],
+    "claims": [
+      {
+        "text": "Direct NAD+ with trans-resveratrol*",
+        "isClaim": true
+      },
+      {
+        "text": "Cellular renewal support and antioxidant defense*",
+        "isClaim": true
+      },
+      {
+        "text": "Third-party tested, lot number on every jar",
+        "isClaim": false
+      }
+    ],
+    "dosingByWeight": []
+  },
+  {
+    "slug": "glow",
+    "handle": "glow",
+    "name": "Glow",
+    "technicalName": "Collagen + NMN",
+    "line": "human",
+    "species": null,
+    "format": "Powders",
+    "color": "#3A1608",
+    "images": ["/images/products/glow-front.webp"],
+    "actives": [
+      {
+        "name": "Hydrolyzed Collagen Peptides",
+        "amount": "5 g"
+      },
+      {
+        "name": "β-Nicotinamide Mononucleotide (NMN)",
+        "amount": "250 mg"
+      },
+      {
+        "name": "Ergothioneine",
+        "amount": "5 mg"
+      },
+      {
+        "name": "Biotin",
+        "amount": "2500 mcg"
+      }
+    ],
+    "serving": "1 scoop (10 g) daily stirred into water or smoothie",
+    "servingsPerJar": 30,
+    "netWeight": "300 g",
+    "variants": [
+      {
+        "id": "var_glow_1",
+        "jars": 1,
+        "title": "1 jar",
+        "price": {
+          "amount": 59,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 59,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-GLO-1"
+      },
+      {
+        "id": "var_glow_2",
+        "jars": 2,
+        "title": "2 jars",
+        "price": {
+          "amount": 106,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 118,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-GLO-2"
+      },
+      {
+        "id": "var_glow_3",
+        "jars": 3,
+        "title": "3 jars",
+        "price": {
+          "amount": 150,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 177,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-GLO-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_glow_30d",
+        "name": "1 jar every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_glow_60d",
+        "name": "2 jars every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_glow_90d",
+        "name": "3 jars every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "Collagen, NMN, ergothioneine, biotin*",
+      "Supports skin elasticity, cellular hydration and nail strength*",
+      "Stir-in powder for morning coffee, water or smoothies",
+      "Third-party tested, lot number on every jar"
+    ],
+    "howToUse": "Mix 1 scoop daily into 8-12 oz of water, coffee, or your morning smoothie. Stir well until dissolved.",
+    "faq": [
+      {
+        "question": "Can I mix Glow with hot beverages like coffee?",
+        "answer": "Yes. The hydrolyzed collagen peptides and active ingredients dissolve easily in hot or cold liquids."
+      },
+      {
+        "question": "Can I pair Glow with Prime or BioHack?",
+        "answer": "Yes. Glow is featured in the Beauty Duo paired with Prime pure NAD+ powder for dual inner vitality and skin support.*"
+      }
+    ],
+    "related": ["prime", "biohack", "renew"],
+    "claims": [
+      {
+        "text": "Collagen, NMN, ergothioneine, biotin*",
+        "isClaim": true
+      },
+      {
+        "text": "Supports skin elasticity, cellular hydration and nail strength*",
+        "isClaim": true
+      },
+      {
+        "text": "Third-party tested, lot number on every jar",
+        "isClaim": false
+      }
+    ],
+    "dosingByWeight": []
+  },
+  {
+    "slug": "prime",
+    "handle": "prime",
+    "name": "Prime",
+    "technicalName": "Pure NAD+ powder",
+    "line": "human",
+    "species": null,
+    "format": "Powders",
+    "color": "#1C3A27",
+    "images": ["/images/products/prime-front.webp"],
+    "actives": [
+      {
+        "name": "Pure Nicotinamide Adenine Dinucleotide (NAD+)",
+        "amount": "250 mg"
+      }
+    ],
+    "serving": "1 scoop (250 mg) daily dissolved in water or beverage",
+    "servingsPerJar": 30,
+    "netWeight": "7.5 g",
+    "variants": [
+      {
+        "id": "var_prime_1",
+        "jars": 1,
+        "title": "1 jar",
+        "price": {
+          "amount": 49,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 49,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-PRI-1"
+      },
+      {
+        "id": "var_prime_2",
+        "jars": 2,
+        "title": "2 jars",
+        "price": {
+          "amount": 88,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 98,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-PRI-2"
+      },
+      {
+        "id": "var_prime_3",
+        "jars": 3,
+        "title": "3 jars",
+        "price": {
+          "amount": 125,
+          "currencyCode": "USD"
+        },
+        "compareAtPrice": {
+          "amount": 147,
+          "currencyCode": "USD"
+        },
+        "sku": "NAD-HUM-PRI-3"
+      }
+    ],
+    "sellingPlans": [
+      {
+        "id": "plan_prime_30d",
+        "name": "1 jar every 30 days (15% off)",
+        "intervalDays": 30,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_prime_60d",
+        "name": "2 jars every 60 days (15% off)",
+        "intervalDays": 60,
+        "discountPercentage": 15
+      },
+      {
+        "id": "plan_prime_90d",
+        "name": "3 jars every 90 days (15% off)",
+        "intervalDays": 90,
+        "discountPercentage": 15
+      }
+    ],
+    "benefits": [
+      "250 mg of pure NAD+ per scoop*",
+      "The coenzyme your cells use to make energy*",
+      "Flavor-neutral dissolvable powder, zero fillers",
+      "Third-party tested, lot number on every jar"
+    ],
+    "howToUse": "Dissolve 1 scoop daily in water, juice, or morning beverage, preferably in the morning or midday.",
+    "faq": [
+      {
+        "question": "What is Prime pure NAD+ powder?",
+        "answer": "Prime contains 250 mg of 100% pure pharmaceutical-grade NAD+ coenzyme in an unflavored, dissolvable powder format with zero additives or fillers.*"
+      },
+      {
+        "question": "How do I take Prime?",
+        "answer": "Stir one scoop into water, juice, or your morning beverage. It dissolves quickly and is virtually tasteless."
+      }
+    ],
+    "related": ["glow", "biohack", "renew"],
+    "claims": [
+      {
+        "text": "250 mg of pure NAD+ per scoop*",
+        "isClaim": true
+      },
+      {
+        "text": "The coenzyme your cells use to make energy*",
+        "isClaim": true
+      },
+      {
+        "text": "Third-party tested, lot number on every jar",
+        "isClaim": false
+      }
+    ],
+    "dosingByWeight": []
+  }
+]
