@@ -573,7 +573,7 @@
     "responsavel": "Enigma",
     "lease_ate": null,
     "branch": "agy/W1-15",
-    "pr": "local",
+    "pr": "local addc4e2",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -651,7 +651,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Matilha",
-    "lease_ate": "2026-11-14T10:06:52.796Z",
+    "lease_ate": "2026-11-14T10:07:43.458Z",
     "branch": "agy/W2-03",
     "pr": "local",
     "criterios": [
