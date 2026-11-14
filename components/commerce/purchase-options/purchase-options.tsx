@@ -3,39 +3,38 @@
 import React, { useId, useMemo, useState } from "react";
 import type {
   Product,
-  Money,
   ProductVariant,
   SellingPlan,
 } from "@/lib/contracts/catalog";
 import type { Cart, CartProvider } from "@/lib/contracts/cart";
 import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
+import { useMarket } from "@/lib/market/context";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import {
+  formatFreeShippingLabel,
+  getFreeShippingThreshold,
+} from "@/lib/market/shipping";
 import { Button } from "@/components/ui/button";
 
 export interface PurchaseOptionsProps {
   product: Product;
   className?: string;
   cartProvider?: CartProvider;
-  locale?: string;
   defaultPurchaseType?: "subscription" | "one-time";
   onAddToCartSuccess?: (cart: Cart) => void;
-}
-
-export function formatMoney(money: Money, locale = "en-US"): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
 }
 
 export function PurchaseOptions({
   product,
   className = "",
   cartProvider = defaultCartProvider,
-  locale = "en-US",
   defaultPurchaseType = "subscription",
   onAddToCartSuccess,
 }: PurchaseOptionsProps) {
   const componentId = useId();
+  const { market } = useMarket();
+  const freeShippingThreshold = getFreeShippingThreshold(market, product.line);
+  const freeShippingLabel = formatFreeShippingLabel(market, product.line);
   const [purchaseType, setPurchaseType] = useState<"subscription" | "one-time">(
     defaultPurchaseType
   );
@@ -101,15 +100,15 @@ export function PurchaseOptions({
     return basePrice;
   }, [selectedVariant, purchaseType, selectedSellingPlan]);
 
-  const formattedTotalPrice = formatMoney(
+  const formattedTotalPrice = formatMoneyWithMarket(
     { amount: currentPriceAmount, currencyCode },
-    locale
+    market
   );
 
   const shopPayQuarterAmount = Math.round((currentPriceAmount / 4) * 100) / 100;
-  const formattedQuarterPrice = formatMoney(
+  const formattedQuarterPrice = formatMoneyWithMarket(
     { amount: shopPayQuarterAmount, currencyCode },
-    locale
+    market
   );
 
   const discountRate = selectedSellingPlan?.discountPercentage ?? 15;
@@ -307,9 +306,9 @@ export function PurchaseOptions({
 
                         <div className="text-right shrink-0">
                           <span className="font-extrabold text-sm text-fg">
-                            {formatMoney(
+                            {formatMoneyWithMarket(
                               { amount: discountedAmount, currencyCode },
-                              locale
+                              market
                             )}
                           </span>
                         </div>
@@ -369,6 +368,12 @@ export function PurchaseOptions({
                 const expectedTotal = singleJarPrice * variant.jars;
                 const savingsAmount = expectedTotal - variant.price.amount;
                 const isPopular = variant.jars === 2;
+                const shippingText =
+                  freeShippingThreshold && freeShippingLabel
+                    ? variant.price.amount >= freeShippingThreshold.amount
+                      ? "Free shipping"
+                      : freeShippingLabel
+                    : null;
 
                 return (
                   <label
@@ -407,28 +412,31 @@ export function PurchaseOptions({
                     </div>
 
                     <div className="text-lg font-extrabold text-fg my-1">
-                      {formatMoney(variant.price, locale)}
+                      {formatMoneyWithMarket(variant.price, market)}
                     </div>
 
                     <div className="text-[11px] text-fg-muted">
-                      {formatMoney({ amount: unitPrice, currencyCode }, locale)}{" "}
+                      {formatMoneyWithMarket(
+                        { amount: unitPrice, currencyCode },
+                        market
+                      )}{" "}
                       / jar
                     </div>
 
                     <div className="min-h-4 text-[11px] font-bold text-accent mt-1">
                       {savingsAmount > 0
-                        ? `Save ${formatMoney(
+                        ? `Save ${formatMoneyWithMarket(
                             { amount: savingsAmount, currencyCode },
-                            locale
+                            market
                           )}`
                         : ""}
                     </div>
 
-                    <div className="text-[10px] font-medium text-fg-muted/80 mt-1">
-                      {variant.price.amount >= 75
-                        ? "Free shipping"
-                        : "Free shipping at $75"}
-                    </div>
+                    {shippingText && (
+                      <div className="text-[10px] font-medium text-fg-muted/80 mt-1">
+                        {shippingText}
+                      </div>
+                    )}
                   </label>
                 );
               })}

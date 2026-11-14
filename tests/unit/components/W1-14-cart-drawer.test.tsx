@@ -33,6 +33,7 @@ describe("CartDrawer Component (W1-14)", () => {
           quantity: 1,
           sellingPlanId: "plan_biohack_30d",
           sellingPlanTitle: "1 jar every 30 days (15% off)",
+          subscriptionDiscountPercentage: 15,
           product: {
             id: "biohack",
             title: "BioHack",
@@ -48,6 +49,7 @@ describe("CartDrawer Component (W1-14)", () => {
           variantId: "var_renew_1",
           quantity: 1,
           sellingPlanId: null,
+          subscriptionDiscountPercentage: 15,
           product: {
             id: "renew",
             title: "Renew",
@@ -71,6 +73,7 @@ describe("CartDrawer Component (W1-14)", () => {
       get: vi.fn().mockResolvedValue(mockCart),
       create: vi.fn().mockResolvedValue(mockCart),
       addLines: vi.fn().mockResolvedValue(mockCart),
+      addKit: vi.fn().mockResolvedValue(mockCart),
       updateLines: vi.fn().mockResolvedValue(mockCart),
       removeLines: vi.fn().mockResolvedValue(mockCart),
       applyDiscount: vi.fn().mockResolvedValue(mockCart),
@@ -264,6 +267,7 @@ describe("CartDrawer Component (W1-14)", () => {
           quantity: 1,
           sellingPlanId: "plan_more_good_years_30d",
           sellingPlanTitle: "Delivery every 30 days (15% off)",
+          subscriptionDiscountPercentage: 15,
           product: {
             id: "more-good-years",
             title: "More Good Years",

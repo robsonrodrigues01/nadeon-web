@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Product, Money } from "@/lib/contracts/catalog";
+import type { Product } from "@/lib/contracts/catalog";
 import type { Cart, CartProvider } from "@/lib/contracts/cart";
 import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
+import { useMarket } from "@/lib/market/context";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { Button } from "@/components/ui/button";
 import { Claim } from "./claim";
 
@@ -13,37 +15,25 @@ export interface ProductCardProps {
   product: Product;
   className?: string;
   cartProvider?: CartProvider;
-  locale?: string;
   onAddToCartSuccess?: (cart: Cart) => void;
-}
-
-/**
- * Formats a monetary value according to the specified market currency and locale.
- * Follows Rule 7: Always uses Intl.NumberFormat, never manual string concatenation.
- */
-export function formatMoney(money: Money, locale = "en-US"): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
 }
 
 export function ProductCard({
   product,
   className = "",
   cartProvider = defaultCartProvider,
-  locale = "en-US",
   onAddToCartSuccess,
 }: ProductCardProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const { market } = useMarket();
 
   const primaryVariant = product.variants[0];
   const primaryPrice = primaryVariant?.price ?? {
     amount: 0,
     currencyCode: "USD",
   };
-  const formattedPrice = formatMoney(primaryPrice, locale);
+  const formattedPrice = formatMoneyWithMarket(primaryPrice, market);
 
   const primarySellingPlan = product.sellingPlans[0];
   const discountPercentage = primarySellingPlan?.discountPercentage ?? 15;
