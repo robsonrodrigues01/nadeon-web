@@ -8,7 +8,7 @@ import {
 
 const emptySubscribe = () => () => {};
 
-export default function W109Section() {
+function FirstVisitPopupShowcase() {
   const [activeModal, setActiveModal] = useState<"human" | "pet" | null>(null);
   const [cookieVersion, setCookieVersion] = useState(0);
 
@@ -147,4 +147,8 @@ export default function W109Section() {
       </div>
     </section>
   );
+}
+
+export default function W109Section() {
+  return <FirstVisitPopupShowcase />;
 }

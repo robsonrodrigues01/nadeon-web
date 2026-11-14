@@ -11,6 +11,7 @@ import { Search, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { useCartStore } from "@/lib/providers/client";
+import { openCartDrawer } from "@/components/commerce/cart-drawer";
 
 export interface HeaderProps {
   variant?: "human" | "pet";
@@ -133,6 +134,10 @@ export function Header({
           <Link
             href="/cart"
             aria-label={`Cart (${cartCount})`}
+            onClick={(e) => {
+              e.preventDefault();
+              openCartDrawer(variant);
+            }}
             className={cn(
               "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-xs sm:text-sm font-bold whitespace-nowrap transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent min-h-11",
               isPet
@@ -157,6 +162,10 @@ export function Header({
           <Link
             href="/cart"
             aria-label={`Cart (${cartCount})`}
+            onClick={(e) => {
+              e.preventDefault();
+              openCartDrawer(variant);
+            }}
             className={cn(
               "inline-flex items-center justify-center rounded-full px-3.5 py-1.5 text-xs font-bold whitespace-nowrap transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent min-h-11",
               isPet ? "bg-fg text-bg" : "bg-gradient-gold text-accent-fg"
