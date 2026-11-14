@@ -301,7 +301,9 @@ describe("W2-02 Route: /human (Home Human)", () => {
     it("renders market-aware free shipping label in bottom CTA and handles null threshold", async () => {
       const { unmount } = render(await HumanPage());
       expect(
-        screen.getByText(/free shipping over \$75 · 60-day guarantee · cancel anytime/i)
+        screen.getByText(
+          /free shipping over \$75 · 60-day guarantee · cancel anytime/i
+        )
       ).toBeDefined();
 
       unmount();
@@ -312,9 +314,7 @@ describe("W2-02 Route: /human (Home Human)", () => {
       expect(
         screen.getByText(/^60-day guarantee · cancel anytime$/i)
       ).toBeDefined();
-      expect(
-        screen.queryByText(/free shipping over/i)
-      ).toBeNull();
+      expect(screen.queryByText(/free shipping over/i)).toBeNull();
     }, 15000);
   });
 });
