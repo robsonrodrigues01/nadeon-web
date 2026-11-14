@@ -307,7 +307,7 @@
     "responsavel": "Alicerce",
     "lease_ate": null,
     "branch": "agy/W1-04",
-    "pr": "local",
+    "pr": "local 9dde535",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -325,9 +325,9 @@
     ],
     "status": "entregue",
     "responsavel": "Bussola",
-    "lease_ate": "2026-11-14T07:29:01.516Z",
+    "lease_ate": null,
     "branch": "agy/W1-05",
-    "pr": "local",
+    "pr": "local 9dde535",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -383,11 +383,11 @@
     "depende_de": [
       "W1-01"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Guarda",
-    "lease_ate": "2026-11-14T07:29:05.258Z",
+    "lease_ate": null,
     "branch": "agy/W1-08",
-    "pr": "local",
+    "pr": "local 9dde535",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -425,10 +425,133 @@
       "W1-17",
       "W1-18"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Lastro",
-    "lease_ate": "2026-11-14T07:31:51.204Z",
+    "lease_ate": null,
     "branch": "agy/W1-19",
+    "pr": "local ed0add1",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-13",
+    "titulo": "Dose por peso e seletor",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-01"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Balanca",
+    "lease_ate": "2026-11-14T09:42:51.675Z",
+    "branch": "agy/W1-13",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-10",
+    "titulo": "Analytics track.ts",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-08"
+    ],
+    "status": "entregue",
+    "responsavel": "Rastro",
+    "lease_ate": null,
+    "branch": "agy/W1-10",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-21",
+    "titulo": "Componentes cliente sem node:fs",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-12"
+    ],
+    "status": "entregue",
+    "responsavel": "Ponte",
+    "lease_ate": null,
+    "branch": "agy/W1-21",
+    "pr": "local c76ff3c",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-09",
+    "titulo": "Popup 10%",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-08",
+      "W1-21"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Convite",
+    "lease_ate": "2026-11-14T09:47:51.256Z",
+    "branch": "agy/W1-09",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-14",
+    "titulo": "Gaveta do carrinho",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-03",
+      "W1-12",
+      "W1-21"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Sacola",
+    "lease_ate": "2026-11-14T09:47:52.943Z",
+    "branch": "agy/W1-14",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W1-20",
+    "titulo": "Handles Shopify e renders",
+    "onda": 1,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-19"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Rotulo",
+    "lease_ate": "2026-11-14T09:45:32.732Z",
+    "branch": "agy/W1-20",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",

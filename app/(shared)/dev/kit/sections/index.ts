@@ -1,5 +1,6 @@
 import type React from "react";
 import { FoundationSection } from "./foundation";
+import SW1_10 from "./W1-10";
 import SW1_08 from "./W1-08";
 import SW1_05 from "./W1-05";
 import SW1_04 from "./W1-04";
@@ -36,6 +37,7 @@ export const sections: DevKitSection[] = [
   { id: "W1-04", title: "Footer", Component: SW1_04 },
   { id: "W1-05", title: "Country selector", Component: SW1_05 },
   { id: "W1-08", title: "Cookie banner", Component: SW1_08 },
+  { id: "W1-10", title: "Analytics", Component: SW1_10 },
 ];
 
 export default sections;
