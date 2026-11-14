@@ -15,7 +15,7 @@ interface MathItem {
   name: string;
   technicalName?: string;
   format: string;
-  discountPercentage: number;
+  discountPercentage: number | null;
   oneTimeMoStr: string;
   subMoStr: string;
   oneTimeYrStr: string;
@@ -30,7 +30,8 @@ export function MathComparison({ products, market }: MathComparisonProps) {
     if (!singleVariant) return [];
 
     const discountPercentage = getProductSubscriptionDiscount(product);
-    const factor = (100 - discountPercentage) / 100;
+    const hasDiscount = discountPercentage !== null && discountPercentage > 0;
+    const factor = hasDiscount ? (100 - discountPercentage) / 100 : 1;
 
     const baseAmount = singleVariant.price.amount;
     const oneTimeMo = baseAmount;
@@ -168,7 +169,10 @@ export function MathComparison({ products, market }: MathComparisonProps) {
                 </div>
                 <div>
                   <span className="block font-medium text-accent">
-                    Subscribe ({item.discountPercentage}% off)
+                    {item.discountPercentage !== null &&
+                    item.discountPercentage > 0
+                      ? `Subscribe (${item.discountPercentage}% off)`
+                      : "Subscribe"}
                   </span>
                   <span className="font-semibold text-fg">
                     {item.subMoStr} / mo

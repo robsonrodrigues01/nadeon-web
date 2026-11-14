@@ -20,12 +20,11 @@ export function getUniqueSellingPlans(products: Product[]): SellingPlan[] {
 
 /**
  * Derives the subscription discount percentage from a list of products.
- * Returns the first valid positive discount found, or fallback.
+ * Returns the first valid positive discount found, or null when none is present.
  */
 export function getSubscriptionDiscountPercentage(
-  products: Product[],
-  fallback = 15
-): number {
+  products: Product[]
+): number | null {
   for (const product of products) {
     for (const plan of product.sellingPlans ?? []) {
       if (
@@ -36,21 +35,25 @@ export function getSubscriptionDiscountPercentage(
       }
     }
   }
-  return fallback;
+  return null;
 }
 
 /**
  * Derives the subscription discount percentage for a single product.
  * Looks for the 30-day plan first, or defaults to the first plan in product.sellingPlans.
+ * Returns null when no positive discount is configured.
  */
 export function getProductSubscriptionDiscount(
-  product: Product,
-  fallback = 15
-): number {
+  product: Product
+): number | null {
   const plans = product.sellingPlans ?? [];
   const plan = plans.find((sp) => sp.intervalDays === 30) ?? plans[0];
-  if (plan && typeof plan.discountPercentage === "number") {
+  if (
+    plan &&
+    typeof plan.discountPercentage === "number" &&
+    plan.discountPercentage > 0
+  ) {
     return plan.discountPercentage;
   }
-  return fallback;
+  return null;
 }

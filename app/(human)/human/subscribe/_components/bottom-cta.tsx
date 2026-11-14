@@ -2,10 +2,14 @@ import React from "react";
 import Link from "next/link";
 
 export interface BottomCtaProps {
-  discountPercentage?: number;
+  discountPercentage?: number | null;
 }
 
-export function BottomCta({ discountPercentage = 15 }: BottomCtaProps = {}) {
+export function BottomCta({ discountPercentage = null }: BottomCtaProps = {}) {
+  const badgeText = discountPercentage
+    ? `SAVE ${discountPercentage}% ON EVERY BOX`
+    : "SAVE ON EVERY BOX";
+
   return (
     <section
       aria-label="Save on every box"
@@ -13,7 +17,7 @@ export function BottomCta({ discountPercentage = 15 }: BottomCtaProps = {}) {
     >
       <div className="mx-auto max-w-4xl px-5 sm:px-8">
         <span className="inline-block rounded-full bg-accent px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-accent-fg">
-          SAVE {discountPercentage}% ON EVERY BOX
+          {badgeText}
         </span>
 
         <h2 className="mt-6 font-archivo text-4xl sm:text-6xl font-black uppercase tracking-tight text-fg leading-none">

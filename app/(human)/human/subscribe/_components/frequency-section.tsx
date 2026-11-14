@@ -5,27 +5,6 @@ export interface FrequencySectionProps {
   plans?: SellingPlan[];
 }
 
-const DEFAULT_PLANS: SellingPlan[] = [
-  {
-    id: "plan_30d",
-    name: "1 jar every 30 days (15% off)",
-    intervalDays: 30,
-    discountPercentage: 15,
-  },
-  {
-    id: "plan_60d",
-    name: "2 jars every 60 days (15% off)",
-    intervalDays: 60,
-    discountPercentage: 15,
-  },
-  {
-    id: "plan_90d",
-    name: "3 jars every 90 days (15% off)",
-    intervalDays: 90,
-    discountPercentage: 15,
-  },
-];
-
 function getFrequencyTitle(intervalDays: number): string {
   switch (intervalDays) {
     case 30:
@@ -43,8 +22,9 @@ function getFrequencyTitle(intervalDays: number): string {
   }
 }
 
-export function FrequencySection({ plans }: FrequencySectionProps = {}) {
-  const items = plans && plans.length > 0 ? plans : DEFAULT_PLANS;
+export function FrequencySection({ plans = [] }: FrequencySectionProps = {}) {
+  const items = plans ?? [];
+  const hasPlans = items.length > 0;
 
   return (
     <section
@@ -62,52 +42,62 @@ export function FrequencySection({ plans }: FrequencySectionProps = {}) {
           Pick your rhythm
         </h2>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
-          {items.map((item, idx) => {
-            const isPopular = idx === 0 || item.intervalDays === 30;
+        {hasPlans ? (
+          <>
+            <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+              {items.map((item, idx) => {
+                const isPopular = idx === 0 || item.intervalDays === 30;
 
-            return (
-              <div
-                key={item.intervalDays}
-                className={`relative flex flex-col justify-between rounded-card border p-6 text-center shadow-card transition-all ${
-                  isPopular
-                    ? "border-accent bg-bg-elevated ring-1 ring-accent"
-                    : "border-border bg-bg-elevated hover:border-fg-muted"
-                }`}
-              >
-                {isPopular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent-fg">
-                    Popular
-                  </span>
-                )}
+                return (
+                  <div
+                    key={item.intervalDays}
+                    className={`relative flex flex-col justify-between rounded-card border p-6 text-center shadow-card transition-all ${
+                      isPopular
+                        ? "border-accent bg-bg-elevated ring-1 ring-accent"
+                        : "border-border bg-bg-elevated hover:border-fg-muted"
+                    }`}
+                  >
+                    {isPopular && (
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent-fg">
+                        Popular
+                      </span>
+                    )}
 
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-fg-muted">
-                    EVERY
-                  </span>
-                  <div className="mt-2 font-archivo text-4xl sm:text-5xl font-black text-accent leading-none">
-                    {item.intervalDays}
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-widest text-fg-muted">
+                        EVERY
+                      </span>
+                      <div className="mt-2 font-archivo text-4xl sm:text-5xl font-black text-accent leading-none">
+                        {item.intervalDays}
+                      </div>
+                      <span className="text-xs uppercase tracking-wider text-fg-muted">
+                        days
+                      </span>
+
+                      <h3 className="mt-4 font-archivo text-lg font-bold uppercase text-fg">
+                        {getFrequencyTitle(item.intervalDays)}
+                      </h3>
+                      <p className="mt-2 text-xs sm:text-sm text-fg-muted leading-relaxed">
+                        {item.name}
+                      </p>
+                    </div>
                   </div>
-                  <span className="text-xs uppercase tracking-wider text-fg-muted">
-                    days
-                  </span>
+                );
+              })}
+            </div>
 
-                  <h3 className="mt-4 font-archivo text-lg font-bold uppercase text-fg">
-                    {getFrequencyTitle(item.intervalDays)}
-                  </h3>
-                  <p className="mt-2 text-xs sm:text-sm text-fg-muted leading-relaxed">
-                    {item.name}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <p className="mt-10 text-sm text-fg-muted">
-          Not sure? Start with {items[0]?.intervalDays ?? 30} days. You can
-          change it from your account anytime.
-        </p>
+            <p className="mt-10 text-sm text-fg-muted">
+              Not sure? Start with {items[0]?.intervalDays} days. You can change
+              it from your account anytime.
+            </p>
+          </>
+        ) : (
+          <div className="mt-12 rounded-card border border-border bg-bg-elevated p-8 max-w-xl mx-auto text-center">
+            <p className="text-sm text-fg-muted">
+              No delivery frequencies currently available.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

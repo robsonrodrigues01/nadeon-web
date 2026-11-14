@@ -9,7 +9,21 @@ export interface FaqItem {
   answer: string;
 }
 
-export function getSubscribeFaqs(discountPercentage: number = 15): FaqItem[] {
+export function getSubscribeFaqs(
+  discountPercentage: number | null = null
+): FaqItem[] {
+  const customStackSave = discountPercentage
+    ? `save ${discountPercentage}% across all of them.`
+    : "save across all of them.";
+
+  const stackOffersQuestion = discountPercentage
+    ? `Does the ${discountPercentage}% stack with other offers?`
+    : "Does the subscription discount stack with other offers?";
+
+  const stackOffersAnswer = discountPercentage
+    ? `The ${discountPercentage}% subscription discount is our best ongoing rate and cannot be combined with one-time discount codes.`
+    : "The subscription discount is our best ongoing rate and cannot be combined with one-time discount codes.";
+
   return [
     {
       question: "When will I be charged?",
@@ -18,11 +32,11 @@ export function getSubscribeFaqs(discountPercentage: number = 15): FaqItem[] {
     },
     {
       question: "Can I subscribe to more than one formula?",
-      answer: `Yes. You can build a custom stack with multiple formulas in one box and save ${discountPercentage}% across all of them.`,
+      answer: `Yes. You can build a custom stack with multiple formulas in one box and ${customStackSave}`,
     },
     {
-      question: `Does the ${discountPercentage}% stack with other offers?`,
-      answer: `The ${discountPercentage}% subscription discount is our best ongoing rate and cannot be combined with one-time discount codes.`,
+      question: stackOffersQuestion,
+      answer: stackOffersAnswer,
     },
     {
       question: "Is shipping really free?",
@@ -37,16 +51,16 @@ export function getSubscribeFaqs(discountPercentage: number = 15): FaqItem[] {
   ];
 }
 
-export const SUBSCRIBE_FAQS: FaqItem[] = getSubscribeFaqs(15);
+export const SUBSCRIBE_FAQS: FaqItem[] = getSubscribeFaqs(null);
 
 export interface SubscribeFaqProps {
   faqs?: FaqItem[];
-  discountPercentage?: number;
+  discountPercentage?: number | null;
 }
 
 export function SubscribeFaq({
   faqs,
-  discountPercentage = 15,
+  discountPercentage = null,
 }: SubscribeFaqProps = {}) {
   const items = faqs ?? getSubscribeFaqs(discountPercentage);
   const [openIndex, setOpenIndex] = useState<number | null>(null);

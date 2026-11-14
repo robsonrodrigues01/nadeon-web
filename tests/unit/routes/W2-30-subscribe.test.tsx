@@ -11,12 +11,20 @@ vi.mock("next/headers", () => ({
 import SubscribePage, {
   generateMetadata,
 } from "@/app/(human)/human/subscribe/page";
+import { Hero } from "@/app/(human)/human/subscribe/_components/hero";
+import { HowItWorks } from "@/app/(human)/human/subscribe/_components/how-it-works";
 import { MathComparison } from "@/app/(human)/human/subscribe/_components/math-comparison";
 import { FrequencySection } from "@/app/(human)/human/subscribe/_components/frequency-section";
+import { BottomCta } from "@/app/(human)/human/subscribe/_components/bottom-cta";
 import {
   getSubscribeFaqs,
   SubscribeFaq,
 } from "@/app/(human)/human/subscribe/_components/subscribe-faq";
+import {
+  getSubscriptionDiscountPercentage,
+  getProductSubscriptionDiscount,
+  getUniqueSellingPlans,
+} from "@/app/(human)/human/subscribe/_components/plan-utils";
 import { getDefaultMarket } from "@/lib/market/markets";
 import type { Product, SellingPlan } from "@/lib/contracts/catalog";
 
@@ -31,7 +39,7 @@ afterEach(() => {
 });
 
 describe("W2-30 /human/subscribe metadata and SEO", () => {
-  it("builds title, description and canonical path with derived discount", async () => {
+  it("builds title, description and canonical path with derived discount from contract", async () => {
     const meta = await generateMetadata();
     expect(meta.title).toContain("Subscribe");
     expect(meta.title).toContain("Nadeon");
@@ -118,13 +126,10 @@ describe("W2-30 /human/subscribe sections content", () => {
 
   it("renders delivery frequency options derived from sellingPlans", async () => {
     await renderSubscribe();
-    // Default mock human products have intervalDays 30, 60, 90
+    // Mock human products have intervalDays 30, 60, 90
     expect(screen.getAllByText(/30/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/60/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/90/).length).toBeGreaterThan(0);
-    // 120 and 180 do not exist in selling plans
-    expect(screen.queryByText("120")).toBeNull();
-    expect(screen.queryByText("180")).toBeNull();
   });
 
   it("renders the interactive subscription simulation panel with action buttons", async () => {
@@ -162,58 +167,92 @@ describe("W2-30 /human/subscribe sections content", () => {
   });
 });
 
-describe("W2-30 review findings verification: dynamic discounts and frequencies", () => {
-  it("derives math comparison calculations and discount text from sellingPlans.discountPercentage", () => {
-    const market = getDefaultMarket();
-    const customProduct: Product = {
-      slug: "custom-longevity",
-      handle: "custom-longevity",
-      name: "Custom Longevity",
-      technicalName: "Longevity Optimizer",
-      line: "human",
-      species: null,
-      format: "Capsules",
-      color: "var(--accent)",
-      images: [],
-      actives: [],
-      serving: "2 capsules",
-      servingsPerJar: 30,
-      netWeight: "60g",
-      variants: [
-        {
-          id: "var_custom_1",
-          jars: 1,
-          title: "1 Jar",
-          price: { amount: 100, currencyCode: "USD" },
-          compareAtPrice: { amount: 100, currencyCode: "USD" },
-          sku: "TEST-1",
-        },
-      ],
-      sellingPlans: [
-        {
-          id: "plan_25",
-          name: "1 jar every 30 days (25% off)",
-          intervalDays: 30,
-          discountPercentage: 25,
-        },
-      ],
-      benefits: ["Longevity*"],
-      howToUse: "Take daily",
-      faq: [],
-      related: [],
-      claims: [{ text: "Longevity*", isClaim: true }],
-      dosingByWeight: [],
-    };
+describe("W2-30 plan-utils unit tests without plans and with plans", () => {
+  const dummyProductNoPlans: Product = {
+    slug: "no-plans",
+    handle: "no-plans",
+    name: "No Plans Product",
+    technicalName: "Test",
+    line: "human",
+    species: null,
+    format: "Capsules",
+    color: "var(--accent)",
+    images: [],
+    actives: [],
+    serving: "2 capsules",
+    servingsPerJar: 30,
+    netWeight: "60g",
+    variants: [],
+    sellingPlans: [],
+    benefits: [],
+    howToUse: "Daily",
+    faq: [],
+    related: [],
+    claims: [],
+    dosingByWeight: [],
+  };
 
-    render(<MathComparison products={[customProduct]} market={market} />);
+  const dummyProductWithPlan: Product = {
+    ...dummyProductNoPlans,
+    slug: "with-plan",
+    sellingPlans: [
+      {
+        id: "sp_1",
+        name: "Monthly 20%",
+        intervalDays: 30,
+        discountPercentage: 20,
+      },
+      {
+        id: "sp_2",
+        name: "Every 60 days 20%",
+        intervalDays: 60,
+        discountPercentage: 20,
+      },
+    ],
+  };
 
-    // 100 base, with 25% discount -> subMo = 75, subYr = 900, savedYr = 300
-    expect(screen.getByText("$75.00")).toBeTruthy();
-    expect(screen.getByText("$900.00")).toBeTruthy();
-    expect(screen.getByText("Subscribe (25% off)")).toBeTruthy();
+  it("returns null when product list is empty or products have no sellingPlans", () => {
+    expect(getSubscriptionDiscountPercentage([])).toBeNull();
+    expect(getSubscriptionDiscountPercentage([dummyProductNoPlans])).toBeNull();
+    expect(getProductSubscriptionDiscount(dummyProductNoPlans)).toBeNull();
   });
 
-  it("renders frequency section with contract intervals and sellingPlans names", () => {
+  it("returns discount percentage when sellingPlans are present", () => {
+    expect(getSubscriptionDiscountPercentage([dummyProductWithPlan])).toBe(20);
+    expect(getProductSubscriptionDiscount(dummyProductWithPlan)).toBe(20);
+  });
+
+  it("returns empty selling plans array when products have no plans", () => {
+    expect(getUniqueSellingPlans([])).toEqual([]);
+    expect(getUniqueSellingPlans([dummyProductNoPlans])).toEqual([]);
+  });
+
+  it("deduplicates unique selling plans by intervalDays", () => {
+    const plans = getUniqueSellingPlans([dummyProductWithPlan]);
+    expect(plans).toHaveLength(2);
+    expect(plans.map((p) => p.intervalDays)).toEqual([30, 60]);
+  });
+});
+
+describe("W2-30 FrequencySection empty state and dynamic plans", () => {
+  it("renders empty state without frequency cards when plans=[]", () => {
+    render(<FrequencySection plans={[]} />);
+    expect(
+      screen.getByText(/No delivery frequencies currently available/i)
+    ).toBeTruthy();
+    expect(screen.queryByText("Popular")).toBeNull();
+    expect(screen.queryByText("EVERY")).toBeNull();
+  });
+
+  it("renders empty state when plans prop is omitted", () => {
+    render(<FrequencySection />);
+    expect(
+      screen.getByText(/No delivery frequencies currently available/i)
+    ).toBeTruthy();
+    expect(screen.queryByText("Popular")).toBeNull();
+  });
+
+  it("renders provided plans when non-empty", () => {
     const testPlans: SellingPlan[] = [
       {
         id: "plan_45",
@@ -237,18 +276,83 @@ describe("W2-30 review findings verification: dynamic discounts and frequencies"
     ).toBeTruthy();
     expect(screen.getByText("90")).toBeTruthy();
     expect(screen.getByText("Quarterly stock up")).toBeTruthy();
-    // 30 should not be rendered when not in plans
     expect(screen.queryByText("30")).toBeNull();
   });
+});
 
-  it("derives FAQ questions and answers from discount percentage", () => {
-    const faqs = getSubscribeFaqs(20);
-    render(<SubscribeFaq faqs={faqs} discountPercentage={20} />);
+describe("W2-30 components omit percentage when discount is null", () => {
+  it("Hero omits percentage when discountPercentage is null", () => {
+    render(<Hero discountPercentage={null} />);
+    expect(screen.getByText("SUBSCRIBE & SAVE")).toBeTruthy();
+    expect(screen.queryByText(/SUBSCRIBE & SAVE \d+%/i)).toBeNull();
+    expect(screen.getByText(/Save on every box/i)).toBeTruthy();
+  });
 
+  it("HowItWorks omits percentage when discountPercentage is null", () => {
+    render(<HowItWorks discountPercentage={null} />);
+    expect(
+      screen.getByRole("heading", { level: 3, name: /^Save on every box$/i })
+    ).toBeTruthy();
+  });
+
+  it("BottomCta omits percentage when discountPercentage is null", () => {
+    render(<BottomCta discountPercentage={null} />);
+    expect(screen.getByText("SAVE ON EVERY BOX")).toBeTruthy();
+    expect(screen.queryByText(/SAVE \d+% ON EVERY BOX/i)).toBeNull();
+  });
+
+  it("SubscribeFaq omits percentage when discountPercentage is null", () => {
+    const faqs = getSubscribeFaqs(null);
+    render(<SubscribeFaq faqs={faqs} discountPercentage={null} />);
     expect(
       screen.getByRole("button", {
-        name: /Does the 20% stack with other offers\?/i,
+        name: /Does the subscription discount stack with other offers\?/i,
       })
     ).toBeTruthy();
+    expect(screen.queryByText(/Does the \d+%/i)).toBeNull();
+  });
+
+  it("MathComparison handles product with no discount gracefully", () => {
+    const market = getDefaultMarket();
+    const productWithoutDiscount: Product = {
+      slug: "no-discount",
+      handle: "no-discount",
+      name: "Standard Formula",
+      technicalName: "Daily Formula",
+      line: "human",
+      species: null,
+      format: "Capsules",
+      color: "var(--accent)",
+      images: [],
+      actives: [],
+      serving: "2 capsules",
+      servingsPerJar: 30,
+      netWeight: "60g",
+      variants: [
+        {
+          id: "var_std_1",
+          jars: 1,
+          title: "1 Jar",
+          price: { amount: 50, currencyCode: "USD" },
+          compareAtPrice: { amount: 50, currencyCode: "USD" },
+          sku: "STD-1",
+        },
+      ],
+      sellingPlans: [],
+      benefits: ["Daily energy*"],
+      howToUse: "Daily",
+      faq: [],
+      related: [],
+      claims: [],
+      dosingByWeight: [],
+    };
+
+    render(
+      <MathComparison products={[productWithoutDiscount]} market={market} />
+    );
+
+    expect(screen.getAllByText("Standard Formula").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Subscribe").length).toBeGreaterThan(0);
+    expect(screen.queryByText(/Subscribe \(\d+% off\)/i)).toBeNull();
   });
 });

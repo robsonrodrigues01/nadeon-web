@@ -24,17 +24,24 @@ import {
 } from "./_components/plan-utils";
 
 export async function generateMetadata(): Promise<Metadata> {
-  let discountPercentage = 15;
+  let discountPercentage: number | null = null;
   try {
     const products = await catalogProvider.getProducts({ line: "human" });
     discountPercentage = getSubscriptionDiscountPercentage(products);
   } catch {
-    discountPercentage = 15;
+    discountPercentage = null;
   }
 
+  const title = discountPercentage
+    ? `Subscribe & Save ${discountPercentage}% | Nadeon Human`
+    : `Subscribe & Save | Nadeon Human`;
+  const description = discountPercentage
+    ? `Your daily NMN and NAD+, delivered on your schedule. Save ${discountPercentage}% on every box with free shipping and full flexibility.`
+    : `Your daily NMN and NAD+, delivered on your schedule. Save on every box with free shipping and full flexibility.`;
+
   return buildMetadata({
-    title: `Subscribe & Save ${discountPercentage}% | Nadeon Human`,
-    description: `Your daily NMN and NAD+, delivered on your schedule. Save ${discountPercentage}% on every box with free shipping and full flexibility.`,
+    title,
+    description,
     pathname: "/human/subscribe",
   });
 }

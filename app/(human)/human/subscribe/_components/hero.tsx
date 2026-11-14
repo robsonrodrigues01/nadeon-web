@@ -2,10 +2,18 @@ import React from "react";
 import Link from "next/link";
 
 export interface HeroProps {
-  discountPercentage?: number;
+  discountPercentage?: number | null;
 }
 
-export function Hero({ discountPercentage = 15 }: HeroProps = {}) {
+export function Hero({ discountPercentage = null }: HeroProps = {}) {
+  const badgeText = discountPercentage
+    ? `SUBSCRIBE & SAVE ${discountPercentage}%`
+    : "SUBSCRIBE & SAVE";
+
+  const saveText = discountPercentage
+    ? `Save ${discountPercentage}% on every box`
+    : "Save on every box";
+
   return (
     <section
       aria-label="Subscribe & Save"
@@ -15,7 +23,7 @@ export function Hero({ discountPercentage = 15 }: HeroProps = {}) {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="max-w-2xl lg:col-span-7">
             <span className="inline-block rounded-full bg-accent px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-accent-fg">
-              SUBSCRIBE &amp; SAVE {discountPercentage}%
+              {badgeText}
             </span>
 
             <h1 className="mt-6 font-archivo text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-fg leading-none">
@@ -25,9 +33,9 @@ export function Hero({ discountPercentage = 15 }: HeroProps = {}) {
             </h1>
 
             <p className="mt-6 text-base sm:text-xl text-fg-muted leading-relaxed max-w-xl">
-              Your daily NMN and NAD<sup>+</sup>, delivered on your schedule.
-              Save {discountPercentage}% on every box, ship free every time, and
-              skip, pause or cancel whenever you like.
+              Your daily NMN and NAD<sup>+</sup>, delivered on your schedule.{" "}
+              {saveText}, ship free every time, and skip, pause or cancel
+              whenever you like.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
