@@ -96,10 +96,12 @@ describe("W2-13: /pet/kits Route Suite", () => {
       expect(within(card).getByText("SAVE 15%")).toBeTruthy();
     });
 
-    it("shows the pet regulatory statement from the footer", async () => {
+    it("does not duplicate the pet chrome (layout provides header, banner, trust strip and footer)", async () => {
       await renderKitsPage();
 
-      expect(screen.getByText(/For animal use only/i)).toBeTruthy();
+      expect(screen.queryByRole("contentinfo")).toBeNull();
+      expect(screen.queryByRole("banner")).toBeNull();
+      expect(document.querySelector("#main-content")).toBeTruthy();
     });
 
     it("renders no placeholder text ([X], $XX or (example))", async () => {
@@ -181,14 +183,6 @@ describe("W2-13: /pet/kits Route Suite", () => {
       expect(link.getAttribute("href")).toBe("/pet/build-your-box");
     });
   });
-
-  describe("Shared footer field", () => {
-    it("exposes the newsletter email field as a labelled input", async () => {
-      await renderKitsPage();
-
-      expect(screen.getByLabelText(/email/i).tagName).toBe("INPUT");
-    });
-  });
 });
 
 describe("W2-13: /pet/kits/[slug] Route Suite", () => {
@@ -230,6 +224,33 @@ describe("W2-13: /pet/kits/[slug] Route Suite", () => {
       "/pet/products/more-good-years",
       "/pet/products/more-good-years-oil",
     ]);
+  });
+
+  it("does not duplicate the pet chrome on the detail page", async () => {
+    const jsx = await PetKitPage({
+      params: Promise.resolve({ slug: "chew-oil" }),
+    });
+    render(jsx);
+
+    expect(screen.queryByRole("contentinfo")).toBeNull();
+    expect(screen.queryByRole("banner")).toBeNull();
+  });
+
+  it("emits JSON-LD offer in the market currency of the cookie", async () => {
+    vi.mocked(cookies).mockResolvedValueOnce({
+      get: (name: string) =>
+        name === "nadeon_market" ? { value: "ca" } : undefined,
+    } as unknown as Awaited<ReturnType<typeof cookies>>);
+
+    const jsx = await PetKitPage({
+      params: Promise.resolve({ slug: "chew-oil" }),
+    });
+    render(jsx);
+
+    const ld = document.getElementById("pet-kit-product-ld")?.textContent ?? "";
+    const data = JSON.parse(ld);
+    expect(data.offers.priceCurrency).toBe("CAD");
+    expect(data.offers.price).toBeCloseTo(102, 0);
   });
 
   it("returns 404 for a kit that is not a pet kit", async () => {

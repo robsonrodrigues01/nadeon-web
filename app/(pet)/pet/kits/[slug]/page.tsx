@@ -4,14 +4,12 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
 import { buildMetadata, DEFAULT_SITE_URL, JsonLd } from "@/lib/seo";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import { Claim } from "@/components/commerce/product-card/claim";
 import type { Product } from "@/lib/contracts/catalog";
 import {
   buildKitView,
   formatKitMoney,
+  marketOffer,
 } from "@/app/(pet)/pet/kits/_components/kit-format";
 import { getRequestMarket } from "@/app/(pet)/pet/kits/_components/request-market";
 
@@ -45,6 +43,7 @@ export default async function PetKitPage({ params }: PetKitPageProps) {
   );
   const view = buildKitView(kit, productsBySlug, market);
 
+  const offer = marketOffer(kit.price, market);
   const jsonLdData = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -53,18 +52,15 @@ export default async function PetKitPage({ params }: PetKitPageProps) {
     url: `${DEFAULT_SITE_URL}/pet/kits/${kit.slug}`,
     offers: {
       "@type": "Offer",
-      price: kit.price.amount,
-      priceCurrency: kit.price.currencyCode,
+      price: offer.amount,
+      priceCurrency: offer.currencyCode,
       url: `${DEFAULT_SITE_URL}/pet/kits/${kit.slug}`,
     },
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-bg text-fg">
+    <>
       <JsonLd data={jsonLdData} id="pet-kit-product-ld" />
-
-      <AnnouncementBar line="pet" />
-      <Header variant="pet" />
 
       <main id="main-content" className="flex-1">
         <section className="mx-auto w-full max-w-7xl px-5 py-12 sm:px-8 lg:px-18 lg:py-16">
@@ -165,8 +161,6 @@ export default async function PetKitPage({ params }: PetKitPageProps) {
           </ul>
         </section>
       </main>
-
-      <Footer line="pet" />
-    </div>
+    </>
   );
 }

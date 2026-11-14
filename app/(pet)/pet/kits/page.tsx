@@ -2,10 +2,6 @@ import React from "react";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
 import { buildMetadata, DEFAULT_SITE_URL, JsonLd } from "@/lib/seo";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { TrustStrip } from "@/components/brand/trust-strip";
 import type { Product } from "@/lib/contracts/catalog";
 
 import {
@@ -59,11 +55,8 @@ export default async function PetKitsPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-bg text-fg">
+    <>
       <JsonLd data={jsonLdData} id="pet-kits-collection-ld" />
-
-      <AnnouncementBar line="pet" />
-      <Header variant="pet" />
 
       <main id="main-content" className="flex-1">
         <KitsHero savingsPercent={savingsPercent} />
@@ -74,10 +67,7 @@ export default async function PetKitsPage() {
 
         <BuildOwnKit savingsPercent={savingsPercent} />
         <HowKitsWork savingsPercent={savingsPercent} />
-        <TrustStrip line="pet" />
       </main>
-
-      <Footer line="pet" />
-    </div>
+    </>
   );
 }
