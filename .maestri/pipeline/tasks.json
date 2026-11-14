@@ -653,7 +653,7 @@
     "responsavel": "Matilha",
     "lease_ate": null,
     "branch": "agy/W2-03",
-    "pr": "local",
+    "pr": "local 37ec6a4",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -731,7 +731,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Coleira",
-    "lease_ate": "2026-11-14T10:20:43.239Z",
+    "lease_ate": "2026-11-14T10:21:40.952Z",
     "branch": "agy/W2-12",
     "pr": "local",
     "criterios": [
@@ -829,14 +829,15 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "disponivel",
-    "responsavel": null,
+    "status": "em_andamento",
+    "responsavel": "Agulha",
     "branch": "agy/W1-23",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "lease_ate": "2026-11-14T10:21:47.935Z"
   }
 ]
