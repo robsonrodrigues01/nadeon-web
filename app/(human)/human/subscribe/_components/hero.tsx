@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
 
-export function Hero() {
+export interface HeroProps {
+  discountPercentage?: number;
+}
+
+export function Hero({ discountPercentage = 15 }: HeroProps = {}) {
   return (
     <section
       aria-label="Subscribe & Save"
@@ -11,7 +15,7 @@ export function Hero() {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="max-w-2xl lg:col-span-7">
             <span className="inline-block rounded-full bg-accent px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-accent-fg">
-              SUBSCRIBE &amp; SAVE 15%
+              SUBSCRIBE &amp; SAVE {discountPercentage}%
             </span>
 
             <h1 className="mt-6 font-archivo text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-fg leading-none">
@@ -22,8 +26,8 @@ export function Hero() {
 
             <p className="mt-6 text-base sm:text-xl text-fg-muted leading-relaxed max-w-xl">
               Your daily NMN and NAD<sup>+</sup>, delivered on your schedule.
-              Save 15% on every box, ship free every time, and skip, pause or
-              cancel whenever you like.
+              Save {discountPercentage}% on every box, ship free every time, and
+              skip, pause or cancel whenever you like.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">

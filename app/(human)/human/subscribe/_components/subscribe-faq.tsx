@@ -9,35 +9,46 @@ export interface FaqItem {
   answer: string;
 }
 
-export const SUBSCRIBE_FAQS: FaqItem[] = [
-  {
-    question: "When will I be charged?",
-    answer:
-      "When each box ships. You get an email reminder 3 days before, so you can skip or change it.",
-  },
-  {
-    question: "Can I subscribe to more than one formula?",
-    answer:
-      "Yes. You can build a custom stack with multiple formulas in one box and save 15% across all of them.",
-  },
-  {
-    question: "Does the 15% stack with other offers?",
-    answer:
-      "The 15% subscription discount is our best ongoing rate and cannot be combined with one-time discount codes.",
-  },
-  {
-    question: "Is shipping really free?",
-    answer:
-      "Yes. Shipping is free on every recurring subscription delivery, regardless of cart value.",
-  },
-  {
-    question: "What if it is not for me?",
-    answer:
-      "You can pause or cancel anytime with one click in your account, plus your first order is backed by our 60-day guarantee.",
-  },
-];
+export function getSubscribeFaqs(discountPercentage: number = 15): FaqItem[] {
+  return [
+    {
+      question: "When will I be charged?",
+      answer:
+        "When each box ships. You get an email reminder 3 days before, so you can skip or change it.",
+    },
+    {
+      question: "Can I subscribe to more than one formula?",
+      answer: `Yes. You can build a custom stack with multiple formulas in one box and save ${discountPercentage}% across all of them.`,
+    },
+    {
+      question: `Does the ${discountPercentage}% stack with other offers?`,
+      answer: `The ${discountPercentage}% subscription discount is our best ongoing rate and cannot be combined with one-time discount codes.`,
+    },
+    {
+      question: "Is shipping really free?",
+      answer:
+        "Yes. Shipping is free on every recurring subscription delivery, regardless of cart value.",
+    },
+    {
+      question: "What if it is not for me?",
+      answer:
+        "You can pause or cancel anytime with one click in your account, plus your first order is backed by our 60-day guarantee.",
+    },
+  ];
+}
 
-export function SubscribeFaq() {
+export const SUBSCRIBE_FAQS: FaqItem[] = getSubscribeFaqs(15);
+
+export interface SubscribeFaqProps {
+  faqs?: FaqItem[];
+  discountPercentage?: number;
+}
+
+export function SubscribeFaq({
+  faqs,
+  discountPercentage = 15,
+}: SubscribeFaqProps = {}) {
+  const items = faqs ?? getSubscribeFaqs(discountPercentage);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (index: number) => {
@@ -72,7 +83,7 @@ export function SubscribeFaq() {
           </div>
 
           <div className="lg:col-span-8 divide-y divide-border border-y border-border">
-            {SUBSCRIBE_FAQS.map((faq, index) => {
+            {items.map((faq, index) => {
               const isOpen = openIndex === index;
               const panelId = `subscribe-faq-panel-${index}`;
               const buttonId = `subscribe-faq-btn-${index}`;

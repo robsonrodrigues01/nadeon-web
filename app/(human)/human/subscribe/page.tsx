@@ -16,14 +16,25 @@ import { HowItWorks } from "./_components/how-it-works";
 import { MathComparison } from "./_components/math-comparison";
 import { FrequencySection } from "./_components/frequency-section";
 import { FlexibilitySection } from "./_components/flexibility-section";
-import { SubscribeFaq, SUBSCRIBE_FAQS } from "./_components/subscribe-faq";
+import { SubscribeFaq, getSubscribeFaqs } from "./_components/subscribe-faq";
 import { BottomCta } from "./_components/bottom-cta";
+import {
+  getSubscriptionDiscountPercentage,
+  getUniqueSellingPlans,
+} from "./_components/plan-utils";
 
 export async function generateMetadata(): Promise<Metadata> {
+  let discountPercentage = 15;
+  try {
+    const products = await catalogProvider.getProducts({ line: "human" });
+    discountPercentage = getSubscriptionDiscountPercentage(products);
+  } catch {
+    discountPercentage = 15;
+  }
+
   return buildMetadata({
-    title: "Subscribe & Save 15% | Nadeon Human",
-    description:
-      "Your daily NMN and NAD+, delivered on your schedule. Save 15% on every box with free shipping and full flexibility.",
+    title: `Subscribe & Save ${discountPercentage}% | Nadeon Human`,
+    description: `Your daily NMN and NAD+, delivered on your schedule. Save ${discountPercentage}% on every box with free shipping and full flexibility.`,
     pathname: "/human/subscribe",
   });
 }
@@ -42,25 +53,32 @@ export default async function SubscribePage() {
   }
 
   const products = await catalogProvider.getProducts({ line: "human" });
+  const discountPercentage = getSubscriptionDiscountPercentage(products);
+  const sellingPlans = getUniqueSellingPlans(products);
+  const intervals = sellingPlans.map((p) => p.intervalDays);
+  const faqs = getSubscribeFaqs(discountPercentage);
 
   const breadcrumbsLd = buildBreadcrumbJsonLd([
     { name: "Home", url: "/" },
     { name: "Human", url: "/human" },
     { name: "Subscribe", url: "/human/subscribe" },
   ]);
-  const faqLd = buildFaqJsonLd(SUBSCRIBE_FAQS);
+  const faqLd = buildFaqJsonLd(faqs);
 
   return (
     <main id="main-content" className="flex-1 bg-bg text-fg">
       <JsonLd data={{ ...breadcrumbsLd }} id="breadcrumb-jsonld" />
       <JsonLd data={{ ...faqLd }} id="faq-jsonld" />
-      <Hero />
-      <HowItWorks />
+      <Hero discountPercentage={discountPercentage} />
+      <HowItWorks
+        discountPercentage={discountPercentage}
+        intervals={intervals}
+      />
       <MathComparison products={products} market={market} />
-      <FrequencySection />
+      <FrequencySection plans={sellingPlans} />
       <FlexibilitySection />
-      <SubscribeFaq />
-      <BottomCta />
+      <SubscribeFaq faqs={faqs} discountPercentage={discountPercentage} />
+      <BottomCta discountPercentage={discountPercentage} />
     </main>
   );
 }

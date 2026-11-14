@@ -11,6 +11,14 @@ vi.mock("next/headers", () => ({
 import SubscribePage, {
   generateMetadata,
 } from "@/app/(human)/human/subscribe/page";
+import { MathComparison } from "@/app/(human)/human/subscribe/_components/math-comparison";
+import { FrequencySection } from "@/app/(human)/human/subscribe/_components/frequency-section";
+import {
+  getSubscribeFaqs,
+  SubscribeFaq,
+} from "@/app/(human)/human/subscribe/_components/subscribe-faq";
+import { getDefaultMarket } from "@/lib/market/markets";
+import type { Product, SellingPlan } from "@/lib/contracts/catalog";
 
 async function renderSubscribe() {
   const page = await SubscribePage();
@@ -23,10 +31,11 @@ afterEach(() => {
 });
 
 describe("W2-30 /human/subscribe metadata and SEO", () => {
-  it("builds title, description and canonical path", async () => {
+  it("builds title, description and canonical path with derived discount", async () => {
     const meta = await generateMetadata();
     expect(meta.title).toContain("Subscribe");
     expect(meta.title).toContain("Nadeon");
+    expect(meta.title).toContain("15%");
     expect(String(meta.alternates?.canonical)).toMatch(/\/human\/subscribe$/);
   });
 });
@@ -96,7 +105,9 @@ describe("W2-30 /human/subscribe sections content", () => {
     await renderSubscribe();
     expect(screen.getByText("Choose")).toBeTruthy();
     expect(screen.getByText("Set the rhythm")).toBeTruthy();
-    expect(screen.getByText("Save 15%")).toBeTruthy();
+    expect(
+      screen.getByRole("heading", { level: 3, name: /Save 15%/i })
+    ).toBeTruthy();
   });
 
   it("renders Math savings table/cards from catalog data", async () => {
@@ -105,13 +116,15 @@ describe("W2-30 /human/subscribe sections content", () => {
     expect(screen.getByText(/Assumes one jar per month/i)).toBeTruthy();
   });
 
-  it("renders all delivery frequency options (30 to 180 days)", async () => {
+  it("renders delivery frequency options derived from sellingPlans", async () => {
     await renderSubscribe();
+    // Default mock human products have intervalDays 30, 60, 90
     expect(screen.getAllByText(/30/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/60/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/90/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/120/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/180/).length).toBeGreaterThan(0);
+    // 120 and 180 do not exist in selling plans
+    expect(screen.queryByText("120")).toBeNull();
+    expect(screen.queryByText("180")).toBeNull();
   });
 
   it("renders the interactive subscription simulation panel with action buttons", async () => {
@@ -145,7 +158,97 @@ describe("W2-30 /human/subscribe sections content", () => {
     expect(faqQuestion).toBeTruthy();
 
     fireEvent.click(faqQuestion);
-    // After clicking open/close, toggle state works
     expect(screen.getByText(/When each box ships/i)).toBeTruthy();
+  });
+});
+
+describe("W2-30 review findings verification: dynamic discounts and frequencies", () => {
+  it("derives math comparison calculations and discount text from sellingPlans.discountPercentage", () => {
+    const market = getDefaultMarket();
+    const customProduct: Product = {
+      slug: "custom-longevity",
+      handle: "custom-longevity",
+      name: "Custom Longevity",
+      technicalName: "Longevity Optimizer",
+      line: "human",
+      species: null,
+      format: "Capsules",
+      color: "var(--accent)",
+      images: [],
+      actives: [],
+      serving: "2 capsules",
+      servingsPerJar: 30,
+      netWeight: "60g",
+      variants: [
+        {
+          id: "var_custom_1",
+          jars: 1,
+          title: "1 Jar",
+          price: { amount: 100, currencyCode: "USD" },
+          compareAtPrice: { amount: 100, currencyCode: "USD" },
+          sku: "TEST-1",
+        },
+      ],
+      sellingPlans: [
+        {
+          id: "plan_25",
+          name: "1 jar every 30 days (25% off)",
+          intervalDays: 30,
+          discountPercentage: 25,
+        },
+      ],
+      benefits: ["Longevity*"],
+      howToUse: "Take daily",
+      faq: [],
+      related: [],
+      claims: [{ text: "Longevity*", isClaim: true }],
+      dosingByWeight: [],
+    };
+
+    render(<MathComparison products={[customProduct]} market={market} />);
+
+    // 100 base, with 25% discount -> subMo = 75, subYr = 900, savedYr = 300
+    expect(screen.getByText("$75.00")).toBeTruthy();
+    expect(screen.getByText("$900.00")).toBeTruthy();
+    expect(screen.getByText("Subscribe (25% off)")).toBeTruthy();
+  });
+
+  it("renders frequency section with contract intervals and sellingPlans names", () => {
+    const testPlans: SellingPlan[] = [
+      {
+        id: "plan_45",
+        name: "Delivery every 45 days (special rhythm)",
+        intervalDays: 45,
+        discountPercentage: 10,
+      },
+      {
+        id: "plan_90",
+        name: "Quarterly stock up",
+        intervalDays: 90,
+        discountPercentage: 15,
+      },
+    ];
+
+    render(<FrequencySection plans={testPlans} />);
+
+    expect(screen.getByText("45")).toBeTruthy();
+    expect(
+      screen.getByText("Delivery every 45 days (special rhythm)")
+    ).toBeTruthy();
+    expect(screen.getByText("90")).toBeTruthy();
+    expect(screen.getByText("Quarterly stock up")).toBeTruthy();
+    // 30 should not be rendered when not in plans
+    expect(screen.queryByText("30")).toBeNull();
+  });
+
+  it("derives FAQ questions and answers from discount percentage", () => {
+    const faqs = getSubscribeFaqs(20);
+    render(<SubscribeFaq faqs={faqs} discountPercentage={20} />);
+
+    expect(
+      screen.getByRole("button", {
+        name: /Does the 20% stack with other offers\?/i,
+      })
+    ).toBeTruthy();
   });
 });

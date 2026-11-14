@@ -2,6 +2,7 @@ import React from "react";
 import type { Product } from "@/lib/contracts/catalog";
 import type { Market } from "@/lib/market/types";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import { getProductSubscriptionDiscount } from "./plan-utils";
 
 export interface MathComparisonProps {
   products: Product[];
@@ -14,6 +15,7 @@ interface MathItem {
   name: string;
   technicalName?: string;
   format: string;
+  discountPercentage: number;
   oneTimeMoStr: string;
   subMoStr: string;
   oneTimeYrStr: string;
@@ -27,11 +29,14 @@ export function MathComparison({ products, market }: MathComparisonProps) {
       product.variants.find((v) => v.jars === 1) ?? product.variants[0];
     if (!singleVariant) return [];
 
+    const discountPercentage = getProductSubscriptionDiscount(product);
+    const factor = (100 - discountPercentage) / 100;
+
     const baseAmount = singleVariant.price.amount;
     const oneTimeMo = baseAmount;
-    const subMo = baseAmount * 0.85;
+    const subMo = baseAmount * factor;
     const oneTimeYr = baseAmount * 12;
-    const subYr = baseAmount * 0.85 * 12;
+    const subYr = subMo * 12;
     const savedYr = oneTimeYr - subYr;
 
     return [
@@ -41,6 +46,7 @@ export function MathComparison({ products, market }: MathComparisonProps) {
         name: product.name,
         technicalName: product.technicalName,
         format: product.format,
+        discountPercentage,
         oneTimeMoStr: formatMoneyWithMarket(oneTimeMo, market),
         subMoStr: formatMoneyWithMarket(subMo, market),
         oneTimeYrStr: formatMoneyWithMarket(oneTimeYr, market),
@@ -162,7 +168,7 @@ export function MathComparison({ products, market }: MathComparisonProps) {
                 </div>
                 <div>
                   <span className="block font-medium text-accent">
-                    Subscribe (15% off)
+                    Subscribe ({item.discountPercentage}% off)
                   </span>
                   <span className="font-semibold text-fg">
                     {item.subMoStr} / mo

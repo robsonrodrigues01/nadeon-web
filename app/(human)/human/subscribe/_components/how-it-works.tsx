@@ -1,6 +1,19 @@
 import React from "react";
 
-export function HowItWorks() {
+export interface HowItWorksProps {
+  discountPercentage?: number;
+  intervals?: number[];
+}
+
+export function HowItWorks({
+  discountPercentage = 15,
+  intervals = [30, 60, 90],
+}: HowItWorksProps = {}) {
+  const rhythmDescription =
+    intervals.length > 0
+      ? `Every ${intervals.join(", ")} days.`
+      : "On your own schedule.";
+
   const steps = [
     {
       number: "1",
@@ -10,11 +23,11 @@ export function HowItWorks() {
     {
       number: "2",
       title: "Set the rhythm",
-      description: "Every 30, 60, 90, 120 or 180 days.",
+      description: rhythmDescription,
     },
     {
       number: "3",
-      title: "Save 15%",
+      title: `Save ${discountPercentage}%`,
       description: "On every box, with free shipping on every delivery.",
     },
   ];
