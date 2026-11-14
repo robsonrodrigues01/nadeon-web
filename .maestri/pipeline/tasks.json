@@ -809,11 +809,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Bigode",
-    "lease_ate": "2026-11-14T14:40:01.284Z",
+    "lease_ate": null,
     "branch": "agy/W2-10",
-    "pr": "local",
+    "pr": "local 2c122c8",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
