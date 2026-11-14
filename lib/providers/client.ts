@@ -11,6 +11,7 @@ export const cartProvider: CartProvider = isLive
 export { useCartStore, mockCartProvider, liveCartProvider };
 export type {
   Cart,
+  CartKit,
   CartLineItem,
   CartDiscountCode,
   CartProvider,

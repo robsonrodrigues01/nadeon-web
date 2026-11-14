@@ -1,6 +1,18 @@
 import { z } from "zod";
 import { MoneySchema, ProductLineSchema } from "./catalog";
 
+export const CartKitSchema = z.object({
+  slug: z.string(),
+  name: z.string(),
+  items: z.array(
+    z.object({
+      title: z.string(),
+      quantity: z.number().int().positive(),
+    })
+  ),
+});
+export type CartKit = z.infer<typeof CartKitSchema>;
+
 export const CartLineItemSchema = z.object({
   id: z.string(),
   variantId: z.string(),
@@ -14,6 +26,8 @@ export const CartLineItemSchema = z.object({
     image: z.string().optional(),
     line: ProductLineSchema,
   }),
+  // Presente só em linhas de kit: preço e itens vêm do kit, não das fórmulas avulsas.
+  kit: CartKitSchema.optional(),
   price: MoneySchema,
   total: MoneySchema,
   customAttributes: z.record(z.string(), z.string()).optional(),
@@ -58,6 +72,12 @@ export interface CartProvider {
   get(): Promise<Cart | null>;
   create(): Promise<Cart>;
   addLines(lines: AddCartLineInput[]): Promise<Cart>;
+  // Cobra o preço do kit (com o desconto do plano, se houver), não a soma das fórmulas.
+  addKit(
+    kitSlug: string,
+    quantity: number,
+    sellingPlanId?: string | null
+  ): Promise<Cart>;
   updateLines(lines: UpdateCartLineInput[]): Promise<Cart>;
   removeLines(lineIds: string[]): Promise<Cart>;
   applyDiscount(code: string): Promise<Cart>;

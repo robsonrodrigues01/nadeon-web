@@ -114,8 +114,20 @@ export function CartDrawerItem({
               {item.product.title}
             </h3>
             <p className="text-xs text-fg-muted mt-0.5 capitalize">
-              {item.product.line} routine
+              {item.kit ? "Kit" : `${item.product.line} routine`}
             </p>
+            {item.kit && (
+              <ul
+                aria-label={`Items in ${item.kit.name}`}
+                className="text-xs text-fg-muted mt-1 space-y-0.5"
+              >
+                {item.kit.items.map((kitItem) => (
+                  <li key={kitItem.title}>
+                    {kitItem.quantity}× {kitItem.title}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="text-right shrink-0">
@@ -146,32 +158,34 @@ export function CartDrawerItem({
           )}
         </div>
 
-        {/* Action link: Change or Switch to subscription */}
-        <div className="text-xs text-fg-muted mt-1.5 flex flex-wrap items-center gap-2">
-          {isSubscription ? (
-            <>
-              <span>↻ Delivered every 30 days</span>
+        {/* Action link: Change or Switch to subscription. Kit lines have no selling plans in the catalog yet, so the switch is hidden. */}
+        {!item.kit && (
+          <div className="text-xs text-fg-muted mt-1.5 flex flex-wrap items-center gap-2">
+            {isSubscription ? (
+              <>
+                <span>↻ Delivered every 30 days</span>
+                <button
+                  type="button"
+                  onClick={() => setShowPlanSelector((prev) => !prev)}
+                  aria-expanded={showPlanSelector}
+                  aria-label={`Change subscription frequency for ${item.product.title}`}
+                  className="underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
+                >
+                  Change
+                </button>
+              </>
+            ) : (
               <button
                 type="button"
-                onClick={() => setShowPlanSelector((prev) => !prev)}
-                aria-expanded={showPlanSelector}
-                aria-label={`Change subscription frequency for ${item.product.title}`}
-                className="underline hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
+                onClick={() => handleSwitchToSubscription()}
+                aria-label={`Switch ${item.product.title} to subscription and save 15%`}
+                className="underline text-fg hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
               >
-                Change
+                Switch to subscription, save 15%
               </button>
-            </>
-          ) : (
-            <button
-              type="button"
-              onClick={() => handleSwitchToSubscription()}
-              aria-label={`Switch ${item.product.title} to subscription and save 15%`}
-              className="underline text-fg hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded transition-colors cursor-pointer min-h-[30px] inline-flex items-center"
-            >
-              Switch to subscription, save 15%
-            </button>
-          )}
-        </div>
+            )}
+          </div>
+        )}
 
         {/* Frequência dropdown / selector acessível se clicou em Change */}
         {showPlanSelector && (

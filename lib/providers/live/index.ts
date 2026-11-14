@@ -84,6 +84,13 @@ export class LiveCartProvider implements CartProvider {
   async addLines(_lines: AddCartLineInput[]): Promise<Cart> {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
+  async addKit(
+    _kitSlug: string,
+    _quantity: number,
+    _sellingPlanId?: string | null
+  ): Promise<Cart> {
+    throw new Error(NOT_IMPLEMENTED_MSG);
+  }
   async updateLines(_lines: UpdateCartLineInput[]): Promise<Cart> {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
