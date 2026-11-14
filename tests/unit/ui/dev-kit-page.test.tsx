@@ -1,10 +1,47 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderToString } from "react-dom/server";
+import {
+  cloneElement,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import DevKitPage from "@/app/(shared)/dev/kit/page";
 
 const mockNotFound = vi.fn(() => {
   throw new Error("NEXT_NOT_FOUND");
 });
+
+// Server components are async functions and renderToString cannot run them, so
+// resolve only async components here. Sync (client) components are left as
+// elements for React to render, as they are in Next.
+function isAsyncComponent(
+  type: unknown
+): type is (props: unknown) => Promise<ReactNode> {
+  return (
+    typeof type === "function" &&
+    (type as { constructor?: { name?: string } }).constructor?.name ===
+      "AsyncFunction"
+  );
+}
+
+async function resolveServerComponents(node: ReactNode): Promise<ReactNode> {
+  if (Array.isArray(node)) {
+    return Promise.all(node.map(resolveServerComponents));
+  }
+  if (!isValidElement<{ children?: ReactNode }>(node)) return node;
+  if (isAsyncComponent(node.type)) {
+    return resolveServerComponents(await node.type(node.props));
+  }
+  if (node.props.children === undefined) return node;
+  return cloneElement(node, {
+    children: await resolveServerComponents(node.props.children),
+  });
+}
+
+async function renderPage(jsx: ReactElement): Promise<string> {
+  return renderToString((await resolveServerComponents(jsx)) as ReactElement);
+}
 
 vi.mock("next/navigation", () => ({
   notFound: () => mockNotFound(),
@@ -49,7 +86,7 @@ describe("/dev/kit Page", () => {
     expect(jsx).toBeDefined();
     expect(mockNotFound).not.toHaveBeenCalled();
 
-    const html = renderToString(jsx);
+    const html = await renderPage(jsx);
 
     // Themes side-by-side
     expect(html).toContain('data-theme="human"');

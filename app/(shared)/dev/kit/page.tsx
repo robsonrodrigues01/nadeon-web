@@ -22,14 +22,12 @@ export default async function DevKitPage() {
     notFound();
   }
 
-  const renderedSections = await Promise.all(
-    sections.map(async (section) => {
-      const Component = section.Component;
-      const res = Component({});
-      const content = res instanceof Promise ? await res : res;
-      return <React.Fragment key={section.id}>{content}</React.Fragment>;
-    })
-  );
+  // Render each section as an element so React owns the call: client sections
+  // ("use client") cannot be invoked as functions from the server.
+  const renderedSections = sections.map((section) => {
+    const Component = section.Component;
+    return <Component key={section.id} />;
+  });
 
   return (
     <main className="min-h-screen bg-bg text-fg px-4 py-10 sm:px-8 max-w-7xl mx-auto">

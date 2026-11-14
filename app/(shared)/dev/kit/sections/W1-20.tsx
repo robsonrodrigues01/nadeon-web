@@ -98,7 +98,6 @@ export default async function W1_20Section() {
         {/* Semantic Controls for Human Handles */}
         <form
           aria-label="Human Line Controls"
-          onSubmit={(e) => e.preventDefault()}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-card bg-bg-elevated border border-border"
         >
           <div>
@@ -328,7 +327,6 @@ export default async function W1_20Section() {
         {/* Semantic Controls for Pet Handles */}
         <form
           aria-label="Pet Line Controls"
-          onSubmit={(e) => e.preventDefault()}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-card bg-bg-elevated border border-border"
         >
           <div>
