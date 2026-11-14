@@ -1032,7 +1032,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Pedidos",
-    "lease_ate": "2026-11-14T17:44:37.732Z",
+    "lease_ate": "2026-11-14T17:51:14.370Z",
     "branch": "agy/W2-20",
     "pr": "local",
     "criterios": [
@@ -1052,7 +1052,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Assina",
-    "lease_ate": "2026-11-14T17:44:37.101Z",
+    "lease_ate": "2026-11-14T17:50:16.731Z",
     "branch": "agy/W2-21",
     "pr": "local",
     "criterios": [
@@ -1072,7 +1072,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Ajustes",
-    "lease_ate": "2026-11-14T17:47:43.191Z",
+    "lease_ate": "2026-11-14T17:50:26.961Z",
     "branch": "agy/W2-22",
     "pr": "local",
     "criterios": [
@@ -1092,7 +1092,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Farejo",
-    "lease_ate": "2026-11-14T17:48:16.240Z",
+    "lease_ate": "2026-11-14T17:49:15.599Z",
     "branch": "agy/W2-24",
     "pr": "local",
     "criterios": [
@@ -1112,7 +1112,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Origem",
-    "lease_ate": "2026-11-14T17:47:56.567Z",
+    "lease_ate": "2026-11-14T17:52:57.991Z",
     "branch": "agy/W2-25",
     "pr": "local",
     "criterios": [
