@@ -146,6 +146,7 @@ describe("W2-16: /search route", () => {
     it("exposes a labelled search input and a submit button with accessible name", () => {
       render(<SearchField initialQuery="" />);
       expect(screen.getByRole("searchbox")).toBeTruthy();
+      expect(screen.getByRole("searchbox").className).toContain("min-w-0");
       expect(
         screen.getByRole("button", { name: "Search" }).getAttribute("type")
       ).toBe("submit");

@@ -26,7 +26,7 @@ export function SearchField({ initialQuery }: SearchFieldProps) {
         value={value}
         onChange={(event) => setValue(event.target.value)}
         autoComplete="off"
-        className="min-h-11 flex-1 rounded-pill border border-border bg-bg-elevated px-5 text-base font-semibold text-fg placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="min-h-11 min-w-0 flex-1 rounded-pill border border-border bg-bg-elevated px-5 text-base font-semibold text-fg placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       />
       {value && (
         <button
