@@ -103,9 +103,9 @@ export function BundleSection({ kit, kitLines = [] }: BundleSectionProps) {
               )}
             </div>
 
-            <div className="flex items-center justify-center gap-4 sm:gap-6">
-              <div className="flex flex-col items-center rounded-card border border-border bg-bg p-6 shadow-card">
-                <div className="h-36 w-36 relative flex items-center justify-center">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
+              <div className="flex min-w-0 flex-col items-center rounded-card border border-border bg-bg p-4 sm:p-6 shadow-card">
+                <div className="h-24 w-24 sm:h-36 sm:w-36 relative flex items-center justify-center">
                   <Image
                     src="/images/products/biohack-front.webp"
                     alt="BioHack NMN 500 mg"
@@ -122,8 +122,8 @@ export function BundleSection({ kit, kitLines = [] }: BundleSectionProps) {
                 </span>
               </div>
               <span className="text-3xl font-black text-accent">+</span>
-              <div className="flex flex-col items-center rounded-card border border-border bg-bg p-6 shadow-card">
-                <div className="h-36 w-36 relative flex items-center justify-center">
+              <div className="flex min-w-0 flex-col items-center rounded-card border border-border bg-bg p-4 sm:p-6 shadow-card">
+                <div className="h-24 w-24 sm:h-36 sm:w-36 relative flex items-center justify-center">
                   <Image
                     src="/images/products/renew-front.webp"
                     alt="Renew NAD+ and Resveratrol"
