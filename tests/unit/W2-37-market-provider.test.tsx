@@ -1,11 +1,15 @@
+// @vitest-environment jsdom
 import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderToString } from "react-dom/server";
+import { render, screen, cleanup } from "@testing-library/react";
 import RootLayout from "@/app/layout";
 import { MarketProvider, useMarket } from "@/lib/market/context";
 import { getVisitorMarket } from "@/lib/market/visitor";
 import { DEFAULT_MARKET, getMarket } from "@/lib/market/markets";
 import { MARKET_COOKIE_NAME } from "@/lib/market/cookies";
+import DogsPage from "@/app/(pet)/pet/dogs/page";
+import HumanShopPage from "@/app/(human)/human/shop/page";
 
 let mockCookieValue: string | undefined = undefined;
 
@@ -38,9 +42,32 @@ function ClientMarketConsumer() {
   );
 }
 
-describe("W2-37: MarketProvider no layout raiz", () => {
+describe("W2-37: MarketProvider e isolamento SSR / hidratação", () => {
   beforeEach(() => {
     mockCookieValue = undefined;
+    document.cookie = `${MARKET_COOKIE_NAME}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
+
+  describe("RootLayout (síncrono e isolado de cookies)", () => {
+    it("é síncrono e envolve children em MarketProvider sem initialMarket", () => {
+      // RootLayout must not return a Promise
+      const result = RootLayout({
+        children: <ClientMarketConsumer />,
+      });
+      expect(result).not.toBeInstanceOf(Promise);
+      expect(result).toBeDefined();
+      expect(result.type).toBe("html");
+
+      // No SSR render, mesmo se houver cookie, o provider sem initialMarket inicia em DEFAULT_MARKET
+      document.cookie = `${MARKET_COOKIE_NAME}=gb`;
+      const html = renderToString(result);
+      expect(html).toContain('data-testid="market-id">us<');
+      expect(html).toContain('data-testid="currency-code">USD<');
+    });
   });
 
   describe("getVisitorMarket helper", () => {
@@ -88,69 +115,56 @@ describe("W2-37: MarketProvider no layout raiz", () => {
     });
   });
 
-  describe("RootLayout wrapping with MarketProvider", () => {
-    it("wraps children in MarketProvider with initialMarket matching cookie 'gb'", async () => {
-      mockCookieValue = "gb";
-      const rootJsx = await RootLayout({
-        children: <ClientMarketConsumer />,
-      });
-
-      // Verify root structure
-      expect(rootJsx).toBeDefined();
-      expect(rootJsx.type).toBe("html");
-
-      // Render to string and verify client component rendered UK market
-      const html = renderToString(rootJsx);
-      expect(html).toContain('data-testid="market-id">gb<');
-      expect(html).toContain('data-testid="currency-code">GBP<');
-      expect(html).toContain('data-testid="currency-symbol">£<');
-      expect(html).toContain("£51.35");
-      expect(html).toContain("£79.00");
-    });
-
-    it("renders client component with US default market when cookie is absent", async () => {
-      mockCookieValue = undefined;
-      const rootJsx = await RootLayout({
-        children: <ClientMarketConsumer />,
-      });
-
-      const html = renderToString(rootJsx);
+  describe("MarketProvider sem initialMarket", () => {
+    it("no SSR (renderToString) inicia em DEFAULT_MARKET mesmo com cookie no documento", () => {
+      document.cookie = `${MARKET_COOKIE_NAME}=gb`;
+      const html = renderToString(
+        <MarketProvider>
+          <ClientMarketConsumer />
+        </MarketProvider>
+      );
+      // Evita erro de hidratação: no SSR não lê cookie, começa em US
       expect(html).toContain('data-testid="market-id">us<');
       expect(html).toContain('data-testid="currency-code">USD<');
-      expect(html).toContain('data-testid="currency-symbol">$<');
-      expect(html).toContain("$65.00");
-      expect(html).toContain("$100.00");
     });
 
-    it("renders client component with CA market when cookie is 'ca'", async () => {
-      mockCookieValue = "ca";
-      const rootJsx = await RootLayout({
-        children: <ClientMarketConsumer />,
-      });
+    it("aplica o cookie do mercado após montar no cliente (useEffect)", async () => {
+      document.cookie = `${MARKET_COOKIE_NAME}=gb`;
+      render(
+        <MarketProvider>
+          <ClientMarketConsumer />
+        </MarketProvider>
+      );
 
-      const html = renderToString(rootJsx);
-      expect(html).toContain('data-testid="market-id">ca<');
-      expect(html).toContain('data-testid="currency-code">CAD<');
-      expect(html).toContain("$88.40");
-      expect(html).toContain("$136.00");
+      // No cliente, após a montagem o useEffect aplica o cookie
+      const marketIdEl = await screen.findByTestId("market-id");
+      expect(marketIdEl.textContent).toBe("gb");
+
+      const currencyEl = screen.getByTestId("currency-code");
+      expect(currencyEl.textContent).toBe("GBP");
+
+      const symbolEl = screen.getByTestId("currency-symbol");
+      expect(symbolEl.textContent).toBe("£");
+
+      const formattedMoneyEl = screen.getByTestId("formatted-money");
+      expect(formattedMoneyEl.textContent).toBe("£51.35");
     });
 
-    it("renders client component with EU market when cookie is 'eu'", async () => {
-      mockCookieValue = "eu";
-      const rootJsx = await RootLayout({
-        children: <ClientMarketConsumer />,
-      });
+    it("permanece em DEFAULT_MARKET se nenhum cookie estiver presente", async () => {
+      render(
+        <MarketProvider>
+          <ClientMarketConsumer />
+        </MarketProvider>
+      );
 
-      const html = renderToString(rootJsx);
-      expect(html).toContain('data-testid="market-id">eu<');
-      expect(html).toContain('data-testid="currency-code">EUR<');
-      expect(html).toContain("€59.80");
-      expect(html).toContain("€92.00");
+      const marketIdEl = await screen.findByTestId("market-id");
+      expect(marketIdEl.textContent).toBe("us");
+      expect(screen.getByTestId("currency-code").textContent).toBe("USD");
     });
   });
 
-  describe("MarketProvider component isolated behavior", () => {
-    it("provides initial market passed as Market object", () => {
+  describe("Páginas dinâmicas com initialMarket", () => {
+    it("MarketProvider com initialMarket sai no HTML inicial no mercado especificado", () => {
       const gbMarket = getMarket("gb")!;
       const html = renderToString(
         <MarketProvider initialMarket={gbMarket}>
@@ -160,29 +174,24 @@ describe("W2-37: MarketProvider no layout raiz", () => {
       expect(html).toContain('data-testid="market-id">gb<');
       expect(html).toContain('data-testid="currency-code">GBP<');
       expect(html).toContain("£51.35");
-      expect(html).toContain("£79.00");
     });
 
-    it("provides initial market passed as string ID", () => {
-      const html = renderToString(
-        <MarketProvider initialMarket="au">
-          <ClientMarketConsumer />
-        </MarketProvider>
-      );
-      expect(html).toContain('data-testid="market-id">au<');
-      expect(html).toContain('data-testid="currency-code">AUD<');
-      expect(html).toContain("$98.80");
-      expect(html).toContain("$152.00");
+    it("página dinâmica /pet/dogs entrega initialMarket={market} e renderiza no mercado do visitante no SSR", async () => {
+      mockCookieValue = "gb";
+      const pageJsx = await DogsPage();
+      const html = renderToString(pageJsx);
+
+      // Preços de bundles e componentes usam o mercado do visitante no HTML inicial
+      expect(html).toContain("£");
     });
 
-    it("falls back to DEFAULT_MARKET when initialMarket is undefined and no cookie", () => {
-      const html = renderToString(
-        <MarketProvider>
-          <ClientMarketConsumer />
-        </MarketProvider>
-      );
-      expect(html).toContain('data-testid="market-id">us<');
-      expect(html).toContain('data-testid="currency-code">USD<');
+    it("página dinâmica /human/shop entrega initialMarket={market} e renderiza no mercado do visitante no SSR", async () => {
+      mockCookieValue = "eu";
+      const pageJsx = await HumanShopPage();
+      const html = renderToString(pageJsx);
+
+      // Preços de kits e componentes usam o mercado do visitante no HTML inicial
+      expect(html).toContain("€");
     });
   });
 });

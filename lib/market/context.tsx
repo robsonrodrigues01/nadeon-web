@@ -4,6 +4,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -20,25 +21,37 @@ export interface MarketProviderProps {
   initialMarket?: Market | string;
 }
 
+function resolveInitialMarket(initialMarket?: Market | string): Market {
+  if (typeof initialMarket === "object" && initialMarket) {
+    return initialMarket;
+  }
+  if (typeof initialMarket === "string") {
+    const found = getMarket(initialMarket);
+    if (found) return found;
+  }
+  return DEFAULT_MARKET;
+}
+
 export function MarketProvider({
   children,
   initialMarket,
 }: MarketProviderProps) {
-  const [market, setMarketState] = useState<Market>(() => {
-    if (typeof initialMarket === "object" && initialMarket) {
-      return initialMarket;
-    }
-    if (typeof initialMarket === "string") {
-      const found = getMarket(initialMarket);
-      if (found) return found;
-    }
+  const [market, setMarketState] = useState<Market>(() =>
+    resolveInitialMarket(initialMarket)
+  );
+
+  useEffect(() => {
+    if (initialMarket) return;
     const cookieValue = getMarketCookie();
     if (cookieValue) {
       const found = getMarket(cookieValue);
-      if (found) return found;
+      if (found) {
+        queueMicrotask(() => {
+          setMarketState(found);
+        });
+      }
     }
-    return DEFAULT_MARKET;
-  });
+  }, [initialMarket]);
 
   const setMarket = useCallback((marketIdOrCode: string) => {
     const target = getMarket(marketIdOrCode);

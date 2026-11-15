@@ -1,4 +1,5 @@
 import { getVisitorMarket } from "@/lib/market/visitor";
+import { MarketProvider } from "@/lib/market/context";
 import React from "react";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
@@ -49,37 +50,39 @@ export default async function DogsPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-bg text-fg">
-      <JsonLd data={jsonLdData} id="dogs-collection-ld" />
+    <MarketProvider initialMarket={market}>
+      <div className="flex min-h-screen flex-col bg-bg text-fg">
+        <JsonLd data={jsonLdData} id="dogs-collection-ld" />
 
-      {/* Global Pet Announcement Bar */}
-      <AnnouncementBar line="pet" />
+        {/* Global Pet Announcement Bar */}
+        <AnnouncementBar line="pet" />
 
-      {/* Pet Header */}
-      <Header variant="pet" />
+        {/* Pet Header */}
+        <Header variant="pet" />
 
-      <main id="main-content" className="flex-1">
-        {/* 1. Hero Section */}
-        <Hero />
+        <main id="main-content" className="flex-1">
+          {/* 1. Hero Section */}
+          <Hero />
 
-        {/* 2. Products Section with NEED & FORMAT filters and sort */}
-        <DogProductsSection initialProducts={dogProducts} />
+          {/* 2. Products Section with NEED & FORMAT filters and sort */}
+          <DogProductsSection initialProducts={dogProducts} />
 
-        {/* 3. Dose by weight table */}
-        <DoseByWeightSection />
+          {/* 3. Dose by weight table */}
+          <DoseByWeightSection />
 
-        {/* 4. Chew + oil bundles */}
-        <BundlesSection kits={bundleKits} market={market} />
+          {/* 4. Chew + oil bundles */}
+          <BundlesSection kits={bundleKits} market={market} />
 
-        {/* 5. Cats and Horses Section */}
-        <CatsAndHorsesSection products={[...catProducts, ...horseProducts]} />
+          {/* 5. Cats and Horses Section */}
+          <CatsAndHorsesSection products={[...catProducts, ...horseProducts]} />
 
-        {/* 6. Pet Trust Strip */}
-        <TrustStrip line="pet" />
-      </main>
+          {/* 6. Pet Trust Strip */}
+          <TrustStrip line="pet" />
+        </main>
 
-      {/* Pet Footer */}
-      <Footer line="pet" />
-    </div>
+        {/* Pet Footer */}
+        <Footer line="pet" />
+      </div>
+    </MarketProvider>
   );
 }
