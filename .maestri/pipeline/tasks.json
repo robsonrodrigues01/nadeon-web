@@ -1485,7 +1485,7 @@
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Roteiro2",
     "lease_ate": null,
     "pr": "local",
@@ -1571,7 +1571,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
     "responsavel": "Conta3",
-    "lease_ate": "2026-11-15T03:51:51.185Z",
+    "lease_ate": "2026-11-15T03:52:12.415Z",
     "pr": "local",
     "depende_de": [
       "W3-01"
