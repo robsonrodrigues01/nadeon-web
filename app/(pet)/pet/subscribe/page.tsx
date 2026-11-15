@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import type { Product } from "@/lib/contracts/catalog";
 import { catalogProvider } from "@/lib/providers";
 import { getVisitorMarket } from "@/lib/market/visitor";
+import { MarketProvider } from "@/lib/market/context";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
 import { formatFreeShippingLabel } from "@/lib/market/shipping";
 import {
@@ -92,46 +93,48 @@ export default async function PetSubscribePage() {
   const faqLd = buildFaqJsonLd(faqs);
 
   return (
-    <main id="main-content" className="flex-1 w-full bg-bg text-fg">
-      <JsonLd
-        data={breadcrumbLd as unknown as Record<string, unknown>}
-        id="pet-subscribe-breadcrumb-ld"
-      />
-      <JsonLd
-        data={faqLd as unknown as Record<string, unknown>}
-        id="pet-subscribe-faq-ld"
-      />
+    <MarketProvider initialMarket={market}>
+      <main id="main-content" className="flex-1 w-full bg-bg text-fg">
+        <JsonLd
+          data={breadcrumbLd as unknown as Record<string, unknown>}
+          id="pet-subscribe-breadcrumb-ld"
+        />
+        <JsonLd
+          data={faqLd as unknown as Record<string, unknown>}
+          id="pet-subscribe-faq-ld"
+        />
 
-      {/* 1. Hero with dynamic subscription discount percentage */}
-      <Hero discountPercentage={discountPercentage} />
+        {/* 1. Hero with dynamic subscription discount percentage */}
+        <Hero discountPercentage={discountPercentage} />
 
-      {/* 2. How it works with dynamic discount and contract intervals */}
-      <HowItWorks
-        freeShippingText={freeShippingText}
-        discountPercentage={discountPercentage}
-        frequencyText={frequencyText}
-      />
+        {/* 2. How it works with dynamic discount and contract intervals */}
+        <HowItWorks
+          freeShippingText={freeShippingText}
+          discountPercentage={discountPercentage}
+          frequencyText={frequencyText}
+        />
 
-      {/* 3. The Math / What you save derived from selling plans */}
-      <WhatYouSave products={petProducts} market={market} />
+        {/* 3. The Math / What you save derived from selling plans */}
+        <WhatYouSave products={petProducts} market={market} />
 
-      {/* 4. Full flexibility and interactive subscription card */}
-      <FlexibilitySection
-        products={petProducts}
-        intervalDays={baseIntervalDays}
-      />
+        {/* 4. Full flexibility and interactive subscription card */}
+        <FlexibilitySection
+          products={petProducts}
+          intervalDays={baseIntervalDays}
+        />
 
-      {/* 5. FAQ with dynamic discount percentage */}
-      <SubscriptionFaq faqs={faqs} discountPercentage={discountPercentage} />
+        {/* 5. FAQ with dynamic discount percentage */}
+        <SubscriptionFaq faqs={faqs} discountPercentage={discountPercentage} />
 
-      {/* 6. Bottom CTA with dynamic discount percentage */}
-      <BottomCta
-        freeShippingText={freeShippingText}
-        discountPercentage={discountPercentage}
-      />
+        {/* 6. Bottom CTA with dynamic discount percentage */}
+        <BottomCta
+          freeShippingText={freeShippingText}
+          discountPercentage={discountPercentage}
+        />
 
-      {/* 7. Regulatory notice for animal use / FDA */}
-      <PetRegulatoryNotice />
-    </main>
+        {/* 7. Regulatory notice for animal use / FDA */}
+        <PetRegulatoryNotice />
+      </main>
+    </MarketProvider>
   );
 }

@@ -8,6 +8,7 @@ import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { getVisitorMarket } from "@/lib/market/visitor";
+import { MarketProvider } from "@/lib/market/context";
 import {
   formatFreeShippingThreshold,
   formatFreeShippingLabel,
@@ -159,7 +160,7 @@ export default async function ShippingReturnsPage() {
   ];
 
   return (
-    <>
+    <MarketProvider initialMarket={market}>
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
@@ -783,6 +784,6 @@ export default async function ShippingReturnsPage() {
       <TrustStrip line="human" />
       <Newsletter variant="human" />
       <Footer line="human" />
-    </>
+    </MarketProvider>
   );
 }
