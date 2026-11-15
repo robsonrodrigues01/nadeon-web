@@ -1504,7 +1504,7 @@
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Sonar2",
     "lease_ate": null,
     "pr": "local",
@@ -1567,9 +1567,9 @@
     "onda": 2,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
-    "responsavel": "Conta3",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Conta4",
+    "lease_ate": "2026-11-15T04:03:32.126Z",
     "pr": "local",
     "depende_de": [
       "W3-01"
@@ -1582,5 +1582,25 @@
     "id": "W2-43",
     "titulo": "Conta: Reorder no dashboard, Edit address, Start a return, oferta de retenção do cancelamento e ações do /track (catálogo 5.4)",
     "branch": "agy/W2-43"
+  },
+  {
+    "id": "W3-04",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Corrigir links quebrados e metadata ausente apontados pela W3-03",
+    "depende_de": [
+      "W3-03"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Mapa2",
+    "lease_ate": "2026-11-15T04:03:53.613Z",
+    "branch": "agy/W3-04",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "node scripts/check-routes.mjs sem achados",
+      "revisão APROVADO"
+    ]
   }
 ]
