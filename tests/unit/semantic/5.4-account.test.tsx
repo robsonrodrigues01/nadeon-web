@@ -161,6 +161,7 @@ describe("5.4 Semantic Elements: Conta", () => {
             nextBillingDate: "2026-12-01T00:00:00.000Z",
             intervalDays: 30,
             estimatedTotal: { amount: 50, currencyCode: "USD" },
+            createdAt: "2026-11-01T00:00:00.000Z",
             lines: [
               {
                 id: "line_test",
