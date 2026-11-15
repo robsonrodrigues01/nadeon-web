@@ -1464,7 +1464,7 @@
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Inventário2",
     "lease_ate": null,
     "pr": "local",
@@ -1519,16 +1519,15 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-03",
-    "revisor": "Sonda3"
+    "branch": "agy/W3-03"
   },
   {
     "onda": 2,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Sacola3",
-    "lease_ate": "2026-11-15T03:58:15.422Z",
+    "lease_ate": null,
     "pr": "local",
     "depende_de": [
       "W3-01"
@@ -1540,7 +1539,8 @@
     ],
     "id": "W2-41",
     "titulo": "/cart: barra de frete grátis e estado vazio com best sellers e atalhos de categoria (catálogo 5.3)",
-    "branch": "agy/W2-41"
+    "branch": "agy/W2-41",
+    "revisor": "Carrinho4"
   },
   {
     "onda": 2,
@@ -1581,7 +1581,6 @@
     ],
     "id": "W2-43",
     "titulo": "Conta: Reorder no dashboard, Edit address, Start a return, oferta de retenção do cancelamento e ações do /track (catálogo 5.4)",
-    "branch": "agy/W2-43",
-    "revisor": "Balcão2"
+    "branch": "agy/W2-43"
   }
 ]
