@@ -1651,11 +1651,11 @@
       "W3-11",
       "W3-12"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma3",
-    "lease_ate": "2026-11-15T05:00:05.190Z",
+    "lease_ate": "2026-11-15T05:03:06.935Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "VISUAL.md com achados por rota e largura",
       "nenhuma alteração de código"

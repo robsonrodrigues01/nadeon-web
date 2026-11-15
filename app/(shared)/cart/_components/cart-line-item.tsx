@@ -165,7 +165,7 @@ export function CartLineItem({
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-4 sm:w-auto sm:flex-col sm:items-end sm:gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 sm:w-auto sm:flex-col sm:items-end sm:gap-2">
           <div className="text-right">
             {showListPrice && (
               <div className="text-xs text-fg-muted line-through">
