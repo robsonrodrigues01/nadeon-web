@@ -1466,7 +1466,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "para_revisao",
     "responsavel": "Inventário2",
-    "lease_ate": "2026-11-15T03:38:43.939Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
@@ -1479,7 +1479,8 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-01"
+    "branch": "agy/W3-01",
+    "revisor": "Crivo3"
   },
   {
     "papel": "QA",
@@ -1499,14 +1500,13 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-02",
-    "revisor": "Ensaio2"
+    "branch": "agy/W3-02"
   },
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "backlog",
-    "responsavel": null,
+    "status": "para_revisao",
+    "responsavel": "Sonar2",
     "lease_ate": null,
     "pr": "local",
     "criterios": [
@@ -1521,16 +1521,16 @@
       "W2-36"
     ],
     "branch": "agy/W3-03",
-    "nota": "MUDANÇAS do Sonda2: varrer componentes importados, não só page.tsx"
+    "nota": "aguarda vaga de revisor"
   },
   {
     "onda": 2,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Sacola2",
-    "lease_ate": "2026-11-15T03:46:45.878Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "depende_de": [
       "W3-01"
     ],
@@ -1541,7 +1541,8 @@
     ],
     "id": "W2-41",
     "titulo": "/cart: barra de frete grátis e estado vazio com best sellers e atalhos de categoria (catálogo 5.3)",
-    "branch": "agy/W2-41"
+    "branch": "agy/W2-41",
+    "revisor": "Carrinho3"
   },
   {
     "onda": 2,
@@ -1569,9 +1570,9 @@
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
-    "responsavel": "Conta2",
-    "lease_ate": "2026-11-15T03:46:16.768Z",
-    "pr": null,
+    "responsavel": "Conta3",
+    "lease_ate": "2026-11-15T03:51:51.185Z",
+    "pr": "local",
     "depende_de": [
       "W3-01"
     ],
