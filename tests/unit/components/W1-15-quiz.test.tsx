@@ -8,6 +8,7 @@ import {
   cleanup,
   waitFor,
 } from "@testing-library/react";
+import { getAllProducts, getAllKits } from "@/data/products";
 import {
   QuizStart,
   QuizQuestionComponent,
@@ -293,6 +294,11 @@ describe("Quiz Component Suite (W1-15)", () => {
             "picky-eater": "no",
           }}
           recommendation={recommendation}
+          // W2-38: preço e plano de assinatura vêm do catálogo.
+          productsMap={Object.fromEntries(
+            getAllProducts().map((p) => [p.slug, p])
+          )}
+          kitsMap={Object.fromEntries(getAllKits().map((k) => [k.slug, k]))}
           onRetake={onRetake}
           onEditAnswers={onEditAnswers}
         />
