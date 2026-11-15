@@ -1250,7 +1250,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Forquilha",
     "lease_ate": null,
     "branch": "agy/W2-30",
@@ -1272,7 +1272,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Brida",
-    "lease_ate": "2026-11-15T00:21:09.511Z",
+    "lease_ate": "2026-11-15T00:22:05.239Z",
     "branch": "agy/W2-31",
     "pr": "local",
     "criterios": [
@@ -1334,7 +1334,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Tranca",
-    "lease_ate": "2026-11-15T00:20:44.347Z",
+    "lease_ate": "2026-11-15T00:21:31.122Z",
     "branch": "agy/W2-34",
     "pr": null,
     "criterios": [
