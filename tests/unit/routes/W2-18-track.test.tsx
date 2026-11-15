@@ -66,7 +66,7 @@ describe("W2-18: /track route", () => {
       const data = new FormData();
       data.set("orderNumber", "NL-100234");
       data.set("email", "guest@example.com");
-      await expect(lookupOrder(data)).resolves.toBeUndefined();
+      await expect(lookupOrder(data)).resolves.toBeNull();
     });
   });
 
