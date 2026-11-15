@@ -1,7 +1,13 @@
 // @vitest-environment jsdom
 import React from "react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, screen, fireEvent, cleanup, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  within,
+} from "@testing-library/react";
 
 import { CartView } from "@/app/(shared)/cart/_components/cart-view";
 import { CartEmpty } from "@/app/(shared)/cart/_components/cart-empty";
@@ -128,10 +134,18 @@ describe("5.3 Semantic Elements: Carrinho", () => {
       expect(checkoutBtn).toBeDefined();
 
       // Express checkout buttons
-      expect(screen.getByRole("button", { name: /pay with apple pay/i })).toBeDefined();
-      expect(screen.getByRole("button", { name: /pay with google pay/i })).toBeDefined();
-      expect(screen.getByRole("button", { name: /pay with paypal/i })).toBeDefined();
-      expect(screen.getByRole("button", { name: /pay with shop pay/i })).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: /pay with apple pay/i })
+      ).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: /pay with google pay/i })
+      ).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: /pay with paypal/i })
+      ).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: /pay with shop pay/i })
+      ).toBeDefined();
     });
   });
 
@@ -141,19 +155,14 @@ describe("5.3 Semantic Elements: Carrinho", () => {
       const rawProducts = await mockCatalogProvider.getProducts();
       const catalog = rawProducts.map(toCartCatalogProduct);
 
-      render(
-        <CartView
-          initialCart={mockCart}
-          catalog={catalog}
-          cartId={mockCart.id}
-          checkoutAction={vi.fn()}
-        />
-      );
+      render(<CartView catalog={catalog} />);
 
       await screen.findByRole("list", { name: "Items in your cart" });
 
       // Continue shopping
-      const continueLink = screen.getByRole("link", { name: /continue shopping/i });
+      const continueLink = screen.getByRole("link", {
+        name: /continue shopping/i,
+      });
       expect(continueLink).toBeDefined();
 
       // Item actions: Change, Switch to subscription, Remove
@@ -173,25 +182,39 @@ describe("5.3 Semantic Elements: Carrinho", () => {
       expect(screen.getByRole("button", { name: "Apply" })).toBeDefined();
 
       // Checkout securely
-      expect(screen.getByRole("button", { name: "Checkout securely" })).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: "Checkout securely" })
+      ).toBeDefined();
 
       // Frequently bought together
-      expect(screen.getByRole("button", { name: "Add all 3 to cart" })).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: "Add all 3 to cart" })
+      ).toBeDefined();
     });
 
     it("renders empty cart state with quiz link", () => {
-      render(<CartEmpty onSelectPreset={vi.fn()} />);
+      render(<CartEmpty />);
 
-      expect(screen.getByRole("heading", { level: 1, name: "Your cart is empty" })).toBeDefined();
+      expect(
+        screen.getByRole("heading", { level: 1, name: "Your cart is empty" })
+      ).toBeDefined();
       expect(screen.getByRole("link", { name: "Take the quiz" })).toBeDefined();
     });
 
-    it.todo("Cart page `/cart`: Free shipping progress bar ('Free shipping at $75') not implemented on /cart page (only present in cart drawer)");
-    it.todo("Cart page `/cart`: Express payment buttons (Shop Pay, Apple Pay, Google Pay, PayPal) not implemented on /cart page (only present in cart drawer)");
-    it.todo("Cart empty `/cart`: Best sellers and category shortcuts not implemented in empty state (only Take the quiz link)");
+    it.todo(
+      "Cart page `/cart`: Free shipping progress bar ('Free shipping at $75') not implemented on /cart page (only present in cart drawer)"
+    );
+    it.todo(
+      "Cart page `/cart`: Express payment buttons (Shop Pay, Apple Pay, Google Pay, PayPal) not implemented on /cart page (only present in cart drawer)"
+    );
+    it.todo(
+      "Cart empty `/cart`: Best sellers and category shortcuts not implemented in empty state (only Take the quiz link)"
+    );
   });
 
   describe("Checkout opening soon `/checkout-soon`", () => {
-    it.todo("Checkout opening soon `/checkout-soon`: placeholder route not implemented in Onda 2");
+    it.todo(
+      "Checkout opening soon `/checkout-soon`: placeholder route not implemented in Onda 2"
+    );
   });
 });

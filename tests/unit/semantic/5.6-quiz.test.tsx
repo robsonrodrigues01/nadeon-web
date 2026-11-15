@@ -1,7 +1,13 @@
 // @vitest-environment jsdom
 import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent, cleanup, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  within,
+} from "@testing-library/react";
 import PetQuizPage from "@/app/(pet)/pet/quiz/page";
 import { HumanQuizClient } from "@/app/(human)/human/quiz/_components/human-quiz-client";
 import { QuizAnalyzing } from "@/components/commerce/quiz";
@@ -61,9 +67,7 @@ describe("5.6 Semantic Elements: Quiz", () => {
       expect(
         screen.getByRole("button", { name: /start the quiz/i })
       ).toBeDefined();
-      expect(
-        screen.getByRole("link", { name: /exit quiz/i })
-      ).toBeDefined();
+      expect(screen.getByRole("link", { name: /exit quiz/i })).toBeDefined();
     });
   });
 
@@ -124,7 +128,9 @@ describe("5.6 Semantic Elements: Quiz", () => {
       const nameInput = screen.getByLabelText(/name/i, { selector: "input" });
       expect(nameInput.tagName).toBe("INPUT");
 
-      const weightInput = screen.getByLabelText(/weigh/i, { selector: "input" });
+      const weightInput = screen.getByLabelText(/weigh/i, {
+        selector: "input",
+      });
       expect(weightInput.tagName).toBe("INPUT");
 
       // Age buttons (Puppy, Adult, Senior)
@@ -164,7 +170,9 @@ describe("5.6 Semantic Elements: Quiz", () => {
       expect(screen.getByRole("status")).toBeDefined();
       expect(screen.getAllByText("Done").length).toBeGreaterThan(0);
       expect(screen.getAllByText("In progress").length).toBeGreaterThan(0);
-      expect(screen.getByRole("button", { name: /view results now/i })).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: /view results now/i })
+      ).toBeDefined();
     });
   });
 
@@ -178,26 +186,38 @@ describe("5.6 Semantic Elements: Quiz", () => {
 
       // Question 1
       fireEvent.click(screen.getByText("35 to 44"));
-      fireEvent.click(screen.getByRole("button", { name: /continue to next step/i }));
+      fireEvent.click(
+        screen.getByRole("button", { name: /continue to next step/i })
+      );
 
       // Question 2
       fireEvent.click(screen.getByText("Daily energy"));
-      fireEvent.click(screen.getByRole("button", { name: /continue to next step/i }));
+      fireEvent.click(
+        screen.getByRole("button", { name: /continue to next step/i })
+      );
 
       // Question 3
       fireEvent.click(screen.getByText("Sometimes"));
-      fireEvent.click(screen.getByRole("button", { name: /continue to next step/i }));
+      fireEvent.click(
+        screen.getByRole("button", { name: /continue to next step/i })
+      );
 
       // Question 4
       fireEvent.click(screen.getByText("Capsules"));
-      fireEvent.click(screen.getByRole("button", { name: /continue to next step/i }));
+      fireEvent.click(
+        screen.getByRole("button", { name: /continue to next step/i })
+      );
 
       // Question 5
       fireEvent.click(screen.getByText("No, I am new to NMN"));
-      fireEvent.click(screen.getByRole("button", { name: /continue to next step/i }));
+      fireEvent.click(
+        screen.getByRole("button", { name: /continue to next step/i })
+      );
 
       // Fast forward past analyzing
-      fireEvent.click(screen.getByRole("button", { name: /view results now/i }));
+      fireEvent.click(
+        screen.getByRole("button", { name: /view results now/i })
+      );
 
       // Recommendation result CTA and retake action
       expect(
@@ -226,25 +246,41 @@ describe("5.6 Semantic Elements: Quiz", () => {
         target: { value: "Buddy" },
       });
       fireEvent.click(screen.getByRole("button", { name: /^Senior/ }));
-      fireEvent.click(screen.getByRole("button", { name: "Continue to next step" }));
+      fireEvent.click(
+        screen.getByRole("button", { name: "Continue to next step" })
+      );
 
       // Step 2
       const dogQuiz = getQuiz("dog")!;
       const concern = dogQuiz.questions[1].options[0].label;
-      fireEvent.click(screen.getByRole("button", { name: new RegExp(`^${concern}`) }));
-      fireEvent.click(screen.getByRole("button", { name: "Continue to next step" }));
+      fireEvent.click(
+        screen.getByRole("button", { name: new RegExp(`^${concern}`) })
+      );
+      fireEvent.click(
+        screen.getByRole("button", { name: "Continue to next step" })
+      );
 
       // Step 3
       const picky = dogQuiz.questions[2].options[0].label;
-      fireEvent.click(screen.getByRole("button", { name: new RegExp(`^${picky}`) }));
-      fireEvent.click(screen.getByRole("button", { name: "Continue to next step" }));
+      fireEvent.click(
+        screen.getByRole("button", { name: new RegExp(`^${picky}`) })
+      );
+      fireEvent.click(
+        screen.getByRole("button", { name: "Continue to next step" })
+      );
 
       // Pet Result Screen
-      const result = await screen.findByTestId("quiz-result-pet", {}, { timeout: 5000 });
+      const result = await screen.findByTestId(
+        "quiz-result-pet",
+        {},
+        { timeout: 5000 }
+      );
       expect(result).toBeTruthy();
 
       expect(screen.getByRole("button", { name: /one-time/i })).toBeDefined();
-      expect(screen.getByRole("button", { name: /add plan to cart/i })).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: /add plan to cart/i })
+      ).toBeDefined();
       expect(
         screen.getByLabelText("Email address", { selector: "input" })
       ).toBeDefined();
