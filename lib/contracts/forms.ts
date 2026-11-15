@@ -6,6 +6,7 @@ export const ContactInputSchema = z.object({
   topic: z.string().min(1),
   message: z.string().min(1),
   orderNumber: z.string().optional(),
+  copy: z.boolean().optional(),
 });
 export type ContactInput = z.infer<typeof ContactInputSchema>;
 
