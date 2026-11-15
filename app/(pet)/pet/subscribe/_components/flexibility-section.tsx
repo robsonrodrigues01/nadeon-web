@@ -2,33 +2,66 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import type { Product } from "@/lib/contracts/catalog";
 
 interface FlexibilitySectionProps {
-  intervalDays?: number;
+  products?: Product[];
+  intervalDays?: number | null;
   pauseMonths?: number;
 }
 
+const PRODUCT_COLORS: Record<string, string> = {
+  "more-good-years": "bg-product-mint",
+  "golden-years": "bg-product-amber",
+  "good-days": "bg-product-coral",
+  "high-jump": "bg-product-sky",
+  "still-sharp": "bg-product-sky",
+  "shine-on": "bg-product-coral",
+  "second-wind": "bg-product-amber",
+};
+
+function formatDynamicDate(daysOffset: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + daysOffset);
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
 export function FlexibilitySection({
-  intervalDays = 30,
+  products = [],
+  intervalDays = null,
   pauseMonths = 3,
 }: FlexibilitySectionProps) {
+  const stepDays = intervalDays && intervalDays > 0 ? intervalDays : 30;
+  const prod1 = products[0];
+  const prod2 = products[1];
+
+  const [productIndex, setProductIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [deliveryDate, setDeliveryDate] = useState("Dec 3 (example)");
-  const [productName, setProductName] = useState("More Good Years");
-  const [productBadge, setProductBadge] = useState("Senior · NMN 75 mg");
-  const [productColor, setProductColor] = useState("bg-product-mint");
+  const [dayOffset, setDayOffset] = useState(stepDays);
+  const [deliveryDate, setDeliveryDate] = useState(() =>
+    formatDynamicDate(stepDays)
+  );
   const [isCancelled, setIsCancelled] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
+  const currentProduct = productIndex === 1 && prod2 ? prod2 : prod1;
+  const productName = currentProduct?.name ?? "More Good Years";
+  const productBadge = currentProduct?.technicalName || "Senior · NMN 75 mg";
+  const productColor = currentProduct
+    ? (PRODUCT_COLORS[currentProduct.slug] ?? "bg-product-mint")
+    : "bg-product-mint";
+
+  const frequencyCopy = intervalDays
+    ? `every ${intervalDays} days`
+    : "recurring delivery";
+
   const handleSkip = () => {
     setIsCancelled(false);
-    if (deliveryDate === "Dec 3 (example)") {
-      setDeliveryDate("Jan 2 (example)");
-      setMessage("Next delivery skipped to Jan 2 (example).");
-    } else {
-      setDeliveryDate("Feb 1 (example)");
-      setMessage("Next delivery skipped to Feb 1 (example).");
-    }
+    const nextOffset = dayOffset + stepDays;
+    setDayOffset(nextOffset);
+    const nextDate = formatDynamicDate(nextOffset);
+    setDeliveryDate(nextDate);
+    setMessage(`Next delivery skipped to ${nextDate}.`);
   };
 
   const handlePause = () => {
@@ -44,27 +77,25 @@ export function FlexibilitySection({
 
   const handleChangeDate = () => {
     setIsCancelled(false);
-    if (deliveryDate.includes("Dec 3")) {
-      setDeliveryDate("Dec 18 (example)");
-      setMessage("Delivery date moved to Dec 18 (example).");
-    } else {
-      setDeliveryDate("Dec 3 (example)");
-      setMessage("Delivery date updated to Dec 3 (example).");
-    }
+    const newOffset = dayOffset + 14;
+    setDayOffset(newOffset);
+    const nextDate = formatDynamicDate(newOffset);
+    setDeliveryDate(nextDate);
+    setMessage(`Delivery date moved to ${nextDate}.`);
   };
 
   const handleSwap = () => {
     setIsCancelled(false);
-    if (productName === "More Good Years") {
-      setProductName("Golden Years");
-      setProductBadge("Joints · NMN 50 mg");
-      setProductColor("bg-product-amber");
-      setMessage("Swapped product to Golden Years.");
+    if (prod2) {
+      const nextIdx = productIndex === 0 ? 1 : 0;
+      setProductIndex(nextIdx);
+      const nextProd = nextIdx === 1 ? prod2 : prod1;
+      setMessage(`Swapped product to ${nextProd.name}.`);
     } else {
-      setProductName("More Good Years");
-      setProductBadge("Senior · NMN 75 mg");
-      setProductColor("bg-product-mint");
-      setMessage("Swapped product to More Good Years.");
+      // Toggle demo name if only 1 product or mock passed
+      const nextName =
+        productName === "More Good Years" ? "Golden Years" : "More Good Years";
+      setMessage(`Swapped product to ${nextName}.`);
     }
   };
 
@@ -195,7 +226,7 @@ export function FlexibilitySection({
               </h4>
               <p className="text-xs text-fg-muted">{productBadge}</p>
               <p className="mt-1 text-xs text-fg/70">
-                For: Buddy (example) · every {intervalDays} days
+                Active subscription · {frequencyCopy}
               </p>
             </div>
           </div>

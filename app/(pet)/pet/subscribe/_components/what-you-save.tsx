@@ -2,6 +2,7 @@ import React from "react";
 import type { Product } from "@/lib/contracts/catalog";
 import type { Market } from "@/lib/market/types";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import { getProductSubscriptionDiscount } from "./plan-utils";
 
 interface WhatYouSaveProps {
   products: Product[];
@@ -13,78 +14,96 @@ interface ItemSaving {
   name: string;
   subtitle: string;
   colorClass: string;
-  product?: Product;
-  discountPercentage: number;
+  product: Product;
+  discountPercentage: number | null;
   intervalDays: number;
   oneTimeAmount: number;
   subscribeAmount: number;
   yearlySavedAmount: number;
 }
 
+const PRODUCT_COLORS: Record<string, string> = {
+  "more-good-years": "bg-product-mint",
+  "golden-years": "bg-product-amber",
+  "good-days": "bg-product-coral",
+  "high-jump": "bg-product-sky",
+  "still-sharp": "bg-product-sky",
+  "shine-on": "bg-product-coral",
+  "second-wind": "bg-product-amber",
+  "more-good-years-oil": "bg-product-mint",
+  "golden-years-oil": "bg-product-amber",
+  "still-sharp-oil": "bg-product-sky",
+  "shine-on-oil": "bg-product-coral",
+  "purr-mode": "bg-product-sky",
+  "long-stride": "bg-product-amber",
+};
+
 export function WhatYouSave({ products, market }: WhatYouSaveProps) {
-  // Desired items according to the design board
-  const targetItems = [
-    {
-      slug: "more-good-years",
-      fallbackName: "More Good Years",
-      subtitle: "Senior · NMN 75 mg",
-      colorClass: "bg-product-mint",
-      fallbackPrice: 44,
-    },
-    {
-      slug: "golden-years",
-      fallbackName: "Golden Years",
-      subtitle: "Joints · NMN 50 mg",
-      colorClass: "bg-product-amber",
-      fallbackPrice: 44,
-    },
-    {
-      slug: "good-days",
-      fallbackName: "Good Days",
-      subtitle: "Treats · NMN 30 mg",
-      colorClass: "bg-product-coral",
-      fallbackPrice: 29,
-    },
-    {
-      slug: "high-jump",
-      fallbackName: "High Jump",
-      subtitle: "Cat joint drops",
-      colorClass: "bg-product-sky",
-      fallbackPrice: 32,
-    },
-  ];
+  const savings: ItemSaving[] = products.flatMap((p) => {
+    const singleVariant = p.variants.find((v) => v.jars === 1) ?? p.variants[0];
+    if (!singleVariant) return [];
 
-  const savings: ItemSaving[] = targetItems.map((target) => {
-    const p = products.find((prod) => prod.slug === target.slug);
-    const oneTime = p?.variants[0]?.price.amount ?? target.fallbackPrice;
+    const plans = p.sellingPlans ?? [];
+    if (plans.length === 0) return [];
 
-    // Derive discount percentage and interval from product's sellingPlans
-    const primaryPlan = p?.sellingPlans?.[0];
-    const discount =
-      typeof primaryPlan?.discountPercentage === "number"
-        ? primaryPlan.discountPercentage
-        : 15;
-    const intervalDays = primaryPlan?.intervalDays ?? 30;
-
-    const subscribe = oneTime * (1 - discount / 100);
-    const deliveriesPerYear = Math.round(365 / intervalDays);
+    const primaryPlan = plans.find((sp) => sp.intervalDays === 30) ?? plans[0];
+    const discount = getProductSubscriptionDiscount(p);
+    const intervalDays = primaryPlan.intervalDays;
+    const oneTime = singleVariant.price.amount;
+    const subscribe =
+      discount !== null && discount > 0
+        ? oneTime * (1 - discount / 100)
+        : oneTime;
+    const deliveriesPerYear =
+      intervalDays > 0 ? Math.round(365 / intervalDays) : 12;
     const yearlySaved = (oneTime - subscribe) * deliveriesPerYear;
 
-    return {
-      slug: target.slug,
-      name: p?.name ?? target.fallbackName,
-      subtitle: target.subtitle,
-      colorClass: target.colorClass,
-      product: p,
-      discountPercentage: discount,
-      intervalDays,
-      oneTimeAmount: oneTime,
-      subscribeAmount: subscribe,
-      yearlySavedAmount: yearlySaved,
-    };
+    return [
+      {
+        slug: p.slug,
+        name: p.name,
+        subtitle: p.technicalName || "",
+        colorClass: PRODUCT_COLORS[p.slug] ?? "bg-accent",
+        product: p,
+        discountPercentage: discount,
+        intervalDays,
+        oneTimeAmount: oneTime,
+        subscribeAmount: subscribe,
+        yearlySavedAmount: yearlySaved,
+      },
+    ];
   });
 
-  const baseInterval = savings[0]?.intervalDays ?? 30;
+  if (savings.length === 0) {
+    return (
+      <section
+        aria-labelledby="what-you-save-heading"
+        className="border-b border-border bg-bg py-16 sm:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12 text-center">
+          <div className="text-left">
+            <span className="text-xs font-bold uppercase tracking-widest text-accent">
+              THE MATH
+            </span>
+            <h2
+              id="what-you-save-heading"
+              className="mt-3 font-sans text-3xl font-extrabold uppercase tracking-tight text-fg sm:text-4xl lg:text-5xl"
+            >
+              What you save
+            </h2>
+          </div>
+          <div
+            data-testid="what-you-save-empty"
+            className="mt-10 rounded-2xl border border-border bg-bg-elevated p-8 text-center text-fg-muted"
+          >
+            No subscription plans available at this time.
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const baseInterval = savings[0]?.intervalDays;
 
   return (
     <section
@@ -94,7 +113,7 @@ export function WhatYouSave({ products, market }: WhatYouSaveProps) {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="text-left">
           <span className="text-xs font-bold uppercase tracking-widest text-accent">
-            THE MATH (EXAMPLE PRICES)
+            THE MATH
           </span>
           <h2
             id="what-you-save-heading"
@@ -154,7 +173,9 @@ export function WhatYouSave({ products, market }: WhatYouSaveProps) {
                     <h3 className="font-sans text-base font-extrabold uppercase tracking-tight text-fg sm:text-lg">
                       {item.name}
                     </h3>
-                    <p className="text-xs text-fg-muted">{item.subtitle}</p>
+                    {item.subtitle ? (
+                      <p className="text-xs text-fg-muted">{item.subtitle}</p>
+                    ) : null}
                   </div>
                 </div>
 
@@ -195,8 +216,10 @@ export function WhatYouSave({ products, market }: WhatYouSaveProps) {
         </div>
 
         <p className="mt-6 text-left text-xs text-fg-muted">
-          Example prices. Yearly savings assume delivery every {baseInterval}{" "}
-          days. Final prices are set at launch.
+          {baseInterval
+            ? `Yearly savings assume delivery every ${baseInterval} days. `
+            : ""}
+          Final prices are set at launch.
         </p>
       </div>
     </section>

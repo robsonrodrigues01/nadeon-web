@@ -2,15 +2,27 @@ import React from "react";
 
 interface HowItWorksProps {
   freeShippingText?: string | null;
-  discountPercentage?: number;
-  frequencyText?: string;
+  discountPercentage?: number | null;
+  frequencyText?: string | null;
 }
 
 export function HowItWorks({
-  freeShippingText,
-  discountPercentage = 15,
-  frequencyText = "30, 60 or 90 days",
+  freeShippingText = null,
+  discountPercentage = null,
+  frequencyText = null,
 }: HowItWorksProps) {
+  const frequencyDesc = frequencyText
+    ? `Every ${frequencyText}. Change it anytime.`
+    : "On your preferred schedule. Change it anytime.";
+
+  const saveTitle = discountPercentage
+    ? `Save ${discountPercentage}%`
+    : "Save on every delivery";
+
+  const shippingClause = freeShippingText
+    ? `, plus ${freeShippingText.toLowerCase()}`
+    : "";
+
   const steps = [
     {
       step: 1,
@@ -20,12 +32,12 @@ export function HowItWorks({
     {
       step: 2,
       title: "Set the rhythm",
-      description: `Every ${frequencyText}. Change it anytime.`,
+      description: frequencyDesc,
     },
     {
       step: 3,
-      title: `Save ${discountPercentage}%`,
-      description: `On every delivery, plus ${freeShippingText ? freeShippingText.toLowerCase() : "free shipping over $49"}.`,
+      title: saveTitle,
+      description: `On every delivery${shippingClause}.`,
     },
   ];
 

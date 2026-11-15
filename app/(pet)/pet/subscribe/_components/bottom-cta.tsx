@@ -3,13 +3,19 @@ import Link from "next/link";
 
 interface BottomCtaProps {
   freeShippingText?: string | null;
-  discountPercentage?: number;
+  discountPercentage?: number | null;
 }
 
 export function BottomCta({
-  freeShippingText,
-  discountPercentage = 15,
+  freeShippingText = null,
+  discountPercentage = null,
 }: BottomCtaProps) {
+  const badgeText = discountPercentage
+    ? `SAVE ${discountPercentage}% ON EVERY ORDER`
+    : "SAVE ON EVERY ORDER";
+
+  const shippingPrefix = freeShippingText ? `${freeShippingText} · ` : "";
+
   return (
     <section
       aria-labelledby="bottom-cta-heading"
@@ -62,7 +68,7 @@ export function BottomCta({
 
       <div className="relative z-10 mx-auto max-w-4xl px-5 sm:px-8">
         <span className="inline-block rounded-full bg-fg px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-bg">
-          SAVE {discountPercentage}% ON EVERY ORDER
+          {badgeText}
         </span>
         <h2
           id="bottom-cta-heading"
@@ -71,10 +77,7 @@ export function BottomCta({
           Set it once. Save every time.
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-base text-fg sm:text-lg">
-          {freeShippingText
-            ? `${freeShippingText} · `
-            : "Free shipping over $49 · "}
-          Skip, pause or cancel anytime
+          {shippingPrefix}Skip, pause or cancel anytime
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">

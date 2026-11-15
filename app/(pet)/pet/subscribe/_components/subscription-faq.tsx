@@ -9,8 +9,16 @@ export interface SubscriptionFaqItem {
 }
 
 export function buildSubscriptionFaqs(
-  discountPercentage = 15
+  discountPercentage: number | null = null
 ): SubscriptionFaqItem[] {
+  const stackOffersQuestion = discountPercentage
+    ? `Does the ${discountPercentage}% stack with other offers?`
+    : "Does the subscription discount stack with other offers?";
+
+  const stackOffersAnswer = discountPercentage
+    ? `The ${discountPercentage}% discount applies automatically to every recurring delivery. Promotional coupon codes apply to initial one-time checkout.`
+    : "The subscription discount applies automatically to every recurring delivery. Promotional coupon codes apply to initial one-time checkout.";
+
   return [
     {
       question: "When will I be charged?",
@@ -23,8 +31,8 @@ export function buildSubscriptionFaqs(
         "Yes. You can subscribe to multiple products across dogs, cats and horses, and manage them all in one account.",
     },
     {
-      question: `Does the ${discountPercentage}% stack with other offers?`,
-      answer: `The ${discountPercentage}% discount applies automatically to every recurring delivery. Promotional coupon codes apply to initial one-time checkout.`,
+      question: stackOffersQuestion,
+      answer: stackOffersAnswer,
     },
     {
       question: "What if my dog does not like the chews?",
@@ -40,14 +48,16 @@ export function buildSubscriptionFaqs(
 }
 
 interface SubscriptionFaqProps {
-  discountPercentage?: number;
+  faqs?: SubscriptionFaqItem[];
+  discountPercentage?: number | null;
 }
 
 export function SubscriptionFaq({
-  discountPercentage = 15,
-}: SubscriptionFaqProps) {
+  faqs,
+  discountPercentage = null,
+}: SubscriptionFaqProps = {}) {
   const [openIndex, setOpenIndex] = useState<number | null>(0); // First question open by default as in design
-  const faqs = buildSubscriptionFaqs(discountPercentage);
+  const items = faqs ?? buildSubscriptionFaqs(discountPercentage);
 
   const toggle = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
@@ -82,7 +92,7 @@ export function SubscriptionFaq({
 
         {/* Right Column: Accordion */}
         <div className="flex-1 divide-y divide-border">
-          {faqs.map((item, index) => {
+          {items.map((item, index) => {
             const isOpen = openIndex === index;
             const answerId = `faq-answer-${index}`;
             const questionId = `faq-question-${index}`;
@@ -99,21 +109,18 @@ export function SubscriptionFaq({
                 >
                   <span>{item.question}</span>
                   <span
-                    className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-base font-bold transition ${
-                      isOpen ? "bg-fg text-bg" : "border border-border text-fg"
-                    }`}
                     aria-hidden="true"
+                    className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-border text-lg font-bold"
                   >
                     {isOpen ? "−" : "+"}
                   </span>
                 </button>
-
                 {isOpen && (
                   <div
                     id={answerId}
                     role="region"
                     aria-labelledby={questionId}
-                    className="mt-3 pr-10 text-sm leading-relaxed text-fg/80 sm:text-base"
+                    className="mt-2 pb-2 pr-12 text-sm leading-relaxed text-fg-muted sm:text-base"
                   >
                     <p>{item.answer}</p>
                   </div>

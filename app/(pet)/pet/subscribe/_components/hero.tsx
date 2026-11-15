@@ -2,10 +2,17 @@ import React from "react";
 import Link from "next/link";
 
 interface HeroProps {
-  discountPercentage?: number;
+  discountPercentage?: number | null;
 }
 
-export function Hero({ discountPercentage = 15 }: HeroProps) {
+export function Hero({ discountPercentage = null }: HeroProps) {
+  const badgeText = discountPercentage
+    ? `SUBSCRIBE & SAVE ${discountPercentage}%`
+    : "SUBSCRIBE & SAVE";
+  const descText = discountPercentage
+    ? `Their daily chew, delivered on your schedule. Save ${discountPercentage}% on every order. Skip, pause or cancel anytime, no calls needed.`
+    : "Their daily chew, delivered on your schedule. Save on every order. Skip, pause or cancel anytime, no calls needed.";
+
   return (
     <section
       aria-labelledby="hero-heading"
@@ -60,7 +67,7 @@ export function Hero({ discountPercentage = 15 }: HeroProps) {
         {/* Left Column: Headline and CTAs */}
         <div className="relative z-10 max-w-2xl text-left">
           <span className="inline-block rounded-full bg-fg px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-bg">
-            SUBSCRIBE &amp; SAVE {discountPercentage}%
+            {badgeText}
           </span>
           <h1
             id="hero-heading"
@@ -69,9 +76,7 @@ export function Hero({ discountPercentage = 15 }: HeroProps) {
             Never run out of good days.
           </h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-fg sm:text-lg">
-            Their daily chew, delivered on your schedule. Save{" "}
-            {discountPercentage}% on every order. Skip, pause or cancel anytime,
-            no calls needed.
+            {descText}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">

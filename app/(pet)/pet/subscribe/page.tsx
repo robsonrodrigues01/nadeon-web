@@ -22,54 +22,43 @@ import {
 } from "./_components/subscription-faq";
 import { BottomCta } from "./_components/bottom-cta";
 import { PetRegulatoryNotice } from "../_components/pet-regulatory-notice";
+import {
+  getSubscriptionDiscountPercentage,
+  getSubscriptionIntervals,
+  formatIntervalsText,
+  getUniqueSellingPlans,
+  getProductSubscriptionDiscount,
+} from "./_components/plan-utils";
 
-export function getSubscriptionDiscount(products: Product[]): number {
-  for (const product of products) {
-    for (const plan of product.sellingPlans ?? []) {
-      if (
-        typeof plan.discountPercentage === "number" &&
-        plan.discountPercentage > 0
-      ) {
-        return plan.discountPercentage;
-      }
-    }
-  }
-  return 15;
-}
+export {
+  getSubscriptionDiscountPercentage,
+  getSubscriptionIntervals,
+  formatIntervalsText,
+  getUniqueSellingPlans,
+  getProductSubscriptionDiscount,
+};
 
-export function getSubscriptionIntervals(products: Product[]): number[] {
-  const intervals = new Set<number>();
-  for (const product of products) {
-    for (const plan of product.sellingPlans ?? []) {
-      if (typeof plan.intervalDays === "number" && plan.intervalDays > 0) {
-        intervals.add(plan.intervalDays);
-      }
-    }
-  }
-  const sorted = Array.from(intervals).sort((a, b) => a - b);
-  return sorted.length > 0 ? sorted : [30, 60, 90];
-}
-
-export function formatIntervalsText(intervals: number[]): string {
-  if (intervals.length === 0) return "30, 60 or 90 days";
-  if (intervals.length === 1) return `${intervals[0]} days`;
-  const leading = intervals.slice(0, -1).join(", ");
-  const last = intervals[intervals.length - 1];
-  return `${leading} or ${last} days`;
-}
+export const getSubscriptionDiscount = getSubscriptionDiscountPercentage;
 
 export async function generateMetadata(): Promise<Metadata> {
-  let discountPercentage = 15;
+  let discountPercentage: number | null = null;
   try {
     const products = await catalogProvider.getProducts({ line: "pet" });
-    discountPercentage = getSubscriptionDiscount(products);
+    discountPercentage = getSubscriptionDiscountPercentage(products);
   } catch {
-    discountPercentage = 15;
+    discountPercentage = null;
   }
 
+  const title = discountPercentage
+    ? `Subscribe & Save ${discountPercentage}% - Nadeon Pet`
+    : `Subscribe & Save - Nadeon Pet`;
+  const description = discountPercentage
+    ? `Their daily chew, delivered on your schedule. Save ${discountPercentage}% on every order. Skip, pause or cancel anytime, no calls needed.`
+    : `Their daily chew, delivered on your schedule. Save on every order. Skip, pause or cancel anytime, no calls needed.`;
+
   return buildMetadata({
-    title: `Subscribe & Save ${discountPercentage}% - Nadeon Pet`,
-    description: `Their daily chew, delivered on your schedule. Save ${discountPercentage}% on every order. Skip, pause or cancel anytime, no calls needed.`,
+    title,
+    description,
     pathname: "/pet/subscribe",
   });
 }
@@ -82,11 +71,17 @@ export default async function PetSubscribePage() {
     market = DEFAULT_MARKET;
   }
 
-  const petProducts = await catalogProvider.getProducts({ line: "pet" });
-  const discountPercentage = getSubscriptionDiscount(petProducts);
+  let petProducts: Product[] = [];
+  try {
+    petProducts = await catalogProvider.getProducts({ line: "pet" });
+  } catch {
+    petProducts = [];
+  }
+
+  const discountPercentage = getSubscriptionDiscountPercentage(petProducts);
   const intervals = getSubscriptionIntervals(petProducts);
   const frequencyText = formatIntervalsText(intervals);
-  const baseIntervalDays = intervals[0] ?? 30;
+  const baseIntervalDays = intervals[0] ?? null;
   const freeShippingText = formatFreeShippingLabel(market, "pet");
 
   const breadcrumbLd = buildBreadcrumbJsonLd([
@@ -123,10 +118,13 @@ export default async function PetSubscribePage() {
       <WhatYouSave products={petProducts} market={market} />
 
       {/* 4. Full flexibility and interactive subscription card */}
-      <FlexibilitySection intervalDays={baseIntervalDays} />
+      <FlexibilitySection
+        products={petProducts}
+        intervalDays={baseIntervalDays}
+      />
 
       {/* 5. FAQ with dynamic discount percentage */}
-      <SubscriptionFaq discountPercentage={discountPercentage} />
+      <SubscriptionFaq faqs={faqs} discountPercentage={discountPercentage} />
 
       {/* 6. Bottom CTA with dynamic discount percentage */}
       <BottomCta
