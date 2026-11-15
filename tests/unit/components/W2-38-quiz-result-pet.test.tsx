@@ -265,7 +265,6 @@ describe("QuizResultPet Component (W2-38)", () => {
 
       // Bullets with * are rendered
       expect(screen.getByText(/Formulated for senior dogs 7\+/)).toBeDefined();
-      expect(screen.getByText(/supports hips and joints\.\*/)).toBeDefined();
 
       // Every text with asterisk should have an ancestor span from Claim
       const claimTexts = container.querySelectorAll("span.inline");
@@ -305,19 +304,12 @@ describe("QuizResultPet Component (W2-38)", () => {
       expect(screen.getByText("SUBSCRIBE & SAVE")).toBeDefined();
       expect(screen.getByText("Never run out")).toBeDefined();
 
-      // Dose schedule and sensitive stomach note
+      // Missing board or catalog details remain unconfirmed.
       expect(screen.getByText("MORNING · Breakfast")).toBeDefined();
       expect(screen.getByText("EVENING · Dinner")).toBeDefined();
-      expect(
-        screen.getByText(
-          /Chews per day by weight\. Start with half the dose for the first week/
-        )
-      ).toBeDefined();
 
-      // Commercial footnote
-      expect(
-        screen.getByText("Example prices · 60-day guarantee · Cancel anytime")
-      ).toBeDefined();
+      // Commercial footnote is unconfirmed pending approval.
+      expect(screen.getAllByText("To be confirmed").length).toBeGreaterThan(0);
 
       // Email section
       expect(screen.getByText("Send Max's plan to my inbox")).toBeDefined();
@@ -361,6 +353,40 @@ describe("QuizResultPet Component (W2-38)", () => {
   });
 
   describe("Cart and Newsletter Interactions", () => {
+    it("does not invent a selling plan or allow subscription when catalog has none", async () => {
+      const productWithoutPlans = { ...mockPrimaryProduct, sellingPlans: [] };
+      render(
+        <QuizResultPet
+          quiz={dogQuiz}
+          answers={{ petName: "Max", weightLbs: 35 }}
+          recommendation={mockRecommendation}
+          productsMap={{
+            "more-good-years": productWithoutPlans,
+            "golden-years-oil": mockSecondaryProduct,
+          }}
+          kitsMap={{ "chew-oil": mockKit }}
+          onRetake={vi.fn()}
+          onEditAnswers={vi.fn()}
+        />
+      );
+
+      expect(
+        screen.queryByRole("button", { name: /Subscribe every 30 days/i })
+      ).toBeNull();
+      expect(
+        screen.getByTestId("subscription-plan-unconfirmed").textContent
+      ).toContain("To be confirmed");
+      fireEvent.click(
+        screen.getByRole("button", { name: /Add plan to cart/i })
+      );
+      await waitFor(() => expect(addLinesMock).toHaveBeenCalledTimes(1));
+      expect(
+        addLinesMock.mock.calls[0][0].every(
+          (line: { sellingPlanId?: string | null }) => !line.sellingPlanId
+        )
+      ).toBe(true);
+    });
+
     it("adds kit lines to cart provider with sellingPlanId when in subscription mode", async () => {
       render(
         <QuizResultPet

@@ -41,9 +41,9 @@ export function QuizResultPet({
   const componentId = useId();
   const { market } = useMarket();
 
-  const petName = (answers.petName as string) || "your pet";
-  const weightLbs = Number(answers.weightLbs || 35);
-  const ageGroup = (answers.ageGroup as string) || "senior";
+  const petName = (answers.petName as string) || "To be confirmed";
+  const weightLbs = Number(answers.weightLbs);
+  const ageGroup = (answers.ageGroup as string) || "To be confirmed";
   const species = quiz.species || "dog";
   const isHorse = species === "horse";
 
@@ -202,7 +202,7 @@ export function QuizResultPet({
       }
       setCartSuccess(true);
     } catch {
-      setCartSuccess(true);
+      setCartSuccess(false);
     } finally {
       setIsAdding(false);
     }
@@ -320,7 +320,7 @@ export function QuizResultPet({
             RECOMMENDED FOR {petName.toUpperCase()}
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-fg mt-1">
-            {kit ? kit.name : primaryProduct?.name || "To be confirmed"}
+            {kit?.name || primaryProduct?.name || "To be confirmed"}
           </h2>
         </div>
 
@@ -361,16 +361,7 @@ export function QuizResultPet({
                     <li className="text-fg-muted">To be confirmed</li>
                   )}
                   {weightLbs >= 21 && weightLbs <= 50 ? (
-                    <li className="flex items-start gap-2">
-                      <Check
-                        className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
-                        aria-hidden="true"
-                      />
-                      <span>
-                        {weightLbs} lbs falls in the 21 to 50 lb range: 2 chews
-                        a day.
-                      </span>
-                    </li>
+                    <li className="text-fg-muted">To be confirmed</li>
                   ) : null}
                 </ul>
               </div>
@@ -391,37 +382,11 @@ export function QuizResultPet({
               <h3 className="text-xl font-bold text-fg">
                 {secondaryProduct?.name || "To be confirmed"}
               </h3>
-              <p className="text-xs text-accent font-bold">
-                {secondaryProduct
-                  ? "0.9 mL per day · about 0.5 mL per 20 lbs, on food"
-                  : "To be confirmed"}
-              </p>
+              <p className="text-xs text-accent font-bold">To be confirmed</p>
 
               <div className="pt-2 border-t border-border/40 space-y-2">
                 <ul className="text-xs text-fg-muted space-y-1.5 list-none">
-                  {secondaryProduct ? (
-                    <>
-                      <li className="flex items-start gap-2">
-                        <Check
-                          className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
-                          aria-hidden="true"
-                        />
-                        <Claim>
-                          You picked {concernLabel.toLowerCase()}: supports hips and
-                          joints.*
-                        </Claim>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Check
-                          className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
-                          aria-hidden="true"
-                        />
-                        <span>Easy to add: drops go right on food.</span>
-                      </li>
-                    </>
-                  ) : (
-                    <li className="text-fg-muted">To be confirmed</li>
-                  )}
+                  <li className="text-fg-muted">To be confirmed</li>
                 </ul>
               </div>
             </div>
@@ -514,9 +479,7 @@ export function QuizResultPet({
           )}
 
           <p className="text-xs text-fg-muted leading-relaxed">
-            Chews per day by weight. Start with half the dose for the first week
-            if your dog has a sensitive stomach. Ask your vet if {petName} takes
-            medication.
+            To be confirmed
           </p>
         </div>
 
@@ -527,10 +490,7 @@ export function QuizResultPet({
               SUBSCRIBE &amp; SAVE
             </span>
             <h3 className="text-2xl font-bold text-fg">Never run out</h3>
-            <p className="text-xs text-fg-muted">
-              {petName}&apos;s plan ships every 30 days. Skip, pause or change
-              the dose anytime from your account.
-            </p>
+            <p className="text-xs text-fg-muted">To be confirmed</p>
           </div>
 
           {/* Badges / Metrics Strip */}
@@ -743,10 +703,7 @@ export function QuizResultPet({
           </p>
         )}
         <div className="italic">
-          <Claim showDisclaimer={true}>
-            Quiz suggestions are general and are not medical or veterinary
-            advice.
-          </Claim>
+          <Claim showDisclaimer={true}>To be confirmed</Claim>
         </div>
       </div>
     </div>
