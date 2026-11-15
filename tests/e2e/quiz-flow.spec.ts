@@ -43,9 +43,7 @@ if (!process.env.VITEST) {
       await page.getByRole("button", { name: /continue/i }).click();
 
       // Analyzing screen appears
-      await expect(
-        page.getByRole("status")
-      ).toBeVisible();
+      await expect(page.getByRole("status")).toBeVisible();
 
       // Results screen appears after analysis
       // Verify personalized recommendation elements
@@ -93,17 +91,13 @@ if (!process.env.VITEST) {
       await page.getByRole("button", { name: /continue/i }).click();
 
       // Analyzing screen appears
-      await expect(
-        page.getByRole("status")
-      ).toBeVisible();
+      await expect(page.getByRole("status")).toBeVisible();
 
       // Pet results screen appears
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible({
         timeout: 10000,
       });
-      await expect(
-        page.getByText(/for animal use only/i)
-      ).toBeVisible();
+      await expect(page.getByText(/for animal use only/i)).toBeVisible();
     });
   });
 }
