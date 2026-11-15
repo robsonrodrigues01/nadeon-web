@@ -1,16 +1,12 @@
 import React from "react";
 import type { Metadata } from "next";
-import { catalogProvider, campaignConfig } from "@/lib/providers";
+import { catalogProvider } from "@/lib/providers";
 import {
   buildMetadata,
   buildBreadcrumbJsonLd,
   buildFaqJsonLd,
   JsonLd,
 } from "@/lib/seo";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { TrustStrip } from "@/components/brand/trust-strip";
 
 import { Hero } from "./_components/hero";
 import { DailyRoutine } from "./_components/daily-routine";
@@ -41,10 +37,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HumanPage() {
-  const [products, energyDuoKit, activeCampaign] = await Promise.all([
+  const [products, energyDuoKit] = await Promise.all([
     catalogProvider.getProducts({ line: "human" }),
     catalogProvider.getKit("energy-duo"),
-    campaignConfig.getActiveCampaign(),
   ]);
 
   const kitLines = buildKitLines(energyDuoKit, products);
@@ -58,11 +53,8 @@ export default async function HumanPage() {
     <>
       <JsonLd data={{ ...breadcrumbsLd }} id="breadcrumb-jsonld" />
       <JsonLd data={{ ...faqLd }} id="faq-jsonld" />
-      <AnnouncementBar line="human" campaign={activeCampaign} />
-      <Header variant="human" />
       <main id="main-content" className="flex-1">
         <Hero energyDuoKit={energyDuoKit} kitLines={kitLines} />
-        <TrustStrip line="human" />
         <DailyRoutine products={products} />
         <AgeBands />
         <HowItWorks />
@@ -79,7 +71,6 @@ export default async function HumanPage() {
         <CrossLineBanner />
         <BottomCta />
       </main>
-      <Footer line="human" />
     </>
   );
 }
