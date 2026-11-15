@@ -1459,8 +1459,7 @@
     "depende_de": [
       "W2-39"
     ],
-    "branch": "agy/W2-40",
-    "revisor": "Elo2Rev"
+    "branch": "agy/W2-40"
   },
   {
     "papel": "QA",
@@ -1501,13 +1500,13 @@
       "W2-36"
     ],
     "branch": "agy/W3-02",
-    "nota": "aguarda vaga de revisor"
+    "revisor": "Ensaio2"
   },
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
-    "responsavel": "Sonar",
+    "status": "backlog",
+    "responsavel": null,
     "lease_ate": null,
     "pr": "local",
     "criterios": [
@@ -1522,7 +1521,7 @@
       "W2-36"
     ],
     "branch": "agy/W3-03",
-    "revisor": "Sonda2"
+    "nota": "MUDANÇAS do Sonda2: varrer componentes importados, não só page.tsx"
   },
   {
     "onda": 2,
@@ -1569,9 +1568,9 @@
     "onda": 2,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Conta2",
+    "lease_ate": "2026-11-15T03:42:54.780Z",
     "pr": null,
     "depende_de": [
       "W3-01"
