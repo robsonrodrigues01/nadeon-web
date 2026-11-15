@@ -75,12 +75,19 @@ export const ProfileInputSchema = z.object({
 });
 export type ProfileInput = z.infer<typeof ProfileInputSchema>;
 
+export const OrderLineSchema = z.object({
+  variantId: z.string(),
+  quantity: z.number().int().positive(),
+});
+export type OrderLine = z.infer<typeof OrderLineSchema>;
+
 export const OrderItemSchema = z.object({
   title: z.string(),
   quantity: z.number().int().positive(),
   price: MoneySchema,
   image: z.string().optional(),
   variantTitle: z.string().optional(),
+  variantId: z.string().optional(),
 });
 export type OrderItem = z.infer<typeof OrderItemSchema>;
 
@@ -105,6 +112,10 @@ export const OrderSchema = z.object({
   shippingAddress: AddressSchema.optional(),
   trackingNumber: z.string().optional(),
   trackingUrl: z.string().optional(),
+  email: z.string().optional(),
+  lines: z.array(OrderLineSchema).optional(),
+  url: z.string().optional(),
+  statusUrl: z.string().optional(),
 });
 export type Order = z.infer<typeof OrderSchema>;
 
@@ -122,6 +133,7 @@ export interface AccountProvider {
   getCustomer(): Promise<CustomerProfile | null>;
   getOrders(): Promise<Order[]>;
   getOrder(id: string): Promise<Order | null>;
+  lookupGuestOrder(orderNumber: string, email: string): Promise<Order | null>;
   getAddresses(): Promise<Address[]>;
   updateProfile(input: ProfileInput): Promise<CustomerProfile>;
   getPets(): Promise<Pet[]>;
