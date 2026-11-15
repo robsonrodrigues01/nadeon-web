@@ -7,12 +7,21 @@ import { CartEmpty } from "./cart-empty";
 import { CartLineItem } from "./cart-line-item";
 import { CartSummary } from "./cart-summary";
 import { FrequentlyBought } from "./frequently-bought";
+import { useMarket, formatFreeShippingLabel } from "@/lib/market";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import type { CartCatalogProduct, RunCartAction } from "./types";
 
 // Produtos da seção "Frequently bought together" do design (slugs do catálogo).
 const PAIRS_WITH_CART = ["prime", "full-charge", "daylight"];
 
-export function CartView({ catalog }: { catalog: CartCatalogProduct[] }) {
+export function CartView({
+  catalog,
+  petBestSellers = [],
+}: {
+  catalog: CartCatalogProduct[];
+  petBestSellers?: CartCatalogProduct[];
+}) {
+  const { market } = useMarket();
   // undefined = carregando; null = sem carrinho.
   const [cart, setCart] = useState<Cart | null | undefined>(undefined);
   const [pending, setPending] = useState(false);
@@ -46,7 +55,20 @@ export function CartView({ catalog }: { catalog: CartCatalogProduct[] }) {
   const isEmpty = cart !== undefined && (cart === null || lines.length === 0);
 
   if (isEmpty) {
-    return <CartEmpty />;
+    return (
+      <CartEmpty
+        catalog={petBestSellers}
+        pending={pending}
+        error={error}
+        onAddToCart={(product) =>
+          run(() =>
+            cartProvider.addLines([
+              { variantId: product.variants[0].id, quantity: 1 },
+            ])
+          )
+        }
+      />
+    );
   }
 
   const pairs = PAIRS_WITH_CART.map((slug) =>
@@ -90,6 +112,55 @@ export function CartView({ catalog }: { catalog: CartCatalogProduct[] }) {
       {cart && (
         <div className="mt-6 lg:grid lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-10">
           <div>
+            {market.freeShipping?.pet != null &&
+              formatFreeShippingLabel(market, "pet") && (
+                <div className="pb-6">
+                  <p className="mb-2 text-sm text-fg">
+                    {cart.subtotalPrice.amount >= market.freeShipping.pet ? (
+                      <span>
+                        You unlocked <strong>free shipping</strong> ✓
+                      </span>
+                    ) : (
+                      <span>
+                        Add{" "}
+                        <strong>
+                          {formatMoneyWithMarket(
+                            {
+                              amount:
+                                market.freeShipping.pet -
+                                cart.subtotalPrice.amount,
+                              currencyCode: market.currency.code,
+                            },
+                            market
+                          )}
+                        </strong>{" "}
+                        more to unlock free shipping
+                      </span>
+                    )}
+                  </p>
+                  <div
+                    role="progressbar"
+                    aria-label="Free shipping progress"
+                    aria-valuenow={Math.min(
+                      cart.subtotalPrice.amount,
+                      market.freeShipping.pet
+                    )}
+                    aria-valuemin={0}
+                    aria-valuemax={market.freeShipping.pet}
+                    className="relative h-2 overflow-hidden rounded-full bg-fg/15"
+                  >
+                    <div
+                      className="h-full rounded-full bg-accent transition-all"
+                      style={{
+                        width: `${Math.min(100, Math.round((cart.subtotalPrice.amount / market.freeShipping.pet) * 100))}%`,
+                      }}
+                    />
+                  </div>
+                  <p className="mt-1.5 text-right text-[11px] text-fg-muted">
+                    {formatFreeShippingLabel(market, "pet")}
+                  </p>
+                </div>
+              )}
             <ul aria-label="Items in your cart">
               {lines.map((line) => (
                 <CartLineItem
