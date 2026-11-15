@@ -15,7 +15,8 @@ import { CancelSteps } from "../../_components/cancel-steps";
 import { formatShortDate, productTitle } from "../../_components/format";
 
 export const metadata = buildMetadata({
-  title: "Cancel subscription | Nadeon Labs",
+  title: "Cancel subscription",
+  description: "Manage your subscription cancellation.",
   pathname: "/account/subscriptions",
   noIndex: true,
 });

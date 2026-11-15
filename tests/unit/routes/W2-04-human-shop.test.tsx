@@ -269,18 +269,11 @@ describe("W2-04: /human/shop Route & Components", () => {
       });
     });
 
-    it("renders the Compare all 7 card with link to /human/compare", async () => {
+    it("does not link to the growth-stage comparison page", async () => {
       const products = await mockCatalogProvider.getProducts({ line: "human" });
       render(<ShopCollection products={products} />);
 
-      expect(screen.getByText("Compare all 7")).toBeTruthy();
-      expect(
-        screen.getByText("Dose, format and price side by side.")
-      ).toBeTruthy();
-
-      const compareLink = screen.getByRole("link", { name: "Compare" });
-      expect(compareLink).toBeTruthy();
-      expect(compareLink.getAttribute("href")).toBe("/human/compare");
+      expect(screen.queryByRole("link", { name: "Compare" })).toBeNull();
     });
   });
 
@@ -363,7 +356,7 @@ describe("W2-04: /human/shop Route & Components", () => {
 
       const quizLink = screen.getByRole("link", { name: "Take the quiz" });
       expect(quizLink).toBeTruthy();
-      expect(quizLink.getAttribute("href")).toBe("/quiz");
+      expect(quizLink.getAttribute("href")).toBe("/human/quiz");
     });
   });
 

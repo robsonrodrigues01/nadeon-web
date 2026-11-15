@@ -1,6 +1,4 @@
 import React from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 export function JournalSection() {
   const articles = [
@@ -48,22 +46,12 @@ export function JournalSection() {
               For pet parents
             </h2>
           </div>
-          <div>
-            <Link
-              href="/journal"
-              className="min-h-11 px-6 py-2.5 inline-flex items-center gap-2 justify-center rounded border border-border text-fg hover:border-accent hover:text-accent font-medium active:scale-[0.98] transition-colors"
-            >
-              <span>All articles</span>
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </Link>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {articles.map((article) => (
-            <Link
+            <article
               key={article.slug}
-              href={`/journal/${article.slug}`}
               className="group p-6 rounded border border-border bg-bg-elevated shadow-card hover:border-accent transition-colors flex flex-col justify-between"
             >
               <div>
@@ -79,12 +67,9 @@ export function JournalSection() {
               </div>
               <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs font-medium text-fg group-hover:text-accent">
                 <span>Read article</span>
-                <ArrowRight
-                  className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
-                  aria-hidden="true"
-                />
+                <span>Coming soon</span>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
       </div>

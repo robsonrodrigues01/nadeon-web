@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { Star } from "lucide-react";
 
 export function ReviewsSection() {
@@ -20,14 +19,6 @@ export function ReviewsSection() {
             <p className="mt-2 text-sm text-fg-muted">
               Real reviews from pet parents will appear here after launch.
             </p>
-          </div>
-          <div>
-            <Link
-              href="/reviews"
-              className="min-h-11 px-6 py-2.5 inline-flex items-center justify-center rounded border border-border text-fg hover:border-accent hover:text-accent font-medium active:scale-[0.98] transition-colors"
-            >
-              Read all reviews
-            </Link>
           </div>
         </div>
 

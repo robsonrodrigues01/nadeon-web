@@ -15,7 +15,7 @@ describe("route SEO checks", () => {
 
   it("exports page metadata with title and description", () => {
     expect(
-      metadata.filter(({ file }) => !pendingMetadata.includes(file)),
+      metadata,
       `Missing metadata:\n${metadata.map(({ file }) => file).join("\n")}`
     ).toEqual([]);
   });
@@ -24,36 +24,7 @@ describe("route SEO checks", () => {
     expect(
       links,
       `Broken internal links:\n${links.map(({ file, href }) => `${file}: ${href}`).join("\n")}`
-    ).toEqual([
-      {
-        file: "app/(human)/human/_components/journal-section.tsx",
-        href: "/journal",
-      },
-      {
-        file: "app/(human)/human/_components/reviews-section.tsx",
-        href: "/reviews",
-      },
-      {
-        file: "app/(human)/human/shop/_components/quiz-banner.tsx",
-        href: "/quiz",
-      },
-      {
-        file: "app/(human)/human/shop/_components/shop-collection.tsx",
-        href: "/human/compare",
-      },
-      {
-        file: "app/(pet)/pet/_components/journal-section.tsx",
-        href: "/journal",
-      },
-      {
-        file: "app/(pet)/pet/_components/reviews-section.tsx",
-        href: "/reviews",
-      },
-      {
-        file: "components/commerce/cart-drawer/cart-drawer-empty.tsx",
-        href: "/quiz",
-      },
-    ]);
+    ).toEqual([]);
   });
 
   it("emits parseable JSON-LD with @context and @type", () => {
@@ -63,18 +34,3 @@ describe("route SEO checks", () => {
     ).toEqual([]);
   });
 });
-
-const pendingMetadata = [
-  "app/(account)/account/orders/[id]/page.tsx",
-  "app/(account)/account/orders/page.tsx",
-  "app/(account)/account/page.tsx",
-  "app/(account)/account/settings/page.tsx",
-  "app/(account)/account/subscriptions/[id]/cancel/page.tsx",
-  "app/(account)/account/subscriptions/page.tsx",
-  "app/(human)/human/shop/[format]/page.tsx",
-  "app/(human)/human/subscribe/page.tsx",
-  "app/(pet)/pet/subscribe/page.tsx",
-  "app/(shared)/cart/page.tsx",
-];
-
-for (const file of pendingMetadata) it.todo(`metadata pendente: ${file}`);

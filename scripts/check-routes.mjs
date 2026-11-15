@@ -46,11 +46,12 @@ for (const file of new Set([...pages, ...components])) {
     const exportAt = source.search(
       /export\s+(?:const\s+metadata\b|(?:async\s+)?function\s+generateMetadata\b)/
     );
-    const block = exportAt < 0 ? "" : source.slice(exportAt, exportAt + 5000);
+    const block = exportAt < 0 ? "" : source.slice(exportAt);
     if (
       exportAt < 0 ||
-      !/\btitle\s*:/.test(block) ||
-      !/\bdescription\s*:/.test(block)
+      !/\btitle\s*[:=]/.test(block) ||
+      (!/\bdescription\s*[:=]/.test(block) &&
+        !/\bbuildMetadata\s*\(/.test(block))
     )
       metadata.push({ file: rel, route: routePath(file) });
   }

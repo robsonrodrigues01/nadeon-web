@@ -29,7 +29,7 @@ export function QuizBanner() {
 
         <div>
           <Link
-            href="/quiz"
+            href="/human/quiz"
             className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-fg px-8 py-3.5 font-bold text-sm text-bg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent shadow-xs"
           >
             Take the quiz

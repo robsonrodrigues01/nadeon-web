@@ -373,33 +373,6 @@ export function ShopCollection({
               </article>
             );
           })}
-
-          {/* 8th card: Compare all 7 */}
-          <div className="rounded-card border-1.5 border-dashed border-border/60 bg-bg-elevated/40 p-6 sm:p-7 flex flex-col justify-center gap-3.5 text-fg">
-            <div
-              aria-hidden="true"
-              className="w-12 h-12 rounded-xl bg-accent/20 border border-accent/40 flex items-center justify-center text-accent font-bold text-xl"
-            >
-              ☷
-            </div>
-
-            <div className="title text-xl font-extrabold uppercase tracking-tight">
-              Compare all 7
-            </div>
-
-            <p className="text-sm text-fg-muted leading-relaxed">
-              Dose, format and price side by side.
-            </p>
-
-            <div className="pt-2">
-              <Link
-                href="/human/compare"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-fg px-5 py-2 font-bold text-sm text-fg transition-all hover:bg-fg hover:text-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              >
-                Compare
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
     </div>

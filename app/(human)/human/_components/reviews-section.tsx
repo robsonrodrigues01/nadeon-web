@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 
 export function ReviewsSection() {
   return (
@@ -20,15 +19,6 @@ export function ReviewsSection() {
           <p className="text-base sm:text-lg font-medium text-fg-muted">
             No reviews yet
           </p>
-        </div>
-
-        <div className="mt-10">
-          <Link
-            href="/reviews"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border-2 border-border px-8 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-fg transition-colors hover:border-fg focus-visible:outline-2 focus-visible:outline-accent"
-          >
-            Read all reviews
-          </Link>
         </div>
       </div>
     </section>

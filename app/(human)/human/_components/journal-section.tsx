@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 
 export function JournalSection() {
   const articles = [
@@ -41,12 +40,6 @@ export function JournalSection() {
               Read before you buy
             </h2>
           </div>
-          <Link
-            href="/journal"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border-2 border-border px-7 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-fg transition-colors hover:border-fg focus-visible:outline-2 focus-visible:outline-accent"
-          >
-            All articles
-          </Link>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -60,18 +53,13 @@ export function JournalSection() {
                   {art.tag}
                 </span>
                 <h3 className="mt-4 font-archivo text-xl sm:text-2xl font-bold uppercase text-fg group-hover:text-accent transition-colors">
-                  <Link href={art.href} className="focus:outline-none">
-                    {art.title}
-                  </Link>
+                  {art.title}
                 </h3>
               </div>
               <div className="mt-8 pt-4 border-t border-border">
-                <Link
-                  href={art.href}
-                  className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-fg hover:text-accent transition-colors"
-                >
-                  Read article →
-                </Link>
+                <span className="text-xs font-bold uppercase tracking-wider text-fg-muted">
+                  Coming soon
+                </span>
               </div>
             </article>
           ))}
