@@ -9,7 +9,7 @@
       "species": "cat",
       "format": "Drops",
       "color": "#A592D8",
-      "images": ["/images/products/high-jump-front.webp"],
+      "images": ["/renders/placeholder.svg"],
       "actives": [
         {
           "name": "NMN",
@@ -120,7 +120,7 @@
       "species": "cat",
       "format": "Drops",
       "color": "#A3CCEF",
-      "images": ["/images/products/purr-mode-front.webp"],
+      "images": ["/renders/placeholder.svg"],
       "actives": [
         {
           "name": "NMN",
@@ -231,7 +231,7 @@
       "species": "horse",
       "format": "Top-dress",
       "color": "#D49A5E",
-      "images": ["/images/products/long-stride-front.webp"],
+      "images": ["/renders/placeholder.svg"],
       "actives": [
         {
           "name": "NMN",
@@ -342,7 +342,7 @@
       "species": "horse",
       "format": "Top-dress",
       "color": "#A9CC8E",
-      "images": ["/images/products/solid-ground-front.webp"],
+      "images": ["/renders/placeholder.svg"],
       "actives": [
         {
           "name": "Biotin",

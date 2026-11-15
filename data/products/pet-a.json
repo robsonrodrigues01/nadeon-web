@@ -8,10 +8,7 @@
     "species": "dog",
     "format": "Soft chews",
     "color": "#ffc35a",
-    "images": [
-      "/images/products/more-good-years-front.webp",
-      "/images/products/more-good-years-label.webp"
-    ],
+    "images": ["/renders/more-good-years.png"],
     "actives": [
       {
         "name": "NMN",
@@ -168,10 +165,7 @@
     "species": "dog",
     "format": "Soft chews",
     "color": "#ff6b6b",
-    "images": [
-      "/images/products/golden-years-front.webp",
-      "/images/products/golden-years-label.webp"
-    ],
+    "images": ["/renders/golden-years.png"],
     "actives": [
       {
         "name": "NMN",
@@ -328,10 +322,7 @@
     "species": "dog",
     "format": "Soft chews",
     "color": "#b892ff",
-    "images": [
-      "/images/products/still-sharp-front.webp",
-      "/images/products/still-sharp-label.webp"
-    ],
+    "images": ["/renders/still-sharp.png"],
     "actives": [
       {
         "name": "NMN",
@@ -488,10 +479,7 @@
     "species": "dog",
     "format": "Soft chews",
     "color": "#ff8fc0",
-    "images": [
-      "/images/products/shine-on-front.webp",
-      "/images/products/shine-on-label.webp"
-    ],
+    "images": ["/renders/shine-on.png"],
     "actives": [
       {
         "name": "NMN",
@@ -648,10 +636,7 @@
     "species": "dog",
     "format": "Treats",
     "color": "#7cc4ff",
-    "images": [
-      "/images/products/good-days-front.webp",
-      "/images/products/good-days-label.webp"
-    ],
+    "images": ["/renders/placeholder.svg"],
     "actives": [
       {
         "name": "NMN",
@@ -796,10 +781,7 @@
     "species": "dog",
     "format": "Powder",
     "color": "#7fe0b0",
-    "images": [
-      "/images/products/second-wind-front.webp",
-      "/images/products/second-wind-label.webp"
-    ],
+    "images": ["/renders/placeholder.svg"],
     "actives": [
       {
         "name": "NMN",
@@ -944,10 +926,7 @@
     "species": "dog",
     "format": "Oils",
     "color": "#ffc35a",
-    "images": [
-      "/images/products/more-good-years-oil-front.webp",
-      "/images/products/more-good-years-oil-label.webp"
-    ],
+    "images": ["/renders/placeholder.svg"],
     "actives": [
       {
         "name": "NMN",
@@ -1092,10 +1071,7 @@
     "species": "dog",
     "format": "Oils",
     "color": "#ff6b6b",
-    "images": [
-      "/images/products/golden-years-oil-front.webp",
-      "/images/products/golden-years-oil-label.webp"
-    ],
+    "images": ["/renders/placeholder.svg"],
     "actives": [
       {
         "name": "NMN",
@@ -1240,10 +1216,7 @@
     "species": "dog",
     "format": "Oils",
     "color": "#b892ff",
-    "images": [
-      "/images/products/still-sharp-oil-front.webp",
-      "/images/products/still-sharp-oil-label.webp"
-    ],
+    "images": ["/renders/placeholder.svg"],
     "actives": [
       {
         "name": "NMN",
@@ -1388,10 +1361,7 @@
     "species": "dog",
     "format": "Oils",
     "color": "#ff8fc0",
-    "images": [
-      "/images/products/shine-on-oil-front.webp",
-      "/images/products/shine-on-oil-label.webp"
-    ],
+    "images": ["/renders/placeholder.svg"],
     "actives": [
       {
         "name": "NMN",

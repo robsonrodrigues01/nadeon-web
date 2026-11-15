@@ -50,8 +50,7 @@ describe("JSON-LD Helpers", () => {
       name: "Nadeon",
     });
     expect(jsonLd.image).toEqual([
-      "https://nadeonlabs.com/images/products/biohack-front.webp",
-      "https://nadeonlabs.com/images/products/biohack-back.webp",
+      "https://nadeonlabs.com/renders/biohack.png",
     ]);
 
     // Offers verification

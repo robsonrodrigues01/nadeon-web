@@ -8,10 +8,7 @@
     "species": null,
     "format": "Capsules",
     "color": "#1A0A2C",
-    "images": [
-      "/images/products/biohack-front.webp",
-      "/images/products/biohack-back.webp"
-    ],
+    "images": ["/renders/biohack.png"],
     "actives": [
       {
         "name": "NMN (β-nicotinamide mononucleotide)",
@@ -140,7 +137,7 @@
     "species": null,
     "format": "Capsules",
     "color": "#16100C",
-    "images": ["/images/products/full-charge-front.webp"],
+    "images": ["/renders/full-charge.png"],
     "actives": [
       {
         "name": "NMN (β-nicotinamide mononucleotide)",
@@ -269,7 +266,7 @@
     "species": null,
     "format": "Capsules",
     "color": "#2E0716",
-    "images": ["/images/products/renew-front.webp"],
+    "images": ["/renders/renew.png"],
     "actives": [
       {
         "name": "Direct NAD+ (Nicotinamide Adenine Dinucleotide)",
@@ -389,7 +386,7 @@
     "species": null,
     "format": "Powders",
     "color": "#3A1608",
-    "images": ["/images/products/glow-front.webp"],
+    "images": ["/renders/placeholder.svg"],
     "actives": [
       {
         "name": "Hydrolyzed Collagen Peptides",
@@ -518,7 +515,7 @@
     "species": null,
     "format": "Powders",
     "color": "#1C3A27",
-    "images": ["/images/products/prime-front.webp"],
+    "images": ["/renders/placeholder.svg"],
     "actives": [
       {
         "name": "Pure Nicotinamide Adenine Dinucleotide (NAD+)",
