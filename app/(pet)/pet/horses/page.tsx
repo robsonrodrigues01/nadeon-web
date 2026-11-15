@@ -3,7 +3,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
 import { buildMetadata, JsonLd, DEFAULT_SITE_URL } from "@/lib/seo";
-import { getDefaultMarket } from "@/lib/market";
 
 import { HorseProductsSection } from "./_components/horse-products-section";
 
@@ -31,8 +30,6 @@ const BARN_NOTES = [
 
 export default async function HorsesPage() {
   const products = await catalogProvider.getProducts({ species: "horse" });
-  const locale = getDefaultMarket().locale;
-
   const jsonLdData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -107,7 +104,7 @@ export default async function HorsesPage() {
         </p>
       </section>
 
-      <HorseProductsSection products={products} locale={locale} />
+      <HorseProductsSection products={products} />
 
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-8">
         <Link

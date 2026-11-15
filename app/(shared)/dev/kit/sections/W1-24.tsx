@@ -63,11 +63,7 @@ export default function W124Section() {
           >
             {humanLine && (
               <li>
-                <CartDrawerItem
-                  item={humanLine}
-                  cartProvider={cartProvider}
-                  theme="human"
-                />
+                <CartDrawerItem item={humanLine} cartProvider={cartProvider} />
               </li>
             )}
           </ul>
@@ -86,11 +82,7 @@ export default function W124Section() {
           >
             {petLine && (
               <li>
-                <CartDrawerItem
-                  item={petLine}
-                  cartProvider={cartProvider}
-                  theme="pet"
-                />
+                <CartDrawerItem item={petLine} cartProvider={cartProvider} />
               </li>
             )}
           </ul>
