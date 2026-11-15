@@ -1593,12 +1593,33 @@
     ],
     "status": "para_revisao",
     "responsavel": "Mapa2",
-    "lease_ate": "2026-11-15T04:08:20.706Z",
+    "lease_ate": null,
     "branch": "agy/W3-04",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "node scripts/check-routes.mjs sem achados",
+      "revisão APROVADO"
+    ],
+    "revisor": "Sonda4"
+  },
+  {
+    "id": "W3-05",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Zerar warnings do pnpm lint (imports e variáveis sem uso)",
+    "depende_de": [
+      "W3-04"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Lixa",
+    "lease_ate": "2026-11-15T04:09:43.661Z",
+    "branch": "agy/W3-05",
+    "pr": null,
+    "criterios": [
+      "pnpm lint com 0 warnings",
+      "pnpm gate verde",
       "revisão APROVADO"
     ]
   }
