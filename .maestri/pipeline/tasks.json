@@ -1651,9 +1651,9 @@
       "W3-11",
       "W3-12"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma3",
+    "lease_ate": "2026-11-15T05:00:05.190Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -1776,12 +1776,13 @@
     ],
     "status": "para_revisao",
     "responsavel": "Moldura3",
-    "lease_ate": "2026-11-15T04:57:15.304Z",
+    "lease_ate": null,
     "branch": "agy/W3-13",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Moldura4Rev"
   }
 ]
