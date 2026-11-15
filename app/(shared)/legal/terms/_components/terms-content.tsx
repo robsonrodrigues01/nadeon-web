@@ -227,22 +227,6 @@ export function TermsContent() {
 
         {/* Main Article Content */}
         <article className="flex-1 max-w-3xl">
-          {/* Discreet Draft notice */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-800/30 bg-amber-500/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-amber-900 mb-6">
-            Draft pending legal review
-          </div>
-
-          {/* Template warning banner from design */}
-          <div className="flex items-start gap-3 rounded-card border-2 border-dashed border-accent/80 bg-amber-100/70 p-4 sm:p-5 text-sm sm:text-base leading-relaxed mb-8">
-            <strong className="whitespace-nowrap font-bold text-fg">
-              TEMPLATE
-            </strong>
-            <span className="text-fg">
-              All text on this page is placeholder. Final Terms of Service must
-              be written and approved by legal counsel before launch.
-            </span>
-          </div>
-
           {/* Intro paragraph */}
           <p className="text-lg sm:text-xl font-medium leading-relaxed mb-10 text-fg">
             Placeholder intro. These Terms of Service govern your use of

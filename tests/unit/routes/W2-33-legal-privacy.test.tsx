@@ -79,12 +79,9 @@ describe("W2-33: /legal/privacy route", () => {
       expect(a11yLink.getAttribute("href")).toBe("/legal/accessibility");
     });
 
-    it("renders the discreet draft notice and template warning banner", () => {
-      expect(mainEl().textContent).toContain("Draft pending legal review");
-      expect(mainEl().textContent).toContain("TEMPLATE");
-      expect(mainEl().textContent).toContain(
-        "All text on this page is placeholder"
-      );
+    it("does not render draft or template warning notices on the page", () => {
+      expect(mainEl().textContent).not.toContain("Draft pending legal review");
+      expect(mainEl().textContent).not.toContain("TEMPLATE");
     });
   });
 
