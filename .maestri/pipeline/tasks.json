@@ -1842,5 +1842,25 @@
     ],
     "id": "W3-16",
     "titulo": "Teclado e foco: Tab em todas as rotas, foco visível, ordem lógica, sem armadilha em modais/gavetas, Escape fecha"
+  },
+  {
+    "id": "W3-17",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Início do quiz Human: espaçamento e composição conforme o board",
+    "depende_de": [
+      "W3-08"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-15T23:29:50.773Z",
+    "branch": "agy/W3-17",
+    "pr": null,
+    "criterios": [
+      "comparação no portal com o board",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
