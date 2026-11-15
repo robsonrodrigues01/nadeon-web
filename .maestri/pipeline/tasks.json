@@ -1525,7 +1525,7 @@
     "onda": 2,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Sacola3",
     "lease_ate": null,
     "pr": "local",
@@ -1566,7 +1566,7 @@
     "onda": 2,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Conta4",
     "lease_ate": null,
     "pr": "local",
@@ -1591,11 +1591,11 @@
     "depende_de": [
       "W3-03"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Mapa2",
-    "lease_ate": "2026-11-15T04:03:53.613Z",
+    "lease_ate": "2026-11-15T04:08:20.706Z",
     "branch": "agy/W3-04",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "node scripts/check-routes.mjs sem achados",
