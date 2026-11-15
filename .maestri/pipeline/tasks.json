@@ -1388,10 +1388,10 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
-    "responsavel": "Mapa",
-    "lease_ate": "2026-11-15T02:57:58.581Z",
-    "pr": null,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1399,7 +1399,8 @@
     ],
     "id": "W2-37",
     "titulo": "MarketProvider no layout raiz com mercado do cookie (useMarket no cliente)",
-    "branch": "agy/W2-37"
+    "branch": "agy/W2-37",
+    "nota": "MUDANÇAS: ver DECISIONS 15/11 (provider raiz sem cookies())"
   },
   {
     "onda": 2,
@@ -1410,7 +1411,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Coleira2",
-    "lease_ate": "2026-11-15T02:57:51.778Z",
+    "lease_ate": "2026-11-15T02:59:16.444Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1428,10 +1429,10 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Selo2",
-    "lease_ate": "2026-11-15T02:58:03.762Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1464,9 +1465,9 @@
   {
     "papel": "QA",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Inventário",
+    "lease_ate": "2026-11-15T03:02:27.183Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1484,9 +1485,9 @@
   {
     "papel": "QA",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Roteiro",
+    "lease_ate": "2026-11-15T03:01:33.389Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
