@@ -1591,7 +1591,7 @@
     "depende_de": [
       "W3-03"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Mapa3",
     "lease_ate": null,
     "branch": "agy/W3-04",
@@ -1611,7 +1611,7 @@
     "depende_de": [
       "W3-04"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Lixa",
     "lease_ate": null,
     "branch": "agy/W3-05",
