@@ -1743,8 +1743,7 @@
     ],
     "id": "W3-11",
     "titulo": "Imagens de produto: data aponta para /images/products/*.webp inexistente; usar /renders/*.png e placeholder neutro",
-    "branch": "agy/W3-11",
-    "revisor": "Lente2"
+    "branch": "agy/W3-11"
   },
   {
     "onda": 3,
@@ -1765,7 +1764,7 @@
     "id": "W3-12",
     "titulo": "Rolagem horizontal em 375 px: /human e /search?q",
     "branch": "agy/W3-12",
-    "nota": "aguarda vaga de revisor"
+    "revisor": "Régua2"
   },
   {
     "id": "W3-13",
@@ -1776,14 +1775,15 @@
     "depende_de": [
       "W3-11"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Moldura",
-    "lease_ate": "2026-11-15T04:51:53.892Z",
+    "lease_ate": null,
     "branch": "agy/W3-13",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Moldura2Rev"
   }
 ]
