@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { OrderDetailView } from "./order-view";
 import { OrderStatusBadge } from "./order-status-badge";
+import { OrderActions } from "./order-actions";
 
 export interface OrderDetailViewProps {
   order: OrderDetailView;
@@ -53,9 +54,7 @@ export function OrderDetailView({ order }: OrderDetailViewProps) {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="primary" size="sm" disabled>
-            Buy again
-          </Button>
+          <OrderActions lines={order.lines} orderUrl={order.url} showBuyAgain />
           <Button variant="secondary" size="sm" href="/help">
             Get help
           </Button>

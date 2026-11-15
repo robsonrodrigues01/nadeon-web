@@ -1,10 +1,15 @@
 // @vitest-environment jsdom
-import React from "react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup, within } from "@testing-library/react";
 import TrackOrderPage, { generateMetadata } from "@/app/(shared)/track/page";
 import { TrackOrderSchema } from "@/app/(shared)/track/_components/schema";
 import { lookupOrder } from "@/app/(shared)/track/_components/actions";
+import { accountProvider } from "@/lib/providers";
+import { OrderSchema } from "@/lib/contracts/account";
+
+vi.mock("next/headers", () => ({
+  cookies: async () => ({ get: () => undefined }),
+}));
 
 describe("W2-18: /track route", () => {
   beforeEach(() => {
@@ -156,6 +161,65 @@ describe("W2-18: /track route", () => {
     it("renders no design placeholders in the text", async () => {
       const { container } = await renderPage();
       expect(container.textContent).not.toMatch(/\[X\]|\$XX|\(example\)/);
+    });
+  });
+
+  describe("rendered page (state B, guest order result)", () => {
+    it("looks up the order by number and email and renders the returned order", async () => {
+      const lookup = vi
+        .spyOn(accountProvider, "lookupGuestOrder")
+        .mockResolvedValue(
+          OrderSchema.parse({
+            id: "order-guest",
+            orderNumber: "NL-100234",
+            createdAt: "2026-11-06T14:14:00.000Z",
+            financialStatus: "paid",
+            fulfillmentStatus: "in_transit",
+            items: [
+              {
+                title: "BioHack - 1 Jar",
+                quantity: 2,
+                price: { amount: 59, currencyCode: "USD" },
+              },
+            ],
+            total: { amount: 118, currencyCode: "USD" },
+            trackingNumber: "1Z100234",
+            trackingUrl: "https://ups.com/track/1Z100234",
+          })
+        );
+
+      const jsx = await TrackOrderPage({
+        searchParams: Promise.resolve({
+          orderNumber: " nl-100234 ",
+          email: " guest@example.com ",
+        }),
+      });
+      render(jsx);
+
+      expect(lookup).toHaveBeenCalledWith("NL-100234", "guest@example.com");
+      expect(
+        screen.getByRole("heading", { name: "Order #NL-100234" })
+      ).toBeTruthy();
+      expect(screen.getByText("Tracking 1Z100234")).toBeTruthy();
+      lookup.mockRestore();
+    });
+
+    it("shows an error message when the account provider is unavailable", async () => {
+      vi.spyOn(accountProvider, "lookupGuestOrder").mockRejectedValue(
+        new Error("provider unavailable")
+      );
+
+      const jsx = await TrackOrderPage({
+        searchParams: Promise.resolve({
+          orderNumber: "NL-100234",
+          email: "guest@example.com",
+        }),
+      });
+      render(jsx);
+
+      expect(screen.getByRole("status").textContent).toContain(
+        "Unable to look up your order"
+      );
     });
   });
 });

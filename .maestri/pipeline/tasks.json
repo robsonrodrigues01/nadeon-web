@@ -1444,7 +1444,7 @@
   {
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Elo",
     "lease_ate": null,
     "pr": "local",
@@ -1459,15 +1459,14 @@
     "depende_de": [
       "W2-39"
     ],
-    "branch": "agy/W2-40",
-    "revisor": "Elo2Rev"
+    "branch": "agy/W2-40"
   },
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Inventário2",
-    "lease_ate": "2026-11-15T03:38:43.939Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
@@ -1485,7 +1484,7 @@
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Roteiro2",
     "lease_ate": null,
     "pr": "local",
@@ -1500,14 +1499,13 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-02",
-    "nota": "aguarda vaga de revisor"
+    "branch": "agy/W3-02"
   },
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "status": "para_revisao",
-    "responsavel": "Sonar",
+    "responsavel": "Sonar2",
     "lease_ate": null,
     "pr": "local",
     "criterios": [
@@ -1521,17 +1519,16 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-03",
-    "revisor": "Sonda2"
+    "branch": "agy/W3-03"
   },
   {
     "onda": 2,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
-    "responsavel": "Sacola2",
-    "lease_ate": "2026-11-15T03:41:27.497Z",
-    "pr": null,
+    "status": "para_revisao",
+    "responsavel": "Sacola3",
+    "lease_ate": null,
+    "pr": "local",
     "depende_de": [
       "W3-01"
     ],
@@ -1542,7 +1539,8 @@
     ],
     "id": "W2-41",
     "titulo": "/cart: barra de frete grátis e estado vazio com best sellers e atalhos de categoria (catálogo 5.3)",
-    "branch": "agy/W2-41"
+    "branch": "agy/W2-41",
+    "revisor": "Carrinho4"
   },
   {
     "onda": 2,
@@ -1569,10 +1567,10 @@
     "onda": 2,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "backlog",
-    "responsavel": null,
+    "status": "para_revisao",
+    "responsavel": "Conta3",
     "lease_ate": null,
-    "pr": null,
+    "pr": "local",
     "depende_de": [
       "W3-01"
     ],
