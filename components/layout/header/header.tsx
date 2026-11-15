@@ -93,9 +93,9 @@ export function Header({
         className
       )}
     >
-      <div className="mx-auto flex h-18 sm:h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-8 lg:px-12">
+      <div className="mx-auto flex h-18 sm:h-20 w-full max-w-7xl items-center justify-between gap-2 px-4 sm:px-8 lg:px-12">
         {/* Brand Logo */}
-        <div className="flex items-center">
+        <div className="flex min-w-0 items-center">
           <Logo variant={variant} />
         </div>
 
