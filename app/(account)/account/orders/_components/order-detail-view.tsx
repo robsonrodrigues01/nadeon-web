@@ -123,7 +123,7 @@ export function OrderDetailView({ order }: OrderDetailViewProps) {
           <Button variant="primary" size="sm" href="/help">
             Get help with this order
           </Button>
-          <Button variant="secondary" size="sm" disabled>
+          <Button variant="secondary" size="sm" href="/help?subject=return">
             Start a return
           </Button>
         </div>

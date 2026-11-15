@@ -44,6 +44,7 @@ export interface RecentOrder {
   firstTitle: string;
   itemCount: number;
   totalLabel: string;
+  lines?: { variantId: string; quantity: number }[];
 }
 
 export interface AccountDashboardView {
@@ -122,6 +123,7 @@ export function buildAccountDashboard({
         firstTitle: latest.items[0]?.title ?? "",
         itemCount: latest.items.reduce((sum, item) => sum + item.quantity, 0),
         totalLabel: money(latest.total, market),
+        lines: latest.lines,
       }
     : null;
 

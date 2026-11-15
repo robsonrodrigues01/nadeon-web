@@ -1,14 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { lookupOrder } from "./actions";
+import type { Order } from "@/lib/contracts/account";
 
 interface OrderLookupProps {
   signInHref: string;
+  order?: Order | null;
 }
 
 // Estado A do design: formulário sem resultado. Sem JavaScript de cliente.
-export function OrderLookup({ signInHref }: OrderLookupProps) {
+export function OrderLookup({ signInHref, order }: OrderLookupProps) {
   return (
     <section
       aria-labelledby="order-lookup-heading"
@@ -24,7 +25,7 @@ export function OrderLookup({ signInHref }: OrderLookupProps) {
         Find your order
       </h2>
 
-      <form action={lookupOrder} className="mt-6 flex flex-col gap-5">
+      <form action="/track" method="get" className="mt-6 flex flex-col gap-5">
         <div className="flex flex-col gap-2">
           <label htmlFor="order-number" className="text-sm font-bold text-fg">
             Order number
@@ -67,6 +68,52 @@ export function OrderLookup({ signInHref }: OrderLookupProps) {
           Track order
         </Button>
       </form>
+
+      {order && (
+        <section
+          aria-labelledby="lookup-result-title"
+          className="mt-8 border-t border-border pt-6"
+        >
+          <h3
+            id="lookup-result-title"
+            className="font-archivo text-xl font-bold text-fg"
+          >
+            Order {order.orderNumber}
+          </h3>
+          <p className="mt-2 text-sm text-fg-muted">
+            Status: {order.fulfillmentStatus.replace("_", " ")}
+          </p>
+          {order.trackingNumber && (
+            <p className="mt-1 text-sm text-fg-muted">
+              Tracking number: {order.trackingNumber}
+            </p>
+          )}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {order.trackingUrl && (
+              <Button
+                href={order.trackingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Track shipment
+                <span className="sr-only"> (opens in a new tab)</span>
+              </Button>
+            )}
+            <Button
+              variant="secondary"
+              href={`/help?subject=problem&order=${encodeURIComponent(order.orderNumber)}`}
+            >
+              Report a problem
+            </Button>
+            <Button
+              variant="secondary"
+              href={`/help?subject=return&order=${encodeURIComponent(order.orderNumber)}`}
+            >
+              Start a return
+            </Button>
+          </div>
+        </section>
+      )}
 
       <p className="mt-6 text-sm text-fg-muted">
         or{" "}

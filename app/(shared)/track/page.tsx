@@ -9,6 +9,7 @@ import { TrustStrip } from "@/components/brand/trust-strip";
 import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
 import { OrderLookup } from "./_components/order-lookup";
+import { TrackOrderSchema } from "./_components/schema";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
@@ -41,8 +42,20 @@ const HELP_LINKS = [
   },
 ] as const;
 
-export default async function TrackOrderPage() {
+export default async function TrackOrderPage({
+  searchParams = Promise.resolve({}),
+}: {
+  searchParams?: Promise<{ orderNumber?: string; email?: string }>;
+} = {}) {
   const signInHref = await accountProvider.signInUrl("/track");
+  const params = await searchParams;
+  const parsed = TrackOrderSchema.safeParse(params);
+  const order = parsed.success
+    ? await accountProvider.lookupGuestOrder(
+        parsed.data.orderNumber,
+        parsed.data.email
+      )
+    : null;
 
   return (
     <>
@@ -79,7 +92,7 @@ export default async function TrackOrderPage() {
           </header>
 
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-            <OrderLookup signInHref={signInHref} />
+            <OrderLookup signInHref={signInHref} order={order} />
 
             <aside
               aria-labelledby="order-number-help-heading"
