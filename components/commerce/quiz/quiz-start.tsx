@@ -19,12 +19,16 @@ export function QuizStart({ quiz, onStart, className = "" }: QuizStartProps) {
 
   return (
     <div
-      className={`rounded-card border border-border bg-bg-elevated p-6 sm:p-10 text-fg shadow-card ${className}`}
+      className={`${isHuman ? "rounded-card border border-border bg-bg-elevated p-6 sm:p-10 text-fg shadow-card lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none" : "rounded-card border border-border bg-bg-elevated p-6 sm:p-10 text-fg shadow-card"} ${className}`}
       data-testid="quiz-start"
     >
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div
+        className={`${isHuman ? "max-w-6xl mx-auto space-y-8 lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-x-16 lg:gap-y-8 lg:space-y-0" : "max-w-2xl mx-auto space-y-8"}`}
+      >
         {/* Top Badges */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div
+          className={`flex flex-wrap items-center gap-3 ${isHuman ? "lg:col-start-1" : ""}`}
+        >
           <span className="inline-flex items-center gap-1.5 rounded-pill bg-accent/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
             <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" />
             {isHuman ? "Free Routine Quiz" : "Free Pet Quiz"}
@@ -40,18 +44,20 @@ export function QuizStart({ quiz, onStart, className = "" }: QuizStartProps) {
         </div>
 
         {/* Headings */}
-        <div className="space-y-3">
-          <h1 className="title text-3xl sm:text-4xl font-extrabold uppercase tracking-tight text-fg">
+        <div
+          className={`space-y-3 ${isHuman ? "lg:col-start-1 lg:row-start-2" : ""}`}
+        >
+          <h1 className="title text-3xl sm:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-fg">
             {quiz.promiseHeadline}
           </h1>
-          <p className="text-base sm:text-lg text-fg-muted leading-relaxed">
+          <p className="text-base sm:text-lg lg:text-xl text-fg-muted leading-relaxed">
             {quiz.supportingText}
           </p>
         </div>
 
         {/* Action Area */}
         {isHuman ? (
-          <div className="space-y-4 pt-2">
+          <div className="space-y-4 pt-2 lg:col-start-1 lg:row-start-3">
             <div>
               <Button
                 type="button"
@@ -158,7 +164,9 @@ export function QuizStart({ quiz, onStart, className = "" }: QuizStartProps) {
         )}
 
         {/* What you'll get preview */}
-        <div className="border-t border-border/60 pt-6">
+        <div
+          className={`${isHuman ? "lg:col-start-2 lg:row-start-1 lg:row-span-4 lg:border-l lg:border-border/60 lg:pl-10" : "border-t border-border/60 pt-6"}`}
+        >
           <h2 className="text-xs font-bold uppercase tracking-wider text-fg-muted mb-4">
             What you will get
           </h2>
