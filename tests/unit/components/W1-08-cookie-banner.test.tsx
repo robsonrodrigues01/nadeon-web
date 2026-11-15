@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import React from "react";
+import React, { useState } from "react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import {
@@ -96,6 +96,62 @@ describe("W1-08 Cookie Banner & Consent System", () => {
   });
 
   describe("CookieBanner Component & Semantic Elements", () => {
+    it("reserves the banner height while open and removes it when closed", () => {
+      const observe = vi.fn();
+      const disconnect = vi.fn();
+      vi.stubGlobal(
+        "ResizeObserver",
+        class {
+          constructor(private callback: ResizeObserverCallback) {}
+          observe(target: Element) {
+            vi.spyOn(target, "getBoundingClientRect").mockReturnValue({
+              height: 180,
+            } as DOMRect);
+            observe(target);
+            this.callback(
+              [{ target } as ResizeObserverEntry],
+              this as unknown as ResizeObserver
+            );
+          }
+          disconnect() {
+            disconnect();
+          }
+        }
+      );
+
+      function Harness() {
+        const [isOpen, setIsOpen] = useState(true);
+        return (
+          <ConsentProvider initialCountry="US" forceBannerOpen={true}>
+            <CookieBanner isOpen={isOpen} />
+            <button type="button" onClick={() => setIsOpen(false)}>
+              Close banner
+            </button>
+          </ConsentProvider>
+        );
+      }
+      render(<Harness />);
+      const banner = screen.getByRole("region", {
+        name: /cookie consent banner/i,
+      });
+      expect(observe).toHaveBeenCalledWith(banner);
+      expect(document.body.style.paddingBottom).toBe("180px");
+
+      fireEvent.click(screen.getByRole("button", { name: "Close banner" }));
+      expect(disconnect).toHaveBeenCalled();
+      expect(document.body.style.paddingBottom).toBe("");
+      vi.unstubAllGlobals();
+    });
+
+    it("does not reserve space for the inline banner", () => {
+      render(
+        <ConsentProvider initialCountry="US" forceBannerOpen={true}>
+          <CookieBanner inline forceVisible={true} />
+        </ConsentProvider>
+      );
+      expect(document.body.style.paddingBottom).toBe("");
+    });
+
     it("renders banner with required semantic buttons and links", () => {
       render(
         <ConsentProvider initialCountry="US" forceBannerOpen={true}>

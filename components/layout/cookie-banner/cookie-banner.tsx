@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useConsent } from "@/lib/consent";
 import { CookieSettingsModal } from "./cookie-settings-modal";
@@ -18,6 +18,7 @@ export function CookieBanner({
   forceVisible = false,
   className = "",
 }: CookieBannerProps) {
+  const bannerRef = useRef<HTMLElement>(null);
   const {
     isBannerOpen,
     isSettingsOpen,
@@ -25,9 +26,28 @@ export function CookieBanner({
     rejectNonEssential,
     openSettings,
   } = useConsent();
+  const isVisible = forceVisible || (isOpen ?? isBannerOpen);
 
-  const isVisible =
-    forceVisible || (isOpen !== undefined ? isOpen : isBannerOpen);
+  // Banner fixo: enquanto aberto, reserva o espaço dele no fim da página para não cobrir CTAs.
+  useEffect(() => {
+    if (inline || !isVisible) return;
+    const banner = bannerRef.current;
+    if (!banner) return;
+    const body = document.body;
+    const previous = body.style.paddingBottom;
+    const apply = () => {
+      body.style.paddingBottom = `${banner.getBoundingClientRect().height}px`;
+    };
+    apply();
+    const observer =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(apply) : null;
+    observer?.observe(banner);
+    return () => {
+      observer?.disconnect();
+      if (previous) body.style.paddingBottom = previous;
+      else body.style.removeProperty("padding-bottom");
+    };
+  }, [inline, isVisible]);
 
   if (!isVisible && !isSettingsOpen) {
     return null;
@@ -41,6 +61,7 @@ export function CookieBanner({
     <>
       {isVisible && (
         <section
+          ref={bannerRef}
           role="region"
           aria-label="Cookie consent banner"
           className={containerClasses}
