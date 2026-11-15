@@ -1388,9 +1388,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Bitola2",
-    "lease_ate": "2026-11-15T03:12:38.795Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
@@ -1399,18 +1399,19 @@
     ],
     "id": "W2-37",
     "titulo": "MarketProvider no layout raiz com mercado do cookie (useMarket no cliente)",
-    "branch": "agy/W2-37"
+    "branch": "agy/W2-37",
+    "revisor": "Lupa2"
   },
   {
     "onda": 2,
     "papel": "Frontend",
-    "preset": "Gemini 3.8 Flash (AGY)",
+    "preset": "Luna 6 Low (GPT)",
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Focinho2",
+    "lease_ate": "2026-11-15T03:26:47.947Z",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
@@ -1419,8 +1420,7 @@
     ],
     "id": "W2-38",
     "titulo": "QuizResultPet sem preço, moeda e claims fixos (componente compartilhado do quiz)",
-    "branch": "agy/W2-38",
-    "nota": "MUDANÇAS do Faro2 (5 fallbacks inventados); aguarda construtor"
+    "branch": "agy/W2-38"
   },
   {
     "onda": 2,
@@ -1444,10 +1444,10 @@
   },
   {
     "papel": "Frontend",
-    "preset": "Gemini 3.8 Flash (AGY)",
+    "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
     "responsavel": "Elo",
-    "lease_ate": "2026-11-15T03:13:01.623Z",
+    "lease_ate": "2026-11-15T03:26:47.919Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1464,10 +1464,10 @@
   },
   {
     "papel": "QA",
-    "preset": "Gemini 3.8 Flash (AGY)",
+    "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
     "responsavel": "Inventário",
-    "lease_ate": "2026-11-15T03:12:59.552Z",
+    "lease_ate": "2026-11-15T03:26:26.781Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1485,8 +1485,8 @@
   {
     "papel": "QA",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "status": "para_revisao",
-    "responsavel": "Roteiro",
+    "status": "backlog",
+    "responsavel": null,
     "lease_ate": null,
     "pr": "local",
     "criterios": [
@@ -1501,7 +1501,7 @@
       "W2-36"
     ],
     "branch": "agy/W3-02",
-    "revisor": "Ensaio"
+    "nota": "MUDANÇAS do Ensaio: seletores por role, mock de rede antes da navegação, sem dados fixos"
   },
   {
     "papel": "QA",
