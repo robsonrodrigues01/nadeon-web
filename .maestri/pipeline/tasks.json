@@ -1250,9 +1250,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Forquilha",
-    "lease_ate": "2026-11-14T23:58:57.253Z",
+    "lease_ate": null,
     "branch": "agy/W2-30",
     "pr": "local",
     "criterios": [
@@ -1271,8 +1271,8 @@
       "W1-22"
     ],
     "status": "para_revisao",
-    "responsavel": "Ferradura",
-    "lease_ate": "2026-11-14T23:57:03.154Z",
+    "responsavel": "Brida",
+    "lease_ate": null,
     "branch": "agy/W2-31",
     "pr": "local",
     "criterios": [
@@ -1290,8 +1290,8 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
-    "responsavel": "Baliza",
+    "status": "entregue",
+    "responsavel": "Marco",
     "lease_ate": null,
     "branch": "agy/W2-32",
     "pr": "local",
@@ -1299,8 +1299,7 @@
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ],
-    "revisor": "Bússola"
+    ]
   },
   {
     "id": "W2-33",
@@ -1311,11 +1310,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Sinete",
-    "lease_ate": "2026-11-14T23:52:07.444Z",
+    "lease_ate": null,
     "branch": "agy/W2-33",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1331,11 +1330,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Lacre",
+    "lease_ate": "2026-11-15T02:41:55.560Z",
     "branch": "agy/W2-34",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1351,16 +1350,17 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
+    "status": "para_revisao",
+    "responsavel": "Rampa",
     "lease_ate": null,
     "branch": "agy/W2-35",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Rampa2"
   },
   {
     "id": "W2-36",
@@ -1371,9 +1371,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Vazio",
+    "lease_ate": "2026-11-15T02:41:55.896Z",
     "branch": "agy/W2-36",
     "pr": null,
     "criterios": [
