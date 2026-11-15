@@ -1270,7 +1270,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Brida",
     "lease_ate": null,
     "branch": "agy/W2-31",
@@ -1332,7 +1332,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lacre",
-    "lease_ate": "2026-11-15T02:41:55.560Z",
+    "lease_ate": "2026-11-15T02:42:36.467Z",
     "branch": "agy/W2-34",
     "pr": "local",
     "criterios": [
