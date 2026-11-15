@@ -512,7 +512,7 @@ export function TermsContent() {
               </div>
             </div>
             <p className="text-xs sm:text-sm text-fg-muted italic">
-              Dates are estimates. Your bank or wallet controls when the refund
+              Dates are examples. Your bank or wallet controls when the refund
               appears after we issue it.
             </p>
           </section>
