@@ -702,9 +702,7 @@ export function QuizResultPet({
             Equine products: not for horses intended for food.
           </p>
         )}
-        <div className="italic">
-          <Claim showDisclaimer={true}>To be confirmed</Claim>
-        </div>
+        <p className="italic">To be confirmed</p>
       </div>
     </div>
   );
