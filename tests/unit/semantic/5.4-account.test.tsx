@@ -164,6 +164,7 @@ describe("5.4 Semantic Elements: Conta", () => {
             lines: [
               {
                 id: "line_test",
+                variantId: "variant_test",
                 productTitle: "BioHack",
                 quantity: 1,
                 price: { amount: 50, currencyCode: "USD" },
