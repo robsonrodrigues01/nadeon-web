@@ -1250,9 +1250,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Forquilha",
-    "lease_ate": "2026-11-14T23:58:57.253Z",
+    "lease_ate": null,
     "branch": "agy/W2-30",
     "pr": "local",
     "criterios": [
@@ -1270,9 +1270,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
-    "responsavel": "Ferradura",
-    "lease_ate": "2026-11-14T23:57:03.154Z",
+    "status": "em_andamento",
+    "responsavel": "Brida",
+    "lease_ate": "2026-11-15T00:21:09.511Z",
     "branch": "agy/W2-31",
     "pr": "local",
     "criterios": [
@@ -1291,7 +1291,7 @@
       "W1-22"
     ],
     "status": "para_revisao",
-    "responsavel": "Baliza",
+    "responsavel": "Marco",
     "lease_ate": null,
     "branch": "agy/W2-32",
     "pr": "local",
@@ -1300,7 +1300,7 @@
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ],
-    "revisor": "Bússola"
+    "revisor": "Cotejo"
   },
   {
     "id": "W2-33",
@@ -1311,16 +1311,17 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Sinete",
-    "lease_ate": "2026-11-14T23:52:07.444Z",
+    "lease_ate": null,
     "branch": "agy/W2-33",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Sigilo"
   },
   {
     "id": "W2-34",
@@ -1331,9 +1332,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Tranca",
+    "lease_ate": "2026-11-15T00:20:44.347Z",
     "branch": "agy/W2-34",
     "pr": null,
     "criterios": [
@@ -1351,9 +1352,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Rampa",
+    "lease_ate": "2026-11-15T00:21:09.844Z",
     "branch": "agy/W2-35",
     "pr": null,
     "criterios": [
