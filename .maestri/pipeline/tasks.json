@@ -1330,9 +1330,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Lacre",
-    "lease_ate": "2026-11-15T02:48:12.598Z",
+    "lease_ate": null,
     "branch": "agy/W2-34",
     "pr": "local",
     "criterios": [
@@ -1350,7 +1350,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Rampa",
     "lease_ate": null,
     "branch": "agy/W2-35",
@@ -1370,11 +1370,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Vazio",
-    "lease_ate": "2026-11-15T02:48:19.997Z",
+    "lease_ate": null,
     "branch": "agy/W2-36",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1391,7 +1391,7 @@
     "status": "backlog",
     "responsavel": null,
     "lease_ate": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1399,7 +1399,8 @@
     ],
     "id": "W2-37",
     "titulo": "MarketProvider no layout raiz com mercado do cookie (useMarket no cliente)",
-    "branch": "agy/W2-37"
+    "branch": "agy/W2-37",
+    "nota": "MUDANÇAS: ver DECISIONS 15/11 (provider raiz sem cookies())"
   },
   {
     "onda": 2,
@@ -1408,9 +1409,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Coleira2",
+    "lease_ate": "2026-11-15T02:59:16.444Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1428,6 +1429,22 @@
     "depende_de": [
       "W1-22"
     ],
+    "status": "entregue",
+    "responsavel": "Selo2",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W2-39",
+    "titulo": "Contrato: ContactInput.copy, consulta de pedido de visitante, reorder e copy link",
+    "branch": "agy/W2-39"
+  },
+  {
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
     "status": "backlog",
     "responsavel": null,
     "lease_ate": null,
@@ -1437,8 +1454,72 @@
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ],
-    "id": "W2-39",
-    "titulo": "Contrato: ContactInput.copy, consulta de pedido de visitante, reorder e copy link",
-    "branch": "agy/W2-39"
+    "id": "W2-40",
+    "onda": 2,
+    "titulo": "Ligar /help, /track estado B e /account/orders aos novos campos do contrato",
+    "depende_de": [
+      "W2-39"
+    ],
+    "branch": "agy/W2-40"
+  },
+  {
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "status": "em_andamento",
+    "responsavel": "Inventário",
+    "lease_ate": "2026-11-15T03:02:27.183Z",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W3-01",
+    "onda": 3,
+    "titulo": "Teste semântico: cada botão e campo do catálogo seção 5 existe como elemento semântico (Vitest)",
+    "depende_de": [
+      "W2-36"
+    ],
+    "branch": "agy/W3-01"
+  },
+  {
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "status": "em_andamento",
+    "responsavel": "Roteiro",
+    "lease_ate": "2026-11-15T03:01:33.389Z",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W3-02",
+    "onda": 3,
+    "titulo": "Specs Playwright de compra, quiz e conta (escritas para o CI, não executadas no Mac)",
+    "depende_de": [
+      "W2-36"
+    ],
+    "branch": "agy/W3-02"
+  },
+  {
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W3-03",
+    "onda": 3,
+    "titulo": "Checagem de links internos, metadata e JSON-LD de todas as rotas (script + teste)",
+    "depende_de": [
+      "W2-36"
+    ],
+    "branch": "agy/W3-03"
   }
 ]

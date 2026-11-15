@@ -55,6 +55,7 @@ const mockOrders: Order[] = [
     createdAt: new Date(Date.now() - 86400 * 1000 * 5).toISOString(),
     financialStatus: "paid",
     fulfillmentStatus: "delivered",
+    email: "alex.morgan@example.com",
     items: [
       {
         title: "BioHack - 2 Jars (60 days)",
@@ -62,12 +63,21 @@ const mockOrders: Order[] = [
         price: { amount: 118, currencyCode: "USD" },
         image: "/images/products/biohack-front.webp",
         variantTitle: "2 Jars",
+        variantId: "var_biohack_1",
+      },
+    ],
+    lines: [
+      {
+        variantId: "var_biohack_1",
+        quantity: 1,
       },
     ],
     total: { amount: 118, currencyCode: "USD" },
     shippingAddress: mockAddresses[0],
     trackingNumber: "1Z9999999999999999",
     trackingUrl: "https://www.ups.com/track?tracknum=1Z9999999999999999",
+    url: "/account/orders/ord_100234",
+    statusUrl: "https://track.nadeonlabs.com/orders/NL-100234",
   }),
   OrderSchema.parse({
     id: "ord_100189",
@@ -75,6 +85,7 @@ const mockOrders: Order[] = [
     createdAt: new Date(Date.now() - 86400 * 1000 * 20).toISOString(),
     financialStatus: "paid",
     fulfillmentStatus: "in_transit",
+    email: "alex.morgan@example.com",
     items: [
       {
         title: "More Good Years Soft Chews - 1 Jar",
@@ -82,12 +93,21 @@ const mockOrders: Order[] = [
         price: { amount: 44, currencyCode: "USD" },
         image: "/images/products/more-good-years-front.webp",
         variantTitle: "1 Jar",
+        variantId: "var_mgy_2",
+      },
+    ],
+    lines: [
+      {
+        variantId: "var_mgy_2",
+        quantity: 1,
       },
     ],
     total: { amount: 44, currencyCode: "USD" },
     shippingAddress: mockAddresses[0],
     trackingNumber: "1Z8888888888888888",
     trackingUrl: "https://www.ups.com/track?tracknum=1Z8888888888888888",
+    url: "/account/orders/ord_100189",
+    statusUrl: "https://track.nadeonlabs.com/orders/NL-100189",
   }),
 ];
 
@@ -128,6 +148,27 @@ export class MockAccountProvider implements AccountProvider {
 
   async getOrder(id: string): Promise<Order | null> {
     const found = mockOrders.find((o) => o.id === id || o.orderNumber === id);
+    return found ? { ...found } : null;
+  }
+
+  async lookupGuestOrder(
+    orderNumber: string,
+    email: string
+  ): Promise<Order | null> {
+    if (!orderNumber || !email) {
+      return null;
+    }
+    const normNumber = orderNumber.trim().toLowerCase();
+    const normEmail = email.trim().toLowerCase();
+    const found = mockOrders.find((o) => {
+      const matchNumber =
+        o.orderNumber.toLowerCase() === normNumber ||
+        o.id.toLowerCase() === normNumber;
+      const matchEmail = o.email
+        ? o.email.trim().toLowerCase() === normEmail
+        : false;
+      return matchNumber && matchEmail;
+    });
     return found ? { ...found } : null;
   }
 
