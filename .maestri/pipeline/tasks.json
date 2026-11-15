@@ -1388,6 +1388,26 @@
     "depende_de": [
       "W1-22"
     ],
+    "status": "em_andamento",
+    "responsavel": "Bitola2",
+    "lease_ate": "2026-11-15T03:12:38.795Z",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W2-37",
+    "titulo": "MarketProvider no layout raiz com mercado do cookie (useMarket no cliente)",
+    "branch": "agy/W2-37"
+  },
+  {
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "depende_de": [
+      "W1-22"
+    ],
     "status": "backlog",
     "responsavel": null,
     "lease_ate": null,
@@ -1397,30 +1417,10 @@
       "diff só nos caminhos do briefing",
       "revisão APROVADO"
     ],
-    "id": "W2-37",
-    "titulo": "MarketProvider no layout raiz com mercado do cookie (useMarket no cliente)",
-    "branch": "agy/W2-37",
-    "nota": "MUDANÇAS: ver DECISIONS 15/11 (provider raiz sem cookies())"
-  },
-  {
-    "onda": 2,
-    "papel": "Frontend",
-    "preset": "Gemini 3.8 Flash (AGY)",
-    "depende_de": [
-      "W1-22"
-    ],
-    "status": "em_andamento",
-    "responsavel": "Coleira2",
-    "lease_ate": "2026-11-15T02:59:16.444Z",
-    "pr": null,
-    "criterios": [
-      "pnpm gate verde",
-      "diff só nos caminhos do briefing",
-      "revisão APROVADO"
-    ],
     "id": "W2-38",
     "titulo": "QuizResultPet sem preço, moeda e claims fixos (componente compartilhado do quiz)",
-    "branch": "agy/W2-38"
+    "branch": "agy/W2-38",
+    "nota": "MUDANÇAS do Faro2 (5 fallbacks inventados); aguarda construtor"
   },
   {
     "onda": 2,
@@ -1445,9 +1445,9 @@
   {
     "papel": "Frontend",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Elo",
+    "lease_ate": "2026-11-15T03:13:01.623Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1467,7 +1467,7 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "status": "em_andamento",
     "responsavel": "Inventário",
-    "lease_ate": "2026-11-15T03:02:27.183Z",
+    "lease_ate": "2026-11-15T03:12:59.552Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1485,10 +1485,10 @@
   {
     "papel": "QA",
     "preset": "Gemini 3.8 Flash (AGY)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Roteiro",
-    "lease_ate": "2026-11-15T03:01:33.389Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1500,7 +1500,8 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-02"
+    "branch": "agy/W3-02",
+    "revisor": "Ensaio"
   },
   {
     "papel": "QA",
