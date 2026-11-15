@@ -185,31 +185,33 @@ describe("5.6 Semantic Elements: Quiz", () => {
       fireEvent.click(screen.getByRole("button", { name: /start the quiz/i }));
 
       // Question 1
-      fireEvent.click(screen.getByText("35 to 44"));
+      fireEvent.click(screen.getByRole("button", { name: /^35 to 44\b/ }));
       fireEvent.click(
         screen.getByRole("button", { name: /continue to next step/i })
       );
 
       // Question 2
-      fireEvent.click(screen.getByText("Daily energy"));
+      fireEvent.click(screen.getByRole("button", { name: /^Daily energy\b/ }));
       fireEvent.click(
         screen.getByRole("button", { name: /continue to next step/i })
       );
 
       // Question 3
-      fireEvent.click(screen.getByText("Sometimes"));
+      fireEvent.click(screen.getByRole("button", { name: /^Sometimes\b/ }));
       fireEvent.click(
         screen.getByRole("button", { name: /continue to next step/i })
       );
 
       // Question 4
-      fireEvent.click(screen.getByText("Capsules"));
+      fireEvent.click(screen.getByRole("button", { name: /^Capsules\b/ }));
       fireEvent.click(
         screen.getByRole("button", { name: /continue to next step/i })
       );
 
       // Question 5
-      fireEvent.click(screen.getByText("No, I am new to NMN"));
+      fireEvent.click(
+        screen.getByRole("button", { name: /^No, I am new to NMN\b/ })
+      );
       fireEvent.click(
         screen.getByRole("button", { name: /continue to next step/i })
       );

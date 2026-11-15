@@ -11,6 +11,7 @@ import SciencePage from "@/app/(shared)/science/page";
 import ShippingReturnsPage from "@/app/(shared)/shipping-returns/page";
 import HumanSubscribePage from "@/app/(human)/human/subscribe/page";
 import PetSubscribePage from "@/app/(pet)/pet/subscribe/page";
+import AccessibilityPage from "@/app/(shared)/legal/accessibility/page";
 import NotFound from "@/app/not-found";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import { mockLabsProvider } from "@/lib/providers/mock/labs";
@@ -212,15 +213,27 @@ describe("5.7 Semantic Elements: Conteúdo e páginas de apoio", () => {
     }
   });
 
+  it("Accessibility statement renders labeled feedback fields and submit action", () => {
+    render(<AccessibilityPage />);
+    for (const name of [
+      "Name",
+      "Email",
+      "Page or feature (optional)",
+      "Describe the issue",
+      "Preferred reply format",
+      "Assistive technology used (optional)",
+    ]) {
+      expect(screen.getByLabelText(name)).toBeDefined();
+    }
+    expect(screen.getByRole("button", { name: "Send feedback" })).toBeDefined();
+  });
+
   it.todo(
     "Journal Human/Pet and Journal category/article pages are not implemented in this branch yet"
   );
   it.todo("Our Experts page is not implemented in this branch yet");
   it.todo(
     "Legal tabs and Do Not Sell pages are not fully implemented in this branch yet"
-  );
-  it.todo(
-    "Accessibility statement page is implemented, but its listed feedback fields are outside the currently available rendered route test setup"
   );
   it.todo("Breed guide pages are not implemented in this branch yet");
   it.todo(

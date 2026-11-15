@@ -286,7 +286,9 @@ describe("5.2 Semantic Elements: Loja", () => {
       ).toBeDefined();
 
       // COA Search
-      expect(screen.getByPlaceholderText(/e\.g\. nl-0000/i)).toBeDefined();
+      expect(
+        screen.getByRole("textbox", { name: "Enter lot number" })
+      ).toBeDefined();
       expect(screen.getByRole("button", { name: /search/i })).toBeDefined();
 
       // Supporting sections
