@@ -265,8 +265,9 @@ export function TrackResult({ order, market }: TrackResultProps) {
               Need a hand with this order?
             </h3>
             <p className="mt-2 text-sm text-fg-muted leading-relaxed">
-              Damaged jar, missing item or a question? We reply within 1 business
-              day. Returns are covered by our 60-day money-back guarantee.
+              Damaged jar, missing item or a question? We reply within 1
+              business day. Returns are covered by our 60-day money-back
+              guarantee.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Button variant="primary" size="sm" href="/help#contact">

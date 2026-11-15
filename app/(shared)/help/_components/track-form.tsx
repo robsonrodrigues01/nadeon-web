@@ -54,19 +54,17 @@ export function TrackForm() {
       </Button>
 
       <div role="status" aria-live="polite" className="text-sm text-fg-muted">
-        {state.status === "invalid" && (
-          <p>Check the order number and email.</p>
-        )}
+        {state.status === "invalid" && <p>Check the order number and email.</p>}
         {state.status === "not_found" && (
           <p>No order found with those details.</p>
         )}
-        {state.status === "error" && (
-          <p>Unable to track order. Try again.</p>
-        )}
+        {state.status === "error" && <p>Unable to track order. Try again.</p>}
         {state.status === "found" && (
           <div className="mt-4 rounded-card border border-border bg-bg-elevated p-4 flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-fg">Order #{state.orderNumber}</span>
+              <span className="font-bold text-fg">
+                Order #{state.orderNumber}
+              </span>
               <span className="capitalize font-bold text-accent">
                 {state.fulfillmentStatus.replace("_", " ")}
               </span>

@@ -75,11 +75,15 @@ export default async function TrackOrderPage({
     if (!parsed.success) {
       errorMessage = "Check the order number and email.";
     } else {
-      order = await accountProvider.lookupGuestOrder(
-        parsed.data.orderNumber,
-        parsed.data.email
-      );
-      if (!order) {
+      try {
+        order = await accountProvider.lookupGuestOrder(
+          parsed.data.orderNumber,
+          parsed.data.email
+        );
+      } catch {
+        errorMessage = "Unable to look up your order. Please try again.";
+      }
+      if (!order && !errorMessage) {
         errorMessage =
           "No order found with that number and email. Please check your confirmation email.";
       }
@@ -149,8 +153,8 @@ export default async function TrackOrderPage({
                   <ol className="mt-5 flex flex-col gap-4 text-sm text-fg-muted">
                     <li>
                       Search your inbox for{" "}
-                      <strong>&quot;Nadeon order&quot;</strong>. The number is at
-                      the top of the confirmation email.
+                      <strong>&quot;Nadeon order&quot;</strong>. The number is
+                      at the top of the confirmation email.
                     </li>
                     <li>
                       Order numbers start with <strong>NL-</strong> and have 6
@@ -161,8 +165,8 @@ export default async function TrackOrderPage({
                       number.
                     </li>
                     <li>
-                      Still stuck? Chat with us or email support and we will find
-                      it.
+                      Still stuck? Chat with us or email support and we will
+                      find it.
                     </li>
                   </ol>
                 </aside>

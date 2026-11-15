@@ -270,7 +270,10 @@ describe("W2-27: /help route", () => {
         { status: "idle" },
         formData({ orderNumber: "nl-100234", email: "ana@example.com" })
       );
-      expect(lookupGuestOrder).toHaveBeenCalledWith("NL-100234", "ana@example.com");
+      expect(lookupGuestOrder).toHaveBeenCalledWith(
+        "NL-100234",
+        "ana@example.com"
+      );
       expect(result).toEqual({
         status: "found",
         orderNumber: "NL-100234",
