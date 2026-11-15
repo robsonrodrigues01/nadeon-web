@@ -143,11 +143,12 @@ describe("5.4 Semantic Elements: Conta", () => {
       expect(
         screen.getByRole("link", { name: /track package/i })
       ).toBeDefined();
+      // W2-43: sem contrato de devolução, "Start a return" leva ao /help.
       expect(
         screen
-          .getByRole("button", { name: "Start a return" })
-          .hasAttribute("disabled")
-      ).toBe(true);
+          .getByRole("link", { name: "Start a return" })
+          .getAttribute("href")
+      ).toBe("/help?subject=return");
     });
   });
 
