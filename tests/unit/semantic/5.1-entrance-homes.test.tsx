@@ -171,13 +171,9 @@ describe("5.1 Semantic Elements: Entrada e Homes", () => {
       const aboutUs = screen.getByRole("link", { name: /about us/i });
       expect(aboutUs.getAttribute("href")).toBe("/about");
 
-      const readReviews = screen.getByRole("link", {
-        name: /read all reviews/i,
-      });
-      expect(readReviews.getAttribute("href")).toBe("/reviews");
-
-      const allArticles = screen.getByRole("link", { name: /all articles/i });
-      expect(allArticles.getAttribute("href")).toBe("/journal");
+      // W3-04: links para rotas da onda C retirados até a rota existir.
+      expect(document.querySelector('a[href="/reviews"]')).toBeNull();
+      expect(document.querySelector('a[href="/journal"]')).toBeNull();
 
       const allFaqs = screen.getByRole("link", { name: /all faqs/i });
       expect(allFaqs.getAttribute("href")).toBe("/faq");
@@ -313,13 +309,9 @@ describe("5.1 Semantic Elements: Entrada e Homes", () => {
         "https://instagram.com/nadeonlabs"
       );
 
-      const readReviews = screen.getByRole("link", {
-        name: /read all reviews/i,
-      });
-      expect(readReviews.getAttribute("href")).toBe("/reviews");
-
-      const allArticles = screen.getByRole("link", { name: /all articles/i });
-      expect(allArticles.getAttribute("href")).toBe("/journal");
+      // W3-04: links para rotas da onda C retirados até a rota existir.
+      expect(document.querySelector('a[href="/reviews"]')).toBeNull();
+      expect(document.querySelector('a[href="/journal"]')).toBeNull();
 
       const allFaqs = screen.getByRole("link", { name: /all faqs/i });
       expect(allFaqs.getAttribute("href")).toBe("/faq");

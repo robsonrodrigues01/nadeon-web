@@ -214,7 +214,6 @@ describe("5.7 Semantic Elements: Conteúdo e páginas de apoio", () => {
       "Shop Human",
       "BioHack",
       "Science",
-      "Journal",
       "Take the quiz",
       "Help center",
     ]) {

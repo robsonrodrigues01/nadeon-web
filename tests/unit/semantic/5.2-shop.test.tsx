@@ -81,8 +81,8 @@ describe("5.2 Semantic Elements: Loja", () => {
       });
       expect(addToCartButtons.length).toBeGreaterThan(0);
 
-      const compareLink = screen.getByRole("link", { name: "Compare" });
-      expect(compareLink.getAttribute("href")).toBe("/human/compare");
+      // W3-04: links para rotas da onda C retirados até a rota existir.
+      expect(document.querySelector('a[href="/human/compare"]')).toBeNull();
 
       // Better together: Add the duo
       const addDuoButtons = screen.getAllByRole("button", {
