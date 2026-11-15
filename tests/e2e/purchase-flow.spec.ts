@@ -15,7 +15,7 @@ if (!process.env.VITEST) {
       await expect(
         page.getByRole("heading", { level: 1, name: /biohack/i })
       ).toBeVisible();
-      await expect(page.getByText(/NMN 500 mg/i).first()).toBeVisible();
+      await expect(page.getByText(/NMN 500 mg/i)).toBeVisible();
 
       // Verify purchase options container is present
       const addToCartButton = page.getByRole("button", {
@@ -107,7 +107,7 @@ if (!process.env.VITEST) {
       await expect(
         page.getByRole("heading", { level: 1, name: /your cart/i })
       ).toBeVisible();
-      await expect(page.getByText(/biohack/i).first()).toBeVisible();
+      await expect(page.getByText(/biohack/i)).toBeVisible();
     });
 
     test("manages cart line items, quantity adjustments, and removal", async ({
@@ -138,7 +138,7 @@ if (!process.env.VITEST) {
       await expect(
         page.getByRole("heading", { level: 2, name: /order summary/i })
       ).toBeVisible();
-      await expect(page.getByText(/subtotal/i).first()).toBeVisible();
+      await expect(page.getByText(/subtotal/i)).toBeVisible();
 
       // Remove item
       const removeBtn = page.getByRole("button", { name: /remove/i });
@@ -157,7 +157,7 @@ if (!process.env.VITEST) {
       await expect(page.getByText(/added .* to cart/i)).toBeVisible();
 
       await page.goto("/cart");
-      const promoInput = page.getByPlaceholder(/enter code/i);
+      const promoInput = page.getByLabel(/promo code/i);
       await expect(promoInput).toBeVisible();
 
       await promoInput.fill("SAVE10");
@@ -169,6 +169,14 @@ if (!process.env.VITEST) {
     }: {
       page: Page;
     }) => {
+      await page.route("https://checkout.nadeon.com/**", (route) => {
+        route.fulfill({
+          status: 200,
+          contentType: "text/html",
+          body: "<html><body><h1>Mock Checkout</h1></body></html>",
+        });
+      });
+
       // Add product to ensure cart is not empty
       await page.goto("/human/products/biohack");
       await page.getByRole("button", { name: /add to cart/i }).click();
@@ -184,15 +192,6 @@ if (!process.env.VITEST) {
         name: /checkout securely/i,
       });
       await expect(checkoutButton).toBeVisible();
-
-      // Mock/intercept navigation to the checkout domain
-      await page.route("**/checkout.nadeon.com/**", (route) => {
-        route.fulfill({
-          status: 200,
-          contentType: "text/html",
-          body: "<html><body><h1>Mock Checkout</h1></body></html>",
-        });
-      });
 
       // Click checkout and wait for redirection
       await Promise.all([
