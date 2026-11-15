@@ -4,9 +4,13 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, cleanup, within } from "@testing-library/react";
 
 const sendContact = vi.fn();
+const lookupGuestOrder = vi.fn();
 
 vi.mock("@/lib/providers", () => ({
   formsProvider: { sendContact: (...args: unknown[]) => sendContact(...args) },
+  accountProvider: {
+    lookupGuestOrder: (...args: unknown[]) => lookupGuestOrder(...args),
+  },
 }));
 
 import HelpPage, { metadata } from "@/app/(shared)/help/page";
@@ -31,6 +35,7 @@ describe("W2-27: /help route", () => {
   beforeEach(() => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     sendContact.mockReset();
+    lookupGuestOrder.mockReset();
   });
 
   afterEach(() => {
@@ -214,6 +219,21 @@ describe("W2-27: /help route", () => {
       expect(sendContact).toHaveBeenCalledWith({
         ...valid,
         orderNumber: undefined,
+        copy: undefined,
+      });
+    });
+
+    it("forwards copy: true when 'Send me a copy' is checked", async () => {
+      sendContact.mockResolvedValue({ success: true, id: "c2" });
+      const result = await sendContactMessage(
+        { status: "idle" },
+        formData({ ...valid, copy: "on" })
+      );
+      expect(result).toEqual({ status: "sent" });
+      expect(sendContact).toHaveBeenCalledWith({
+        ...valid,
+        orderNumber: undefined,
+        copy: true,
       });
     });
 
@@ -234,14 +254,40 @@ describe("W2-27: /help route", () => {
         formData({ orderNumber: "XX-1", email: "ana@example.com" })
       );
       expect(result).toEqual({ status: "invalid" });
+      expect(lookupGuestOrder).not.toHaveBeenCalled();
     });
 
-    it("accepts a valid order number and email, reporting pending", async () => {
+    it("accepts a valid order number and email, querying lookupGuestOrder", async () => {
+      lookupGuestOrder.mockResolvedValue({
+        id: "ord_100234",
+        orderNumber: "NL-100234",
+        fulfillmentStatus: "in_transit",
+        trackingNumber: "1Z999",
+        trackingUrl: "https://ups.com/track/1Z999",
+        items: [{ title: "BioHack", quantity: 1 }],
+      });
       const result = await lookupOrder(
         { status: "idle" },
         formData({ orderNumber: "nl-100234", email: "ana@example.com" })
       );
-      expect(result).toEqual({ status: "pending" });
+      expect(lookupGuestOrder).toHaveBeenCalledWith("NL-100234", "ana@example.com");
+      expect(result).toEqual({
+        status: "found",
+        orderNumber: "NL-100234",
+        fulfillmentStatus: "in_transit",
+        trackingNumber: "1Z999",
+        trackingUrl: "https://ups.com/track/1Z999",
+        itemCount: 1,
+      });
+    });
+
+    it("reports not_found when lookupGuestOrder returns null", async () => {
+      lookupGuestOrder.mockResolvedValue(null);
+      const result = await lookupOrder(
+        { status: "idle" },
+        formData({ orderNumber: "NL-999999", email: "nobody@example.com" })
+      );
+      expect(result).toEqual({ status: "not_found" });
     });
   });
 });
