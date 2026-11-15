@@ -2,6 +2,7 @@ import type {
   Address,
   FulfillmentStatus,
   Order,
+  OrderLine,
 } from "@/lib/contracts/account";
 import type { Money } from "@/lib/contracts/catalog";
 
@@ -39,6 +40,8 @@ export interface OrderRowView {
   totalLabel: string;
   itemTitles: string[];
   trackingUrl?: string;
+  lines?: OrderLine[];
+  url?: string;
   searchText: string;
 }
 
@@ -59,6 +62,8 @@ export interface OrderDetailView {
   items: OrderItemView[];
   trackingNumber?: string;
   trackingUrl?: string;
+  lines?: OrderLine[];
+  url?: string;
   addressLines?: string[];
 }
 
@@ -73,6 +78,8 @@ export function toOrderRowView(order: Order, f: OrderFormatters): OrderRowView {
     totalLabel: f.money(order.total),
     itemTitles,
     trackingUrl: order.trackingUrl,
+    lines: order.lines,
+    url: order.url,
     searchText: [order.orderNumber, ...itemTitles].join(" ").toLowerCase(),
   };
 }
@@ -96,6 +103,8 @@ export function toOrderDetailView(
     })),
     trackingNumber: order.trackingNumber,
     trackingUrl: order.trackingUrl,
+    lines: order.lines,
+    url: order.url,
     addressLines: order.shippingAddress
       ? formatAddressLines(
           order.shippingAddress,

@@ -1,14 +1,22 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { lookupOrder } from "./actions";
 
 interface OrderLookupProps {
   signInHref: string;
+  errorMessage?: string;
+  initialValues?: {
+    orderNumber?: string;
+    email?: string;
+  };
 }
 
-// Estado A do design: formulário sem resultado. Sem JavaScript de cliente.
-export function OrderLookup({ signInHref }: OrderLookupProps) {
+// Estado A do design: formulário de busca de pedido de visitante.
+export function OrderLookup({
+  signInHref,
+  errorMessage,
+  initialValues,
+}: OrderLookupProps) {
   return (
     <section
       aria-labelledby="order-lookup-heading"
@@ -24,7 +32,7 @@ export function OrderLookup({ signInHref }: OrderLookupProps) {
         Find your order
       </h2>
 
-      <form action={lookupOrder} className="mt-6 flex flex-col gap-5">
+      <form method="GET" action="/track" className="mt-6 flex flex-col gap-5">
         <div className="flex flex-col gap-2">
           <label htmlFor="order-number" className="text-sm font-bold text-fg">
             Order number
@@ -37,6 +45,7 @@ export function OrderLookup({ signInHref }: OrderLookupProps) {
             autoComplete="off"
             autoCapitalize="characters"
             pattern="[Nn][Ll]-[0-9]{6}"
+            defaultValue={initialValues?.orderNumber ?? ""}
             aria-describedby="order-number-hint"
             className="min-h-11 w-full rounded-field border border-border bg-bg px-4 py-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           />
@@ -55,6 +64,7 @@ export function OrderLookup({ signInHref }: OrderLookupProps) {
             type="email"
             required
             autoComplete="email"
+            defaultValue={initialValues?.email ?? ""}
             aria-describedby="order-email-hint"
             className="min-h-11 w-full rounded-field border border-border bg-bg px-4 py-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           />
@@ -66,6 +76,12 @@ export function OrderLookup({ signInHref }: OrderLookupProps) {
         <Button type="submit" size="lg" className="w-full">
           Track order
         </Button>
+
+        {errorMessage && (
+          <p role="status" aria-live="polite" className="text-sm text-accent">
+            {errorMessage}
+          </p>
+        )}
       </form>
 
       <p className="mt-6 text-sm text-fg-muted">
