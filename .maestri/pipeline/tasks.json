@@ -1723,8 +1723,7 @@
     ],
     "id": "W3-10",
     "titulo": "Fontes e tema: --font-sans cíclico no globals.css (títulos em serif); superfícies Human/Pet conforme tokens",
-    "branch": "agy/W3-10",
-    "revisor": "Pincel"
+    "branch": "agy/W3-10"
   },
   {
     "onda": 3,
@@ -1779,7 +1778,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Moldura",
-    "lease_ate": "2026-11-15T04:47:09.204Z",
+    "lease_ate": "2026-11-15T04:50:18.979Z",
     "branch": "agy/W3-13",
     "pr": null,
     "criterios": [
