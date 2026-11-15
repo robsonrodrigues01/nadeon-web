@@ -16,7 +16,8 @@ import { HowItWorks } from "./_components/how-it-works";
 import { MathComparison } from "./_components/math-comparison";
 import { FrequencySection } from "./_components/frequency-section";
 import { FlexibilitySection } from "./_components/flexibility-section";
-import { SubscribeFaq, getSubscribeFaqs } from "./_components/subscribe-faq";
+import { SubscribeFaq } from "./_components/subscribe-faq";
+import { getSubscribeFaqs } from "./_components/subscribe-faq-data";
 import { BottomCta } from "./_components/bottom-cta";
 import {
   getSubscriptionDiscountPercentage,

@@ -16,10 +16,8 @@ import { HowItWorks } from "@/app/(human)/human/subscribe/_components/how-it-wor
 import { MathComparison } from "@/app/(human)/human/subscribe/_components/math-comparison";
 import { FrequencySection } from "@/app/(human)/human/subscribe/_components/frequency-section";
 import { BottomCta } from "@/app/(human)/human/subscribe/_components/bottom-cta";
-import {
-  getSubscribeFaqs,
-  SubscribeFaq,
-} from "@/app/(human)/human/subscribe/_components/subscribe-faq";
+import { SubscribeFaq } from "@/app/(human)/human/subscribe/_components/subscribe-faq";
+import { getSubscribeFaqs } from "@/app/(human)/human/subscribe/_components/subscribe-faq-data";
 import {
   getSubscriptionDiscountPercentage,
   getProductSubscriptionDiscount,
