@@ -12,6 +12,7 @@ import { PurchaseOptions } from "@/components/commerce/purchase-options";
 import { Claim } from "@/components/commerce/product-card/claim";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { getVisitorMarket } from "@/lib/market/visitor";
+import { MarketProvider } from "@/lib/market/context";
 
 import { Gallery } from "./_components/gallery";
 import { DetailsTabs } from "./_components/details-tabs";
@@ -101,7 +102,7 @@ export default async function ProductPage({ params }: PageProps) {
       : null;
 
   return (
-    <>
+    <MarketProvider initialMarket={market}>
       <JsonLd
         data={jsonLdData as unknown as Record<string, unknown>}
         id="product-schema-jsonld"
@@ -307,6 +308,6 @@ export default async function ProductPage({ params }: PageProps) {
 
       {/* Sticky Bottom Bar on Scroll */}
       <StickyBar product={product} market={market} />
-    </>
+    </MarketProvider>
   );
 }

@@ -130,6 +130,12 @@ export class LiveAccountProvider implements AccountProvider {
   async getOrder(_id: string): Promise<Order | null> {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
+  async lookupGuestOrder(
+    _orderNumber: string,
+    _email: string
+  ): Promise<Order | null> {
+    throw new Error(NOT_IMPLEMENTED_MSG);
+  }
   async getAddresses(): Promise<Address[]> {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }

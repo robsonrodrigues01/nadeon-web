@@ -1,4 +1,5 @@
 import { getVisitorMarket } from "@/lib/market/visitor";
+import { MarketProvider } from "@/lib/market/context";
 import React from "react";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
@@ -44,7 +45,7 @@ export default async function HumanShopPage() {
   const faqSchema = buildFaqJsonLd(SHOPPING_FAQS);
 
   return (
-    <>
+    <MarketProvider initialMarket={market}>
       <JsonLd
         id="shop-structured-data"
         data={[
@@ -70,6 +71,6 @@ export default async function HumanShopPage() {
 
       <TrustStrip line="human" />
       <Footer line="human" />
-    </>
+    </MarketProvider>
   );
 }
