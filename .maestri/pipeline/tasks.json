@@ -1330,9 +1330,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Lacre",
-    "lease_ate": "2026-11-15T02:48:12.598Z",
+    "lease_ate": null,
     "branch": "agy/W2-34",
     "pr": "local",
     "criterios": [
@@ -1370,11 +1370,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Vazio",
-    "lease_ate": "2026-11-15T02:48:19.997Z",
+    "lease_ate": null,
     "branch": "agy/W2-36",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1390,7 +1390,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Mapa",
-    "lease_ate": "2026-11-15T02:48:30.587Z",
+    "lease_ate": "2026-11-15T02:50:57.508Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1408,9 +1408,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Coleira2",
+    "lease_ate": "2026-11-15T02:51:51.698Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -1428,9 +1428,9 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Selo2",
+    "lease_ate": "2026-11-15T02:53:14.972Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
