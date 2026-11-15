@@ -4,10 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { catalogProvider } from "@/lib/providers";
 import { buildMetadata, buildProductJsonLd, JsonLd } from "@/lib/seo";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { TrustStrip } from "@/components/brand/trust-strip";
 import { PurchaseOptions } from "@/components/commerce/purchase-options";
 import { Claim } from "@/components/commerce/product-card/claim";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
@@ -107,10 +103,6 @@ export default async function ProductPage({ params }: PageProps) {
         data={jsonLdData as unknown as Record<string, unknown>}
         id="product-schema-jsonld"
       />
-
-      {/* Global Announcements & Navigation */}
-      <AnnouncementBar line="human" />
-      <Header variant="human" />
 
       <main className="min-h-screen bg-bg text-fg">
         {/* Breadcrumb Navigation */}
@@ -298,13 +290,9 @@ export default async function ProductPage({ params }: PageProps) {
 
         {/* Section 8: FAQ */}
         <FaqSection productName={product.name} />
-
-        {/* Section 9: Brand Trust Strip */}
-        <TrustStrip line="human" />
       </main>
 
       {/* Global Footer */}
-      <Footer line="human" />
 
       {/* Sticky Bottom Bar on Scroll */}
       <StickyBar product={product} market={market} />

@@ -9,10 +9,6 @@ import {
   buildFaqJsonLd,
   JsonLd,
 } from "@/lib/seo";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { TrustStrip } from "@/components/brand/trust-strip";
-import { Footer } from "@/components/layout/footer";
 import { ShopHero } from "./_components/shop-hero";
 import { ShopCollection } from "./_components/shop-collection";
 import { BetterTogetherSection } from "./_components/better-together";
@@ -54,9 +50,6 @@ export default async function HumanShopPage() {
         ]}
       />
 
-      <AnnouncementBar line="human" />
-      <Header variant="human" />
-
       <main id="main-content" className="flex-1">
         <ShopHero />
         <ShopCollection products={products} />
@@ -68,9 +61,6 @@ export default async function HumanShopPage() {
         <QuizBanner />
         <ShoppingFaqSection />
       </main>
-
-      <TrustStrip line="human" />
-      <Footer line="human" />
     </MarketProvider>
   );
 }

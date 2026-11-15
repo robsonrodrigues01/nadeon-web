@@ -4,10 +4,6 @@ import React from "react";
 import type { Metadata } from "next";
 import { catalogProvider } from "@/lib/providers";
 import { buildMetadata, JsonLd } from "@/lib/seo";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { TrustStrip } from "@/components/brand/trust-strip";
 
 import { Hero } from "./_components/hero";
 import { DogProductsSection } from "./_components/dog-products-section";
@@ -51,14 +47,8 @@ export default async function DogsPage() {
 
   return (
     <MarketProvider initialMarket={market}>
-      <div className="flex min-h-screen flex-col bg-bg text-fg">
+      <>
         <JsonLd data={jsonLdData} id="dogs-collection-ld" />
-
-        {/* Global Pet Announcement Bar */}
-        <AnnouncementBar line="pet" />
-
-        {/* Pet Header */}
-        <Header variant="pet" />
 
         <main id="main-content" className="flex-1">
           {/* 1. Hero Section */}
@@ -75,14 +65,8 @@ export default async function DogsPage() {
 
           {/* 5. Cats and Horses Section */}
           <CatsAndHorsesSection products={[...catProducts, ...horseProducts]} />
-
-          {/* 6. Pet Trust Strip */}
-          <TrustStrip line="pet" />
         </main>
-
-        {/* Pet Footer */}
-        <Footer line="pet" />
-      </div>
+      </>
     </MarketProvider>
   );
 }
