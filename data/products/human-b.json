@@ -9,7 +9,7 @@
       "species": null,
       "format": "Tinctures",
       "color": "#FF9A5C",
-      "images": ["/images/products/powerhouse-front.webp"],
+      "images": ["/renders/powerhouse.png"],
       "actives": [
         {
           "name": "Ubiquinol CoQ10",
@@ -120,7 +120,7 @@
       "species": null,
       "format": "Tinctures",
       "color": "#F3CC62",
-      "images": ["/images/products/daylight-front.webp"],
+      "images": ["/renders/daylight.png"],
       "actives": [
         {
           "name": "Vitamin D3 (Cholecalciferol)",
