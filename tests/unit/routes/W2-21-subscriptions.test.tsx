@@ -17,7 +17,9 @@ vi.mock("next/navigation", () => ({
 import SubscriptionsPage, {
   metadata,
 } from "@/app/(account)/account/subscriptions/page";
-import CancelSubscriptionPage from "@/app/(account)/account/subscriptions/[id]/cancel/page";
+import CancelSubscriptionPage, {
+  metadata as cancelMetadata,
+} from "@/app/(account)/account/subscriptions/[id]/cancel/page";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
 import { subscriptionProvider } from "@/lib/providers";
@@ -162,6 +164,17 @@ describe("W2-21 /account/subscriptions", () => {
 });
 
 describe("W2-21 /account/subscriptions/[id]/cancel", () => {
+  it("sets noindex metadata for cancellation", async () => {
+    expect(cancelMetadata.title).toBe("Cancel subscription | Nadeon Labs");
+    expect(cancelMetadata.description).toBe(
+      "Manage your subscription cancellation."
+    );
+    expect(cancelMetadata.robots).toMatchObject({
+      index: false,
+      follow: false,
+    });
+  });
+
   async function renderCancel(id: string) {
     const page = await CancelSubscriptionPage({
       params: Promise.resolve({ id }),

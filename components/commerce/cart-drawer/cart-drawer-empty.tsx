@@ -49,7 +49,7 @@ export function CartDrawerEmpty({
         </Link>
 
         <Link
-          href="/quiz"
+          href={isPet ? "/pet/quiz" : "/human/quiz"}
           onClick={onClose}
           className="min-h-[44px] flex-1 inline-flex items-center justify-center px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider text-center border-2 border-border text-fg hover:border-accent hover:text-accent transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >

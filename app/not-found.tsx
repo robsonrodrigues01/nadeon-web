@@ -119,7 +119,6 @@ const HUMAN_PILLS = [
   { label: "Shop Human →", href: "/human" },
   { label: "BioHack →", href: "/human/products/biohack" },
   { label: "Science →", href: "/science" },
-  { label: "Journal →", href: "/journal" },
   { label: "Take the quiz →", href: "/human/quiz" },
   { label: "Help center →", href: "/help" },
 ] as const;
