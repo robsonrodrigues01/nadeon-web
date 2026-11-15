@@ -8,7 +8,6 @@ import { Claim } from "@/components/commerce/product-card/claim";
 import { KitAddToCart } from "../_components/kit-add-to-cart";
 import { KitPrice } from "../_components/kit-price";
 import { buildKitViews } from "../_components/kit-view";
-import { listProductRenders } from "../_components/kit-renders";
 
 type KitPageProps = {
   params: Promise<{ slug: string }>;
@@ -39,7 +38,7 @@ export default async function HumanKitPage({ params }: KitPageProps) {
   if (!kit) notFound();
 
   const products = await catalogProvider.getProducts({ line: "human" });
-  const [view] = buildKitViews([kit], products, listProductRenders());
+  const [view] = buildKitViews([kit], products);
   const bySlug = new Map(products.map((p) => [p.slug, p]));
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([

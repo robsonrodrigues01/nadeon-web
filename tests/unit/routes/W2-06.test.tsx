@@ -96,6 +96,13 @@ describe("Route /human/products/[slug] (W2-06)", () => {
 
       render(jsx);
 
+      const imageSrc = screen
+        .getByRole("img", { name: /front view of biohack jar/i })
+        .getAttribute("src");
+      expect(
+        new URL(imageSrc!, "https://nadeonlabs.com").searchParams.get("url")
+      ).toBe("/renders/biohack.png");
+
       // 1. Heading and Breadcrumb navigation
       expect(
         screen.getByRole("heading", { level: 1, name: /biohack/i })

@@ -12,6 +12,7 @@ export interface KitView {
   slug: string;
   name: string;
   description: string;
+  image: string;
   productCount: number;
   productNames: string;
   products: KitProductView[];
@@ -95,6 +96,9 @@ export function buildKitView(
     slug: kit.slug,
     name: kit.name,
     description: kit.description,
+    image:
+      kitProducts.find((product) => product.images[0])?.images[0] ||
+      "/renders/placeholder.svg",
     productCount: kit.products.reduce((sum, ref) => sum + ref.quantity, 0),
     productNames: products.map((p) => p.name).join(" + "),
     products,

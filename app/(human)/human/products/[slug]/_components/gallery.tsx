@@ -55,10 +55,7 @@ export function Gallery({ product }: GalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const activeTab = GALLERY_TABS[activeIndex] || GALLERY_TABS[0];
-  const imageSrc =
-    product.images && product.images[0]
-      ? `/renders/${product.slug}.png`
-      : `/renders/${product.slug}.png`;
+  const imageSrc = product.images[0] || "/renders/placeholder.svg";
 
   return (
     <section aria-label="Product image gallery" className="flex flex-col gap-4">

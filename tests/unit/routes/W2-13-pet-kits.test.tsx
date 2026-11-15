@@ -16,6 +16,7 @@ import { DEFAULT_MARKET, getMarket } from "@/lib/market/markets";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { cookies } from "next/headers";
 import { getRequestMarket } from "@/app/(pet)/pet/kits/_components/request-market";
+import type { Product } from "@/lib/contracts/catalog";
 
 vi.mock("next/headers", () => ({ cookies: vi.fn() }));
 
@@ -276,6 +277,21 @@ describe("W2-13: /pet/kits/[slug] Route Suite", () => {
     expect(view.productCount).toBe(2);
     expect(view.savings).toBe("$13.00");
     expect(view.badge).toBe("SAVE 15%");
+    expect(view.image).toBe(map.get("more-good-years")?.images[0]);
+  });
+
+  it("uses the placeholder when no kit product has a catalog image", async () => {
+    const kit = (await mockCatalogProvider.getKit("chew-oil"))!;
+    const map = new Map<string, Product>();
+    await Promise.all(
+      kit.products.map(async ({ productSlug }) => {
+        const product = await mockCatalogProvider.getProduct(productSlug);
+        if (product) map.set(productSlug, { ...product, images: [] });
+      })
+    );
+    expect(buildKitView(kit, map, DEFAULT_MARKET).image).toBe(
+      "/renders/placeholder.svg"
+    );
   });
 });
 
