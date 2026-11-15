@@ -45,10 +45,16 @@ export function CartEmpty({
             </Link>
           ))}
           <Link
-            href="/pet/quiz"
+            href="/human/quiz"
             className="inline-flex min-h-11 items-center rounded-pill bg-gradient-gold px-6 font-bold text-accent-fg hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Take the quiz
+          </Link>
+          <Link
+            href="/pet/quiz"
+            className="inline-flex min-h-11 items-center rounded-pill border border-border px-6 font-bold text-fg hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            Take the pet quiz
           </Link>
         </nav>
       </section>

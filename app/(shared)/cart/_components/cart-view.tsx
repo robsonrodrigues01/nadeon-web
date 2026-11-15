@@ -8,7 +8,7 @@ import { CartLineItem } from "./cart-line-item";
 import { CartSummary } from "./cart-summary";
 import { FrequentlyBought } from "./frequently-bought";
 import { useMarket, formatFreeShippingLabel } from "@/lib/market";
-import { formatMoneyWithMarket } from "@/lib/market/formatter";
+import { CartDrawerShippingBar } from "@/components/commerce/cart-drawer";
 import type { CartCatalogProduct, RunCartAction } from "./types";
 
 // Produtos da seção "Frequently bought together" do design (slugs do catálogo).
@@ -112,55 +112,18 @@ export function CartView({
       {cart && (
         <div className="mt-6 lg:grid lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-10">
           <div>
-            {market.freeShipping?.pet != null &&
-              formatFreeShippingLabel(market, "pet") && (
-                <div className="pb-6">
-                  <p className="mb-2 text-sm text-fg">
-                    {cart.subtotalPrice.amount >= market.freeShipping.pet ? (
-                      <span>
-                        You unlocked <strong>free shipping</strong> ✓
-                      </span>
-                    ) : (
-                      <span>
-                        Add{" "}
-                        <strong>
-                          {formatMoneyWithMarket(
-                            {
-                              amount:
-                                market.freeShipping.pet -
-                                cart.subtotalPrice.amount,
-                              currencyCode: market.currency.code,
-                            },
-                            market
-                          )}
-                        </strong>{" "}
-                        more to unlock free shipping
-                      </span>
-                    )}
-                  </p>
-                  <div
-                    role="progressbar"
-                    aria-label="Free shipping progress"
-                    aria-valuenow={Math.min(
-                      cart.subtotalPrice.amount,
-                      market.freeShipping.pet
-                    )}
-                    aria-valuemin={0}
-                    aria-valuemax={market.freeShipping.pet}
-                    className="relative h-2 overflow-hidden rounded-full bg-fg/15"
-                  >
-                    <div
-                      className="h-full rounded-full bg-accent transition-all"
-                      style={{
-                        width: `${Math.min(100, Math.round((cart.subtotalPrice.amount / market.freeShipping.pet) * 100))}%`,
-                      }}
-                    />
-                  </div>
-                  <p className="mt-1.5 text-right text-[11px] text-fg-muted">
-                    {formatFreeShippingLabel(market, "pet")}
-                  </p>
-                </div>
-              )}
+            {formatFreeShippingLabel(
+              market,
+              cart.lines[0]?.product.line === "human" ? "human" : "pet"
+            ) && (
+              <CartDrawerShippingBar
+                subtotal={cart.subtotalPrice.amount}
+                currencyCode={cart.subtotalPrice.currencyCode}
+                theme={
+                  cart.lines[0]?.product.line === "human" ? "human" : "pet"
+                }
+              />
+            )}
             <ul aria-label="Items in your cart">
               {lines.map((line) => (
                 <CartLineItem
