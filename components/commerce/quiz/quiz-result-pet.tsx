@@ -47,19 +47,6 @@ export function QuizResultPet({
   const species = quiz.species || "dog";
   const isHorse = species === "horse";
 
-  const [purchaseType, setPurchaseType] = useState<"subscription" | "one-time">(
-    "subscription"
-  );
-  const [isAdding, setIsAdding] = useState(false);
-  const [cartSuccess, setCartSuccess] = useState(false);
-
-  // Email form state
-  const [email, setEmail] = useState("");
-  const [emailStatus, setEmailStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-  const [emailMessage, setEmailMessage] = useState("");
-
   const kit = recommendation.recommendedKitSlug
     ? kitsMap[recommendation.recommendedKitSlug]
     : undefined;
@@ -77,7 +64,7 @@ export function QuizResultPet({
   // Base pricing from recommended kit or product
   const baseMoney = kit ? kit.price : primaryProduct?.variants[0]?.price;
 
-  // Selling plan discount from recommended product
+  // Selling plan discount from recommended product only
   const productForPlans =
     primaryProduct ??
     (kit?.products?.[0]?.productSlug
@@ -88,30 +75,44 @@ export function QuizResultPet({
     productForPlans?.sellingPlans?.find((sp) => sp.intervalDays === 30) ??
     productForPlans?.sellingPlans?.[0];
 
-  const discountPercentage = sellingPlan?.discountPercentage ?? 0;
+  const hasSellingPlan = Boolean(sellingPlan?.id);
+  const discountPercentage = hasSellingPlan
+    ? (sellingPlan?.discountPercentage ?? 0)
+    : 0;
 
-  // Calculate discount amount and subscription price
+  const [selectedPurchaseType, setSelectedPurchaseType] = useState<
+    "subscription" | "one-time"
+  >(hasSellingPlan ? "subscription" : "one-time");
+
+  // Force one-time when no valid selling plan exists in catalog
+  const purchaseType = hasSellingPlan ? selectedPurchaseType : "one-time";
+
+  const [isAdding, setIsAdding] = useState(false);
+  const [cartSuccess, setCartSuccess] = useState(false);
+
+  // Email form state
+  const [email, setEmail] = useState("");
+  const [emailStatus, setEmailStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [emailMessage, setEmailMessage] = useState("");
+
+  // Desconto SÓ de sellingPlans (nada de compareAtPrice como desconto)
   let discountAmount = 0;
-  if (baseMoney) {
-    if (discountPercentage > 0) {
-      discountAmount =
-        Math.round(((baseMoney.amount * discountPercentage) / 100) * 100) / 100;
-    } else if (
-      kit?.compareAtPrice &&
-      kit.compareAtPrice.amount > kit.price.amount
-    ) {
-      discountAmount =
-        Math.round((kit.compareAtPrice.amount - kit.price.amount) * 100) / 100;
-    }
+  if (baseMoney && hasSellingPlan && discountPercentage > 0) {
+    discountAmount =
+      Math.round(((baseMoney.amount * discountPercentage) / 100) * 100) / 100;
   }
 
   const oneTimeAmount = baseMoney ? baseMoney.amount : null;
   const subscriptionAmount =
-    baseMoney !== undefined
+    baseMoney && hasSellingPlan && discountPercentage > 0
       ? Math.max(0, Math.round((baseMoney.amount - discountAmount) * 100) / 100)
       : null;
   const yearlySavingsAmount =
-    discountAmount > 0 ? Math.round(discountAmount * 12 * 100) / 100 : 0;
+    hasSellingPlan && discountAmount > 0
+      ? Math.round(discountAmount * 12 * 100) / 100
+      : 0;
 
   // Formatted prices using useMarket() and formatMoneyWithMarket
   const formattedOneTimePrice =
@@ -123,7 +124,7 @@ export function QuizResultPet({
       : "To be confirmed";
 
   const formattedSubscriptionPrice =
-    baseMoney && subscriptionAmount !== null
+    baseMoney && hasSellingPlan && subscriptionAmount !== null
       ? formatMoneyWithMarket(
           {
             amount: subscriptionAmount,
@@ -134,12 +135,12 @@ export function QuizResultPet({
       : "To be confirmed";
 
   const formattedActivePrice =
-    purchaseType === "subscription"
+    purchaseType === "subscription" && hasSellingPlan
       ? formattedSubscriptionPrice
       : formattedOneTimePrice;
 
   const formattedDiscount =
-    baseMoney && discountAmount > 0
+    baseMoney && hasSellingPlan && discountAmount > 0
       ? formatMoneyWithMarket(
           {
             amount: discountAmount,
@@ -150,7 +151,7 @@ export function QuizResultPet({
       : "To be confirmed";
 
   const formattedYearlySavings =
-    baseMoney && yearlySavingsAmount > 0
+    baseMoney && hasSellingPlan && yearlySavingsAmount > 0
       ? formatMoneyWithMarket(
           {
             amount: yearlySavingsAmount,
@@ -168,21 +169,24 @@ export function QuizResultPet({
     ? formatMoneyWithMarket(secondaryProduct.variants[0].price, market)
     : "To be confirmed";
 
-  const freeShippingLabel =
-    formatFreeShippingLabel(market, "pet") ?? "Free shipping";
+  // Frete: só formatFreeShippingLabel, sem 'Free' fixo
+  const freeShippingLabel = formatFreeShippingLabel(market, "pet");
 
   const handleAddToCart = async () => {
+    if (!baseMoney) return;
     setIsAdding(true);
     setCartSuccess(false);
     try {
+      const activeSellingPlanId =
+        purchaseType === "subscription" && hasSellingPlan && sellingPlan?.id
+          ? sellingPlan.id
+          : null;
+
       if (kit && kit.products.length > 0) {
         const lines = kit.products.map((p) => ({
           variantId: `${p.productSlug}-var-1`,
           quantity: p.quantity,
-          sellingPlanId:
-            purchaseType === "subscription"
-              ? (sellingPlan?.id ?? "sub-monthly")
-              : null,
+          sellingPlanId: activeSellingPlanId,
         }));
         await defaultCartProvider.addLines(lines);
       } else if (primaryProduct) {
@@ -192,10 +196,7 @@ export function QuizResultPet({
           {
             variantId,
             quantity: 1,
-            sellingPlanId:
-              purchaseType === "subscription"
-                ? (sellingPlan?.id ?? "sub-monthly")
-                : null,
+            sellingPlanId: activeSellingPlanId,
           },
         ]);
       }
@@ -319,7 +320,7 @@ export function QuizResultPet({
             RECOMMENDED FOR {petName.toUpperCase()}
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-fg mt-1">
-            {kit ? kit.name : primaryProduct?.name || "Two-step plan"}
+            {kit ? kit.name : primaryProduct?.name || "To be confirmed"}
           </h2>
         </div>
 
@@ -329,42 +330,48 @@ export function QuizResultPet({
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="inline-block rounded-pill bg-accent/20 px-2.5 py-0.5 text-xs font-bold text-accent">
-                  {primaryProduct?.format || "Chews"}
+                  {primaryProduct?.format || "To be confirmed"}
                 </span>
                 <span className="text-base font-bold text-fg">
                   {primaryProductPrice}
                 </span>
               </div>
               <h3 className="text-xl font-bold text-fg">
-                {primaryProduct?.name || "More Good Years"}
+                {primaryProduct?.name || "To be confirmed"}
               </h3>
               <p className="text-xs text-accent font-bold">
-                {dosing?.dose || "2 chews"} per day for {weightLbs} lbs ·{" "}
-                {dosing?.servingDescription || "1 at breakfast, 1 at dinner"}
+                {dosing?.dose && dosing?.servingDescription
+                  ? `${dosing.dose} per day for ${weightLbs} lbs · ${dosing.servingDescription}`
+                  : "To be confirmed"}
               </p>
 
               <div className="pt-2 border-t border-border/40 space-y-2">
                 <ul className="text-xs text-fg-muted space-y-1.5 list-none">
-                  {recommendation.reasons.map((reason, i) => (
-                    <li key={i} className="flex items-start gap-2">
+                  {recommendation.reasons.length > 0 ? (
+                    recommendation.reasons.map((reason, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <Check
+                          className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <Claim>{reason}</Claim>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="text-fg-muted">To be confirmed</li>
+                  )}
+                  {weightLbs >= 21 && weightLbs <= 50 ? (
+                    <li className="flex items-start gap-2">
                       <Check
                         className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
                         aria-hidden="true"
                       />
-                      <Claim>{reason}</Claim>
+                      <span>
+                        {weightLbs} lbs falls in the 21 to 50 lb range: 2 chews
+                        a day.
+                      </span>
                     </li>
-                  ))}
-                  <li className="flex items-start gap-2">
-                    <Check
-                      className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
-                      aria-hidden="true"
-                    />
-                    <Claim>
-                      {weightLbs >= 21 && weightLbs <= 50
-                        ? `${weightLbs} lbs falls in the 21 to 50 lb range: 2 chews a day.`
-                        : `Dosed specifically for ${weightLbs} lbs to maintain therapeutic NAD+ levels.*`}
-                    </Claim>
-                  </li>
+                  ) : null}
                 </ul>
               </div>
             </div>
@@ -375,38 +382,46 @@ export function QuizResultPet({
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="inline-block rounded-pill bg-accent/20 px-2.5 py-0.5 text-xs font-bold text-accent">
-                  {secondaryProduct?.format || "Oil"}
+                  {secondaryProduct?.format || "To be confirmed"}
                 </span>
                 <span className="text-base font-bold text-fg">
                   {secondaryProductPrice}
                 </span>
               </div>
               <h3 className="text-xl font-bold text-fg">
-                {secondaryProduct?.name || "Golden Years Oil"}
+                {secondaryProduct?.name || "To be confirmed"}
               </h3>
               <p className="text-xs text-accent font-bold">
-                0.9 mL per day · about 0.5 mL per 20 lbs, on food
+                {secondaryProduct
+                  ? "0.9 mL per day · about 0.5 mL per 20 lbs, on food"
+                  : "To be confirmed"}
               </p>
 
               <div className="pt-2 border-t border-border/40 space-y-2">
                 <ul className="text-xs text-fg-muted space-y-1.5 list-none">
-                  <li className="flex items-start gap-2">
-                    <Check
-                      className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
-                      aria-hidden="true"
-                    />
-                    <Claim>
-                      You picked {concernLabel.toLowerCase()}: supports hips and
-                      joints.*
-                    </Claim>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check
-                      className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
-                      aria-hidden="true"
-                    />
-                    <span>Easy to add: drops go right on food.</span>
-                  </li>
+                  {secondaryProduct ? (
+                    <>
+                      <li className="flex items-start gap-2">
+                        <Check
+                          className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <Claim>
+                          You picked {concernLabel.toLowerCase()}: supports hips and
+                          joints.*
+                        </Claim>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check
+                          className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <span>Easy to add: drops go right on food.</span>
+                      </li>
+                    </>
+                  ) : (
+                    <li className="text-fg-muted">To be confirmed</li>
+                  )}
                 </ul>
               </div>
             </div>
@@ -434,8 +449,7 @@ export function QuizResultPet({
                   MORNING · Breakfast
                 </span>
                 <p className="text-sm font-bold text-fg">
-                  {dosing?.dailySchedule?.morning ||
-                    "1 chew + 0.9 mL oil on food"}
+                  {dosing?.dailySchedule?.morning || "To be confirmed"}
                 </p>
               </div>
             </div>
@@ -449,8 +463,7 @@ export function QuizResultPet({
                   EVENING · Dinner
                 </span>
                 <p className="text-sm font-bold text-fg">
-                  {dosing?.dailySchedule?.evening ||
-                    "1 chew, with or after the meal"}
+                  {dosing?.dailySchedule?.evening || "To be confirmed"}
                 </p>
               </div>
             </div>
@@ -527,18 +540,30 @@ export function QuizResultPet({
                 {formattedDiscount}
               </div>
               <p className="text-xs text-fg-muted">
-                {kit ? "off the kit, every order" : "off every order"}
+                {hasSellingPlan && formattedDiscount !== "To be confirmed"
+                  ? kit
+                    ? "off the kit, every order"
+                    : "off every order"
+                  : "To be confirmed"}
               </p>
             </div>
             <div className="space-y-1">
               <div className="text-2xl font-extrabold text-fg">
                 {formattedYearlySavings}
               </div>
-              <p className="text-xs text-fg-muted">saved per year</p>
+              <p className="text-xs text-fg-muted">
+                {hasSellingPlan && formattedYearlySavings !== "To be confirmed"
+                  ? "saved per year"
+                  : "To be confirmed"}
+              </p>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl font-extrabold text-fg">Free</div>
-              <p className="text-xs text-fg-muted">{freeShippingLabel}</p>
+              <div className="text-base sm:text-lg font-extrabold text-fg">
+                {freeShippingLabel ?? "To be confirmed"}
+              </div>
+              <p className="text-xs text-fg-muted">
+                {freeShippingLabel ? "Shipping" : "To be confirmed"}
+              </p>
             </div>
           </div>
 
@@ -546,7 +571,7 @@ export function QuizResultPet({
             {/* One-time Card */}
             <button
               type="button"
-              onClick={() => setPurchaseType("one-time")}
+              onClick={() => setSelectedPurchaseType("one-time")}
               aria-label="One-time purchase"
               className={`rounded-card border p-4 text-left transition-all min-h-11 cursor-pointer flex flex-col justify-between ${
                 purchaseType === "one-time"
@@ -565,39 +590,56 @@ export function QuizResultPet({
             </button>
 
             {/* Subscription Card */}
-            <button
-              type="button"
-              onClick={() => setPurchaseType("subscription")}
-              aria-label="Subscribe every 30 days"
-              className={`rounded-card border p-4 text-left transition-all min-h-11 cursor-pointer flex flex-col justify-between ${
-                purchaseType === "subscription"
-                  ? "border-accent bg-accent/15 ring-2 ring-accent"
-                  : "border-border bg-bg-elevated hover:border-fg-muted/40"
-              }`}
-              aria-pressed={purchaseType === "subscription"}
-            >
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
+            {hasSellingPlan ? (
+              <button
+                type="button"
+                onClick={() => setSelectedPurchaseType("subscription")}
+                aria-label="Subscribe every 30 days"
+                className={`rounded-card border p-4 text-left transition-all min-h-11 cursor-pointer flex flex-col justify-between ${
+                  purchaseType === "subscription"
+                    ? "border-accent bg-accent/15 ring-2 ring-accent"
+                    : "border-border bg-bg-elevated hover:border-fg-muted/40"
+                }`}
+                aria-pressed={purchaseType === "subscription"}
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-fg text-sm">
+                      Subscribe every 30 days
+                    </span>
+                    {discountPercentage > 0 && (
+                      <span className="text-xs font-bold text-accent bg-accent/20 px-2 py-0.5 rounded-pill">
+                        Save {discountPercentage}%
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-fg-muted">
+                    {kit ? "Kit price · " : ""}
+                    {formattedDiscount !== "To be confirmed"
+                      ? `${formattedDiscount} off every delivery`
+                      : "To be confirmed"}
+                  </p>
+                </div>
+                <div className="text-xl font-extrabold text-fg mt-3">
+                  {formattedSubscriptionPrice}
+                </div>
+              </button>
+            ) : (
+              <div
+                className="rounded-card border border-border bg-bg-elevated p-4 text-left flex flex-col justify-between opacity-80"
+                data-testid="subscription-plan-unconfirmed"
+              >
+                <div className="space-y-1">
                   <span className="font-bold text-fg text-sm">
                     Subscribe every 30 days
                   </span>
-                  {discountPercentage > 0 && (
-                    <span className="text-xs font-bold text-accent bg-accent/20 px-2 py-0.5 rounded-pill">
-                      Save {discountPercentage}%
-                    </span>
-                  )}
+                  <p className="text-xs text-fg-muted">To be confirmed</p>
                 </div>
-                <p className="text-xs text-fg-muted">
-                  {kit ? "Kit price · " : ""}
-                  {formattedDiscount !== "To be confirmed"
-                    ? `${formattedDiscount} off every delivery`
-                    : "To be confirmed"}
-                </p>
+                <div className="text-xl font-extrabold text-fg mt-3">
+                  To be confirmed
+                </div>
               </div>
-              <div className="text-xl font-extrabold text-fg mt-3">
-                {formattedSubscriptionPrice}
-              </div>
-            </button>
+            )}
           </div>
 
           <div className="space-y-3 pt-2">
@@ -606,7 +648,11 @@ export function QuizResultPet({
               variant="primary"
               size="lg"
               onClick={handleAddToCart}
-              disabled={isAdding}
+              disabled={
+                isAdding ||
+                !baseMoney ||
+                (purchaseType === "subscription" && !hasSellingPlan)
+              }
               isLoading={isAdding}
               className="w-full min-h-11 text-base font-bold shadow-card cursor-pointer"
               aria-label={
@@ -623,7 +669,7 @@ export function QuizResultPet({
             </Button>
 
             <p className="text-xs text-fg-muted text-center pt-1">
-              Example prices · 60-day guarantee · Cancel anytime
+              To be confirmed
             </p>
           </div>
         </div>
