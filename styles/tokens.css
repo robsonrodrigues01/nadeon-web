@@ -75,10 +75,6 @@
   --space-16: 64px;
   --space-20: 80px;
   --space-24: 96px;
-
-  /* Variáveis de fonte padrão com fallback */
-  --font-archivo: "Archivo", sans-serif;
-  --font-dm-sans: "DM Sans", sans-serif;
 }
 
 /* Integração com Tailwind v4 via @theme inline */
@@ -104,8 +100,8 @@
 
   --shadow-card: var(--shadow-card);
 
-  --font-archivo: var(--font-archivo);
-  --font-dm-sans: var(--font-dm-sans);
+  --font-archivo: var(--font-archivo-next);
+  --font-dm-sans: var(--font-dm-sans-next);
 }
 
 /* Classes utilitárias de gradiente */
