@@ -1752,7 +1752,7 @@
     "depende_de": [
       "W3-06"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Margem",
     "lease_ate": null,
     "pr": "local",
@@ -1774,9 +1774,9 @@
     "depende_de": [
       "W3-11"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Moldura3",
-    "lease_ate": "2026-11-15T04:55:09.958Z",
+    "lease_ate": "2026-11-15T04:57:15.304Z",
     "branch": "agy/W3-13",
     "pr": "local",
     "criterios": [
