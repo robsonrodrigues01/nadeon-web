@@ -217,11 +217,8 @@ describe("5.2 Semantic Elements: Loja", () => {
         name: /add .* bundle/i,
       });
       expect(addBundleButtons.length).toBeGreaterThan(0);
+      expect(screen.getByRole("link", { name: "See bundles" })).toBeDefined();
     });
-
-    it.todo(
-      "Collection Pet Dogs `/pet/dogs`: 'See bundles' secondary link not implemented in route"
-    );
   });
 
   describe("Collection Cats `/pet/cats` e Collection Horses `/pet/horses`", () => {
@@ -298,11 +295,11 @@ describe("5.2 Semantic Elements: Loja", () => {
       expect(
         screen.getByRole("button", { name: /add the duo/i })
       ).toBeDefined();
+      expect(screen.getByText("No reviews yet")).toBeDefined();
+      expect(
+        screen.queryByRole("button", { name: /write a review/i })
+      ).toBeNull();
     });
-
-    it.todo(
-      "Produto Human `/human/products/[slug]`: 'Write a review' button suppressed at launch per Rule 8 compliance (No reviews yet)"
-    );
   });
 
   describe("Produto Pet `/pet/products/[slug]`", () => {
@@ -338,11 +335,11 @@ describe("5.2 Semantic Elements: Loja", () => {
       expect(
         screen.getAllByRole("button", { name: /add the kit/i }).length
       ).toBeGreaterThan(0);
+      expect(screen.getByText("No reviews yet")).toBeDefined();
+      expect(
+        screen.queryByRole("button", { name: /write a review/i })
+      ).toBeNull();
     });
-
-    it.todo(
-      "Produto Pet `/pet/products/[slug]`: 'Write a review' button suppressed at launch per Rule 8 compliance (No reviews yet)"
-    );
   });
 
   describe("Kits Human e Pet `/human/kits`, `/pet/kits`", () => {
@@ -368,6 +365,9 @@ describe("5.2 Semantic Elements: Loja", () => {
       expect(
         screen.getByRole("link", { name: "Build your box" })
       ).toBeDefined();
+      expect(
+        screen.getAllByRole("link", { name: "View details" }).length
+      ).toBeGreaterThan(0);
     });
 
     it("renders Pet kits filters and Add kit to cart buttons", async () => {
@@ -382,11 +382,10 @@ describe("5.2 Semantic Elements: Loja", () => {
       expect(
         screen.getByRole("link", { name: /build your box/i })
       ).toBeDefined();
+      expect(
+        screen.getAllByRole("link", { name: "View details" }).length
+      ).toBeGreaterThan(0);
     });
-
-    it.todo(
-      "Kits Human e Pet: 'View details' link not designed or implemented in route"
-    );
   });
 
   describe("Build your box Human `/human/build-your-box`", () => {

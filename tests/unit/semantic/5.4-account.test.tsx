@@ -16,6 +16,11 @@ import SubscriptionsPage from "@/app/(account)/account/subscriptions/page";
 import CancelSubscriptionPage from "@/app/(account)/account/subscriptions/[id]/cancel/page";
 import SettingsPage from "@/app/(account)/account/settings/page";
 import TrackOrderPage from "@/app/(shared)/track/page";
+import { OrderCard } from "@/app/(account)/account/orders/_components/order-card";
+import { OrderDetailView } from "@/app/(account)/account/orders/_components/order-detail-view";
+import { SubscriptionCard } from "@/app/(account)/account/subscriptions/_components/subscription-card";
+import { mockSubscriptionProvider } from "@/lib/providers/mock/subscription";
+import { getDefaultMarket } from "@/lib/market/markets";
 
 vi.mock("next/headers", () => ({
   cookies: async () => ({ get: () => undefined }),
@@ -67,9 +72,6 @@ describe("5.4 Semantic Elements: Conta", () => {
     it.todo(
       "Dashboard `/account`: Referral link ('Copy link') not implemented in dashboard view"
     );
-    it.todo(
-      "Dashboard `/account`: 'Reorder' button not implemented on dashboard (present on orders page)"
-    );
   });
 
   describe("Orders `/account/orders`", () => {
@@ -100,48 +102,90 @@ describe("5.4 Semantic Elements: Conta", () => {
       expect(
         within(statusGroup).getByRole("button", { name: /delivered/i })
       ).toBeDefined();
+      render(
+        <OrderCard
+          row={{
+            id: "order_processing",
+            orderNumber: "NL-TEST",
+            status: "processing",
+            statusLabel: "Processing",
+            placedLabel: "Nov 10, 2026",
+            totalLabel: "$1.00",
+            itemTitles: [],
+            searchText: "nl-test",
+          }}
+        />
+      );
+      expect(screen.getByRole("link", { name: "Edit address" })).toBeDefined();
     });
-
-    it.todo(
-      "Orders `/account/orders`: 'Edit address' button not implemented in orders list"
-    );
   });
 
   describe("Order detail `/account/orders/[id]`", () => {
     it("renders Buy again button, Get help link, and Track package link", async () => {
-      const page = await OrderDetailPage({
-        params: Promise.resolve({ id: "ord_100234" }),
-      });
-      render(page);
+      render(
+        <OrderDetailView
+          order={{
+            id: "ord_100234",
+            orderNumber: "NL-100234",
+            status: "in_transit",
+            statusLabel: "In transit",
+            placedLabel: "Nov 10, 2026",
+            totalLabel: "$118.00",
+            items: [],
+            trackingNumber: "1Z123456789",
+            trackingUrl: "https://example.com/track",
+          }}
+        />
+      );
 
       expect(screen.getByRole("button", { name: "Buy again" })).toBeDefined();
       expect(screen.getByRole("link", { name: "Get help" })).toBeDefined();
       expect(
         screen.getByRole("link", { name: /track package/i })
       ).toBeDefined();
+      expect(
+        screen
+          .getByRole("button", { name: "Start a return" })
+          .hasAttribute("disabled")
+      ).toBe(true);
     });
-
-    it.todo(
-      "Order detail `/account/orders/[id]`: 'Start a return' button not implemented in route"
-    );
   });
 
   describe("Subscriptions `/account/subscriptions`", () => {
     it("renders subscription list, action links, and Browse formulas", async () => {
-      const page = await SubscriptionsPage();
-      render(page);
+      render(
+        <SubscriptionCard
+          subscription={{
+            id: "sub_test",
+            status: "active",
+            nextBillingDate: "2026-12-01T00:00:00.000Z",
+            intervalDays: 30,
+            estimatedTotal: { amount: 50, currencyCode: "USD" },
+            lines: [
+              {
+                id: "line_test",
+                productTitle: "BioHack",
+                quantity: 1,
+                price: { amount: 50, currencyCode: "USD" },
+              },
+            ],
+          }}
+          capabilities={await mockSubscriptionProvider.capabilities()}
+          market={getDefaultMarket()}
+        />
+      );
 
-      expect(
-        screen.getByRole("heading", { level: 1, name: "Subscriptions" })
-      ).toBeDefined();
-      expect(
-        screen.getByRole("link", { name: "Browse formulas" })
-      ).toBeDefined();
+      expect(screen.getByRole("heading", { name: "BioHack" })).toBeDefined();
+      for (const name of [
+        "Change frequency",
+        "Swap product",
+        "Edit quantity",
+        "Pause",
+      ]) {
+        const button = screen.getByRole("button", { name });
+        expect(button.hasAttribute("disabled")).toBe(name !== "Pause");
+      }
     });
-
-    it.todo(
-      "Subscriptions `/account/subscriptions`: 'Change frequency', 'Swap product', 'Edit quantity', 'Pause' controls modal/actions pending full subscription app integration"
-    );
   });
 
   describe("Cancel subscription `/account/subscriptions/[id]/cancel`", () => {

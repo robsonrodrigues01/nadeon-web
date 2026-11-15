@@ -146,6 +146,12 @@ describe("5.3 Semantic Elements: Carrinho", () => {
       expect(
         screen.getByRole("button", { name: /pay with shop pay/i })
       ).toBeDefined();
+      expect(
+        screen.getByRole("group", { name: /express checkout options/i })
+      ).toBeDefined();
+      expect(
+        screen.getByRole("progressbar", { name: /free shipping progress/i })
+      ).toBeDefined();
     });
   });
 
@@ -202,13 +208,10 @@ describe("5.3 Semantic Elements: Carrinho", () => {
     });
 
     it.todo(
-      "Cart page `/cart`: Free shipping progress bar ('Free shipping at $75') not implemented on /cart page (only present in cart drawer)"
+      "Cart page `/cart`: free shipping progress and express payments are not implemented on this route"
     );
     it.todo(
-      "Cart page `/cart`: Express payment buttons (Shop Pay, Apple Pay, Google Pay, PayPal) not implemented on /cart page (only present in cart drawer)"
-    );
-    it.todo(
-      "Cart empty `/cart`: Best sellers and category shortcuts not implemented in empty state (only Take the quiz link)"
+      "Cart empty `/cart`: best sellers and category shortcuts are not implemented"
     );
   });
 
