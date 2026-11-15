@@ -87,14 +87,18 @@ const fieldClass =
 
 const initialState: PrivacyFormState = { status: "idle" };
 
-export function PrivacyRequestForm() {
+export function PrivacyRequestForm({
+  initialFormState,
+}: {
+  initialFormState?: PrivacyFormState;
+} = {}) {
   const [selectedType, setSelectedType] = useState<string>("do_not_sell");
   const [requestorType, setRequestorType] = useState<string>("consumer");
   const [resetKey, setResetKey] = useState<number>(0);
 
   const [state, formAction, isPending] = useActionState(
     submitPrivacyRequest,
-    initialState
+    initialFormState ?? initialState
   );
 
   function handleReset() {
@@ -132,8 +136,7 @@ export function PrivacyRequestForm() {
         </h2>
 
         <p className="text-base sm:text-lg text-fg/80 mt-2 sm:mt-3 max-w-xl mx-auto leading-relaxed">
-          Thanks. Your opt-out of sale and sharing is now on file. We sent a
-          confirmation to {state.email || "To be confirmed"}.
+          Thanks. Your request has been received.
         </p>
 
         <div className="inline-block mt-4 rounded-field border border-dashed border-border px-4 py-2 text-sm text-fg">

@@ -127,7 +127,10 @@ describe("W2-34: /legal/do-not-sell route", () => {
 
       // Global Privacy Control Card
       expect(html).toContain("Global Privacy Control");
-      expect(html).toContain("We honor GPC signals");
+      expect(html).toContain("We honor GPC signals (To be confirmed)");
+      expect(html).toContain(
+        "treat it as a request to opt out of sale and sharing for that browser (To be confirmed)"
+      );
 
       // Other ways to submit Card
       expect(html).toContain("Other ways to submit");
@@ -159,7 +162,7 @@ describe("W2-34: /legal/do-not-sell route", () => {
       );
 
       // GPC and verification
-      expect(html).toContain("GPC detected in this browser: To be confirmed");
+      expect(html).toContain("GPC detected in this browser (To be confirmed)");
       expect(html).toContain(
         "submit this form while signed in To be confirmed."
       );
@@ -173,6 +176,29 @@ describe("W2-34: /legal/do-not-sell route", () => {
       expect(html).not.toMatch(/\[privacy email\]/i);
       expect(html).not.toMatch(/\[toll-free number\]/i);
       expect(html).not.toMatch(/\[postal address\]/i);
+    });
+
+    it("renders confirmation state (State B) stating only request received without claiming opt-out on file or email sent", () => {
+      const html = renderToString(
+        <PrivacyRequestForm
+          initialFormState={{
+            status: "success",
+            id: "prv_ref_987",
+            email: "user@example.com",
+            requestType: "do_not_sell",
+          }}
+        />
+      );
+
+      expect(html).toContain('data-testid="privacy-confirmation"');
+      expect(html).toContain("Request received");
+      expect(html).toContain("Thanks. Your request has been received.");
+      expect(html).toContain("Reference");
+      expect(html).toContain("prv_ref_987");
+
+      // Does not allege opt-out applied or confirmation email sent
+      expect(html).not.toContain("is now on file");
+      expect(html).not.toContain("We sent a confirmation to");
     });
   });
 

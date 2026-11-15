@@ -114,20 +114,20 @@ export function DoNotSellSidebar() {
           Global Privacy Control
         </div>
         <h2 className="title text-xl font-extrabold text-fg mt-2 leading-tight">
-          We honor GPC signals
+          We honor GPC signals (To be confirmed)
         </h2>
         <p className="text-sm text-fg-muted mt-2.5 leading-relaxed">
           If your browser or extension sends a Global Privacy Control signal, we
-          treat it as a request to opt out of sale and sharing for that browser,
-          no form needed. To apply it to your account too, submit this form
-          while signed in To be confirmed.
+          treat it as a request to opt out of sale and sharing for that browser
+          (To be confirmed), no form needed. To apply it to your account too,
+          submit this form while signed in To be confirmed.
         </p>
         <div className="flex items-center gap-2.5 mt-4 rounded-field bg-fg/10 px-3 py-2.5 text-xs text-fg">
           <span
-            className="size-2.5 rounded-full bg-product-mint shrink-0"
+            className="size-2.5 rounded-full bg-fg-muted shrink-0"
             aria-hidden="true"
           />
-          <span>GPC detected in this browser: To be confirmed</span>
+          <span>GPC detected in this browser (To be confirmed)</span>
         </div>
       </div>
 
