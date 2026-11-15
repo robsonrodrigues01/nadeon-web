@@ -92,6 +92,15 @@ describe("W2-32: /shipping-returns route", () => {
       expect(html).toContain("PR, US territories, APO/FPO");
       expect(html).toContain("International");
       expect(html).toContain("To be confirmed");
+      expect(html).not.toContain("Not available yet");
+    });
+
+    it("marks carrier tracking and PO box policy as To be confirmed without invented rules", async () => {
+      const html = await getHtml();
+      expect(html).toContain("Tracking on every order: To be confirmed");
+      expect(html).toContain(
+        "Standard shipping to PO boxes and Express address requirements: To be confirmed"
+      );
     });
 
     it("renders 4 return steps and eligibility cards", async () => {

@@ -151,10 +151,10 @@ export default async function ShippingReturnsPage() {
     },
     {
       zone: "International",
-      method: "Not available yet",
-      time: "Coming later (To be confirmed)",
-      cost: "None",
-      freeOver: "None",
+      method: "To be confirmed",
+      time: "To be confirmed",
+      cost: "To be confirmed",
+      freeOver: "To be confirmed",
     },
   ];
 
@@ -355,7 +355,8 @@ export default async function ShippingReturnsPage() {
                   Carriers
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  Carriers: To be confirmed. You get tracking on every order.
+                  Carriers: To be confirmed. Tracking on every order: To be
+                  confirmed.
                 </p>
               </div>
               <div>
@@ -363,8 +364,8 @@ export default async function ShippingReturnsPage() {
                   PO boxes
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  Standard shipping only to PO boxes. Express needs a street
-                  address.
+                  Standard shipping to PO boxes and Express address
+                  requirements: To be confirmed.
                 </p>
               </div>
               <div>
