@@ -1703,8 +1703,7 @@
     ],
     "id": "W3-09",
     "titulo": "Shell duplicado: páginas dentro dos layouts /human e /pet não renderizam AnnouncementBar/Header/Footer de novo",
-    "branch": "agy/W3-09",
-    "revisor": "Casco"
+    "branch": "agy/W3-09"
   },
   {
     "onda": 3,
@@ -1746,7 +1745,7 @@
     "id": "W3-11",
     "titulo": "Imagens de produto: data aponta para /images/products/*.webp inexistente; usar /renders/*.png e placeholder neutro",
     "branch": "agy/W3-11",
-    "nota": "aguarda vaga de revisor"
+    "revisor": "Lente2"
   },
   {
     "onda": 3,
@@ -1755,10 +1754,10 @@
     "depende_de": [
       "W3-06"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Margem",
-    "lease_ate": "2026-11-15T04:46:42.530Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1766,7 +1765,8 @@
     ],
     "id": "W3-12",
     "titulo": "Rolagem horizontal em 375 px: /human e /search?q",
-    "branch": "agy/W3-12"
+    "branch": "agy/W3-12",
+    "nota": "aguarda vaga de revisor"
   },
   {
     "id": "W3-13",
