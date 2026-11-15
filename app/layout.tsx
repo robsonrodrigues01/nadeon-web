@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, DM_Sans } from "next/font/google";
+import { MarketProvider } from "@/lib/market/context";
 import "./globals.css";
 import "../styles/tokens.css";
 
@@ -31,7 +32,9 @@ export default function RootLayout({
       className={`${archivo.variable} ${dmSans.variable} h-full antialiased`}
       data-theme="human"
     >
-      <body className="min-h-full flex flex-col bg-bg text-fg">{children}</body>
+      <body className="min-h-full flex flex-col bg-bg text-fg">
+        <MarketProvider>{children}</MarketProvider>
+      </body>
     </html>
   );
 }

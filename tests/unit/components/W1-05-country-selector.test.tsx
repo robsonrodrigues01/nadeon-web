@@ -1,7 +1,13 @@
 // @vitest-environment jsdom
 import React from "react";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  waitFor,
+} from "@testing-library/react";
 import {
   CountrySelector,
   CountrySelectorInline,
@@ -244,7 +250,7 @@ describe("W1-05: Country and Currency Selector & Market Context", () => {
   });
 
   describe("Cookie Persistence", () => {
-    it("initializes from cookie when cookie exists", () => {
+    it("initializes from cookie when cookie exists", async () => {
       setMarketCookie("ca");
       expect(getMarketCookie()).toBe("ca");
 
@@ -254,7 +260,10 @@ describe("W1-05: Country and Currency Selector & Market Context", () => {
         </MarketProvider>
       );
 
-      expect(screen.getByTestId("active-market-id").textContent).toBe("ca");
+      // W2-37: o cookie é aplicado após a hidratação (useEffect), não no primeiro render.
+      await waitFor(() =>
+        expect(screen.getByTestId("active-market-id").textContent).toBe("ca")
+      );
       expect(screen.getByTestId("active-currency-code").textContent).toBe(
         "CAD"
       );
