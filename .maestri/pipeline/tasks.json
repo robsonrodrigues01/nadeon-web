@@ -1629,11 +1629,11 @@
     "depende_de": [
       "W3-05"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Prisma2",
-    "lease_ate": "2026-11-15T04:20:34.307Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "VISUAL.md com achados por rota e largura",
       "nenhuma alteração de código"
@@ -1646,7 +1646,10 @@
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "depende_de": [
-      "W3-05"
+      "W3-09",
+      "W3-10",
+      "W3-11",
+      "W3-12"
     ],
     "status": "backlog",
     "responsavel": null,
@@ -1665,7 +1668,10 @@
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "depende_de": [
-      "W3-05"
+      "W3-09",
+      "W3-10",
+      "W3-11",
+      "W3-12"
     ],
     "status": "backlog",
     "responsavel": null,
@@ -1678,5 +1684,104 @@
     ],
     "id": "W3-08",
     "titulo": "Revisão visual vs boards: 5.6 quiz e 5.7 conteúdo, legal e 404 (1280 e 375 px)"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-06"
+    ],
+    "status": "entregue",
+    "responsavel": "Casca",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W3-09",
+    "titulo": "Shell duplicado: páginas dentro dos layouts /human e /pet não renderizam AnnouncementBar/Header/Footer de novo",
+    "branch": "agy/W3-09"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-06"
+    ],
+    "status": "entregue",
+    "responsavel": "Tinta",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W3-10",
+    "titulo": "Fontes e tema: --font-sans cíclico no globals.css (títulos em serif); superfícies Human/Pet conforme tokens",
+    "branch": "agy/W3-10"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-06"
+    ],
+    "status": "entregue",
+    "responsavel": "Retrato",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W3-11",
+    "titulo": "Imagens de produto: data aponta para /images/products/*.webp inexistente; usar /renders/*.png e placeholder neutro",
+    "branch": "agy/W3-11"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-06"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Margem",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W3-12",
+    "titulo": "Rolagem horizontal em 375 px: /human e /search?q",
+    "branch": "agy/W3-12"
+  },
+  {
+    "id": "W3-13",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Galeria Human e kits usam product.images (sem montar /renders/<slug>.png por conta própria)",
+    "depende_de": [
+      "W3-11"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Moldura3",
+    "lease_ate": "2026-11-15T04:55:09.958Z",
+    "branch": "agy/W3-13",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]

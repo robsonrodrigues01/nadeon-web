@@ -5,13 +5,13 @@ import "./globals.css";
 import "../styles/tokens.css";
 
 const archivo = Archivo({
-  variable: "--font-archivo",
+  variable: "--font-archivo-next",
   subsets: ["latin"],
   axes: ["wdth"],
 });
 
 const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+  variable: "--font-dm-sans-next",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
 });

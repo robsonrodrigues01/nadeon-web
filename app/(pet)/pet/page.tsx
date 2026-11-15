@@ -7,10 +7,6 @@ import {
   buildBreadcrumbJsonLd,
   JsonLd,
 } from "@/lib/seo";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { TrustStrip } from "@/components/brand/trust-strip";
 import { PET_FAQS } from "./_components/faq-data";
 import {
   HeroCarousel,
@@ -61,9 +57,6 @@ export default async function PetPage() {
         id="pet-breadcrumb-jsonld"
       />
 
-      <AnnouncementBar line="pet" />
-      <Header variant="pet" />
-
       <main id="main-content" className="flex-1 w-full bg-bg text-fg">
         <HeroCarousel />
         <WhoForSection />
@@ -84,10 +77,7 @@ export default async function PetPage() {
         <AndForYouSection />
         <BottomCtaBanner />
         <PetRegulatoryNotice />
-        <TrustStrip line="pet" />
       </main>
-
-      <Footer line="pet" />
     </>
   );
 }
