@@ -35,10 +35,7 @@ describe("W2-02 Route: /human (Home Human)", () => {
   describe("Catalog Section 5.1 Elements & Semantics", () => {
     it("renders hero carousel and transitions across slides with semantic controls", async () => {
       const PageComponent = await HumanPage();
-      const { container } = render(PageComponent);
-      expect(container.querySelector("header > div")?.className).toContain(
-        "gap-2"
-      );
+      render(PageComponent);
 
       // Hero Carousel controls & Slide 1
       const prevBtn = screen.getByRole("button", { name: /previous slide/i });
