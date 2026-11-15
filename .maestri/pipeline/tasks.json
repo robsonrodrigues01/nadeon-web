@@ -1712,7 +1712,7 @@
     "depende_de": [
       "W3-06"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Tinta",
     "lease_ate": null,
     "pr": "local",
@@ -1778,7 +1778,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Moldura",
-    "lease_ate": "2026-11-15T04:50:18.979Z",
+    "lease_ate": "2026-11-15T04:51:53.892Z",
     "branch": "agy/W3-13",
     "pr": null,
     "criterios": [
