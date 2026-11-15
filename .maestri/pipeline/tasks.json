@@ -1763,8 +1763,7 @@
     ],
     "id": "W3-12",
     "titulo": "Rolagem horizontal em 375 px: /human e /search?q",
-    "branch": "agy/W3-12",
-    "revisor": "Régua2"
+    "branch": "agy/W3-12"
   },
   {
     "id": "W3-13",
@@ -1775,15 +1774,14 @@
     "depende_de": [
       "W3-11"
     ],
-    "status": "para_revisao",
-    "responsavel": "Moldura",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Moldura3",
+    "lease_ate": "2026-11-15T04:55:09.958Z",
     "branch": "agy/W3-13",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Moldura2Rev"
+    ]
   }
 ]
