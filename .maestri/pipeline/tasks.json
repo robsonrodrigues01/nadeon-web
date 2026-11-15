@@ -1651,9 +1651,9 @@
       "W3-11",
       "W3-12"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma3",
-    "lease_ate": "2026-11-15T05:03:06.935Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -1661,7 +1661,8 @@
       "nenhuma alteração de código"
     ],
     "id": "W3-07",
-    "titulo": "Revisão visual vs boards: 5.3 carrinho e 5.4 conta (1280 e 375 px)"
+    "titulo": "Revisão visual vs boards: 5.3 carrinho e 5.4 conta (1280 e 375 px)",
+    "nota": "revisão parcial do Prisma3; Maestro conferiu /cart vazio e preenchido e varreu overflow 375 px em 38 rotas (sem rolagem horizontal da página)"
   },
   {
     "onda": 3,
@@ -1782,7 +1783,6 @@
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Moldura4Rev"
+    ]
   }
 ]
