@@ -273,10 +273,18 @@ export function TrackResult({ order, market }: TrackResultProps) {
               <Button variant="primary" size="sm" href="/help#contact">
                 Contact support
               </Button>
-              <Button variant="secondary" size="sm" href="/help#contact">
+              <Button
+                variant="secondary"
+                size="sm"
+                href={`/help?subject=problem&order=${encodeURIComponent(order.orderNumber)}`}
+              >
                 Report a problem
               </Button>
-              <Button variant="secondary" size="sm" href="/shipping-returns">
+              <Button
+                variant="secondary"
+                size="sm"
+                href={`/help?subject=return&order=${encodeURIComponent(order.orderNumber)}`}
+              >
                 Start a return
               </Button>
             </div>

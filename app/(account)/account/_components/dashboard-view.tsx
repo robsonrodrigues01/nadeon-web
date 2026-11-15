@@ -2,7 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { AccountDashboardView } from "./view-model";
-import { signOutAction, skipNextDeliveryAction } from "./actions";
+import {
+  reorderAction,
+  signOutAction,
+  skipNextDeliveryAction,
+} from "./actions";
 
 const NAV_ITEMS = [
   { label: "Overview", href: "/account", current: true },
@@ -207,6 +211,27 @@ export function AccountDashboard({ view }: { view: AccountDashboardView }) {
                     {items(recentOrder.itemCount)} · {recentOrder.totalLabel}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2.5">
+                    {recentOrder.lines?.length ? (
+                      <form action={reorderAction}>
+                        {recentOrder.lines.map((line) => (
+                          <span key={line.variantId}>
+                            <input
+                              type="hidden"
+                              name="variantId"
+                              value={line.variantId}
+                            />
+                            <input
+                              type="hidden"
+                              name="quantity"
+                              value={line.quantity}
+                            />
+                          </span>
+                        ))}
+                        <Button type="submit" variant="primary" size="sm">
+                          Reorder
+                        </Button>
+                      </form>
+                    ) : null}
                     <Button
                       href={`/account/orders/${recentOrder.id}`}
                       variant="secondary"

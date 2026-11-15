@@ -88,17 +88,13 @@ describe("W2-20 /account/orders/[id] buttons (catalog 5.4)", () => {
     ).toBe("/help");
   });
 
-  it("Start a return is a disabled button until returns exist", () => {
+  it("Start a return links to the help form with the return subject", () => {
     render(
       <OrderDetailView order={toOrderDetailView(noTrackingOrder, formatters)} />
     );
     expect(
-      (
-        screen.getByRole("button", {
-          name: "Start a return",
-        }) as HTMLButtonElement
-      ).disabled
-    ).toBe(true);
+      screen.getByRole("link", { name: "Start a return" }).getAttribute("href")
+    ).toBe("/help?subject=return");
   });
 
   it("Track package links out in a new tab when the order has tracking", () => {
