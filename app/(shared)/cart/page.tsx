@@ -23,8 +23,20 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function CartPage() {
   // Mercado escolhido pelo cliente, lido do cookie para o SSR bater com o navegador.
   const marketId = (await cookies()).get(MARKET_COOKIE_NAME)?.value;
-  const products = await catalogProvider.getProducts({ line: "human" });
+  const [products, collection] = await Promise.all([
+    catalogProvider.getProducts(),
+    catalogProvider.getCollection(
+      "dogs",
+      {
+        line: "pet",
+        species: "dog",
+      },
+      "best-selling"
+    ),
+  ]);
+  const bestSellers = collection?.products ?? [];
   const catalog = products.map(toCartCatalogProduct);
+  const petBestSellers = bestSellers.map(toCartCatalogProduct);
 
   return (
     <>
@@ -33,7 +45,7 @@ export default async function CartPage() {
 
       <main id="main-content" className="flex-1">
         <MarketProvider initialMarket={marketId}>
-          <CartView catalog={catalog} />
+          <CartView catalog={catalog} petBestSellers={petBestSellers} />
         </MarketProvider>
       </main>
 

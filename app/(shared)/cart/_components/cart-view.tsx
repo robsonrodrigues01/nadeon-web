@@ -7,12 +7,21 @@ import { CartEmpty } from "./cart-empty";
 import { CartLineItem } from "./cart-line-item";
 import { CartSummary } from "./cart-summary";
 import { FrequentlyBought } from "./frequently-bought";
+import { useMarket, formatFreeShippingLabel } from "@/lib/market";
+import { CartDrawerShippingBar } from "@/components/commerce/cart-drawer";
 import type { CartCatalogProduct, RunCartAction } from "./types";
 
 // Produtos da seção "Frequently bought together" do design (slugs do catálogo).
 const PAIRS_WITH_CART = ["prime", "full-charge", "daylight"];
 
-export function CartView({ catalog }: { catalog: CartCatalogProduct[] }) {
+export function CartView({
+  catalog,
+  petBestSellers = [],
+}: {
+  catalog: CartCatalogProduct[];
+  petBestSellers?: CartCatalogProduct[];
+}) {
+  const { market } = useMarket();
   // undefined = carregando; null = sem carrinho.
   const [cart, setCart] = useState<Cart | null | undefined>(undefined);
   const [pending, setPending] = useState(false);
@@ -46,7 +55,20 @@ export function CartView({ catalog }: { catalog: CartCatalogProduct[] }) {
   const isEmpty = cart !== undefined && (cart === null || lines.length === 0);
 
   if (isEmpty) {
-    return <CartEmpty />;
+    return (
+      <CartEmpty
+        catalog={petBestSellers}
+        pending={pending}
+        error={error}
+        onAddToCart={(product) =>
+          run(() =>
+            cartProvider.addLines([
+              { variantId: product.variants[0].id, quantity: 1 },
+            ])
+          )
+        }
+      />
+    );
   }
 
   const pairs = PAIRS_WITH_CART.map((slug) =>
@@ -90,6 +112,18 @@ export function CartView({ catalog }: { catalog: CartCatalogProduct[] }) {
       {cart && (
         <div className="mt-6 lg:grid lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-10">
           <div>
+            {formatFreeShippingLabel(
+              market,
+              cart.lines[0]?.product.line === "human" ? "human" : "pet"
+            ) && (
+              <CartDrawerShippingBar
+                subtotal={cart.subtotalPrice.amount}
+                currencyCode={cart.subtotalPrice.currencyCode}
+                theme={
+                  cart.lines[0]?.product.line === "human" ? "human" : "pet"
+                }
+              />
+            )}
             <ul aria-label="Items in your cart">
               {lines.map((line) => (
                 <CartLineItem
