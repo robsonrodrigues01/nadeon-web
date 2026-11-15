@@ -1,18 +1,10 @@
 // @vitest-environment jsdom
 import React from "react";
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import {
-  render,
-  screen,
-  fireEvent,
-  cleanup,
-  within,
-} from "@testing-library/react";
+import { describe, it, expect, afterEach, vi } from "vitest";
+import { render, screen, cleanup, within } from "@testing-library/react";
 
 import AccountPage from "@/app/(account)/account/page";
 import OrdersPage from "@/app/(account)/account/orders/page";
-import OrderDetailPage from "@/app/(account)/account/orders/[id]/page";
-import SubscriptionsPage from "@/app/(account)/account/subscriptions/page";
 import CancelSubscriptionPage from "@/app/(account)/account/subscriptions/[id]/cancel/page";
 import SettingsPage from "@/app/(account)/account/settings/page";
 import TrackOrderPage from "@/app/(shared)/track/page";

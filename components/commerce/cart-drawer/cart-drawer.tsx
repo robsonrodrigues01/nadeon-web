@@ -114,7 +114,6 @@ export function CartDrawer({
                       key={line.id}
                       item={line}
                       cartProvider={cartProvider}
-                      theme={resolvedTheme}
                     />
                   ))}
                 </div>

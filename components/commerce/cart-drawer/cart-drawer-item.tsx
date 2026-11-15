@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import type { CartLineItem, CartProvider } from "@/lib/providers/client";
 import { useMarket } from "@/lib/market/context";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
@@ -10,14 +9,9 @@ import { formatMoneyWithMarket } from "@/lib/market/formatter";
 export interface CartDrawerItemProps {
   item: CartLineItem;
   cartProvider: CartProvider;
-  theme?: "human" | "pet";
 }
 
-export function CartDrawerItem({
-  item,
-  cartProvider,
-  theme = "human",
-}: CartDrawerItemProps) {
+export function CartDrawerItem({ item, cartProvider }: CartDrawerItemProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [showPlanSelector, setShowPlanSelector] = useState(false);
   const { market } = useMarket();

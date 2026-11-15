@@ -1,13 +1,7 @@
 // @vitest-environment jsdom
 import React from "react";
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import {
-  render,
-  screen,
-  fireEvent,
-  cleanup,
-  within,
-} from "@testing-library/react";
+import { describe, it, expect, afterEach, vi } from "vitest";
+import { render, screen, cleanup } from "@testing-library/react";
 
 import { CartView } from "@/app/(shared)/cart/_components/cart-view";
 import { CartEmpty } from "@/app/(shared)/cart/_components/cart-empty";

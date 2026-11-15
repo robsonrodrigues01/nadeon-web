@@ -8,7 +8,6 @@ export type HorseSort = "featured" | "price-asc" | "price-desc" | "title-asc";
 
 export interface HorseProductsSectionProps {
   products: Product[];
-  locale: string;
 }
 
 const SORT_LABELS: Record<HorseSort, string> = {
@@ -20,10 +19,7 @@ const SORT_LABELS: Record<HorseSort, string> = {
 
 const ALL = "all";
 
-export function HorseProductsSection({
-  products,
-  locale,
-}: HorseProductsSectionProps) {
+export function HorseProductsSection({ products }: HorseProductsSectionProps) {
   const sortId = useId();
   const [format, setFormat] = useState<string>(ALL);
   const [sort, setSort] = useState<HorseSort>("featured");
