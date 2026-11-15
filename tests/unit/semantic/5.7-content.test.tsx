@@ -1,7 +1,13 @@
 // @vitest-environment jsdom
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 
 import AboutPage from "@/app/(shared)/about/page";
 import FaqPage from "@/app/(shared)/faq/page";
@@ -13,6 +19,7 @@ import HumanSubscribePage from "@/app/(human)/human/subscribe/page";
 import PetSubscribePage from "@/app/(pet)/pet/subscribe/page";
 import AccessibilityPage from "@/app/(shared)/legal/accessibility/page";
 import NotFound from "@/app/not-found";
+import { submitAccessibilityFeedback } from "@/app/(shared)/legal/accessibility/_components/actions";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import { mockLabsProvider } from "@/lib/providers/mock/labs";
 
@@ -23,6 +30,10 @@ vi.mock("next/headers", () => ({
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn(), replace: vi.fn() }),
   usePathname: () => "/",
+}));
+
+vi.mock("@/app/(shared)/legal/accessibility/_components/actions", () => ({
+  submitAccessibilityFeedback: vi.fn().mockResolvedValue({ status: "success" }),
 }));
 
 describe("5.7 Semantic Elements: Conteúdo e páginas de apoio", () => {
@@ -213,19 +224,23 @@ describe("5.7 Semantic Elements: Conteúdo e páginas de apoio", () => {
     }
   });
 
-  it("Accessibility statement renders labeled feedback fields and submit action", () => {
+  it("Accessibility statement submits the labeled feedback form and confirms success", async () => {
     render(<AccessibilityPage />);
-    for (const name of [
-      "Name",
-      "Email",
-      "Page or feature (optional)",
-      "Describe the issue",
-      "Preferred reply format",
-      "Assistive technology used (optional)",
-    ]) {
-      expect(screen.getByLabelText(name)).toBeDefined();
-    }
-    expect(screen.getByRole("button", { name: "Send feedback" })).toBeDefined();
+    const form = screen
+      .getByRole("button", { name: "Send feedback" })
+      .closest("form");
+    expect(form).not.toBeNull();
+    fireEvent.submit(form!);
+
+    await waitFor(() =>
+      expect(submitAccessibilityFeedback).toHaveBeenCalledOnce()
+    );
+    expect(
+      await screen.findByRole("heading", { name: "Feedback received" })
+    ).toBeDefined();
+    expect(
+      screen.getByRole("button", { name: "Send another report" })
+    ).toBeDefined();
   });
 
   it.todo(
