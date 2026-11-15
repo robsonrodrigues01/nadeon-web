@@ -1674,11 +1674,11 @@
       "W3-11",
       "W3-12"
     ],
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Prisma4",
     "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "VISUAL.md com achados por rota e largura",
       "nenhuma alteração de código"
@@ -1782,6 +1782,26 @@
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-14",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Banner de cookies não cobre CTAs (reserva espaço no fim da página enquanto aberto) e espaçamento do início do quiz Human",
+    "depende_de": [
+      "W3-08"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Biscoito",
+    "lease_ate": "2026-11-15T05:17:43.565Z",
+    "branch": "agy/W3-14",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "medição no portal: CTA final visível com banner aberto",
       "revisão APROVADO"
     ]
   }
