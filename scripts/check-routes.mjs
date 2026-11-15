@@ -30,24 +30,30 @@ const pages = (await sourceFiles("app")).filter(
       path.relative(path.join(root, "app"), file)
     )
 );
+const components = [
+  ...(await sourceFiles("app")),
+  ...(await sourceFiles("components")),
+].filter((file) => file.endsWith(".tsx"));
 const routes = pages.map(routePath);
 const metadata = [];
 const links = [];
 const jsonLd = [];
 
-for (const file of pages) {
+for (const file of new Set([...pages, ...components])) {
   const source = await readFile(file, "utf8");
   const rel = path.relative(root, file);
-  const exportAt = source.search(
-    /export\s+(?:const\s+metadata\b|(?:async\s+)?function\s+generateMetadata\b)/
-  );
-  const block = exportAt < 0 ? "" : source.slice(exportAt, exportAt + 5000);
-  if (
-    exportAt < 0 ||
-    !/\btitle\s*:/.test(block) ||
-    !/\bdescription\s*:/.test(block)
-  )
-    metadata.push({ file: rel, route: routePath(file) });
+  if (pages.includes(file)) {
+    const exportAt = source.search(
+      /export\s+(?:const\s+metadata\b|(?:async\s+)?function\s+generateMetadata\b)/
+    );
+    const block = exportAt < 0 ? "" : source.slice(exportAt, exportAt + 5000);
+    if (
+      exportAt < 0 ||
+      !/\btitle\s*:/.test(block) ||
+      !/\bdescription\s*:/.test(block)
+    )
+      metadata.push({ file: rel, route: routePath(file) });
+  }
   for (const tag of source.matchAll(/<(?:Link|a)\b[^>]*>/gs)) {
     const hrefs = tag[0].matchAll(
       /\bhref\s*=\s*(?:\{\s*)?["'](\/[^"'#?]*)["']/g

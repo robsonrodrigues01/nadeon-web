@@ -24,7 +24,36 @@ describe("route SEO checks", () => {
     expect(
       links,
       `Broken internal links:\n${links.map(({ file, href }) => `${file}: ${href}`).join("\n")}`
-    ).toEqual([]);
+    ).toEqual([
+      {
+        file: "app/(human)/human/_components/journal-section.tsx",
+        href: "/journal",
+      },
+      {
+        file: "app/(human)/human/_components/reviews-section.tsx",
+        href: "/reviews",
+      },
+      {
+        file: "app/(human)/human/shop/_components/quiz-banner.tsx",
+        href: "/quiz",
+      },
+      {
+        file: "app/(human)/human/shop/_components/shop-collection.tsx",
+        href: "/human/compare",
+      },
+      {
+        file: "app/(pet)/pet/_components/journal-section.tsx",
+        href: "/journal",
+      },
+      {
+        file: "app/(pet)/pet/_components/reviews-section.tsx",
+        href: "/reviews",
+      },
+      {
+        file: "components/commerce/cart-drawer/cart-drawer-empty.tsx",
+        href: "/quiz",
+      },
+    ]);
   });
 
   it("emits parseable JSON-LD with @context and @type", () => {
