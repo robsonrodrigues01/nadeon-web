@@ -16,10 +16,8 @@ import { Hero } from "./_components/hero";
 import { HowItWorks } from "./_components/how-it-works";
 import { WhatYouSave } from "./_components/what-you-save";
 import { FlexibilitySection } from "./_components/flexibility-section";
-import {
-  SubscriptionFaq,
-  buildSubscriptionFaqs,
-} from "./_components/subscription-faq";
+import { SubscriptionFaq } from "./_components/subscription-faq";
+import { buildSubscriptionFaqs } from "./_components/subscription-faq-data";
 import { BottomCta } from "./_components/bottom-cta";
 import { PetRegulatoryNotice } from "../_components/pet-regulatory-notice";
 import {
