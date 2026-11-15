@@ -11,44 +11,19 @@ export interface GalleryProps {
 interface GalleryTab {
   id: string;
   label: string;
-  altText: string;
   badge?: string;
   icon?: string;
 }
 
 const GALLERY_TABS: GalleryTab[] = [
-  { id: "jar", label: "Jar", altText: "Front view of BioHack jar" },
-  { id: "capsules", label: "Capsules", altText: "BioHack vegan capsules view" },
-  {
-    id: "label",
-    label: "Label",
-    altText: "BioHack supplement facts and product label",
-  },
-  {
-    id: "how-to-take",
-    label: "How to take",
-    altText: "BioHack daily morning serving illustration",
-  },
-  {
-    id: "supplement-facts",
-    label: "Supplement facts",
-    altText: "BioHack nutritional supplement facts chart",
-  },
-  {
-    id: "routine",
-    label: "Routine",
-    altText: "BioHack daily longevity routine schedule",
-  },
-  {
-    id: "lab-report",
-    label: "Lab report",
-    altText: "BioHack lab report, first lots publishing soon",
-  },
-  {
-    id: "video",
-    label: "▶ Video",
-    altText: "BioHack formula and production overview video preview",
-  },
+  { id: "jar", label: "Jar" },
+  { id: "capsules", label: "Capsules" },
+  { id: "label", label: "Label" },
+  { id: "how-to-take", label: "How to take" },
+  { id: "supplement-facts", label: "Supplement facts" },
+  { id: "routine", label: "Routine" },
+  { id: "lab-report", label: "Lab report" },
+  { id: "video", label: "▶ Video" },
 ];
 
 export function Gallery({ product }: GalleryProps) {
@@ -78,7 +53,7 @@ export function Gallery({ product }: GalleryProps) {
         <div className="relative h-full w-full flex flex-col items-center justify-center">
           <Image
             src={imageSrc}
-            alt={activeTab.altText}
+            alt={`${product.name}, ${activeTab.label} view`}
             width={480}
             height={480}
             priority

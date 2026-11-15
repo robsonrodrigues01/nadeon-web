@@ -89,21 +89,61 @@ describe("Route /human/products/[slug] (W2-06)", () => {
   });
 
   describe("Page layout, semantic elements, and Section 5.2 buttons & fields", () => {
-    it("renders page with all buttons and fields mandated by catalog section 5.2", async () => {
+    it("uses the catalog image and product-specific alt text", async () => {
       const jsx = await ProductPage({
-        params: Promise.resolve({ slug: "biohack" }),
+        params: Promise.resolve({ slug: "powerhouse" }),
       });
 
       render(jsx);
 
-      const imageSrc = screen
-        .getByRole("img", { name: /front view of biohack jar/i })
-        .getAttribute("src");
+      const product = await catalogProvider.getProduct("powerhouse");
+      expect(product).toBeTruthy();
+      const image = screen.getByRole("img", { name: "Powerhouse, Jar view" });
       expect(
-        new URL(imageSrc!, "https://nadeonlabs.com").searchParams.get("url")
-      ).toBe("/renders/biohack.png");
+        new URL(
+          image.getAttribute("src")!,
+          "https://nadeonlabs.com"
+        ).searchParams.get("url")
+      ).toBe(product!.images[0]);
 
       // 1. Heading and Breadcrumb navigation
+      expect(
+        screen.getByRole("heading", { level: 1, name: /powerhouse/i })
+      ).toBeTruthy();
+      expect(
+        screen.getByRole("navigation", { name: /breadcrumb/i })
+      ).toBeTruthy();
+
+      const expectedTabs = [
+        "Jar",
+        "Capsules",
+        "Label",
+        "How to take",
+        "Supplement facts",
+        "Routine",
+        "Lab report",
+        "▶ Video",
+      ];
+      for (const tabName of expectedTabs)
+        expect(screen.getByRole("tab", { name: tabName })).toBeTruthy();
+    });
+
+    it("uses a descriptive product alt text for the placeholder image", async () => {
+      const jsx = await ProductPage({
+        params: Promise.resolve({ slug: "glow" }),
+      });
+      render(jsx);
+
+      const image = screen.getByRole("img", { name: "Glow, Jar view" });
+      expect(image.getAttribute("src")).toBe("/renders/placeholder.svg");
+    });
+
+    it("renders page with all buttons and fields mandated by catalog section 5.2", async () => {
+      const jsx = await ProductPage({
+        params: Promise.resolve({ slug: "biohack" }),
+      });
+      render(jsx);
+
       expect(
         screen.getByRole("heading", { level: 1, name: /biohack/i })
       ).toBeTruthy();
