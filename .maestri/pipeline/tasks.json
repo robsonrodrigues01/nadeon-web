@@ -1290,7 +1290,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Marco",
     "lease_ate": null,
     "branch": "agy/W2-32",
@@ -1310,7 +1310,7 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Sinete",
     "lease_ate": null,
     "branch": "agy/W2-33",
@@ -1350,11 +1350,11 @@
     "depende_de": [
       "W1-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Rampa",
     "lease_ate": "2026-11-15T00:26:47.353Z",
     "branch": "agy/W2-35",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
