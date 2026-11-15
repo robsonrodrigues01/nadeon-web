@@ -15,21 +15,9 @@ export interface KitView {
   canAddToCart: boolean;
 }
 
-/**
- * Turns catalog kits into plain, serializable view models for the UI.
- */
-function renderFor(kit: Kit, available: ReadonlySet<string>): string | null {
-  const slug = kit.products.find((ref) =>
-    available.has(ref.productSlug)
-  )?.productSlug;
-  return slug ? `/renders/${slug}.png` : null;
-}
+/** Turns catalog kits into plain, serializable view models for the UI. */
 
-export function buildKitViews(
-  kits: Kit[],
-  products: Product[],
-  availableRenders: ReadonlySet<string> = new Set()
-): KitView[] {
+export function buildKitViews(kits: Kit[], products: Product[]): KitView[] {
   const bySlug = new Map(products.map((p) => [p.slug, p]));
   const savingsOf = (kit: Kit) =>
     kit.compareAtPrice ? kit.compareAtPrice.amount - kit.price.amount : 0;
@@ -50,8 +38,9 @@ export function buildKitViews(
       slug: kit.slug,
       name: kit.name,
       description: kit.description,
-      // Kit art is not in public/: use the first formula's render that exists, else no image.
-      image: renderFor(kit, availableRenders),
+      image:
+        members.find(({ product }) => product?.images[0])?.product?.images[0] ||
+        "/renders/placeholder.svg",
       itemCount: kit.products.reduce((sum, ref) => sum + ref.quantity, 0),
       itemsLabel: members
         .flatMap(({ product }) =>

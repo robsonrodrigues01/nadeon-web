@@ -19,6 +19,7 @@ import {
 import { catalogProvider } from "@/lib/providers";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
+import type { Product } from "@/lib/contracts/catalog";
 
 // Páginas de servidor leem o cookie de mercado; o teste não tem requisição.
 vi.mock("next/headers", () => ({
@@ -164,7 +165,7 @@ describe("W2-07 Route: Kits (`/human/kits`)", () => {
     expect(screen.getByText("On one-time orders.")).toBeDefined();
   });
 
-  it("uses an existing product render as kit image and omits the image when none exists", () => {
+  it("uses catalog product images as kit image and falls back to the placeholder", () => {
     const kits = [
       {
         slug: "a",
@@ -179,6 +180,7 @@ describe("W2-07 Route: Kits (`/human/kits`)", () => {
     const products = [
       {
         slug: "biohack",
+        images: ["/images/biohack.webp"],
         name: "BioHack",
         technicalName: "",
         variants: [
@@ -190,11 +192,11 @@ describe("W2-07 Route: Kits (`/human/kits`)", () => {
           },
         ],
       },
-    ] as never;
-    expect(buildKitViews(kits, products, new Set(["biohack"]))[0].image).toBe(
-      "/renders/biohack.png"
+    ] as Product[];
+    expect(buildKitViews(kits, products)[0].image).toBe("/images/biohack.webp");
+    expect(buildKitViews(kits, [{ ...products[0], images: [] }])[0].image).toBe(
+      "/renders/placeholder.svg"
     );
-    expect(buildKitViews(kits, products)[0].image).toBeNull();
   });
 
   it("does not leave placeholders, example markers or dollar placeholders in the text", async () => {

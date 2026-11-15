@@ -6,7 +6,6 @@ import { buildBreadcrumbJsonLd, buildMetadata, JsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { averageSavingsPercent, buildKitViews } from "./_components/kit-view";
 import { KitsBrowser } from "./_components/kits-browser";
-import { listProductRenders } from "./_components/kit-renders";
 
 export const metadata = buildMetadata({
   title: "Kits & bundles",
@@ -21,7 +20,7 @@ export default async function HumanKitsPage() {
     catalogProvider.getKits("human"),
     catalogProvider.getProducts({ line: "human" }),
   ]);
-  const views = buildKitViews(kits, products, listProductRenders());
+  const views = buildKitViews(kits, products);
   const averageSavings = averageSavingsPercent(views);
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
