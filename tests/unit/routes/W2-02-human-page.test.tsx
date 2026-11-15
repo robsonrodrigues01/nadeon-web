@@ -172,14 +172,10 @@ describe("W2-02 Route: /human (Home Human)", () => {
         screen.getByRole("link", { name: /about us/i }).getAttribute("href")
       ).toBe("/about");
       expect(
-        screen
-          .getByRole("link", { name: /read all reviews/i })
-          .getAttribute("href")
-      ).toBe("/reviews");
+        screen.queryByRole("link", { name: /read all reviews/i })
+      ).toBeNull();
       expect(screen.getByText(/no reviews yet/i)).toBeDefined();
-      expect(
-        screen.getByRole("link", { name: /all articles/i }).getAttribute("href")
-      ).toBe("/journal");
+      expect(screen.queryByRole("link", { name: /all articles/i })).toBeNull();
 
       expect(
         screen.getByRole("link", { name: /all faqs/i }).getAttribute("href")

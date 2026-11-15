@@ -249,13 +249,11 @@ describe("W2-03 Pet Home Route (/pet)", () => {
       expect(buildSub.getAttribute("href")).toBe("/pet/subscribe");
     });
 
-    it("Reviews: Read all reviews link and empty state for launch", () => {
+    it("Reviews: does not link to the growth-stage reviews page", () => {
       render(<ReviewsSection />);
-
-      const readReviews = screen.getByRole("link", {
-        name: /read all reviews/i,
-      });
-      expect(readReviews.getAttribute("href")).toBe("/reviews");
+      expect(
+        screen.queryByRole("link", { name: /read all reviews/i })
+      ).toBeNull();
     });
 
     it("Pack UGC: Tag @nadeonlabs external link", () => {
@@ -268,11 +266,9 @@ describe("W2-03 Pet Home Route (/pet)", () => {
       expect(tagLink.getAttribute("target")).toBe("_blank");
     });
 
-    it("Journal: All articles link and article items", () => {
+    it("Journal: does not link to the growth-stage journal page", () => {
       render(<JournalSection />);
-
-      const allArticles = screen.getByRole("link", { name: /all articles/i });
-      expect(allArticles.getAttribute("href")).toBe("/journal");
+      expect(screen.queryByRole("link", { name: /all articles/i })).toBeNull();
     });
 
     it("Pet FAQ: accordion toggle buttons and All FAQs link", () => {
