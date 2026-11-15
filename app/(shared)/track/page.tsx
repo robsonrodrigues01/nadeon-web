@@ -1,14 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { accountProvider } from "@/lib/providers";
 import { buildMetadata } from "@/lib/seo";
+import { DEFAULT_MARKET, getMarket, MARKET_COOKIE_NAME } from "@/lib/market";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { TrustStrip } from "@/components/brand/trust-strip";
 import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
 import { OrderLookup } from "./_components/order-lookup";
+import { TrackResult } from "./_components/track-result";
+import { TrackOrderSchema } from "./_components/schema";
+import type { Order } from "@/lib/contracts/account";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
@@ -41,7 +46,50 @@ const HELP_LINKS = [
   },
 ] as const;
 
-export default async function TrackOrderPage() {
+interface TrackOrderPageProps {
+  searchParams?: Promise<{
+    orderNumber?: string;
+    email?: string;
+  }>;
+}
+
+export default async function TrackOrderPage({
+  searchParams,
+}: TrackOrderPageProps = {}) {
+  const params = searchParams ? await searchParams : undefined;
+  const rawOrderNumber = params?.orderNumber?.trim();
+  const rawEmail = params?.email?.trim();
+
+  const cookieStore = await cookies();
+  const marketId = cookieStore.get(MARKET_COOKIE_NAME)?.value;
+  const market = getMarket(marketId) ?? DEFAULT_MARKET;
+
+  let order: Order | null = null;
+  let errorMessage: string | undefined;
+
+  if (rawOrderNumber || rawEmail) {
+    const parsed = TrackOrderSchema.safeParse({
+      orderNumber: rawOrderNumber,
+      email: rawEmail,
+    });
+    if (!parsed.success) {
+      errorMessage = "Check the order number and email.";
+    } else {
+      try {
+        order = await accountProvider.lookupGuestOrder(
+          parsed.data.orderNumber,
+          parsed.data.email
+        );
+      } catch {
+        errorMessage = "Unable to look up your order. Please try again.";
+      }
+      if (!order && !errorMessage) {
+        errorMessage =
+          "No order found with that number and email. Please check your confirmation email.";
+      }
+    }
+  }
+
   const signInHref = await accountProvider.signInUrl("/track");
 
   return (
@@ -78,39 +126,52 @@ export default async function TrackOrderPage() {
             </p>
           </header>
 
-          <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-            <OrderLookup signInHref={signInHref} />
+          <div className="mt-10">
+            {order ? (
+              <TrackResult order={order} market={market} />
+            ) : (
+              <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+                <OrderLookup
+                  signInHref={signInHref}
+                  errorMessage={errorMessage}
+                  initialValues={{
+                    orderNumber: rawOrderNumber,
+                    email: rawEmail,
+                  }}
+                />
 
-            <aside
-              aria-labelledby="order-number-help-heading"
-              className="rounded-card border border-border p-6 sm:p-8"
-            >
-              <h2
-                id="order-number-help-heading"
-                className="font-archivo text-xl font-bold text-fg"
-              >
-                Where is my order number?
-              </h2>
-              <ol className="mt-5 flex flex-col gap-4 text-sm text-fg-muted">
-                <li>
-                  Search your inbox for{" "}
-                  <strong>&quot;Nadeon order&quot;</strong>. The number is at
-                  the top of the confirmation email.
-                </li>
-                <li>
-                  Order numbers start with <strong>NL-</strong> and have 6
-                  digits.
-                </li>
-                <li>
-                  Checked out with Shop Pay or as a guest? Same email, same
-                  number.
-                </li>
-                <li>
-                  Still stuck? Chat with us or email support and we will find
-                  it.
-                </li>
-              </ol>
-            </aside>
+                <aside
+                  aria-labelledby="order-number-help-heading"
+                  className="rounded-card border border-border p-6 sm:p-8"
+                >
+                  <h2
+                    id="order-number-help-heading"
+                    className="font-archivo text-xl font-bold text-fg"
+                  >
+                    Where is my order number?
+                  </h2>
+                  <ol className="mt-5 flex flex-col gap-4 text-sm text-fg-muted">
+                    <li>
+                      Search your inbox for{" "}
+                      <strong>&quot;Nadeon order&quot;</strong>. The number is
+                      at the top of the confirmation email.
+                    </li>
+                    <li>
+                      Order numbers start with <strong>NL-</strong> and have 6
+                      digits.
+                    </li>
+                    <li>
+                      Checked out with Shop Pay or as a guest? Same email, same
+                      number.
+                    </li>
+                    <li>
+                      Still stuck? Chat with us or email support and we will
+                      find it.
+                    </li>
+                  </ol>
+                </aside>
+              </div>
+            )}
           </div>
 
           <section aria-labelledby="help-links-heading" className="mt-14">

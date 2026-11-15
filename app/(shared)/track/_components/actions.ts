@@ -1,13 +1,22 @@
 "use server";
 
+import { accountProvider } from "@/lib/providers";
 import { TrackOrderSchema } from "./schema";
+import type { Order } from "@/lib/contracts/account";
 
-// shortcut: nenhum contrato consulta pedido de visitante por número e e-mail, então
-// a ação só valida a entrada. Quando o contrato existir, chamar o provider aqui e
-// devolver o resultado para a página (estado B do design).
-export async function lookupOrder(formData: FormData): Promise<void> {
-  TrackOrderSchema.safeParse({
+/**
+ * Consulta de pedido de visitante via lookupGuestOrder (estado B do design).
+ */
+export async function lookupOrder(formData: FormData): Promise<Order | null> {
+  const parsed = TrackOrderSchema.safeParse({
     orderNumber: formData.get("orderNumber"),
     email: formData.get("email"),
   });
+  if (!parsed.success) {
+    return null;
+  }
+  return accountProvider.lookupGuestOrder(
+    parsed.data.orderNumber,
+    parsed.data.email
+  );
 }

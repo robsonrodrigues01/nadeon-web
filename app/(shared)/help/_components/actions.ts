@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { formsProvider } from "@/lib/providers";
+import { formsProvider, accountProvider } from "@/lib/providers";
 import { ContactInputSchema } from "@/lib/contracts/forms";
 
 export type ContactState =
@@ -11,7 +11,18 @@ export type ContactState =
   | { status: "error" };
 
 export type TrackState =
-  { status: "idle" } | { status: "invalid" } | { status: "pending" };
+  | { status: "idle" }
+  | { status: "invalid" }
+  | { status: "not_found" }
+  | {
+      status: "found";
+      orderNumber: string;
+      fulfillmentStatus: string;
+      trackingNumber?: string;
+      trackingUrl?: string;
+      itemCount: number;
+    }
+  | { status: "error" };
 
 // Mesmo formato do campo de número do design: NL- seguido de 6 dígitos.
 const TrackInputSchema = z.object({
@@ -20,19 +31,23 @@ const TrackInputSchema = z.object({
     .trim()
     .toUpperCase()
     .regex(/^NL-\d{6}$/),
-  email: z.email().trim(),
+  email: z.string().email().trim(),
 });
 
 export async function sendContactMessage(
   _previous: ContactState,
   formData: FormData
 ): Promise<ContactState> {
+  const rawCopy = formData.get("copy");
+  const copy = rawCopy === "on" || rawCopy === "true" ? true : undefined;
+
   const parsed = ContactInputSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
     topic: formData.get("topic"),
     message: formData.get("message"),
     orderNumber: formData.get("orderNumber") || undefined,
+    copy,
   });
   if (!parsed.success) {
     return { status: "invalid" };
@@ -46,8 +61,6 @@ export async function sendContactMessage(
   }
 }
 
-// shortcut: nenhum contrato consulta pedido de visitante por número e e-mail.
-// Quando existir, chamar o provider aqui e devolver o pedido para a página.
 export async function lookupOrder(
   _previous: TrackState,
   formData: FormData
@@ -56,5 +69,27 @@ export async function lookupOrder(
     orderNumber: formData.get("orderNumber"),
     email: formData.get("email"),
   });
-  return parsed.success ? { status: "pending" } : { status: "invalid" };
+  if (!parsed.success) {
+    return { status: "invalid" };
+  }
+
+  try {
+    const order = await accountProvider.lookupGuestOrder(
+      parsed.data.orderNumber,
+      parsed.data.email
+    );
+    if (!order) {
+      return { status: "not_found" };
+    }
+    return {
+      status: "found",
+      orderNumber: order.orderNumber,
+      fulfillmentStatus: order.fulfillmentStatus,
+      trackingNumber: order.trackingNumber,
+      trackingUrl: order.trackingUrl,
+      itemCount: order.items.length,
+    };
+  } catch {
+    return { status: "error" };
+  }
 }

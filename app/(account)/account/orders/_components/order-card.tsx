@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import type { OrderRowView } from "./order-view";
 import { OrderStatusBadge } from "./order-status-badge";
+import { OrderActions } from "./order-actions";
 
 export interface OrderCardProps {
   row: OrderRowView;
@@ -65,12 +66,11 @@ export function OrderCard({ row }: OrderCardProps) {
               Track package
             </Button>
           ))}
-        {row.status === "delivered" && (
-          // Buy again needs variant ids, which the order contract does not expose yet.
-          <Button variant="primary" size="sm" disabled>
-            Buy again
-          </Button>
-        )}
+        <OrderActions
+          lines={row.lines}
+          orderUrl={row.url}
+          showBuyAgain={row.status === "delivered"}
+        />
         <Button variant="secondary" size="sm" href={detailsHref}>
           Details
         </Button>

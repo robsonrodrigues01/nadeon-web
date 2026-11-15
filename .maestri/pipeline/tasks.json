@@ -1444,9 +1444,9 @@
   {
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Elo",
-    "lease_ate": "2026-11-15T03:33:05.566Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
@@ -1465,7 +1465,7 @@
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "status": "para_revisao",
-    "responsavel": "Inventário",
+    "responsavel": "Inventário2",
     "lease_ate": null,
     "pr": "local",
     "criterios": [
@@ -1479,15 +1479,14 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-01",
-    "revisor": "Crivo2"
+    "branch": "agy/W3-01"
   },
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Roteiro2",
-    "lease_ate": "2026-11-15T03:30:32.400Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
@@ -1506,8 +1505,8 @@
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "status": "para_revisao",
-    "responsavel": "Sonar",
-    "lease_ate": "2026-11-15T03:33:10.457Z",
+    "responsavel": "Sonar2",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
@@ -1520,6 +1519,69 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-03"
+    "branch": "agy/W3-03",
+    "revisor": "Sonda3"
+  },
+  {
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "em_andamento",
+    "responsavel": "Sacola3",
+    "lease_ate": "2026-11-15T03:57:24.499Z",
+    "pr": "local",
+    "depende_de": [
+      "W3-01"
+    ],
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W2-41",
+    "titulo": "/cart: barra de frete grátis e estado vazio com best sellers e atalhos de categoria (catálogo 5.3)",
+    "branch": "agy/W2-41"
+  },
+  {
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "entregue",
+    "responsavel": "Vitrine2",
+    "lease_ate": null,
+    "pr": "local",
+    "depende_de": [
+      "W3-01"
+    ],
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W2-42",
+    "titulo": "Loja: link See bundles em /pet/dogs e View details nos kits (catálogo 5.2)",
+    "branch": "agy/W2-42",
+    "nota": "encerrada sem mudança: elementos já existiam"
+  },
+  {
+    "onda": 2,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "para_revisao",
+    "responsavel": "Conta3",
+    "lease_ate": null,
+    "pr": "local",
+    "depende_de": [
+      "W3-01"
+    ],
+    "criterios": [
+      "pnpm gate verde",
+      "diff só nos caminhos do briefing",
+      "revisão APROVADO"
+    ],
+    "id": "W2-43",
+    "titulo": "Conta: Reorder no dashboard, Edit address, Start a return, oferta de retenção do cancelamento e ações do /track (catálogo 5.4)",
+    "branch": "agy/W2-43",
+    "revisor": "Balcão2"
   }
 ]
