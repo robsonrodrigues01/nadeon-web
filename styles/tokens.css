@@ -100,8 +100,8 @@
 
   --shadow-card: var(--shadow-card);
 
-  --font-archivo: var(--font-archivo);
-  --font-dm-sans: var(--font-dm-sans);
+  --font-archivo: var(--font-archivo-next);
+  --font-dm-sans: var(--font-dm-sans-next);
 }
 
 /* Classes utilitárias de gradiente */
