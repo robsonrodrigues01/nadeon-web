@@ -1419,8 +1419,7 @@
     ],
     "id": "W2-38",
     "titulo": "QuizResultPet sem preço, moeda e claims fixos (componente compartilhado do quiz)",
-    "branch": "agy/W2-38",
-    "revisor": "Faro3"
+    "branch": "agy/W2-38"
   },
   {
     "onda": 2,
@@ -1445,10 +1444,10 @@
   {
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Elo",
-    "lease_ate": "2026-11-15T03:27:23.327Z",
-    "pr": null,
+    "lease_ate": "2026-11-15T03:33:05.566Z",
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
@@ -1467,7 +1466,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "para_revisao",
     "responsavel": "Inventário",
-    "lease_ate": "2026-11-15T03:30:38.862Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
@@ -1480,12 +1479,13 @@
     "depende_de": [
       "W2-36"
     ],
-    "branch": "agy/W3-01"
+    "branch": "agy/W3-01",
+    "revisor": "Crivo2"
   },
   {
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Roteiro2",
     "lease_ate": "2026-11-15T03:30:32.400Z",
     "pr": "local",
@@ -1504,11 +1504,11 @@
   },
   {
     "papel": "QA",
-    "preset": "Gemini 3.8 Flash (AGY)",
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
-    "pr": null,
+    "preset": "Luna 6 Low (GPT)",
+    "status": "para_revisao",
+    "responsavel": "Sonar",
+    "lease_ate": "2026-11-15T03:33:10.457Z",
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "diff só nos caminhos do briefing",
