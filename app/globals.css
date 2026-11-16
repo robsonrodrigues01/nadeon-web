@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+/* Tokens Nadeon dentro do pipeline do Tailwind: sem isso o @theme deles não gera bg-bg, text-fg etc. */
+@import "../styles/tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Archivo, DM_Sans } from "next/font/google";
 import { MarketProvider } from "@/lib/market/context";
 import "./globals.css";
-import "../styles/tokens.css";
 
 const archivo = Archivo({
   variable: "--font-archivo-next",
