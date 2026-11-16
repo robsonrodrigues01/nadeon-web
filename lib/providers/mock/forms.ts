@@ -59,7 +59,7 @@ export class MockFormsProvider implements FormsProvider {
     consent: boolean
   ): Promise<FormSubmissionResult> {
     if (!email || !email.includes("@")) {
-      throw new Error(`Invalid email address: ${email}`);
+      throw new Error("Invalid email address");
     }
     if (!consent) {
       throw new Error("Consent is required to subscribe");
@@ -71,12 +71,15 @@ export class MockFormsProvider implements FormsProvider {
     return FormSubmissionResultSchema.parse({
       success: true,
       id,
-      message: `Subscribed ${email} to ${list} successfully`,
+      message: `Subscribed to ${list} successfully`,
     });
   }
 
   async sendContact(payload: ContactInput): Promise<FormSubmissionResult> {
-    ContactInputSchema.parse(payload);
+    const parsed = ContactInputSchema.safeParse(payload);
+    if (!parsed.success) {
+      throw new Error("Invalid contact form data");
+    }
     const id = `contact_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission("contact", id);
 
@@ -90,7 +93,10 @@ export class MockFormsProvider implements FormsProvider {
   async sendPrivacyRequest(
     payload: PrivacyRequestInput
   ): Promise<FormSubmissionResult> {
-    PrivacyRequestInputSchema.parse(payload);
+    const parsed = PrivacyRequestInputSchema.safeParse(payload);
+    if (!parsed.success) {
+      throw new Error("Invalid privacy request data");
+    }
     const id = `privacy_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission("privacy_request", id);
 
@@ -105,7 +111,10 @@ export class MockFormsProvider implements FormsProvider {
     type: ApplicationType,
     payload: ApplicationInput
   ): Promise<FormSubmissionResult> {
-    ApplicationInputSchema.parse(payload);
+    const parsed = ApplicationInputSchema.safeParse(payload);
+    if (!parsed.success) {
+      throw new Error("Invalid application data");
+    }
     const id = `app_${type}_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission(`application:${type}`, id);
 
