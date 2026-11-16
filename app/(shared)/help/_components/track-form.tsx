@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState } from "react";
+import React, { useActionState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { lookupOrder, type TrackState } from "./actions";
 
@@ -10,7 +10,16 @@ const fieldClass =
   "min-h-11 w-full rounded-field border border-border bg-bg px-4 py-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 export function TrackForm() {
-  const [state, formAction] = useActionState(lookupOrder, initialState);
+  const [state, formAction, isPending] = useActionState(
+    lookupOrder,
+    initialState
+  );
+  const statusRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (["invalid", "not_found", "error"].includes(state.status))
+      statusRef.current?.focus();
+  }, [state.status]);
 
   return (
     <form action={formAction} className="mt-6 flex flex-col gap-5">
@@ -49,11 +58,17 @@ export function TrackForm() {
         />
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        Track order
+      <Button type="submit" size="lg" className="w-full" disabled={isPending}>
+        {isPending ? "Tracking..." : "Track order"}
       </Button>
 
-      <div role="status" aria-live="polite" className="text-sm text-fg-muted">
+      <div
+        ref={statusRef}
+        tabIndex={-1}
+        role="status"
+        aria-live="polite"
+        className="text-sm text-fg-muted"
+      >
         {state.status === "invalid" && <p>Check the order number and email.</p>}
         {state.status === "not_found" && (
           <p>No order found with those details.</p>

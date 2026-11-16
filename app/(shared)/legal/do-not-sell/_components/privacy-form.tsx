@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useActionState } from "react";
+import React, { useEffect, useRef, useState, useActionState } from "react";
 import Link from "next/link";
 import { submitPrivacyRequest, type PrivacyFormState } from "./actions";
 
@@ -100,6 +100,12 @@ export function PrivacyRequestForm({
     submitPrivacyRequest,
     initialFormState ?? initialState
   );
+  const statusRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (state.status === "invalid" || state.status === "error")
+      statusRef.current?.focus();
+  }, [state.status]);
 
   function handleReset() {
     setSelectedType("do_not_sell");
@@ -137,6 +143,9 @@ export function PrivacyRequestForm({
 
         <p className="text-base sm:text-lg text-fg/80 mt-2 sm:mt-3 max-w-xl mx-auto leading-relaxed">
           Thanks. Your request has been received.
+        </p>
+        <p role="status" aria-live="polite" className="sr-only">
+          Request received.
         </p>
 
         <div className="inline-block mt-4 rounded-field border border-dashed border-border px-4 py-2 text-sm text-fg">
@@ -488,7 +497,13 @@ export function PrivacyRequestForm({
           </span>
         </div>
 
-        <p role="status" aria-live="polite" className="text-sm">
+        <p
+          ref={statusRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          className="text-sm"
+        >
           {state.status === "invalid" && (
             <span className="text-red-600 font-medium">
               {state.error ||

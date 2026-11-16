@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { subscribeNewsletter } from "@/components/brand/newsletter/actions";
 import type { FormsProvider } from "@/lib/contracts/forms";
@@ -22,6 +22,7 @@ export function NewsletterForm({
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const statusRef = useRef<HTMLParagraphElement>(null);
 
   const isPet = line === "pet";
   const heading = isPet ? "Join the pack" : "Join the Nadeon list";
@@ -32,22 +33,25 @@ export function NewsletterForm({
     if (!email || !email.includes("@")) {
       setStatus("error");
       setErrorMessage("Please enter a valid email address.");
+      requestAnimationFrame(() => statusRef.current?.focus());
       return;
     }
 
     try {
       setStatus("loading");
       setErrorMessage("");
-      if (provider) {
-        await provider.subscribe(listName, email.trim(), true);
-      } else {
-        await subscribeNewsletter(listName, email.trim(), true);
+      const result = provider
+        ? await provider.subscribe(listName, email.trim(), true)
+        : await subscribeNewsletter(listName, email.trim(), true);
+      if (!result.success) {
+        throw new Error("Newsletter subscription failed");
       }
       setStatus("success");
       setEmail("");
     } catch {
       setStatus("error");
       setErrorMessage("Could not complete subscription. Please try again.");
+      requestAnimationFrame(() => statusRef.current?.focus());
     }
   }
 
@@ -120,8 +124,11 @@ export function NewsletterForm({
 
       {status === "error" && (
         <p
+          ref={statusRef}
           id={`footer-newsletter-error-${line}`}
-          role="alert"
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
           className="mt-2 text-xs font-medium text-product-coral"
         >
           {errorMessage}

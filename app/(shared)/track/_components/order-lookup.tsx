@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 interface OrderLookupProps {
@@ -16,6 +18,13 @@ export function OrderLookup({
   errorMessage,
   initialValues,
 }: OrderLookupProps) {
+  const [isPending, setIsPending] = useState(false);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (errorMessage) errorRef.current?.focus();
+  }, [errorMessage]);
+
   return (
     <section
       aria-labelledby="order-lookup-heading"
@@ -31,7 +40,12 @@ export function OrderLookup({
         Find your order
       </h2>
 
-      <form method="GET" action="/track" className="mt-6 flex flex-col gap-5">
+      <form
+        method="GET"
+        action="/track"
+        onSubmit={() => setIsPending(true)}
+        className="mt-6 flex flex-col gap-5"
+      >
         <div className="flex flex-col gap-2">
           <label htmlFor="order-number" className="text-sm font-bold text-fg">
             Order number
@@ -72,12 +86,18 @@ export function OrderLookup({
           </p>
         </div>
 
-        <Button type="submit" size="lg" className="w-full">
-          Track order
+        <Button type="submit" size="lg" className="w-full" disabled={isPending}>
+          {isPending ? "Tracking..." : "Track order"}
         </Button>
 
         {errorMessage && (
-          <p role="status" aria-live="polite" className="text-sm text-accent">
+          <p
+            ref={errorRef}
+            tabIndex={-1}
+            role="status"
+            aria-live="polite"
+            className="text-sm text-accent"
+          >
             {errorMessage}
           </p>
         )}

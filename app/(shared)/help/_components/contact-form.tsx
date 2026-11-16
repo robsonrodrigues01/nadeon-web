@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState } from "react";
+import React, { useActionState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { sendContactMessage, type ContactState } from "./actions";
 
@@ -14,7 +14,16 @@ const fieldClass =
   "min-h-11 w-full rounded-field border border-border bg-bg px-4 py-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 export function ContactForm({ topics }: ContactFormProps) {
-  const [state, formAction] = useActionState(sendContactMessage, initialState);
+  const [state, formAction, isPending] = useActionState(
+    sendContactMessage,
+    initialState
+  );
+  const statusRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (state.status === "invalid" || state.status === "error")
+      statusRef.current?.focus();
+  }, [state.status]);
 
   return (
     <form action={formAction} className="mt-6 flex flex-col gap-5">
@@ -103,11 +112,17 @@ export function ContactForm({ topics }: ContactFormProps) {
         Send me a copy of this message
       </label>
 
-      <Button type="submit" size="lg" className="w-full">
-        Send message
+      <Button type="submit" size="lg" className="w-full" disabled={isPending}>
+        {isPending ? "Sending..." : "Send message"}
       </Button>
 
-      <p role="status" aria-live="polite" className="text-sm text-fg-muted">
+      <p
+        ref={statusRef}
+        tabIndex={-1}
+        role="status"
+        aria-live="polite"
+        className="text-sm text-fg-muted"
+      >
         {state.status === "sent" && "Message sent."}
         {state.status === "invalid" &&
           "Check the highlighted fields and try again."}

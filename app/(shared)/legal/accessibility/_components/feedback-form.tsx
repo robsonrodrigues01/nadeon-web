@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useActionState } from "react";
+import React, { useEffect, useRef, useState, useActionState } from "react";
 import { submitAccessibilityFeedback, type FeedbackFormState } from "./actions";
 
 const inputClass =
@@ -17,6 +17,12 @@ export function FeedbackForm() {
   );
 
   const activeState = customState.status !== "idle" ? customState : serverState;
+  const statusRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (activeState.status === "invalid" || activeState.status === "error")
+      statusRef.current?.focus();
+  }, [activeState.status]);
 
   if (activeState.status === "success") {
     return (
@@ -46,6 +52,9 @@ export function FeedbackForm() {
         <p className="text-sm sm:text-base text-fg/80 mt-2 max-w-md mx-auto leading-relaxed">
           Thank you for helping us improve our website accessibility. We will
           review your report and respond within To be confirmed business days.
+        </p>
+        <p role="status" aria-live="polite" className="sr-only">
+          Feedback received.
         </p>
         <button
           type="button"
@@ -191,7 +200,13 @@ export function FeedbackForm() {
           </button>
         </div>
 
-        <p role="status" aria-live="polite" className="text-sm">
+        <p
+          ref={statusRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          className="text-sm"
+        >
           {activeState.status === "invalid" && (
             <span className="text-product-coral font-medium">
               {activeState.error ||

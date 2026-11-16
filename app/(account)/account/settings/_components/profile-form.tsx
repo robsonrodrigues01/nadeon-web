@@ -1,6 +1,9 @@
+"use client";
+
+import { useActionState, useEffect, useRef } from "react";
 import type { CustomerProfile } from "@/lib/contracts/account";
 import { Button } from "@/components/ui/button";
-import { saveProfileAction } from "./actions";
+import { saveProfileFormAction, type ProfileFormState } from "./actions";
 import { formatBirthday } from "./birthday";
 
 const INPUT_CLASS =
@@ -16,6 +19,15 @@ export interface ProfileFormProps {
 }
 
 export function ProfileForm({ customer }: ProfileFormProps) {
+  const [state, action, isPending] = useActionState(saveProfileFormAction, {
+    status: "idle",
+  } satisfies ProfileFormState);
+  const statusRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (state.status === "invalid" || state.status === "error")
+      statusRef.current?.focus();
+  }, [state.status]);
+
   return (
     <section
       aria-labelledby="profile-heading"
@@ -28,10 +40,7 @@ export function ProfileForm({ customer }: ProfileFormProps) {
         Profile
       </h2>
 
-      <form
-        action={saveProfileAction}
-        className="mt-5 grid gap-4 sm:grid-cols-2"
-      >
+      <form action={action} className="mt-5 grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="profile-first-name" className={LABEL_CLASS}>
             First name
@@ -125,8 +134,23 @@ export function ProfileForm({ customer }: ProfileFormProps) {
         </div>
 
         <div className="sm:col-span-2">
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Saving..." : "Save changes"}
+          </Button>
         </div>
+        <p
+          ref={statusRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          className="text-sm text-fg-muted sm:col-span-2"
+        >
+          {state.status === "invalid" &&
+            "Please check the highlighted fields and try again."}
+          {state.status === "error" &&
+            "Could not save your changes. Please try again."}
+          {state.status === "saved" && "Changes saved."}
+        </p>
       </form>
     </section>
   );

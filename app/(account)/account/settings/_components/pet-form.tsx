@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Pet } from "@/lib/contracts/account";
 import { savePetAction } from "./actions";
@@ -40,12 +41,25 @@ export function PetForm({
 }: PetFormProps) {
   const router = useRouter();
   const headingId = "pet-form-heading";
+  const [status, setStatus] = useState<
+    "idle" | "pending" | "invalid" | "error"
+  >("idle");
+  const statusRef = useRef<HTMLParagraphElement>(null);
 
   async function submit(formData: FormData) {
-    const saved = await savePetAction(formData);
-    if (saved) {
-      onSaved(saved);
-      router.refresh();
+    setStatus("pending");
+    try {
+      const saved = await savePetAction(formData);
+      if (saved) {
+        onSaved(saved);
+        router.refresh();
+      } else {
+        setStatus("invalid");
+        requestAnimationFrame(() => statusRef.current?.focus());
+      }
+    } catch {
+      setStatus("error");
+      requestAnimationFrame(() => statusRef.current?.focus());
     }
   }
 
@@ -196,11 +210,24 @@ export function PetForm({
         </fieldset>
 
         <div className="flex flex-wrap gap-3">
-          <Button type="submit">Save pet</Button>
+          <Button type="submit" disabled={status === "pending"}>
+            {status === "pending" ? "Saving..." : "Save pet"}
+          </Button>
           <Button type="button" variant="secondary" onClick={onCancel}>
             Cancel
           </Button>
         </div>
+        <p
+          ref={statusRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          className="text-sm text-fg-muted"
+        >
+          {status === "invalid" &&
+            "Please check the highlighted fields and try again."}
+          {status === "error" && "Could not save your pet. Please try again."}
+        </p>
       </form>
     </section>
   );
