@@ -230,11 +230,11 @@ export function FirstVisitPopup({
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      if (
-        previousActiveElement.current &&
-        typeof previousActiveElement.current.focus === "function"
-      ) {
-        previousActiveElement.current.focus();
+      const returnFocus = previousActiveElement.current;
+      if (returnFocus?.isConnected && returnFocus !== document.body) {
+        returnFocus.focus();
+      } else {
+        document.getElementById("main-content")?.focus();
       }
     };
   }, [isVisible, inline, handleDismiss]);
