@@ -100,12 +100,16 @@ describe("W3-28 public form errors", () => {
       error: "Unable to submit request. Please try again.",
     });
     expect(serverLog).toHaveBeenCalledWith(
-      "[PrivacyRequest] Submission failed:",
-      error
+      "[PrivacyRequest] Submission failed",
+      { code: "provider_error" }
+    );
+    expect(JSON.stringify(serverLog.mock.calls)).not.toContain(
+      "private@example.test"
     );
   });
 
   it("does not return provider failure messages to privacy request callers", async () => {
+    const serverLog = vi.spyOn(console, "error").mockImplementation(() => {});
     mocks.sendPrivacyRequest.mockResolvedValueOnce({
       success: false,
       message: "private@example.test provider diagnostic",
@@ -124,6 +128,38 @@ describe("W3-28 public form errors", () => {
       status: "error",
       error: "Unable to submit request. Please try again.",
     });
+    expect(serverLog).toHaveBeenCalledWith(
+      "[PrivacyRequest] Provider rejected submission",
+      { code: "provider_rejected" }
+    );
+    expect(JSON.stringify(serverLog.mock.calls)).not.toContain(
+      "private@example.test"
+    );
+  });
+
+  it("rejects non-checkbox confirmation and File values before calling the provider", async () => {
+    const base = {
+      email: "person@example.test",
+      firstName: "Pat",
+      lastName: "Doe",
+      requestType: "do_not_sell",
+    };
+    const invalidConfirmation = form({ ...base, confirmAccuracy: "false" });
+    const fileField = new FormData();
+    fileField.set("email", "person@example.test");
+    fileField.set("firstName", "Pat");
+    fileField.set("lastName", "Doe");
+    fileField.set("requestType", "do_not_sell");
+    fileField.set("confirmAccuracy", "on");
+    fileField.set("phone", new File(["unexpected"], "phone.txt"));
+
+    expect(
+      await submitPrivacyRequest({ status: "idle" }, invalidConfirmation)
+    ).toMatchObject({ status: "invalid" });
+    expect(await submitPrivacyRequest({ status: "idle" }, fileField)).toEqual({
+      status: "invalid",
+    });
+    expect(mocks.sendPrivacyRequest).not.toHaveBeenCalled();
   });
 
   it("does not return provider error details to accessibility feedback callers", async () => {
@@ -139,12 +175,16 @@ describe("W3-28 public form errors", () => {
       error: "Unable to submit feedback. Please try again.",
     });
     expect(serverLog).toHaveBeenCalledWith(
-      "[AccessibilityFeedback] Submission failed:",
-      error
+      "[AccessibilityFeedback] Submission failed",
+      { code: "provider_error" }
+    );
+    expect(JSON.stringify(serverLog.mock.calls)).not.toContain(
+      "private@example.test"
     );
   });
 
   it("does not return provider failure messages to accessibility feedback callers", async () => {
+    const serverLog = vi.spyOn(console, "error").mockImplementation(() => {});
     mocks.sendContact.mockResolvedValueOnce({
       success: false,
       message: "private@example.test provider diagnostic",
@@ -157,5 +197,12 @@ describe("W3-28 public form errors", () => {
       status: "error",
       error: "Unable to submit feedback. Please try again.",
     });
+    expect(serverLog).toHaveBeenCalledWith(
+      "[AccessibilityFeedback] Provider rejected submission",
+      { code: "provider_rejected" }
+    );
+    expect(JSON.stringify(serverLog.mock.calls)).not.toContain(
+      "private@example.test"
+    );
   });
 });
