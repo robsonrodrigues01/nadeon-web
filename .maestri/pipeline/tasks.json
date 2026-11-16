@@ -2234,11 +2234,11 @@
     "depende_de": [
       "W3-37"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T00:55:32.789Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "TRIAGEM.md curta e verificável",
       "nenhuma alteração de código"
@@ -2294,16 +2294,17 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T00:57:42.594Z",
+    "lease_ate": null,
     "branch": "agy/W3-41",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "testes montados",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lupa3"
   },
   {
     "onda": 3,
@@ -2334,7 +2335,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:00:25.092Z",
+    "lease_ate": "2026-11-16T01:05:13.075Z",
     "pr": null,
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
@@ -2382,6 +2383,26 @@
     "pr": null,
     "criterios": [
       "it.fails correspondentes viram testes que passam",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-46",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Corrigir as 31 diferenças reais de texto vs board em 7 rotas (TRIAGEM.md da W3-38)",
+    "depende_de": [
+      "W3-38"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Atalaia",
+    "lease_ate": "2026-11-16T01:05:42.502Z",
+    "branch": "agy/W3-46",
+    "pr": null,
+    "criterios": [
+      "texto igual ao board",
       "pnpm gate verde",
       "revisão APROVADO"
     ]
