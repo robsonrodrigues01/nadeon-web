@@ -430,9 +430,7 @@ export function TermsContent() {
             <div className="rounded-card overflow-hidden border border-border bg-bg-elevated mb-4 shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
-                  <caption className="sr-only">
-                    Refund processing timelines by payment method
-                  </caption>
+                  <caption className="sr-only">Refunds</caption>
                   <thead
                     data-theme="human"
                     className="bg-bg text-fg text-xs font-bold uppercase tracking-wider"

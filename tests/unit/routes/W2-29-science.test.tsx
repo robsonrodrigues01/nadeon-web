@@ -136,4 +136,17 @@ describe("W2-29 /science FAQ accordion", () => {
     expect(question.getAttribute("aria-expanded")).toBe("true");
     expect(screen.getByText(/No\. NMN is a precursor/)).toBeTruthy();
   });
+
+  it("includes the four board-listed questions without inventing answers", async () => {
+    await renderScience();
+    for (const question of [
+      "Is there clinical research on NMN?",
+      "How much NMN is in BioHack?",
+      "Why do some formulas add resveratrol or TMG?",
+      "Should I talk to my doctor first?",
+    ]) {
+      expect(screen.getByRole("heading", { name: question })).toBeTruthy();
+    }
+    expect(screen.queryByText(/To be confirmed/i)).toBeNull();
+  });
 });
