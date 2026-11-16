@@ -34,7 +34,7 @@ export function KitsHero({ savingsPercent }: SavingsProps) {
           </ol>
         </nav>
 
-        <span className="mt-6 inline-block rounded-pill bg-accent px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-widest text-accent-fg">
+        <span className="mt-6 inline-block rounded-pill bg-fg px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-widest text-bg">
           BUNDLE &amp; SAVE
         </span>
 
