@@ -45,7 +45,7 @@ export function SubscriptionCard({
   return (
     <article
       aria-labelledby={headingId}
-      className="flex flex-col gap-6 rounded-card border border-border bg-bg p-5 shadow-card md:flex-row md:p-7"
+      className="flex min-w-0 flex-col gap-6 rounded-card border border-border bg-bg p-5 shadow-card md:flex-row md:p-7"
     >
       <div className="flex h-40 shrink-0 items-center justify-center overflow-hidden rounded-card bg-gradient-sunrise md:h-56 md:w-56">
         {image ? (
@@ -60,10 +60,10 @@ export function SubscriptionCard({
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-4">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex min-w-0 flex-wrap items-start justify-between gap-3">
           <h2
             id={headingId}
-            className="font-archivo text-2xl font-extrabold leading-tight text-fg md:text-3xl"
+            className="min-w-0 flex-1 break-words font-archivo text-2xl font-extrabold leading-tight text-fg md:text-3xl"
           >
             {title}
           </h2>
@@ -83,18 +83,18 @@ export function SubscriptionCard({
           <span className="text-xs text-fg-muted">per delivery</span>
         </p>
 
-        <dl className="grid grid-cols-2 gap-4 border-y border-border py-4 md:grid-cols-4">
-          <div>
+        <dl className="grid min-w-0 grid-cols-2 gap-4 border-y border-border py-4 lg:grid-cols-4">
+          <div className="min-w-0">
             <dt className={dtClass}>Next charge</dt>
             <dd className={ddClass}>
               {formatShortDate(subscription.nextBillingDate, locale)}
             </dd>
           </div>
-          <div>
+          <div className="min-w-0">
             <dt className={dtClass}>Frequency</dt>
             <dd className={ddClass}>Every {subscription.intervalDays} days</dd>
           </div>
-          <div>
+          <div className="min-w-0">
             <dt className={dtClass}>Quantity</dt>
             <dd className={ddClass}>{totalQuantity(lines)}</dd>
           </div>
@@ -146,7 +146,7 @@ export function SubscriptionCard({
         </div>
 
         {capabilities.canCancel && subscription.status !== "cancelled" ? (
-          <div>
+          <div className="min-w-0">
             <Button
               href={`/account/subscriptions/${encodeURIComponent(subscription.id)}/cancel`}
               variant="link"
