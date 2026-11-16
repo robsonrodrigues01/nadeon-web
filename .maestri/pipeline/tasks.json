@@ -2182,7 +2182,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Auditoria de imagens: alt, priority só acima da dobra, sizes coerentes, width/height (fila permanente #8)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
     "lease_ate": null,
     "branch": "agy/W3-35",
@@ -2199,11 +2199,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Tamanho do JS por rota a partir do .next do último build; rotas acima da média e causas (fila permanente #7)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Paleta",
     "lease_ate": "2026-11-16T00:57:41.223Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "BUNDLE.md",
       "nenhuma alteração de código"
