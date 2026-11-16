@@ -225,6 +225,15 @@ describe("5.7 Semantic Elements: Conteúdo e páginas de apoio", () => {
 
   it("Accessibility statement submits the labeled feedback form and confirms success", async () => {
     render(<AccessibilityPage />);
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "Taylor" },
+    });
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "taylor@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText("Describe the issue"), {
+      target: { value: "Contrast issue on shop link." },
+    });
     const form = screen
       .getByRole("button", { name: "Send feedback" })
       .closest("form");
