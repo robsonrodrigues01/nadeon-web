@@ -1929,7 +1929,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "para_revisao",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:40:29.043Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "medição no portal",
@@ -1941,7 +1941,8 @@
     "depende_de": [
       "W3-16"
     ],
-    "branch": "agy/W3-21"
+    "branch": "agy/W3-21",
+    "revisor": "Escudo"
   },
   {
     "id": "W3-22",
@@ -1984,7 +1985,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Contraste WCAG AA dos pares de tokens Human e Pet (fila permanente #6)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
     "lease_ate": null,
     "branch": "agy/W3-24",
@@ -2039,16 +2040,17 @@
     "depende_de": [
       "W3-22"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:38:33.222Z",
+    "lease_ate": null,
     "branch": "agy/W3-27",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "console sem aviso de imagem nas rotas",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Paleta"
   },
   {
     "onda": 3,
@@ -2057,17 +2059,18 @@
     "depende_de": [
       "W3-25"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T00:37:39.317Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
     ],
     "id": "W3-28",
     "titulo": "Server actions com Zod (skipNextDelivery, reorder), erros genéricos ao cliente (do-not-sell, accessibility) e sem PII nos logs do mock de forms",
-    "branch": "agy/W3-28"
+    "branch": "agy/W3-28",
+    "revisor": "Compasso"
   },
   {
     "onda": 3,
@@ -2119,6 +2122,24 @@
     "pr": null,
     "criterios": [
       "lista de lacunas e specs novas escritas, sem executar Playwright",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-32",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Tecla",
+    "lease_ate": "2026-11-16T00:41:36.967Z",
+    "branch": "agy/W3-32",
+    "pr": null,
+    "criterios": [
+      "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
+      "pnpm gate verde",
       "revisão APROVADO"
     ]
   }
