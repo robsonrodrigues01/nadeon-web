@@ -90,7 +90,7 @@ test.describe("W3-51 deferred overlays", () => {
 
     await page.keyboard.press("Escape");
     await expect(dialog).toHaveCount(0);
-    await expect(page.locator("body")).toBeFocused();
+    await expect(page.locator("#main-content")).toBeFocused();
   });
 });
 
