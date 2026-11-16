@@ -2292,7 +2292,7 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Atalaia",
     "lease_ate": null,
     "branch": "agy/W3-41",
@@ -2357,7 +2357,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:17:20.549Z",
+    "lease_ate": "2026-11-16T01:22:23.150Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
@@ -2416,7 +2416,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:19:06.810Z",
+    "lease_ate": "2026-11-16T01:22:54.391Z",
     "branch": "agy/W3-47",
     "pr": null,
     "criterios": [
@@ -2436,7 +2436,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:21:00.693Z",
+    "lease_ate": "2026-11-16T01:21:54.399Z",
     "branch": "agy/W3-48",
     "pr": null,
     "criterios": [
