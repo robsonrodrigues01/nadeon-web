@@ -34,8 +34,6 @@ describe("W3-72 responsive image loading", () => {
       image.includes('src="/renders/full-charge.png"')
     );
     expect(fullCharge).toBeDefined();
-    expect(fullCharge).toContain(
-      'sizes="(max-width: 639px) 96px, 128px"'
-    );
+    expect(fullCharge).toContain('sizes="(max-width: 639px) 96px, 128px"');
   });
 });
