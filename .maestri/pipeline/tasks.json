@@ -2654,7 +2654,7 @@
       "revisão APROVADO"
     ],
     "revisor": "Lente",
-    "nota": "Merge revertido em 6f147cb: excluir conta (delete-account.tsx) reusa submitPrivacyRequest do Do Not Sell e agora falha por exigir state e confirmação (W2-22 e W3-39 account-settings). Corrigir dando ao delete-account campos/ação próprios; no re-merge, reverter 6f147cb."
+    "nota": "MUDANÇAS (Lente, dff5dbd): requestAccountDeletionAction em actions.ts:119-139 sem Zod e ignora confirmAccuracy. PRIORIDADE: próximo construtor livre (Crivo4 conhece o código). W3-64 depende dela."
   },
   {
     "id": "W3-61",
@@ -2797,9 +2797,9 @@
       "W3-67",
       "W3-71"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T19:27:07.672Z",
+    "lease_ate": null,
     "branch": "agy/W3-68",
     "pr": "local",
     "criterios": [
@@ -2807,7 +2807,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "achado da W3-67; aguarda construtor após troca de conta"
+    "nota": "achado da W3-67; aguarda construtor após troca de conta",
+    "revisor": "Lente"
   },
   {
     "id": "W3-69",
@@ -2834,7 +2835,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T19:35:07.687Z",
+    "lease_ate": "2026-11-16T19:59:00.363Z",
     "pr": "local",
     "id": "W3-70",
     "papel": "Frontend",
@@ -2846,7 +2847,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "ver .maestri/status/W3-69/CONTRASTE.md; aguarda construtor"
+    "nota": "MUDANÇAS (Lente): texto sobre bg-accent abaixo de AA em CatFilters; checagem de contraste de UI Pet falha. Ver .maestri/status/W3-70/REVIEW.md. Retomar no worktree W3-70 com o próximo construtor livre.",
+    "revisor": "Lente"
   },
   {
     "onda": 3,
@@ -2908,8 +2910,8 @@
   {
     "onda": 3,
     "status": "em_andamento",
-    "responsavel": "Vigia3",
-    "lease_ate": "2026-11-16T19:25:58.685Z",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T19:59:42.392Z",
     "pr": "local",
     "id": "W3-74",
     "papel": "Frontend",
