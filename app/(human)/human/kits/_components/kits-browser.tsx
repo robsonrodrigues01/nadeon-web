@@ -56,7 +56,7 @@ export function KitsBrowser({ kits, market }: KitsBrowserProps) {
       </div>
 
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {visible.map((kit, index) => (
+        {visible.map((kit) => (
           <li key={kit.slug}>
             <article
               aria-labelledby={`kit-${kit.slug}`}
@@ -69,7 +69,7 @@ export function KitsBrowser({ kits, market }: KitsBrowserProps) {
                     alt={kit.name}
                     width={640}
                     height={480}
-                    loading={index === 0 ? "eager" : "lazy"}
+                    sizes="(min-width: 64rem) calc((min(100vw, 1200px) - 168px) / 4), (min-width: 48rem) calc((min(100vw, 1200px) - 88px) / 2), (min-width: 40rem) calc((100vw - 56px) / 2), calc(100vw - 32px)"
                     className="h-full w-full object-contain"
                   />
                 </div>
