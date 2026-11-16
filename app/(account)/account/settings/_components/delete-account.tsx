@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import type { CustomerProfile } from "@/lib/contracts/account";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +19,66 @@ export function DeleteAccount({ customer }: DeleteAccountProps) {
     initialState
   );
   const [confirming, setConfirming] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const successMessageRef = useRef<HTMLParagraphElement>(null);
+  const wasConfirmingRef = useRef(false);
+
+  useEffect(() => {
+    if (!confirming || state.status === "success") {
+      if (wasConfirmingRef.current) {
+        if (state.status === "success") {
+          successMessageRef.current?.focus();
+        } else {
+          triggerRef.current?.focus();
+        }
+      }
+      wasConfirmingRef.current = false;
+      return;
+    }
+
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const focusableSelector =
+      'button:not([disabled]), input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])';
+    const focusables = dialog.querySelectorAll<HTMLElement>(focusableSelector);
+    focusables[0]?.focus();
+    wasConfirmingRef.current = true;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setConfirming(false);
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const currentFocusables =
+        dialog.querySelectorAll<HTMLElement>(focusableSelector);
+      if (!currentFocusables.length) {
+        event.preventDefault();
+        dialog.focus();
+        return;
+      }
+
+      const first = currentFocusables[0];
+      const last = currentFocusables[currentFocusables.length - 1];
+      if (!dialog.contains(document.activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [confirming, state.status]);
 
   if (state.status === "success") {
     return (
@@ -34,6 +94,8 @@ export function DeleteAccount({ customer }: DeleteAccountProps) {
           role="status"
           aria-live="polite"
           aria-atomic="true"
+          tabIndex={-1}
+          ref={successMessageRef}
         >
           We received your account deletion request. We will verify your
           identity before processing it. Reference #{state.id}.
@@ -57,6 +119,7 @@ export function DeleteAccount({ customer }: DeleteAccountProps) {
         </p>
       </div>
       <Button
+        ref={triggerRef}
         type="button"
         variant="link"
         className="shrink-0"
@@ -68,11 +131,13 @@ export function DeleteAccount({ customer }: DeleteAccountProps) {
 
       {confirming ? (
         <div
+          ref={dialogRef}
           role="alertdialog"
           aria-modal="true"
           aria-labelledby="delete-account-dialog-title"
           aria-describedby="delete-account-dialog-description"
           className="fixed inset-0 z-50 flex items-center justify-center bg-fg/50 p-4"
+          tabIndex={-1}
         >
           <form
             action={formAction}

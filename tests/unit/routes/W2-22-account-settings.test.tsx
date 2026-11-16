@@ -229,6 +229,38 @@ describe("W2-22 /account/settings", () => {
   });
 
   describe("Delete account", () => {
+    it("moves focus into the dialog, traps Tab and restores the trigger on Escape", async () => {
+      await renderPage();
+      const trigger = button(
+        screen.getByRole("region", { name: "Delete account" }),
+        "Request account deletion"
+      );
+
+      fireEvent.click(trigger);
+      const dialog = await screen.findByRole("alertdialog", {
+        name: /confirm account deletion request/i,
+      });
+      const cancel = within(dialog).getByRole("button", {
+        name: "Keep my account",
+      });
+      const confirm = within(dialog).getByRole("button", {
+        name: "Confirm deletion",
+      });
+
+      await waitFor(() => expect(document.activeElement).toBe(cancel));
+
+      fireEvent.keyDown(window, { key: "Tab", shiftKey: true });
+      expect(document.activeElement).toBe(confirm);
+
+      fireEvent.keyDown(window, { key: "Tab" });
+      expect(document.activeElement).toBe(cancel);
+
+      fireEvent.keyDown(window, { key: "Escape" });
+
+      await waitFor(() => expect(document.activeElement).toBe(trigger));
+      expect(screen.queryByRole("alertdialog")).toBeNull();
+    });
+
     it("confirma a solicitação de exclusão e mostra feedback de sucesso", async () => {
       const sendPrivacyRequest = vi
         .spyOn(formsProvider, "sendPrivacyRequest")
