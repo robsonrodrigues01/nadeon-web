@@ -1967,9 +1967,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Revisão visual em 1440 e 320 px (fila permanente #3)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:01:08.460Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2343,5 +2343,26 @@
     "id": "W3-43",
     "titulo": "QuizWizard dividido por etapa; tela de resultado sob demanda",
     "branch": "agy/W3-43"
+  },
+  {
+    "id": "W3-44",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Overflow horizontal em 320 px nas 7 rotas da W3-23 + reconferir paleta após W3-26",
+    "depende_de": [
+      "W3-23",
+      "W3-26"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T01:02:42.339Z",
+    "branch": "agy/W3-44",
+    "pr": null,
+    "criterios": [
+      "scrollWidth=320 medido no portal nas 7 rotas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
