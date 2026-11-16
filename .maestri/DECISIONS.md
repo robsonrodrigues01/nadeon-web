@@ -141,3 +141,4 @@
 - 2026-11-16: fila item 7 adiado (next build com memória em 48%); item 8 liberado como W3-71.
 - 2026-11-16: fila item 9 adiado (portal instável); item 10 liberado como W3-73 por leitura. W3-68 ampliada com 18 assets da W3-71.
 - 2026-11-16: merges W3-60/W3-64 revertidos (6f147cb, 529f7a1): W3-60 quebrou excluir conta, que reusa submitPrivacyRequest. reset no main foi negado pelo classificador; usado revert.
+- 2026-11-16: fila esgotada; itens 1 e 4 voltam (W3-86, W3-87) porque o main mudou desde W3-15/W3-67 (W3-68/70/72/84).

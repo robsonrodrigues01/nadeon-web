@@ -3134,5 +3134,60 @@
     ],
     "nota": "ver .maestri/status/W3-82/TECLADO.md",
     "revisor": "Lupa"
+  },
+  {
+    "onda": 3,
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Trilho",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "id": "W3-86",
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Revisão visual em 768 px (fila permanente item 1, segunda passada após W3-70/72/84)",
+    "criterios": [
+      "VISUAL.md em 768 px",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "onda": 3,
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Prisma5",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "id": "W3-87",
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Erros e avisos no console por rota (fila permanente item 4, segunda passada; W3-67 teve portal instável)",
+    "criterios": [
+      "CONSOLE.md por rota",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-88",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Aviso Next Image no hero Human (W3-87): width/height alterado só em um eixo em full-charge, renew e biohack; incluir width/height auto",
+    "depende_de": [
+      "W3-87"
+    ],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W3-88",
+    "pr": "local",
+    "criterios": [
+      "aviso some do console",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "baixa; hero.tsx:141-165"
   }
 ]
