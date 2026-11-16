@@ -15,6 +15,9 @@ import { Footer } from "@/components/layout/footer";
 import { AccountNav } from "./_components/account-nav";
 import { ProfileForm } from "./_components/profile-form";
 import { AddressList } from "./_components/address-list";
+import { CommunicationPreferences } from "./_components/communication-preferences";
+import { PaymentMethod } from "./_components/payment-method";
+import { MOCK_PAYMENT_METHOD } from "./_components/payment-method-mock";
 import { DeleteAccount } from "./_components/delete-account";
 import { PetsSection } from "./_components/pets-section";
 import {
@@ -132,6 +135,8 @@ export default async function AccountSettingsPage() {
               market={market}
             />
             <AddressList addresses={addresses} />
+            <CommunicationPreferences />
+            <PaymentMethod paymentMethod={MOCK_PAYMENT_METHOD} />
             <DeleteAccount customer={customer} />
           </div>
         </div>

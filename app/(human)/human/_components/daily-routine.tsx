@@ -13,9 +13,29 @@ const FORMAT_TABS = ["All", "Capsules", "Powders", "Tinctures"] as const;
 type TabType = (typeof FORMAT_TABS)[number];
 const PANEL_ID = "daily-routine-panel";
 
+// Neutral placeholder from public/renders/ used for products without dedicated pack renders (Glow, Prime)
+// to prevent attributing another product's packaging/artwork (such as renew.png or biohack.png).
+const NEUTRAL_PLACEHOLDER = "/renders/placeholder.svg";
+
+const ROUTINE_RENDER_OVERRIDES: Record<string, string> = {
+  glow: NEUTRAL_PLACEHOLDER,
+  prime: NEUTRAL_PLACEHOLDER,
+};
+
 export function DailyRoutine({ products }: DailyRoutineProps) {
   const [activeTab, setActiveTab] = useState<TabType>("All");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const resolvedProducts = products.map((p) => {
+    const override = ROUTINE_RENDER_OVERRIDES[p.slug];
+    if (override && (!p.images.length || !p.images[0])) {
+      return {
+        ...p,
+        images: [override],
+      };
+    }
+    return p;
+  });
 
   // WAI-ARIA tabs: arrows move and select, Home/End jump to the ends.
   const handleTabKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -34,8 +54,8 @@ export function DailyRoutine({ products }: DailyRoutineProps) {
 
   const filteredProducts =
     activeTab === "All"
-      ? products
-      : products.filter(
+      ? resolvedProducts
+      : resolvedProducts.filter(
           (p) => p.format.toLowerCase() === activeTab.toLowerCase()
         );
 

@@ -7,7 +7,6 @@ import { MARKET_COOKIE_NAME, MarketProvider } from "@/lib/market";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { TrustStrip } from "@/components/brand/trust-strip";
-import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
 import { CartView } from "./_components/cart-view";
 import { toCartCatalogProduct } from "./_components/types";
@@ -50,7 +49,6 @@ export default async function CartPage() {
       </main>
 
       <TrustStrip line="human" />
-      <Newsletter variant="human" />
       <Footer line="human" />
     </>
   );

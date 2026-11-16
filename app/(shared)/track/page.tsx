@@ -8,7 +8,6 @@ import { DEFAULT_MARKET, getMarket, MARKET_COOKIE_NAME } from "@/lib/market";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { TrustStrip } from "@/components/brand/trust-strip";
-import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
 import { OrderLookup } from "./_components/order-lookup";
 import { TrackResult } from "./_components/track-result";
@@ -117,7 +116,7 @@ export default async function TrackOrderPage({
           </nav>
 
           <header className="mt-6 max-w-2xl">
-            <h1 className="font-archivo text-3xl font-bold text-fg sm:text-4xl">
+            <h1 className="font-archivo text-4xl sm:text-5xl lg:text-7xl font-extrabold uppercase tracking-tight text-fg leading-none">
               Track your order
             </h1>
             <p className="mt-3 text-base text-fg-muted">
@@ -206,7 +205,6 @@ export default async function TrackOrderPage({
       </main>
 
       <TrustStrip line="human" />
-      <Newsletter variant="human" />
       <Footer line="human" />
     </>
   );

@@ -37,7 +37,7 @@ export function HeroCarousel() {
               <span className="text-xs uppercase tracking-widest font-mono text-fg-muted">
                 NMN FOR DOGS · CATS · HORSES
               </span>
-              <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-normal font-sans tracking-tight text-fg">
+              <h1 className="mt-4 font-archivo text-[44px] sm:text-6xl lg:text-[92px] font-extrabold uppercase leading-[0.95] tracking-tight text-fg">
                 More good years together.
               </h1>
               <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
@@ -111,7 +111,7 @@ export function HeroCarousel() {
               <span className="text-xs uppercase tracking-widest font-mono text-fg-muted">
                 GOLDEN YEARS · JOINTS
               </span>
-              <h2 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-normal font-sans tracking-tight text-fg">
+              <h2 className="mt-4 font-archivo text-[44px] sm:text-6xl lg:text-[92px] font-extrabold uppercase leading-[0.95] tracking-tight text-fg">
                 Easier walks, every day.
               </h2>
               <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
@@ -167,7 +167,7 @@ export function HeroCarousel() {
               <span className="text-xs uppercase tracking-widest font-mono text-fg-muted">
                 SUBSCRIBE & SAVE 15%
               </span>
-              <h2 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-normal font-sans tracking-tight text-fg">
+              <h2 className="mt-4 font-archivo text-[44px] sm:text-6xl lg:text-[92px] font-extrabold uppercase leading-[0.95] tracking-tight text-fg">
                 Never run out of good days.
               </h2>
               <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
