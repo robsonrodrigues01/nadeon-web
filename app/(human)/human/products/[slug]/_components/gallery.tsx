@@ -55,7 +55,7 @@ export function Gallery({ product }: GalleryProps) {
             src={imageSrc}
             alt={`${product.name}, ${activeTab.label} view`}
             fill
-            sizes="(min-width: 1024px) 50vw, (min-width: 640px) 66vw, 100vw"
+            sizes="(min-width: 1280px) 576px, (min-width: 1024px) calc(58.333vw - 171.333px), (min-width: 640px) calc(100vw - 128px), calc(100vw - 96px)"
             preload
             className="max-h-full max-w-full object-contain transition-all duration-300"
           />
