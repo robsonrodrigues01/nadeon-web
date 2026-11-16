@@ -2556,7 +2556,8 @@
     "depende_de": [
       "W3-50"
     ],
-    "branch": "agy/W3-54"
+    "branch": "agy/W3-54",
+    "revisor": "Tecla"
   },
   {
     "onda": 3,
