@@ -105,6 +105,9 @@ describe("Route /human/products/[slug] (W2-06)", () => {
           "https://nadeonlabs.com"
         ).searchParams.get("url")
       ).toBe(product!.images[0]);
+      expect(image.getAttribute("sizes")).toBe(
+        "(min-width: 1280px) 576px, (min-width: 1024px) calc(58.333vw - 171.333px), (min-width: 640px) calc(100vw - 128px), calc(100vw - 96px)"
+      );
 
       // 1. Heading and Breadcrumb navigation
       expect(

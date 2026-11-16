@@ -54,9 +54,9 @@ export function Gallery({ product }: GalleryProps) {
           <Image
             src={imageSrc}
             alt={`${product.name}, ${activeTab.label} view`}
-            width={480}
-            height={480}
-            priority
+            fill
+            sizes="(min-width: 1280px) 576px, (min-width: 1024px) calc(58.333vw - 171.333px), (min-width: 640px) calc(100vw - 128px), calc(100vw - 96px)"
+            preload
             className="max-h-full max-w-full object-contain transition-all duration-300"
           />
           <div className="mt-2 text-center">
