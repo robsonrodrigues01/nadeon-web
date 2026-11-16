@@ -170,7 +170,9 @@ export function QuizStart({ quiz, onStart, className = "" }: QuizStartProps) {
           <h2 className="text-xs font-bold uppercase tracking-wider text-fg-muted mb-4">
             What you will get
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-fg-muted">
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-3 ${isHuman ? "lg:grid-cols-1" : ""} gap-4 text-xs text-fg-muted`}
+          >
             <div className="rounded-card border border-border/40 p-3 bg-bg/50">
               <p className="font-bold text-fg mb-1">
                 {isHuman ? "Personalized Routine" : "Custom Pet Plan"}
