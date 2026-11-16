@@ -171,12 +171,8 @@ export function FirstVisitPopup({
           result.message ?? "Unable to subscribe. Please try again."
         );
       }
-    } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "An unexpected error occurred. Please try again.";
-      setServerError(message);
+    } catch {
+      setServerError("Unable to subscribe. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -318,7 +314,7 @@ export function FirstVisitPopup({
 
         <div>
           {/* Kicker Preheader */}
-          <span className="text-xs font-bold tracking-[0.14em] uppercase bg-gradient-gold bg-clip-text text-transparent">
+          <span className="text-xs font-bold tracking-[0.14em] uppercase text-accent-text">
             {kicker}
           </span>
 
@@ -327,9 +323,7 @@ export function FirstVisitPopup({
             id={titleId}
             className="title text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-fg mt-2 leading-[0.98]"
           >
-            <span className="bg-gradient-gold bg-clip-text text-transparent">
-              10% off
-            </span>
+            <span className="text-accent-text">10% off</span>
             <br />
             your first order
           </h2>
@@ -456,7 +450,7 @@ export function FirstVisitPopup({
             </div>
 
             {/* Legal Links */}
-            <p className="text-[11px] text-fg-muted/70 mt-2 text-center leading-normal">
+            <p className="text-[11px] text-fg-muted mt-2 text-center leading-normal">
               By signing up you agree to our{" "}
               <Link
                 href="/legal/terms"

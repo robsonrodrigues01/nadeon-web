@@ -107,7 +107,7 @@ export function BundleSection({ kit, kitLines = [] }: BundleSectionProps) {
               <div className="flex min-w-0 flex-col items-center rounded-card border border-border bg-bg p-4 sm:p-6 shadow-card">
                 <div className="h-24 w-24 sm:h-36 sm:w-36 relative flex items-center justify-center">
                   <Image
-                    src="/images/products/biohack-front.webp"
+                    src="/renders/biohack.png"
                     alt="BioHack NMN 500 mg"
                     width={144}
                     height={144}
@@ -126,7 +126,7 @@ export function BundleSection({ kit, kitLines = [] }: BundleSectionProps) {
               <div className="flex min-w-0 flex-col items-center rounded-card border border-border bg-bg p-4 sm:p-6 shadow-card">
                 <div className="h-24 w-24 sm:h-36 sm:w-36 relative flex items-center justify-center">
                   <Image
-                    src="/images/products/renew-front.webp"
+                    src="/renders/renew.png"
                     alt="Renew NAD+ and Resveratrol"
                     width={144}
                     height={144}

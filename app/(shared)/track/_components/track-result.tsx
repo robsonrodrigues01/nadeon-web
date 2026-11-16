@@ -73,14 +73,14 @@ export function TrackResult({ order, market }: TrackResultProps) {
 
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-5 text-center text-xs">
           <div className="flex flex-col items-center gap-2">
-            <div className="flex size-9 items-center justify-center rounded-full bg-accent text-bg font-bold">
+            <div className="flex size-9 items-center justify-center rounded-full bg-accent text-accent-fg font-bold">
               ✓
             </div>
             <span className="font-bold text-fg">Ordered</span>
           </div>
 
           <div className="flex flex-col items-center gap-2">
-            <div className="flex size-9 items-center justify-center rounded-full bg-accent text-bg font-bold">
+            <div className="flex size-9 items-center justify-center rounded-full bg-accent text-accent-fg font-bold">
               ✓
             </div>
             <span className="font-bold text-fg">Packed</span>
@@ -90,7 +90,7 @@ export function TrackResult({ order, market }: TrackResultProps) {
             <div
               className={`flex size-9 items-center justify-center rounded-full font-bold ${
                 isInTransit || isDelivered
-                  ? "bg-accent text-bg"
+                  ? "bg-accent text-accent-fg"
                   : "border border-border text-fg-muted"
               }`}
             >
@@ -108,7 +108,7 @@ export function TrackResult({ order, market }: TrackResultProps) {
             <div
               className={`flex size-9 items-center justify-center rounded-full font-bold ${
                 isDelivered
-                  ? "bg-accent text-bg"
+                  ? "bg-accent text-accent-fg"
                   : "border border-border text-fg-muted"
               }`}
             >
@@ -125,7 +125,7 @@ export function TrackResult({ order, market }: TrackResultProps) {
             <div
               className={`flex size-9 items-center justify-center rounded-full font-bold ${
                 isDelivered
-                  ? "bg-accent text-bg"
+                  ? "bg-accent text-accent-fg"
                   : "border border-border text-fg-muted"
               }`}
             >

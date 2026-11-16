@@ -9,7 +9,7 @@ export function AgeBands() {
       tagline: "Build the habit early",
       product: "BioHack",
       formula: "NMN 500 mg",
-      image: "/images/products/biohack-front.webp",
+      image: "/renders/biohack.png",
       href: "/human/products/biohack",
     },
     {
@@ -17,7 +17,7 @@ export function AgeBands() {
       tagline: "Go beyond NMN alone",
       product: "Full Charge",
       formula: "NMN 4-in-1",
-      image: "/images/products/full-charge-front.webp",
+      image: "/renders/full-charge.png",
       href: "/human/products/full-charge",
     },
     {
@@ -25,7 +25,7 @@ export function AgeBands() {
       tagline: "Add direct NAD⁺",
       product: "Renew",
       formula: "NAD+ + Resveratrol",
-      image: "/images/products/renew-front.webp",
+      image: "/renders/renew.png",
       href: "/human/products/renew",
     },
   ];

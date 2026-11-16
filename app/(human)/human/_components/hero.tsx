@@ -121,7 +121,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
               <div className="flex min-w-0 flex-col items-center rounded-card border border-border bg-bg-elevated p-3 shadow-card sm:p-6">
                 <div className="relative flex h-24 w-24 items-center justify-center sm:h-32 sm:w-32">
                   <Image
-                    src="/images/products/biohack-front.webp"
+                    src="/renders/biohack.png"
                     alt="BioHack NMN 500 mg"
                     width={128}
                     height={128}
@@ -139,7 +139,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
               <div className="flex min-w-0 flex-col items-center rounded-card border border-border bg-bg-elevated p-3 shadow-card sm:p-6">
                 <div className="relative flex h-24 w-24 items-center justify-center sm:h-32 sm:w-32">
                   <Image
-                    src="/images/products/full-charge-front.webp"
+                    src="/renders/full-charge.png"
                     alt="Full Charge NMN 4-in-1"
                     width={128}
                     height={128}
@@ -156,7 +156,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
               <div className="hidden sm:flex flex-col items-center rounded-card border border-border bg-bg-elevated p-6 shadow-card">
                 <div className="h-32 w-32 relative flex items-center justify-center">
                   <Image
-                    src="/images/products/renew-front.webp"
+                    src="/renders/renew.png"
                     alt="Renew NAD+ and Resveratrol"
                     width={128}
                     height={128}
@@ -222,7 +222,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
               <div className="flex flex-col items-center rounded-card border border-border bg-bg-elevated p-6 shadow-card">
                 <div className="h-36 w-36 relative flex items-center justify-center">
                   <Image
-                    src="/images/products/biohack-front.webp"
+                    src="/renders/biohack.png"
                     alt="BioHack NMN 500 mg"
                     width={144}
                     height={144}
@@ -240,7 +240,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
               <div className="flex flex-col items-center rounded-card border border-border bg-bg-elevated p-6 shadow-card">
                 <div className="h-36 w-36 relative flex items-center justify-center">
                   <Image
-                    src="/images/products/renew-front.webp"
+                    src="/renders/renew.png"
                     alt="Renew NAD+ and Resveratrol"
                     width={144}
                     height={144}

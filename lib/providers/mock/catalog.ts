@@ -226,7 +226,7 @@ export class MockCatalogProvider implements CatalogProvider {
         ],
         price: { amount: 98, currencyCode: "USD" },
         compareAtPrice: { amount: 110, currencyCode: "USD" },
-        images: ["/images/kits/the-duo.webp"],
+        images: ["/renders/placeholder.svg"],
       };
     }
 
@@ -241,7 +241,7 @@ export class MockCatalogProvider implements CatalogProvider {
         products: [{ productSlug: "more-good-years", quantity: 1 }],
         price: { amount: 78, currencyCode: "USD" },
         compareAtPrice: { amount: 88, currencyCode: "USD" },
-        images: ["/images/kits/pet-vitality-duo.webp"],
+        images: ["/renders/placeholder.svg"],
       };
     }
 

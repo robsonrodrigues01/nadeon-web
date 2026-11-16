@@ -21,7 +21,7 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
     verifiedBuyer: true,
     helpfulVotes: 14,
     createdAt: "2026-10-15T14:30:00.000Z",
-    images: ["/images/reviews/biohack-review-1.webp"],
+    images: ["/renders/placeholder.svg"],
   }),
   ReviewSchema.parse({
     id: "rev_dev_02",
@@ -47,7 +47,7 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
     verifiedBuyer: true,
     helpfulVotes: 23,
     createdAt: "2026-10-28T16:45:00.000Z",
-    images: ["/images/reviews/mgy-review-1.webp"],
+    images: ["/renders/placeholder.svg"],
   }),
 ];
 

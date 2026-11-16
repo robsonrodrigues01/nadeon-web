@@ -244,7 +244,7 @@
         "amount": 124,
         "currencyCode": "USD"
       },
-      "images": ["/images/kits/energy-duo.webp"]
+      "images": ["/renders/placeholder.svg"]
     },
     {
       "slug": "beauty-duo",
@@ -270,7 +270,7 @@
         "amount": 108,
         "currencyCode": "USD"
       },
-      "images": ["/images/kits/beauty-duo.webp"]
+      "images": ["/renders/placeholder.svg"]
     },
     {
       "slug": "morning-stack",
@@ -296,7 +296,7 @@
         "amount": 88,
         "currencyCode": "USD"
       },
-      "images": ["/images/kits/morning-stack.webp"]
+      "images": ["/renders/placeholder.svg"]
     },
     {
       "slug": "full-routine",
@@ -326,7 +326,7 @@
         "amount": 169,
         "currencyCode": "USD"
       },
-      "images": ["/images/kits/full-routine.webp"]
+      "images": ["/renders/placeholder.svg"]
     }
   ]
 }

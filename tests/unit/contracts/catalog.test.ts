@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 import {
   ProductSchema,
@@ -105,5 +107,50 @@ describe("CatalogProvider Contract", () => {
 
     const whitespaceResults = await mockCatalogProvider.search("   ");
     expect(whitespaceResults).toEqual([]);
+  });
+
+  it("confirms that every image referenced in mock catalog exists in public/", async () => {
+    const products = await mockCatalogProvider.getProducts();
+    const kits = await mockCatalogProvider.getKits();
+    const publicDir = path.resolve(process.cwd(), "public");
+
+    expect(products.length).toBeGreaterThan(0);
+    for (const product of products) {
+      expect(product.images.length).toBeGreaterThan(0);
+      for (const img of product.images) {
+        const relativePath = img.replace(/^\//, "");
+        const absolutePath = path.join(publicDir, relativePath);
+        expect(
+          fs.existsSync(absolutePath),
+          `Product image ${img} for ${product.slug} does not exist at ${absolutePath}`
+        ).toBe(true);
+      }
+    }
+
+    expect(kits.length).toBeGreaterThan(0);
+    for (const kit of kits) {
+      expect(kit.images.length).toBeGreaterThan(0);
+      for (const img of kit.images) {
+        const relativePath = img.replace(/^\//, "");
+        const absolutePath = path.join(publicDir, relativePath);
+        expect(
+          fs.existsSync(absolutePath),
+          `Kit image ${img} for ${kit.slug} does not exist at ${absolutePath}`
+        ).toBe(true);
+      }
+    }
+
+    for (const slug of ["the-duo", "pet-vitality-duo"]) {
+      const kit = await mockCatalogProvider.getKit(slug);
+      expect(kit).not.toBeNull();
+      for (const img of kit!.images) {
+        const relativePath = img.replace(/^\//, "");
+        const absolutePath = path.join(publicDir, relativePath);
+        expect(
+          fs.existsSync(absolutePath),
+          `Kit image ${img} for fallback ${slug} does not exist at ${absolutePath}`
+        ).toBe(true);
+      }
+    }
   });
 });

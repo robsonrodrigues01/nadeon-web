@@ -2644,8 +2644,8 @@
       "W3-59",
       "W3-58"
     ],
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Crivo4",
     "lease_ate": null,
     "branch": "agy/W3-60",
     "pr": "local",
@@ -2653,8 +2653,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "revisor": "Lente",
-    "nota": "Merge revertido em 6f147cb: excluir conta (delete-account.tsx) reusa submitPrivacyRequest do Do Not Sell e agora falha por exigir state e confirmação (W2-22 e W3-39 account-settings). Corrigir dando ao delete-account campos/ação próprios; no re-merge, reverter 6f147cb."
+    "revisor": "Lupa",
+    "nota": "MUDANÇAS (Lente, dff5dbd): requestAccountDeletionAction em actions.ts:119-139 sem Zod e ignora confirmAccuracy. PRIORIDADE: próximo construtor livre (Crivo4 conhece o código). W3-64 depende dela."
   },
   {
     "id": "W3-61",
@@ -2722,7 +2722,7 @@
     "depende_de": [
       "W3-60"
     ],
-    "status": "backlog",
+    "status": "entregue",
     "responsavel": null,
     "lease_ate": null,
     "branch": "agy/W3-64",
@@ -2741,9 +2741,9 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "titulo": "Checagem visual rápida pós-merges (W3-42/52/55/56): /human, /pet, /cart, /account/subscriptions em 375/768/1280",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T04:56:25.148Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2758,9 +2758,9 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "titulo": "Revisão visual em 1440 px e 320 px (fila permanente item 3): mesmas rotas do BRIEFING-VISUAL, sem editar código",
     "depende_de": [],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-16T20:29:17.987Z",
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2797,9 +2797,9 @@
       "W3-67",
       "W3-71"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T19:27:07.672Z",
+    "lease_ate": null,
     "branch": "agy/W3-68",
     "pr": "local",
     "criterios": [
@@ -2807,7 +2807,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "achado da W3-67; aguarda construtor após troca de conta"
+    "nota": "achado da W3-67; aguarda construtor após troca de conta",
+    "revisor": "Lente"
   },
   {
     "id": "W3-69",
@@ -2832,9 +2833,9 @@
     "depende_de": [
       "W3-69"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T19:35:07.687Z",
+    "lease_ate": null,
     "pr": "local",
     "id": "W3-70",
     "papel": "Frontend",
@@ -2846,7 +2847,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "ver .maestri/status/W3-69/CONTRASTE.md; aguarda construtor"
+    "nota": "MUDANÇAS (Lente): texto sobre bg-accent abaixo de AA em CatFilters; checagem de contraste de UI Pet falha. Ver .maestri/status/W3-70/REVIEW.md. Retomar no worktree W3-70 com o próximo construtor livre.",
+    "revisor": "Lente"
   },
   {
     "onda": 3,
@@ -2871,8 +2873,8 @@
     "depende_de": [
       "W3-71"
     ],
-    "status": "backlog",
-    "responsavel": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
     "lease_ate": null,
     "pr": "local",
     "id": "W3-72",
@@ -2885,7 +2887,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "ver .maestri/status/W3-71/IMAGENS.md"
+    "nota": "ver .maestri/status/W3-71/IMAGENS.md Gate rodado pelo Maestro com rede em 8d94ade: verde, 1237 testes + build (sandbox do Trilho sem rede).",
+    "revisor": "Lente"
   },
   {
     "onda": 3,
@@ -2907,9 +2910,9 @@
   },
   {
     "onda": 3,
-    "status": "em_andamento",
-    "responsavel": "Vigia3",
-    "lease_ate": "2026-11-16T19:25:58.685Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "id": "W3-74",
     "papel": "Frontend",
@@ -2924,7 +2927,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "ver .maestri/status/W3-73/COBERTURA.md; aguarda memória verde"
+    "nota": "MUDANÇAS (Lupa): it.fails sem motivo documentado no DONE; ver REVIEW.md. Volta para Prisma5 após W3-81.",
+    "revisor": "Lupa"
   },
   {
     "onda": 3,
@@ -2960,5 +2964,113 @@
       "nenhuma alteração de código"
     ],
     "nota": "W3-59/60 já cobriram parte; focar no que entrou depois"
+  },
+  {
+    "id": "W3-77",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Specs Playwright cobrindo rotas novas desde a W3-02 (fila permanente item 13), só leitura, sem executar",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "PLAYWRIGHT.md com rotas sem spec",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "onda": 3,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W3-78",
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Specs Playwright das lacunas altas da W3-77: Build Your Box Human e Pet, compra Pet, exclusão de conta, Do Not Sell (escrever, rodam só no CI)",
+    "depende_de": [
+      "W3-77",
+      "W3-60"
+    ],
+    "branch": "agy/W3-78",
+    "criterios": [
+      "specs novas com typecheck e lint verdes",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "ver .maestri/status/W3-77/PLAYWRIGHT.md"
+  },
+  {
+    "onda": 3,
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W3-79",
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Docs para o Robson (fila permanente item 14): resumo por rota do que é placeholder/To be confirmed e de onde vem a proposta",
+    "depende_de": [],
+    "branch": null,
+    "criterios": [
+      "PLACEHOLDERS.md por rota",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-80",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Estados de interação dos formulários (fila permanente item 5): hover, loading, erro e vazio em contato, newsletter, settings, do-not-sell, track; relatório sem editar código",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "FORMULARIOS.md por formulário",
+      "nenhuma alteração de código"
+    ],
+    "nota": "portal instável na W3-67: registrar o que não puder ser observado"
+  },
+  {
+    "onda": 3,
+    "depende_de": [],
+    "status": "para_revisao",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T20:27:35.324Z",
+    "branch": null,
+    "pr": "local",
+    "id": "W3-81",
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Tamanho do JS por rota no build (fila permanente item 7): rotas acima da média e causa provável; relatório sem editar código",
+    "criterios": [
+      "BUNDLE.md com tabela por rota",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "onda": 3,
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Crivo4",
+    "lease_ate": "2026-11-16T20:29:26.572Z",
+    "branch": null,
+    "pr": "local",
+    "id": "W3-82",
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Teclado e foco em todas as rotas (fila permanente item 2, nova passada após W3-16): Tab, Shift+Tab, Escape, foco visível, armadilhas de foco; relatório sem editar código",
+    "criterios": [
+      "TECLADO.md por rota",
+      "nenhuma alteração de código"
+    ]
   }
 ]
