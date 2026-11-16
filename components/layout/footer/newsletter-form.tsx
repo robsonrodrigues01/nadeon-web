@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { subscribeNewsletter } from "@/components/brand/newsletter/actions";
+import { newsletterSchema } from "@/components/brand/newsletter/schema";
 import type { FormsProvider } from "@/lib/contracts/forms";
 import type { FooterLine } from "./types";
 
@@ -22,6 +23,9 @@ export function NewsletterForm({
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [invalidEmail, setInvalidEmail] = useState(false);
+  const statusRef = useRef<HTMLParagraphElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   const isPet = line === "pet";
   const heading = isPet ? "Join the pack" : "Join the Nadeon list";
@@ -29,25 +33,33 @@ export function NewsletterForm({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!email || !email.includes("@")) {
+    const parsed = newsletterSchema.safeParse({ email });
+    if (!parsed.success) {
       setStatus("error");
-      setErrorMessage("Please enter a valid email address.");
+      setErrorMessage(
+        parsed.error.issues[0]?.message || "Please enter a valid email address."
+      );
+      setInvalidEmail(true);
+      requestAnimationFrame(() => emailRef.current?.focus());
       return;
     }
 
     try {
       setStatus("loading");
       setErrorMessage("");
-      if (provider) {
-        await provider.subscribe(listName, email.trim(), true);
-      } else {
-        await subscribeNewsletter(listName, email.trim(), true);
+      setInvalidEmail(false);
+      const result = provider
+        ? await provider.subscribe(listName, parsed.data.email, true)
+        : await subscribeNewsletter(listName, parsed.data.email, true);
+      if (!result.success) {
+        throw new Error("Newsletter subscription failed");
       }
       setStatus("success");
       setEmail("");
     } catch {
       setStatus("error");
       setErrorMessage("Could not complete subscription. Please try again.");
+      requestAnimationFrame(() => statusRef.current?.focus());
     }
   }
 
@@ -85,18 +97,24 @@ export function NewsletterForm({
             </label>
             <input
               id={`footer-newsletter-email-${line}`}
+              ref={emailRef}
               name="email"
               type="email"
               autoComplete="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setInvalidEmail(false);
+                if (status === "error") {
+                  setStatus("idle");
+                  setErrorMessage("");
+                }
+              }}
               placeholder="Email address"
               aria-label="Email address"
-              aria-invalid={status === "error" ? "true" : "false"}
+              aria-invalid={invalidEmail || undefined}
               aria-describedby={
-                status === "error"
-                  ? `footer-newsletter-error-${line}`
-                  : undefined
+                invalidEmail ? `footer-newsletter-error-${line}` : undefined
               }
               disabled={status === "loading"}
               required
@@ -120,8 +138,11 @@ export function NewsletterForm({
 
       {status === "error" && (
         <p
+          ref={statusRef}
           id={`footer-newsletter-error-${line}`}
-          role="alert"
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
           className="mt-2 text-xs font-medium text-product-coral"
         >
           {errorMessage}

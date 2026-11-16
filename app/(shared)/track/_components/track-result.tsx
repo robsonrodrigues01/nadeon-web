@@ -34,6 +34,9 @@ export function TrackResult({ order, market }: TrackResultProps) {
 
   return (
     <div className="flex flex-col gap-8">
+      <p role="status" aria-live="polite" className="sr-only">
+        Order #{order.orderNumber}: {statusLabel}.
+      </p>
       <div>
         <Link
           href="/track"

@@ -1,7 +1,14 @@
-import type { CustomerProfile } from "@/lib/contracts/account";
+"use client";
+
+import { useActionState, useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
+import {
+  ProfileInputSchema,
+  type CustomerProfile,
+} from "@/lib/contracts/account";
 import { Button } from "@/components/ui/button";
-import { saveProfileAction } from "./actions";
-import { formatBirthday } from "./birthday";
+import { saveProfileFormAction, type ProfileFormState } from "./actions";
+import { formatBirthday, parseBirthday } from "./birthday";
 
 const INPUT_CLASS =
   "min-h-11 w-full rounded-field border border-border bg-bg/40 px-4 py-3 text-base text-fg placeholder:text-fg/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
@@ -16,6 +23,62 @@ export interface ProfileFormProps {
 }
 
 export function ProfileForm({ customer }: ProfileFormProps) {
+  const [state, action, isPending] = useActionState(saveProfileFormAction, {
+    status: "idle",
+  } satisfies ProfileFormState);
+  const [clientError, setClientError] = useState("");
+  const [invalidField, setInvalidField] = useState("");
+  const statusRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (state.status === "invalid" || state.status === "error")
+      statusRef.current?.focus();
+  }, [state.status]);
+
+  function validate(event: FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const firstName = String(data.get("firstName") ?? "").trim();
+    const lastName = String(data.get("lastName") ?? "").trim();
+    const birthday = parseBirthday(String(data.get("birthDate") ?? ""));
+    const parsed = ProfileInputSchema.safeParse({
+      firstName,
+      lastName,
+      email: String(data.get("email") ?? "").trim(),
+      phone: String(data.get("phone") ?? "").trim() || undefined,
+      birthDate: birthday ?? undefined,
+      profileType: String(data.get("profileType") ?? "") || undefined,
+    });
+
+    const field = !firstName
+      ? "firstName"
+      : !lastName
+        ? "lastName"
+        : !parsed.success
+          ? String(parsed.error.issues[0]?.path[0] ?? "email")
+          : birthday === null
+            ? "birthDate"
+            : "";
+    if (!field) {
+      setClientError("");
+      setInvalidField("");
+      return;
+    }
+
+    event.preventDefault();
+    setInvalidField(field);
+    setClientError(
+      field === "firstName"
+        ? "First name is required."
+        : field === "lastName"
+          ? "Last name is required."
+          : field === "email"
+            ? "Enter a valid email address."
+            : "Enter a valid birthday or leave it blank."
+    );
+    const invalidControl = form.elements.namedItem(field);
+    if (invalidControl instanceof HTMLElement) invalidControl.focus();
+  }
+
   return (
     <section
       aria-labelledby="profile-heading"
@@ -29,7 +92,15 @@ export function ProfileForm({ customer }: ProfileFormProps) {
       </h2>
 
       <form
-        action={saveProfileAction}
+        action={action}
+        onSubmit={validate}
+        onChange={() => {
+          if (clientError) {
+            setClientError("");
+            setInvalidField("");
+          }
+        }}
+        noValidate
         className="mt-5 grid gap-4 sm:grid-cols-2"
       >
         <div>
@@ -43,6 +114,12 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             autoComplete="given-name"
             required
             defaultValue={customer.firstName}
+            aria-invalid={invalidField === "firstName" || undefined}
+            aria-describedby={
+              invalidField === "firstName"
+                ? "profile-validation-error"
+                : undefined
+            }
             className={INPUT_CLASS}
           />
         </div>
@@ -58,6 +135,12 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             autoComplete="family-name"
             required
             defaultValue={customer.lastName}
+            aria-invalid={invalidField === "lastName" || undefined}
+            aria-describedby={
+              invalidField === "lastName"
+                ? "profile-validation-error"
+                : undefined
+            }
             className={INPUT_CLASS}
           />
         </div>
@@ -73,6 +156,10 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             autoComplete="email"
             required
             defaultValue={customer.email}
+            aria-invalid={invalidField === "email" || undefined}
+            aria-describedby={
+              invalidField === "email" ? "profile-validation-error" : undefined
+            }
             className={INPUT_CLASS}
           />
         </div>
@@ -102,6 +189,12 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             inputMode="numeric"
             placeholder="MM / DD"
             defaultValue={formatBirthday(customer.birthDate)}
+            aria-invalid={invalidField === "birthDate" || undefined}
+            aria-describedby={
+              invalidField === "birthDate"
+                ? "profile-validation-error"
+                : undefined
+            }
             className={INPUT_CLASS}
           />
         </div>
@@ -125,8 +218,27 @@ export function ProfileForm({ customer }: ProfileFormProps) {
         </div>
 
         <div className="sm:col-span-2">
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Saving..." : "Save changes"}
+          </Button>
         </div>
+        <p
+          id="profile-validation-error"
+          ref={statusRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          className="text-sm text-fg-muted sm:col-span-2"
+        >
+          {clientError}
+          {!clientError &&
+            state.status === "invalid" &&
+            "Please check the highlighted fields and try again."}
+          {!clientError &&
+            state.status === "error" &&
+            "Could not save your changes. Please try again."}
+          {!clientError && state.status === "saved" && "Changes saved."}
+        </p>
       </form>
     </section>
   );
