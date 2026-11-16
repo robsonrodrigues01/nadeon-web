@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
+import dynamic from "next/dynamic";
 import type {
   QuizDefinition,
   QuizAnswers,
@@ -9,10 +10,32 @@ import type {
 import { getQuiz, evaluateQuizRecommendation } from "@/lib/quiz";
 import type { Product, Kit } from "@/lib/contracts/catalog";
 import { QuizStart } from "./quiz-start";
-import { QuizQuestionComponent } from "./quiz-question";
-import { QuizAnalyzing } from "./quiz-analyzing";
-import { QuizResultHuman } from "./quiz-result-human";
-import { QuizResultPet } from "./quiz-result-pet";
+
+function QuizLoading() {
+  return (
+    <p role="status" aria-live="polite">
+      Loading quiz...
+    </p>
+  );
+}
+
+const QuizQuestionComponent = dynamic(
+  () =>
+    import("./quiz-question").then((module) => module.QuizQuestionComponent),
+  { loading: QuizLoading }
+);
+const QuizAnalyzing = dynamic(
+  () => import("./quiz-analyzing").then((module) => module.QuizAnalyzing),
+  { loading: QuizLoading }
+);
+const QuizResultHuman = dynamic(
+  () => import("./quiz-result-human").then((module) => module.QuizResultHuman),
+  { loading: QuizLoading }
+);
+const QuizResultPet = dynamic(
+  () => import("./quiz-result-pet").then((module) => module.QuizResultPet),
+  { loading: QuizLoading }
+);
 
 export type QuizScreen = "start" | "question" | "analyzing" | "result";
 
@@ -44,6 +67,16 @@ export function QuizWizard({
   const [recommendation, setRecommendation] =
     useState<QuizRecommendationResult | null>(null);
   const [, startTransition] = useTransition();
+  const wizardRef = useRef<HTMLDivElement>(null);
+  const initialRender = useRef(true);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    wizardRef.current?.focus();
+  }, [questionIndex, screen]);
 
   const handleStart = (chosenQuizId?: string) => {
     if (chosenQuizId && chosenQuizId !== activeQuiz.id) {
@@ -106,7 +139,14 @@ export function QuizWizard({
   };
 
   return (
-    <div className={`w-full ${className}`} data-testid="quiz-wizard">
+    <div
+      ref={wizardRef}
+      className={`w-full ${className}`}
+      data-testid="quiz-wizard"
+      role="region"
+      aria-label="Quiz"
+      tabIndex={-1}
+    >
       {screen === "start" && (
         <QuizStart quiz={activeQuiz} onStart={handleStart} />
       )}

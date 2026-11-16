@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import type { QuizDefinition } from "@/lib/quiz";
 import type { Product, Kit } from "@/lib/contracts/catalog";
-import { QuizWizard } from "@/components/commerce/quiz";
+import { QuizWizard } from "@/components/commerce/quiz/quiz-wizard";
 
 export interface PetQuizClientProps {
   quiz: QuizDefinition;

@@ -130,7 +130,7 @@ describe("Route /human/quiz Suite (W2-23)", () => {
       expect(screen.queryByText(/\[x\]/i)).toBeNull();
     });
 
-    it("Question Screen: renders option cards, progressbar, and navigation buttons", () => {
+    it("Question Screen: renders option cards, progressbar, and navigation buttons", async () => {
       const humanQuiz = getQuiz("human");
       render(<HumanQuizClient quiz={humanQuiz!} />);
 
@@ -141,11 +141,11 @@ describe("Route /human/quiz Suite (W2-23)", () => {
       fireEvent.click(startButton);
 
       // Progress bar
-      const progressbar = screen.getByRole("progressbar");
+      const progressbar = await screen.findByRole("progressbar");
       expect(progressbar).toBeDefined();
 
       // Step indicators
-      expect(screen.getByText(/step 1 of 5/i)).toBeDefined();
+      expect(await screen.findByText(/step 1 of 5/i)).toBeDefined();
 
       // Navigation buttons: Back (Previous question) and Continue (Continue to next step)
       const backButton = screen.getByRole("button", {
@@ -158,13 +158,13 @@ describe("Route /human/quiz Suite (W2-23)", () => {
       expect(continueButton).toBeDefined();
 
       // Pick an option card for step 1 (age-range)
-      const optionCard = screen.getByText("35 to 44");
+      const optionCard = await screen.findByText("35 to 44");
       expect(optionCard).toBeDefined();
       fireEvent.click(optionCard);
 
       // Click Continue to step 2
       fireEvent.click(continueButton);
-      expect(screen.getByText(/step 2 of 5/i)).toBeDefined();
+      expect(await screen.findByText(/step 2 of 5/i)).toBeDefined();
     });
 
     it("Analyzing Screen: renders analysis steps with Done and In progress indicators", () => {
