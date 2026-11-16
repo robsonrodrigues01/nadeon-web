@@ -1986,7 +1986,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:26:44.760Z",
+    "lease_ate": "2026-11-16T00:30:52.112Z",
     "branch": "agy/W3-24",
     "pr": null,
     "criterios": [
@@ -2002,11 +2002,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Revisão de segurança local: segredos, server actions sem zod, dados do cliente em logs, cabeçalhos (fila permanente #12)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T00:27:59.889Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "SECURITY.md com achados",
       "nenhuma alteração de código"
@@ -2050,5 +2050,43 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ]
+  },
+  {
+    "onda": 3,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-25"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Paleta",
+    "lease_ate": "2026-11-16T00:31:06.172Z",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-28",
+    "titulo": "Server actions com Zod (skipNextDelivery, reorder), erros genéricos ao cliente (do-not-sell, accessibility) e sem PII nos logs do mock de forms",
+    "branch": "agy/W3-28"
+  },
+  {
+    "onda": 3,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-25"
+    ],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-29",
+    "titulo": "Cabeçalhos de segurança em next.config.ts (CSP, frame-ancestors, Referrer-Policy, Permissions-Policy) e /pipeline e /dev/kit 404 em produção sem bypass",
+    "branch": "agy/W3-29"
   }
 ]
