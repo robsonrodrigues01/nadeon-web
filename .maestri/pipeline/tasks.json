@@ -1970,7 +1970,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T00:35:47.223Z",
+    "lease_ate": "2026-11-16T00:44:10.389Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -2069,8 +2069,7 @@
     ],
     "id": "W3-28",
     "titulo": "Server actions com Zod (skipNextDelivery, reorder), erros genéricos ao cliente (do-not-sell, accessibility) e sem PII nos logs do mock de forms",
-    "branch": "agy/W3-28",
-    "revisor": "Compasso"
+    "branch": "agy/W3-28"
   },
   {
     "onda": 3,
@@ -2098,16 +2097,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Código morto: exports sem uso, componentes órfãos, arquivos não importados (fila permanente #11)",
     "depende_de": [],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T00:44:13.757Z",
     "branch": null,
     "pr": null,
     "criterios": [
       "DEADCODE.md com lista verificada",
       "nenhuma alteração de código"
-    ],
-    "nota": "Escudo sem acesso (role em Codex); refazer"
+    ]
   },
   {
     "id": "W3-31",
@@ -2118,7 +2116,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:40:34.538Z",
+    "lease_ate": "2026-11-16T00:43:42.625Z",
     "branch": "agy/W3-31",
     "pr": null,
     "criterios": [
@@ -2135,7 +2133,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:41:36.967Z",
+    "lease_ate": "2026-11-16T00:43:16.639Z",
     "branch": "agy/W3-32",
     "pr": null,
     "criterios": [
