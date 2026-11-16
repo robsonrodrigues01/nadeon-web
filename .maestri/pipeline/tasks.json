@@ -2274,7 +2274,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T01:00:57.698Z",
+    "lease_ate": "2026-11-16T01:07:23.426Z",
     "pr": null,
     "criterios": [
       "testes de comportamento montados",
@@ -2294,17 +2294,16 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "para_revisao",
-    "responsavel": "Atalaia",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Lupa3",
+    "lease_ate": "2026-11-16T01:08:33.967Z",
     "branch": "agy/W3-41",
     "pr": "local",
     "criterios": [
       "testes montados",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Lupa3"
+    ]
   },
   {
     "onda": 3,
@@ -2315,7 +2314,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T00:59:21.488Z",
+    "lease_ate": "2026-11-16T01:07:23.533Z",
     "pr": null,
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
@@ -2335,7 +2334,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:05:13.075Z",
+    "lease_ate": "2026-11-16T01:07:38.083Z",
     "pr": null,
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
@@ -2358,7 +2357,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:03:47.869Z",
+    "lease_ate": "2026-11-16T01:07:23.630Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
