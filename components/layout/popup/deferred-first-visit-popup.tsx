@@ -1,24 +1,37 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useSyncExternalStore } from "react";
-import { readCookie, useConsent } from "@/lib/consent";
+import { useState, useSyncExternalStore, type RefObject } from "react";
+import { readCookie, useConsent, writeCookie } from "@/lib/consent";
 import { FIRST_VISIT_POPUP_COOKIE_NAME } from "./constants";
 import type { PopupVariant } from "./first-visit-popup";
+import {
+  DeferredOverlayBoundary,
+  DeferredOverlayFallback,
+  useDeferredOverlayReturnFocus,
+} from "@/components/layout/deferred-overlay-fallback";
 
 const LazyFirstVisitPopup = dynamic(
   () => import("./first-visit-popup").then((module) => module.FirstVisitPopup),
   {
     ssr: false,
-    loading: () => (
-      <span className="sr-only" role="status" aria-live="polite">
-        Loading welcome offer
-      </span>
-    ),
+    loading: () => <DeferredOverlayFallback />,
   }
 );
 
 const noSubscription = () => () => {};
+
+function LoadedFirstVisitPopup({
+  variant,
+  returnFocusRef,
+}: {
+  variant: PopupVariant;
+  returnFocusRef: RefObject<HTMLElement | null>;
+}) {
+  return (
+    <LazyFirstVisitPopup variant={variant} returnFocusRef={returnFocusRef} />
+  );
+}
 
 export function DeferredFirstVisitPopup({
   variant,
@@ -26,6 +39,7 @@ export function DeferredFirstVisitPopup({
   variant: PopupVariant;
 }) {
   const { isBannerOpen, record } = useConsent();
+  const [dismissed, setDismissed] = useState(false);
   const cookieDismissed = useSyncExternalStore(
     noSubscription,
     () => Boolean(readCookie(FIRST_VISIT_POPUP_COOKIE_NAME)),
@@ -33,7 +47,28 @@ export function DeferredFirstVisitPopup({
   );
   const consentResolved = Boolean(record?.explicit) && !isBannerOpen;
 
-  if (!consentResolved || cookieDismissed) return null;
+  if (!consentResolved || cookieDismissed || dismissed) return null;
 
-  return <LazyFirstVisitPopup variant={variant} />;
+  return (
+    <DeferredOverlayBoundary
+      label="welcome offer"
+      onEscape={() => {
+        writeCookie(FIRST_VISIT_POPUP_COOKIE_NAME, "dismissed", 365);
+        setDismissed(true);
+      }}
+    >
+      <FirstVisitPopupWithReturnFocus variant={variant} />
+    </DeferredOverlayBoundary>
+  );
+}
+
+function FirstVisitPopupWithReturnFocus({
+  variant,
+}: {
+  variant: PopupVariant;
+}) {
+  const returnFocusRef = useDeferredOverlayReturnFocus();
+  return (
+    <LoadedFirstVisitPopup variant={variant} returnFocusRef={returnFocusRef} />
+  );
 }

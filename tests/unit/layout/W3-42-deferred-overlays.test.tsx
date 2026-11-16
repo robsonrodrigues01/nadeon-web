@@ -4,6 +4,7 @@
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  act,
   cleanup,
   fireEvent,
   render,
@@ -19,6 +20,18 @@ import {
   useCartDrawerStore,
 } from "@/components/commerce/cart-drawer";
 
+const dynamicControl = vi.hoisted(() => ({
+  defer: false,
+  resolvers: [] as Array<() => void>,
+}));
+
+async function resolvePendingDynamicImports() {
+  await act(async () => {
+    dynamicControl.resolvers.splice(0).forEach((resolve) => resolve());
+    await Promise.resolve();
+  });
+}
+
 vi.mock("next/dynamic", async () => {
   const ReactModule = await import("react");
   return {
@@ -29,7 +42,17 @@ vi.mock("next/dynamic", async () => {
       options?: { loading?: () => React.ReactNode }
     ) => {
       const LazyComponent = ReactModule.lazy(async () => {
-        const loaded = await loader();
+        const loaded = await (dynamicControl.defer
+          ? new Promise<
+              | React.ComponentType
+              | { default?: React.ComponentType }
+              | Record<string, React.ComponentType>
+            >((resolve) => {
+              dynamicControl.resolvers.push(() => {
+                void loader().then(resolve);
+              });
+            })
+          : loader());
         const Component =
           typeof loaded === "function"
             ? loaded
@@ -49,12 +72,132 @@ vi.mock("next/dynamic", async () => {
 
 afterEach(() => {
   cleanup();
+  dynamicControl.defer = false;
+  dynamicControl.resolvers.length = 0;
   useCartDrawerStore.getState().close();
   document.cookie = "nadeon_first_visit_popup=; path=/; max-age=0";
   document.cookie = "nadeon_consent=; path=/; max-age=0";
 });
 
 describe("W3-42 deferred overlays", () => {
+  it.each([["cart drawer", "Loading cart", () => openCartDrawer("human")]])(
+    "traps focus and closes the pending %s with Escape",
+    async (_, label, open) => {
+      dynamicControl.defer = true;
+
+      function Harness() {
+        return (
+          <>
+            <button type="button" onClick={open as () => void}>
+              Open overlay
+            </button>
+            <button type="button">Background action</button>
+            <DeferredCartDrawer theme="human" />
+          </>
+        );
+      }
+
+      render(<Harness />);
+      const trigger = screen.getByRole("button", { name: "Open overlay" });
+      trigger.focus();
+      fireEvent.click(trigger);
+
+      const pendingDialog = await screen.findByRole("dialog", { name: label });
+      expect(pendingDialog.getAttribute("aria-modal")).toBe("true");
+      expect(document.activeElement).toBe(pendingDialog);
+      const tabEvent = new KeyboardEvent("keydown", {
+        key: "Tab",
+        bubbles: true,
+        cancelable: true,
+      });
+      pendingDialog.dispatchEvent(tabEvent);
+      expect(tabEvent.defaultPrevented).toBe(true);
+      expect(document.activeElement).toBe(pendingDialog);
+      fireEvent.keyDown(pendingDialog, { key: "Escape" });
+
+      await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+      expect(document.activeElement).toBe(trigger);
+      await resolvePendingDynamicImports();
+    }
+  );
+
+  it("traps focus and closes pending cookie settings with Escape", async () => {
+    dynamicControl.defer = true;
+    render(
+      <ConsentProvider forceBannerOpen={false}>
+        <CookieBanner forceVisible />
+        <button type="button">Background action</button>
+      </ConsentProvider>
+    );
+    const trigger = screen.getByRole("button", { name: "Settings" });
+    trigger.focus();
+    fireEvent.click(trigger);
+
+    const pendingDialog = await screen.findByRole("dialog", {
+      name: "Loading cookie settings",
+    });
+    expect(pendingDialog.getAttribute("aria-modal")).toBe("true");
+    expect(document.activeElement).toBe(pendingDialog);
+    const tabEvent = new KeyboardEvent("keydown", {
+      key: "Tab",
+      bubbles: true,
+      cancelable: true,
+    });
+    pendingDialog.dispatchEvent(tabEvent);
+    expect(tabEvent.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(pendingDialog);
+    fireEvent.keyDown(pendingDialog, { key: "Escape" });
+
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    expect(document.activeElement).toBe(trigger);
+    await resolvePendingDynamicImports();
+  });
+
+  it("traps focus and closes the pending welcome popup with Escape", async () => {
+    dynamicControl.defer = true;
+
+    function Harness() {
+      const consent = useConsent();
+      return (
+        <>
+          <button type="button" onClick={consent.acceptAll}>
+            Accept all
+          </button>
+          <button type="button">Background action</button>
+          <DeferredFirstVisitPopup variant="human" />
+        </>
+      );
+    }
+
+    render(
+      <ConsentProvider forceBannerOpen={false}>
+        <Harness />
+      </ConsentProvider>
+    );
+    const trigger = screen.getByRole("button", { name: "Accept all" });
+    trigger.focus();
+    fireEvent.click(trigger);
+
+    const pendingDialog = await screen.findByRole("dialog", {
+      name: "Loading welcome offer",
+    });
+    expect(pendingDialog.getAttribute("aria-modal")).toBe("true");
+    expect(document.activeElement).toBe(pendingDialog);
+    const tabEvent = new KeyboardEvent("keydown", {
+      key: "Tab",
+      bubbles: true,
+      cancelable: true,
+    });
+    pendingDialog.dispatchEvent(tabEvent);
+    expect(tabEvent.defaultPrevented).toBe(true);
+    expect(document.activeElement).toBe(pendingDialog);
+    fireEvent.keyDown(pendingDialog, { key: "Escape" });
+
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    expect(document.activeElement).toBe(trigger);
+    await resolvePendingDynamicImports();
+  });
+
   it("loads the cart drawer on first open and restores focus after Escape", async () => {
     function Harness() {
       return (

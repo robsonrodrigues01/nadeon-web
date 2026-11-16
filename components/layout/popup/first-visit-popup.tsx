@@ -8,6 +8,7 @@ import React, {
   useCallback,
   useSyncExternalStore,
   type FormEvent,
+  type RefObject,
 } from "react";
 import Link from "next/link";
 import { X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
@@ -63,6 +64,8 @@ export interface FirstVisitPopupProps {
    */
   cookieName?: string;
 
+  returnFocusRef?: RefObject<HTMLElement | null>;
+
   /**
    * Additional wrapper class names.
    */
@@ -80,6 +83,7 @@ export function FirstVisitPopup({
   onClose,
   onSuccess,
   cookieName = FIRST_VISIT_POPUP_COOKIE_NAME,
+  returnFocusRef,
   className = "",
 }: FirstVisitPopupProps) {
   const { isBannerOpen, record } = useConsent();
@@ -182,7 +186,8 @@ export function FirstVisitPopup({
   useEffect(() => {
     if (!isVisible || inline) return;
 
-    previousActiveElement.current = document.activeElement as HTMLElement;
+    previousActiveElement.current =
+      returnFocusRef?.current ?? (document.activeElement as HTMLElement);
 
     const modalEl = modalRef.current;
     if (!modalEl) return;
@@ -238,7 +243,7 @@ export function FirstVisitPopup({
         previousActiveElement.current.focus();
       }
     };
-  }, [isVisible, inline, handleDismiss]);
+  }, [isVisible, inline, handleDismiss, returnFocusRef]);
 
   if (!isVisible) return null;
 
