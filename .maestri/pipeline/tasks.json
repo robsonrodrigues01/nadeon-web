@@ -1967,11 +1967,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Revisão visual em 1440 e 320 px (fila permanente #3)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T00:55:44.211Z",
+    "lease_ate": "2026-11-16T01:01:08.460Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "VISUAL.md por rota",
       "nenhuma alteração de código"
@@ -2113,7 +2113,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Specs Playwright cobrem as rotas e fluxos novos desde a W3-02 (fila permanente #13)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Régua3",
     "lease_ate": null,
     "branch": "agy/W3-31",
@@ -2132,7 +2132,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T01:01:03.638Z",
+    "lease_ate": "2026-11-16T01:01:52.710Z",
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
