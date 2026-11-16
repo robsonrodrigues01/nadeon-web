@@ -124,26 +124,30 @@ describe("W3-41 mounted lab lot lookup behavior", () => {
   });
 
   it("keeps the query and shows no result when the lot is unknown", async () => {
+    const testLotNumber = "TEST-LOT-UNKNOWN";
     vi.spyOn(labsProvider, "listLots").mockResolvedValue([fixtureLot]);
     vi.spyOn(labsProvider, "findLot").mockResolvedValue(null);
     vi.spyOn(catalogProvider, "getProducts").mockResolvedValue([]);
-    await renderLabPage("NL-UNKNOWN");
+    await renderLabPage(testLotNumber);
 
     expect(
       (screen.getByRole("textbox", { name: "Lot number" }) as HTMLInputElement)
         .value
-    ).toBe("NL-UNKNOWN");
-    expect(screen.queryByRole("region", { name: "Lot NL-00001" })).toBeNull();
+    ).toBe(testLotNumber);
+    expect(
+      screen.queryByRole("region", { name: `Lot ${fixtureLot.lotNumber}` })
+    ).toBeNull();
     expect(screen.getByRole("table")).toBeTruthy();
   });
 
   it("propagates provider errors when looking up a lot", async () => {
+    const testLotNumber = "TEST-LOT-0002";
     const failure = new Error("Labs provider unavailable");
     vi.spyOn(labsProvider, "listLots").mockResolvedValue([fixtureLot]);
     vi.spyOn(labsProvider, "findLot").mockRejectedValue(failure);
     vi.spyOn(catalogProvider, "getProducts").mockResolvedValue([]);
 
-    await expect(renderLabPage("NL-00001")).rejects.toBe(failure);
+    await expect(renderLabPage(testLotNumber)).rejects.toBe(failure);
   });
 
   it("keeps lookup disabled and shows the launch state when no lots are published", async () => {
