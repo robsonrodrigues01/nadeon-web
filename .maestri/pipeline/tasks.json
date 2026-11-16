@@ -2129,7 +2129,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Régua3",
     "lease_ate": "2026-11-16T01:35:22.591Z",
     "branch": "agy/W3-32",
@@ -2354,7 +2354,7 @@
       "W3-23",
       "W3-26"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma5",
     "lease_ate": null,
     "branch": "agy/W3-44",
@@ -2491,11 +2491,11 @@
     "depende_de": [
       "W3-43"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:36:22.183Z",
+    "lease_ate": null,
     "branch": "agy/W3-51",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "typecheck e playwright --list",
       "revisão APROVADO"
@@ -2510,11 +2510,11 @@
     "depende_de": [
       "W3-43"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:30:15.435Z",
+    "lease_ate": "2026-11-16T01:41:36.006Z",
     "branch": "agy/W3-52",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "kB antes/depois medidos",
       "pnpm gate verde",
@@ -2542,10 +2542,10 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:34:42.366Z",
-    "pr": null,
+    "lease_ate": "2026-11-16T01:42:20.988Z",
+    "pr": "local",
     "criterios": [
       "reproduzido e corrigido, medido no portal",
       "pnpm gate verde",
@@ -2562,10 +2562,10 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T01:36:26.408Z",
-    "pr": null,
+    "lease_ate": "2026-11-16T01:41:49.813Z",
+    "pr": "local",
     "criterios": [
       "reproduzido e corrigido, medido no portal",
       "pnpm gate verde",
@@ -2587,11 +2587,11 @@
     "depende_de": [
       "W3-53"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T01:35:23.297Z",
+    "lease_ate": "2026-11-16T01:49:42.733Z",
     "branch": "agy/W3-56",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "script da W3-53 sem achados nas rotas tocadas",
       "pnpm gate verde",
@@ -2607,11 +2607,11 @@
     "depende_de": [
       "W3-49"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T01:36:43.027Z",
+    "lease_ate": "2026-11-16T01:45:29.300Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "VISUAL.md",
       "nenhuma alteração de código"
@@ -2624,11 +2624,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Revisão de segurança de novo, após W3-28/29/42/45/48 (fila permanente #12)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Paleta",
     "lease_ate": "2026-11-16T01:36:43.102Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "SECURITY.md",
       "nenhuma alteração de código"
