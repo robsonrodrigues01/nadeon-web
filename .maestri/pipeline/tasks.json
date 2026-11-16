@@ -2644,9 +2644,9 @@
       "W3-59",
       "W3-58"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo4",
+    "lease_ate": "2026-11-16T20:08:13.303Z",
     "branch": "agy/W3-60",
     "pr": "local",
     "criterios": [
@@ -2741,9 +2741,9 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "titulo": "Checagem visual rápida pós-merges (W3-42/52/55/56): /human, /pet, /cart, /account/subscriptions em 375/768/1280",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T04:56:25.148Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2833,9 +2833,9 @@
     "depende_de": [
       "W3-69"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T19:59:00.363Z",
+    "lease_ate": null,
     "pr": "local",
     "id": "W3-70",
     "papel": "Frontend",
@@ -2911,7 +2911,7 @@
     "onda": 3,
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T19:59:42.392Z",
+    "lease_ate": "2026-11-16T20:09:22.946Z",
     "pr": "local",
     "id": "W3-74",
     "papel": "Frontend",
@@ -2962,5 +2962,22 @@
       "nenhuma alteração de código"
     ],
     "nota": "W3-59/60 já cobriram parte; focar no que entrou depois"
+  },
+  {
+    "id": "W3-77",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Specs Playwright cobrindo rotas novas desde a W3-02 (fila permanente item 13), só leitura, sem executar",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Lente",
+    "lease_ate": "2026-11-16T20:09:11.480Z",
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "PLAYWRIGHT.md com rotas sem spec",
+      "nenhuma alteração de código"
+    ]
   }
 ]
