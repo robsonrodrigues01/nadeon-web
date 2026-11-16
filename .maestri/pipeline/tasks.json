@@ -2875,7 +2875,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Crivo5",
-    "lease_ate": "2026-11-16T20:40:43.434Z",
+    "lease_ate": "2026-11-16T21:20:51.558Z",
     "pr": "local",
     "id": "W3-72",
     "papel": "Frontend",
@@ -2984,9 +2984,9 @@
   },
   {
     "onda": 3,
-    "status": "em_andamento",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T20:49:23.040Z",
+    "status": "entregue",
+    "responsavel": "Trilho",
+    "lease_ate": null,
     "pr": "local",
     "id": "W3-78",
     "papel": "QA",
@@ -3002,7 +3002,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "ver .maestri/status/W3-77/PLAYWRIGHT.md"
+    "nota": "MUDANÇAS (Lupa): build-your-box.spec.ts:130-134 só marca a faixa de peso Pet se visível; teste pode passar sem selecionar. Ver REVIEW.md. Volta à Prisma5 após W3-84.",
+    "revisor": "Lupa"
   },
   {
     "onda": 3,
@@ -3059,9 +3060,9 @@
   {
     "onda": 3,
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-16T20:50:15.529Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "id": "W3-82",
@@ -3099,9 +3100,9 @@
     "depende_de": [
       "W3-66"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T21:19:13.920Z",
     "branch": "agy/W3-84",
     "pr": "local",
     "criterios": [
@@ -3109,6 +3110,29 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "ver .maestri/status/W3-66/VISUAL.md"
+    "nota": "ver .maestri/status/W3-66/VISUAL.md",
+    "revisor": "Lente"
+  },
+  {
+    "id": "W3-85",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Achados de teclado da W3-82: restaurar foco ao fechar menu móvel com Escape (K-01 no Header) e demais achados médios/altos",
+    "depende_de": [
+      "W3-82"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-16T21:25:24.319Z",
+    "branch": "agy/W3-85",
+    "pr": "local",
+    "criterios": [
+      "achados W3-82 resolvidos com teste de foco",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "ver .maestri/status/W3-82/TECLADO.md",
+    "revisor": "Lupa"
   }
 ]
