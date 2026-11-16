@@ -2283,7 +2283,7 @@
     "id": "W3-40",
     "titulo": "Testes de comportamento: filtros e ordenação do catálogo na UI e preços/totais em mercados não USD (produto, kit, carrinho)",
     "branch": "agy/W3-40",
-    "nota": "aguarda revisor"
+    "revisor": "Atalaia"
   },
   {
     "id": "W3-41",
@@ -2357,7 +2357,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:09:43.230Z",
+    "lease_ate": "2026-11-16T01:13:37.550Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
@@ -2397,13 +2397,14 @@
     ],
     "status": "para_revisao",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T01:09:56.364Z",
+    "lease_ate": null,
     "branch": "agy/W3-46",
     "pr": "local",
     "criterios": [
       "texto igual ao board",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "aguarda revisor"
   }
 ]
