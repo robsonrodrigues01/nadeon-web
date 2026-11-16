@@ -1970,7 +1970,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T00:44:10.389Z",
+    "lease_ate": "2026-11-16T00:44:51.532Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -2059,7 +2059,7 @@
     "depende_de": [
       "W3-25"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Paleta",
     "lease_ate": null,
     "pr": "local",
