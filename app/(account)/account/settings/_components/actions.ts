@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { accountProvider } from "@/lib/providers";
+import { accountProvider, formsProvider } from "@/lib/providers";
 import {
   PetInputSchema,
   ProfileInputSchema,
@@ -108,4 +108,59 @@ export async function savePetAction(formData: FormData): Promise<Pet | null> {
   const saved = await accountProvider.savePet(parsed.data);
   revalidatePath("/account/settings");
   return saved;
+}
+
+export type DeleteAccountFormState =
+  | { status: "idle" }
+  | { status: "success"; id: string }
+  | { status: "invalid"; error?: string }
+  | { status: "error"; error?: string };
+
+export async function requestAccountDeletionAction(
+  _previousState: DeleteAccountFormState,
+  formData: FormData
+): Promise<DeleteAccountFormState> {
+  const email = text(formData, "email");
+  const firstName = text(formData, "firstName");
+  const lastName = text(formData, "lastName");
+  const requestType = text(formData, "requestType");
+
+  if (
+    !email ||
+    !email.includes("@") ||
+    !firstName ||
+    !lastName ||
+    requestType !== "delete"
+  ) {
+    return {
+      status: "invalid",
+      error: "Unable to submit request. Please try again.",
+    };
+  }
+
+  try {
+    const result = await formsProvider.sendPrivacyRequest({
+      email,
+      firstName,
+      lastName,
+      requestType: "delete",
+    });
+
+    if (!result.success) {
+      return {
+        status: "error",
+        error: "Unable to submit request. Please try again.",
+      };
+    }
+
+    return {
+      status: "success",
+      id: result.id,
+    };
+  } catch {
+    return {
+      status: "error",
+      error: "Unable to submit request. Please try again.",
+    };
+  }
 }
