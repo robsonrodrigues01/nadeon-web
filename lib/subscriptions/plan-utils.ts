@@ -1,27 +1,21 @@
 import type { Product, SellingPlan } from "@/lib/contracts/catalog";
 
-/**
- * Returns unique selling plans across products, deduplicated by intervalDays
- * and sorted in ascending order.
- */
+/** Returns one plan per interval, ordered from shortest to longest. */
 export function getUniqueSellingPlans(products: Product[]): SellingPlan[] {
-  const map = new Map<number, SellingPlan>();
+  const plansByInterval = new Map<number, SellingPlan>();
   for (const product of products) {
     for (const plan of product.sellingPlans ?? []) {
-      if (!map.has(plan.intervalDays)) {
-        map.set(plan.intervalDays, plan);
+      if (!plansByInterval.has(plan.intervalDays)) {
+        plansByInterval.set(plan.intervalDays, plan);
       }
     }
   }
-  return Array.from(map.values()).sort(
+  return Array.from(plansByInterval.values()).sort(
     (a, b) => a.intervalDays - b.intervalDays
   );
 }
 
-/**
- * Derives the subscription discount percentage from a list of products.
- * Returns the first valid positive discount found, or null when none is present.
- */
+/** Returns the first positive subscription discount across the products. */
 export function getSubscriptionDiscountPercentage(
   products: Product[]
 ): number | null {
@@ -38,16 +32,13 @@ export function getSubscriptionDiscountPercentage(
   return null;
 }
 
-/**
- * Derives the subscription discount percentage for a single product.
- * Looks for the 30-day plan first, or defaults to the first plan in product.sellingPlans.
- * Returns null when no positive discount is configured.
- */
+/** Prefers the 30-day plan discount, then the first configured plan. */
 export function getProductSubscriptionDiscount(
   product: Product
 ): number | null {
   const plans = product.sellingPlans ?? [];
-  const plan = plans.find((sp) => sp.intervalDays === 30) ?? plans[0];
+  const plan =
+    plans.find((candidate) => candidate.intervalDays === 30) ?? plans[0];
   if (
     plan &&
     typeof plan.discountPercentage === "number" &&

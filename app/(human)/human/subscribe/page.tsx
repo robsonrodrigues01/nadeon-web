@@ -22,7 +22,7 @@ import { BottomCta } from "./_components/bottom-cta";
 import {
   getSubscriptionDiscountPercentage,
   getUniqueSellingPlans,
-} from "./_components/plan-utils";
+} from "@/lib/subscriptions/plan-utils";
 
 export async function generateMetadata(): Promise<Metadata> {
   let discountPercentage: number | null = null;

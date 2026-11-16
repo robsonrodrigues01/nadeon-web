@@ -22,7 +22,7 @@ import {
   getSubscriptionDiscountPercentage,
   getProductSubscriptionDiscount,
   getUniqueSellingPlans,
-} from "@/app/(human)/human/subscribe/_components/plan-utils";
+} from "@/lib/subscriptions/plan-utils";
 import { getDefaultMarket } from "@/lib/market/markets";
 import type { Product, SellingPlan } from "@/lib/contracts/catalog";
 
