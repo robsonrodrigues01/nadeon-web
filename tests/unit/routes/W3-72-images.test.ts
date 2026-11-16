@@ -29,5 +29,13 @@ describe("W3-72 responsive image loading", () => {
       'sizes="(max-width: 639px) 96px, 128px"'
     );
     expect(preloadedImages[0]).not.toContain('loading="eager"');
+
+    const fullCharge = heroImages.find((image) =>
+      image.includes('src="/renders/full-charge.png"')
+    );
+    expect(fullCharge).toBeDefined();
+    expect(fullCharge).toContain(
+      'sizes="(max-width: 639px) 96px, 128px"'
+    );
   });
 });
