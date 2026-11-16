@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { Dialog } from "radix-ui";
 import {
   cartProvider as defaultCartProvider,
@@ -32,6 +32,7 @@ export function CartDrawer({
 }: CartDrawerProps) {
   const store = useCartDrawerStore();
   const liveCart = useCartStore((state) => state.cart);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
 
   const cart = customCart ?? liveCart;
   const isControlled = isOpen !== undefined;
@@ -58,6 +59,14 @@ export function CartDrawer({
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/65 backdrop-blur-xs transition-opacity duration-300" />
         <Dialog.Content
+          onOpenAutoFocus={() => {
+            previousActiveElement.current =
+              document.activeElement as HTMLElement;
+          }}
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            previousActiveElement.current?.focus();
+          }}
           data-theme={resolvedTheme}
           aria-describedby="cart-drawer-description"
           className="fixed top-0 right-0 bottom-0 z-50 h-full w-full max-w-[460px] flex flex-col bg-bg text-fg shadow-elevated border-l border-border/30 overflow-hidden outline-none animate-in slide-in-from-right duration-300"

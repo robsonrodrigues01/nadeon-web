@@ -86,7 +86,7 @@ export default async function BuildYourBoxPage() {
         ]}
       />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <section className="bg-bg-elevated px-4 pt-8 pb-10 lg:px-18 lg:pt-15 lg:pb-14">
           <nav aria-label="Breadcrumb" className="text-xs opacity-60">
             <ol className="flex flex-wrap gap-2">

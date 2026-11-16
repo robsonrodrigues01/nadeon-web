@@ -122,7 +122,7 @@ export default async function ShopByFormatPage({
   ]);
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <JsonLd
         data={breadcrumb as unknown as Record<string, unknown>}
         id="breadcrumb-jsonld"

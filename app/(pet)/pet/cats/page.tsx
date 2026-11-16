@@ -123,7 +123,11 @@ export default async function CatsPage({
   ]);
 
   return (
-    <main className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6 lg:px-8">
+    <main
+      className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6 lg:px-8"
+      id="main-content"
+      tabIndex={-1}
+    >
       <JsonLd data={{ ...breadcrumb }} id="breadcrumb-jsonld" />
 
       <nav aria-label="Breadcrumb" className="mb-6 text-sm text-fg-muted">

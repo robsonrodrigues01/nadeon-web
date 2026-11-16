@@ -26,7 +26,7 @@ export default async function BuildYourBoxPage() {
   );
 
   return (
-    <main id="main-content" className="flex-1 bg-bg text-fg">
+    <main id="main-content" className="flex-1 bg-bg text-fg" tabIndex={-1}>
       <JsonLd
         id="build-your-box-breadcrumb-ld"
         data={{

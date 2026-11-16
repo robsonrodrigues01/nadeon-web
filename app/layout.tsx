@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, DM_Sans } from "next/font/google";
 import { MarketProvider } from "@/lib/market/context";
+import { SkipLink } from "@/components/layout/skip-link";
 import "./globals.css";
 import "../styles/tokens.css";
 
@@ -33,6 +34,7 @@ export default function RootLayout({
       data-theme="human"
     >
       <body className="min-h-full flex flex-col bg-bg text-fg">
+        <SkipLink />
         <MarketProvider>{children}</MarketProvider>
       </body>
     </html>

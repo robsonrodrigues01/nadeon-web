@@ -62,7 +62,7 @@ export default async function PetKitPage({ params }: PetKitPageProps) {
     <>
       <JsonLd data={jsonLdData} id="pet-kit-product-ld" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <section className="mx-auto w-full max-w-7xl px-5 py-12 sm:px-8 lg:px-18 lg:py-16">
           <nav
             aria-label="Breadcrumb"

@@ -59,7 +59,7 @@ export default async function SciencePage() {
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <ScienceHero />
         <WhatNadDoesSection />
         <NmnPathwaySection />

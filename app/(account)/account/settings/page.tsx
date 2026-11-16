@@ -89,6 +89,7 @@ export default async function AccountSettingsPage() {
       <main
         id="main-content"
         className="mx-auto w-full max-w-[1280px] flex-1 px-4 pb-16 pt-8 sm:px-8 lg:px-[72px] lg:pb-24 lg:pt-11"
+        tabIndex={-1}
       >
         <nav aria-label="Breadcrumb" className="text-sm text-fg/70">
           <ol className="flex flex-wrap gap-2">

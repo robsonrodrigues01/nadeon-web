@@ -74,7 +74,7 @@ export default async function SubscribePage() {
   const faqLd = buildFaqJsonLd(faqs);
 
   return (
-    <main id="main-content" className="flex-1 bg-bg text-fg">
+    <main id="main-content" className="flex-1 bg-bg text-fg" tabIndex={-1}>
       <JsonLd data={{ ...breadcrumbsLd }} id="breadcrumb-jsonld" />
       <JsonLd data={{ ...faqLd }} id="faq-jsonld" />
       <Hero discountPercentage={discountPercentage} />

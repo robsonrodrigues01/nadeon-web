@@ -49,7 +49,7 @@ export default async function AccountPage() {
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <AccountDashboard view={view} />
       </main>
 

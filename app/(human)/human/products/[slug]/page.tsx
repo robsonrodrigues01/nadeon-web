@@ -104,7 +104,11 @@ export default async function ProductPage({ params }: PageProps) {
         id="product-schema-jsonld"
       />
 
-      <main className="min-h-screen bg-bg text-fg">
+      <main
+        className="min-h-screen bg-bg text-fg"
+        id="main-content"
+        tabIndex={-1}
+      >
         {/* Breadcrumb Navigation */}
         <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-18 pt-6 pb-4">
           <nav

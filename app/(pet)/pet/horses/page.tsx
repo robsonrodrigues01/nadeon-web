@@ -48,7 +48,7 @@ export default async function HorsesPage() {
   };
 
   return (
-    <main id="main-content" className="flex-1">
+    <main id="main-content" className="flex-1" tabIndex={-1}>
       <JsonLd data={jsonLdData} id="horses-collection-ld" />
 
       <nav

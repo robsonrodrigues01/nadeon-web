@@ -58,7 +58,7 @@ export default async function PetKitsPage() {
     <>
       <JsonLd data={jsonLdData} id="pet-kits-collection-ld" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <KitsHero savingsPercent={savingsPercent} />
 
         <div className="mx-auto w-full max-w-7xl px-5 py-12 sm:px-8 lg:px-18 lg:py-16">

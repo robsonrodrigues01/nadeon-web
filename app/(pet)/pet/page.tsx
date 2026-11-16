@@ -57,7 +57,11 @@ export default async function PetPage() {
         id="pet-breadcrumb-jsonld"
       />
 
-      <main id="main-content" className="flex-1 w-full bg-bg text-fg">
+      <main
+        id="main-content"
+        className="flex-1 w-full bg-bg text-fg"
+        tabIndex={-1}
+      >
         <HeroCarousel />
         <WhoForSection />
         <ShopByNeedSection />

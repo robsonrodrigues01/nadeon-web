@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useId } from "react";
+import React, { useState, useEffect, useId, useRef } from "react";
 import { useConsent } from "@/lib/consent";
 import { X } from "lucide-react";
 
@@ -205,22 +205,53 @@ export function CookieSettingsModal({
 
   const titleId = useId();
   const descId = useId();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
 
   const active = isOpen !== undefined ? isOpen : isSettingsOpen;
   const handleClose = onClose || closeSettings;
 
-  // Close on Escape key when active as a modal overlay
   useEffect(() => {
     if (!active || inline) return;
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+    const dialog =
+      modalRef.current?.querySelector<HTMLElement>('[role="dialog"]');
+    if (!dialog) return;
+
+    previousActiveElement.current = document.activeElement as HTMLElement;
+    const focusableSelector =
+      'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])';
+    const focusables = dialog.querySelectorAll<HTMLElement>(focusableSelector);
+    focusables[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
         handleClose();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const currentFocusables =
+        dialog.querySelectorAll<HTMLElement>(focusableSelector);
+      if (!currentFocusables.length) return;
+
+      const first = currentFocusables[0];
+      const last = currentFocusables[currentFocusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      previousActiveElement.current?.focus();
+    };
   }, [active, inline, handleClose]);
 
   if (!active) return null;
@@ -260,7 +291,10 @@ export function CookieSettingsModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div
+      ref={modalRef}
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto"
+    >
       {modalContent}
     </div>
   );

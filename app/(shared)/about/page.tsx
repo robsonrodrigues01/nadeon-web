@@ -64,7 +64,7 @@ export default async function AboutPage() {
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <StorySection />
         <WhySection />
         <MissionSection />

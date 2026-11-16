@@ -44,7 +44,11 @@ export default async function SubscriptionsPage() {
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1 bg-bg-elevated text-fg">
+      <main
+        id="main-content"
+        className="flex-1 bg-bg-elevated text-fg"
+        tabIndex={-1}
+      >
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-8 md:px-12 md:py-12">
           <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-2 text-sm text-fg-muted">

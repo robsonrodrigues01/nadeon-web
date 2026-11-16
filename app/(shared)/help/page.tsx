@@ -57,7 +57,7 @@ export default function HelpPage() {
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
           <header className="max-w-2xl">
             <h1 className="font-archivo text-3xl font-bold text-fg sm:text-4xl">

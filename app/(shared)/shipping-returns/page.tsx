@@ -164,7 +164,7 @@ export default async function ShippingReturnsPage() {
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1 bg-bg text-fg">
+      <main id="main-content" className="flex-1 bg-bg text-fg" tabIndex={-1}>
         {/* Hero Section */}
         <header className="border-b border-border bg-bg-elevated px-4 py-10 sm:px-8 sm:py-16 lg:px-16 lg:py-20">
           <div className="mx-auto max-w-6xl">

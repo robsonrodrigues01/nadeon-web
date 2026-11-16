@@ -31,7 +31,11 @@ export function HumanQuizClient({
     <div className="min-h-screen flex flex-col bg-bg text-fg">
       <QuizHeader exitHref="/human" />
 
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-12">
+      <main
+        className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-12"
+        id="main-content"
+        tabIndex={-1}
+      >
         <QuizWizard
           initialQuiz={quiz}
           productsMap={productsMap}
