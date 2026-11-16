@@ -35,5 +35,16 @@ describe("W3-72 responsive image loading", () => {
     );
     expect(fullCharge).toBeDefined();
     expect(fullCharge).toContain('sizes="(max-width: 639px) 96px, 128px"');
+
+    const renew = heroImages.find((image) =>
+      image.includes('src="/renders/renew.png"')
+    );
+    expect(renew).toBeDefined();
+    expect(renew).toContain('sizes="(max-width: 639px) 96px, 128px"');
+
+    // W3-88: Ensure all slide 1 product cards maintain aspect ratio with h-auto
+    for (const cardImage of [preloadedImages[0], fullCharge, renew]) {
+      expect(cardImage).toContain("h-auto");
+    }
   });
 });
