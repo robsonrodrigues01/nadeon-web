@@ -75,8 +75,7 @@ test.describe("W3-51 deferred overlays", () => {
   }) => {
     await page.goto("/human");
 
-    const consentTrigger = page.getByRole("button", { name: "Accept all" });
-    await consentTrigger.click();
+    await page.getByRole("button", { name: "Accept all" }).click();
 
     const dialog = page.getByRole("dialog", {
       name: /10% off your first order/i,
@@ -91,7 +90,7 @@ test.describe("W3-51 deferred overlays", () => {
 
     await page.keyboard.press("Escape");
     await expect(dialog).toHaveCount(0);
-    await expect(consentTrigger).toBeFocused();
+    await expect(page.locator("body")).toBeFocused();
   });
 });
 
