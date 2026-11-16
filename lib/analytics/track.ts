@@ -14,6 +14,106 @@ import {
 import { AnalyticsEventSchemas } from "./schemas";
 import { hasAnalyticsConsent } from "./consent";
 
+const FORBIDDEN_ANALYTICS_LOG_KEYS = new Set([
+  "email",
+  "user_email",
+  "customer_email",
+  "mail",
+  "name",
+  "first_name",
+  "firstname",
+  "last_name",
+  "lastname",
+  "full_name",
+  "fullname",
+  "customer_name",
+  "user_name",
+  "phone",
+  "telephone",
+  "mobile",
+  "address",
+  "street",
+  "street_address",
+  "city",
+  "zip",
+  "zip_code",
+  "zipcode",
+  "postal_code",
+  "postalcode",
+  "billing_address",
+  "shipping_address",
+  "search_term",
+  "query",
+  "message",
+  "comment",
+  "note",
+  "notes",
+  "details",
+  "description",
+  "free_text",
+  "text",
+  "body",
+  "feedback",
+  "prompt",
+]);
+
+const EMAIL_REGEX = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/;
+
+/**
+ * Sanitizes analytical payload before console logging.
+ * Retains only event type, IDs, and non-personal fields.
+ * Excludes email, names, addresses, and free text.
+ */
+export function sanitizeForAnalyticsLog(
+  payload: Record<string, unknown>
+): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(payload)) {
+    if (value === undefined) continue;
+
+    const lowerKey = key.toLowerCase();
+    if (
+      FORBIDDEN_ANALYTICS_LOG_KEYS.has(lowerKey) ||
+      lowerKey.includes("email") ||
+      lowerKey.includes("address")
+    ) {
+      continue;
+    }
+
+    if (typeof value === "string") {
+      if (EMAIL_REGEX.test(value)) {
+        continue;
+      }
+      result[key] = value;
+    } else if (
+      typeof value === "number" ||
+      typeof value === "boolean" ||
+      value === null
+    ) {
+      result[key] = value;
+    } else if (Array.isArray(value)) {
+      result[key] = value
+        .filter((item) => {
+          if (typeof item === "string") {
+            return !EMAIL_REGEX.test(item);
+          }
+          return typeof item === "number" || typeof item === "boolean";
+        })
+        .map((item) => {
+          if (item && typeof item === "object") {
+            return sanitizeForAnalyticsLog(item as Record<string, unknown>);
+          }
+          return item;
+        });
+    } else if (typeof value === "object") {
+      result[key] = sanitizeForAnalyticsLog(value as Record<string, unknown>);
+    }
+  }
+
+  return result;
+}
+
 /**
  * Sanitizes and flattens properties for @vercel/analytics custom events.
  * Vercel Analytics accepts Record<string, string | number | boolean | null | undefined>.
@@ -82,8 +182,11 @@ export function track<E extends AnalyticsEventName>(
     );
     vercelAnalytics.track(event, flattened);
   } else {
-    // Development / test: console logging only
-    console.log("[Analytics]", event, validatedPayload);
+    // Development / test: console logging only (redacted: no PII or free text)
+    const sanitizedLogPayload = sanitizeForAnalyticsLog(
+      validatedPayload as Record<string, unknown>
+    );
+    console.log("[Analytics]", event, sanitizedLogPayload);
   }
 
   return {
