@@ -17,6 +17,7 @@ import { ProfileForm } from "./_components/profile-form";
 import { AddressList } from "./_components/address-list";
 import { CommunicationPreferences } from "./_components/communication-preferences";
 import { PaymentMethod } from "./_components/payment-method";
+import { MOCK_PAYMENT_METHOD } from "./_components/payment-method-mock";
 import { DeleteAccount } from "./_components/delete-account";
 import { PetsSection } from "./_components/pets-section";
 import {
@@ -135,7 +136,7 @@ export default async function AccountSettingsPage() {
             />
             <AddressList addresses={addresses} />
             <CommunicationPreferences />
-            <PaymentMethod />
+            <PaymentMethod paymentMethod={MOCK_PAYMENT_METHOD} />
             <DeleteAccount customer={customer} />
           </div>
         </div>

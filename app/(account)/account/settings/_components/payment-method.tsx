@@ -3,7 +3,18 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-export function PaymentMethod() {
+export interface SavedPaymentMethod {
+  brand: string;
+  last4: string;
+  expiry: string;
+  subscriptionCount?: number;
+}
+
+export interface PaymentMethodProps {
+  paymentMethod?: SavedPaymentMethod | null;
+}
+
+export function PaymentMethod({ paymentMethod }: PaymentMethodProps) {
   const [feedback, setFeedback] = useState<string | null>(null);
 
   const handleUpdate = () => {
@@ -25,31 +36,50 @@ export function PaymentMethod() {
         </h2>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <span
-            aria-hidden="true"
-            className="inline-flex rounded-field border border-border px-2.5 py-1 text-xs font-extrabold uppercase tracking-wide text-fg"
-          >
-            VISA
-          </span>
-          <div>
-            <p className="text-sm font-bold text-fg sm:text-base">•••• 4242</p>
-            <p className="text-xs text-fg-muted sm:text-sm">
-              Expires 08/28 · used for active subscriptions
-            </p>
+      {paymentMethod ? (
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <span
+              aria-hidden="true"
+              className="inline-flex rounded-field border border-border px-2.5 py-1 text-xs font-extrabold uppercase tracking-wide text-fg"
+            >
+              {paymentMethod.brand}
+            </span>
+            <div>
+              <p className="text-sm font-bold text-fg sm:text-base">
+                •••• {paymentMethod.last4}
+              </p>
+              <p className="text-xs text-fg-muted sm:text-sm">
+                Expires {paymentMethod.expiry}
+                {typeof paymentMethod.subscriptionCount === "number"
+                  ? ` · used for ${paymentMethod.subscriptionCount} subscription${paymentMethod.subscriptionCount === 1 ? "" : "s"}`
+                  : ""}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <Button
-          type="button"
-          variant="secondary"
-          size="sm"
-          onClick={handleUpdate}
-        >
-          Update
-        </Button>
-      </div>
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            onClick={handleUpdate}
+          >
+            Update
+          </Button>
+        </div>
+      ) : (
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <p className="text-sm text-fg-muted">No saved payment method.</p>
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            onClick={handleUpdate}
+          >
+            Add payment method
+          </Button>
+        </div>
+      )}
 
       <p className="text-xs text-fg-muted">
         Card details are stored and processed by Shopify Payments.

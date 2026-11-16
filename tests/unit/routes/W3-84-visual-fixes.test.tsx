@@ -25,6 +25,7 @@ import { HeroCarousel } from "@/app/(pet)/pet/_components/hero-carousel";
 import TrackOrderPage from "@/app/(shared)/track/page";
 import CartPage from "@/app/(shared)/cart/page";
 import AccountSettingsPage from "@/app/(account)/account/settings/page";
+import { PaymentMethod } from "@/app/(account)/account/settings/_components/payment-method";
 import { DailyRoutine } from "@/app/(human)/human/_components/daily-routine";
 import type { ProductCardData } from "@/components/commerce/product-card/product-card-data";
 
@@ -125,7 +126,7 @@ describe("W3-84 Visual Fixes (Headings hierarchy, Unique Newsletter, Settings Pa
       expect(switches.length).toBeGreaterThanOrEqual(3);
     });
 
-    it("renders Payment method panel with card details and update button", async () => {
+    it("renders Payment method panel with mock data and update button", async () => {
       const pageJsx = await AccountSettingsPage();
       render(pageJsx);
 
@@ -134,7 +135,7 @@ describe("W3-84 Visual Fixes (Headings hierarchy, Unique Newsletter, Settings Pa
       ).toBeDefined();
       expect(screen.getByText("•••• 4242")).toBeDefined();
       expect(
-        screen.getByText(/expires 08\/28 · used for active subscriptions/i)
+        screen.getByText(/expires 08\/28 · used for 2 subscriptions/i)
       ).toBeDefined();
       expect(screen.getByRole("button", { name: /update/i })).toBeDefined();
       expect(
@@ -143,10 +144,24 @@ describe("W3-84 Visual Fixes (Headings hierarchy, Unique Newsletter, Settings Pa
         )
       ).toBeDefined();
     });
+
+    it("renders empty state without inventing card details when paymentMethod is null", () => {
+      render(<PaymentMethod paymentMethod={null} />);
+
+      expect(
+        screen.getByRole("heading", { name: /payment method/i })
+      ).toBeDefined();
+      expect(screen.getByText(/no saved payment method/i)).toBeDefined();
+      expect(
+        screen.getByRole("button", { name: /add payment method/i })
+      ).toBeDefined();
+      expect(screen.queryByText(/••••/)).toBeNull();
+      expect(screen.queryByText(/visa/i)).toBeNull();
+    });
   });
 
-  describe("Daily Routine Glow e Prime renders", () => {
-    it("overrides placeholder.svg for Glow and Prime with existing physical renders in public/", () => {
+  describe("Daily Routine Glow e Prime neutral placeholders", () => {
+    it("uses existing neutral placeholder.svg for Glow and Prime without using another product's artwork", () => {
       const mockProducts: ProductCardData[] = [
         {
           slug: "glow",
@@ -170,7 +185,7 @@ describe("W3-84 Visual Fixes (Headings hierarchy, Unique Newsletter, Settings Pa
           line: "human",
           species: null,
           format: "Powders",
-          images: ["/renders/placeholder.svg"],
+          images: [],
           variants: [
             { id: "var_prime_1", price: { amount: 49, currencyCode: "USD" } },
           ],
@@ -185,8 +200,9 @@ describe("W3-84 Visual Fixes (Headings hierarchy, Unique Newsletter, Settings Pa
       const images = screen.getAllByRole("img");
       for (const img of images) {
         const src = img.getAttribute("src");
-        expect(src).not.toContain("placeholder.svg");
-        expect(src).toContain("renew.png");
+        expect(src).toContain("placeholder.svg");
+        expect(src).not.toContain("renew.png");
+        expect(src).not.toContain("biohack.png");
       }
     });
   });
