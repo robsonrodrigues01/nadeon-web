@@ -2352,11 +2352,11 @@
       "W3-23",
       "W3-26"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:30:43.853Z",
+    "lease_ate": "2026-11-16T01:32:22.900Z",
     "branch": "agy/W3-44",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "scrollWidth=320 medido no portal nas 7 rotas",
       "pnpm gate verde",
@@ -2372,7 +2372,7 @@
     "depende_de": [
       "W3-39"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Paleta",
     "lease_ate": "2026-11-16T01:26:02.885Z",
     "branch": "agy/W3-45",
@@ -2430,7 +2430,7 @@
     "depende_de": [
       "W3-30"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
     "lease_ate": null,
     "branch": "agy/W3-48",
