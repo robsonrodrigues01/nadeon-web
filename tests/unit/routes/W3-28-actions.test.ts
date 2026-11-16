@@ -91,6 +91,7 @@ describe("W3-28 public form errors", () => {
         email: "person@example.test",
         firstName: "Pat",
         lastName: "Doe",
+        state: "CA",
         requestType: "do_not_sell",
         confirmAccuracy: "on",
       })
@@ -116,6 +117,7 @@ describe("W3-28 public form errors", () => {
         email: "person@example.test",
         firstName: "Pat",
         lastName: "Doe",
+        state: "CA",
         requestType: "do_not_sell",
         confirmAccuracy: "on",
       })
