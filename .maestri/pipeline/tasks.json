@@ -1812,11 +1812,11 @@
     "depende_de": [
       "W3-14"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-15T23:29:20.521Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "relatório com achados por rota",
       "nenhuma alteração de código"
@@ -1831,11 +1831,11 @@
     "depende_de": [
       "W3-14"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-15T23:29:20.564Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "relatório com achados por rota",
       "nenhuma alteração de código"
@@ -1852,15 +1852,96 @@
     "depende_de": [
       "W3-08"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-15T23:29:50.773Z",
+    "lease_ate": "2026-11-15T23:30:10.958Z",
     "branch": "agy/W3-17",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "comparação no portal com o board",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Prisma5"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T00:18:10.719Z",
+    "pr": null,
+    "criterios": [
+      "medição no portal",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-18",
+    "titulo": "Grade de /human/shop/capsules sem colisão de títulos em 768 px",
+    "depende_de": [
+      "W3-15"
+    ],
+    "branch": "agy/W3-18"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": null,
+    "criterios": [
+      "medição no portal",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-19",
+    "titulo": "/account/subscriptions: cartão e ações cabem em 768 px",
+    "depende_de": [
+      "W3-15"
+    ],
+    "branch": "agy/W3-19"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": null,
+    "criterios": [
+      "medição no portal",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-20",
+    "titulo": "Hero de /pet/kits com a paleta Pet do board",
+    "depende_de": [
+      "W3-15"
+    ],
+    "branch": "agy/W3-20"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "em_andamento",
+    "responsavel": "Tecla",
+    "lease_ate": "2026-11-16T00:18:10.750Z",
+    "pr": null,
+    "criterios": [
+      "medição no portal",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-21",
+    "titulo": "Skip link para #main-content nos layouts e foco preso/Escape em gaveta, seletor de país, cookies e popup",
+    "depende_de": [
+      "W3-16"
+    ],
+    "branch": "agy/W3-21"
   }
 ]
