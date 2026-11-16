@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { accountProvider, formsProvider } from "@/lib/providers";
 import {
   PetInputSchema,
@@ -110,6 +111,22 @@ export async function savePetAction(formData: FormData): Promise<Pet | null> {
   return saved;
 }
 
+export const DeleteAccountFormSchema = z.object({
+  email: z.string().trim().email(),
+  firstName: z.string().trim().min(1).max(100),
+  lastName: z.string().trim().min(1).max(100),
+  requestType: z.literal("delete"),
+  confirmAccuracy: z.literal("on"),
+});
+
+export const DELETE_ACCOUNT_FORM_FIELDS = [
+  "email",
+  "firstName",
+  "lastName",
+  "requestType",
+  "confirmAccuracy",
+] as const;
+
 export type DeleteAccountFormState =
   | { status: "idle" }
   | { status: "success"; id: string }
@@ -120,18 +137,26 @@ export async function requestAccountDeletionAction(
   _previousState: DeleteAccountFormState,
   formData: FormData
 ): Promise<DeleteAccountFormState> {
-  const email = text(formData, "email");
-  const firstName = text(formData, "firstName");
-  const lastName = text(formData, "lastName");
-  const requestType = text(formData, "requestType");
-
   if (
-    !email ||
-    !email.includes("@") ||
-    !firstName ||
-    !lastName ||
-    requestType !== "delete"
+    DELETE_ACCOUNT_FORM_FIELDS.some(
+      (field) => formData.getAll(field).length > 1
+    )
   ) {
+    return {
+      status: "invalid",
+      error: "Unable to submit request. Please try again.",
+    };
+  }
+
+  const rawValues = Object.fromEntries(
+    DELETE_ACCOUNT_FORM_FIELDS.map((field) => [
+      field,
+      formData.get(field) ?? undefined,
+    ])
+  );
+
+  const parsed = DeleteAccountFormSchema.safeParse(rawValues);
+  if (!parsed.success) {
     return {
       status: "invalid",
       error: "Unable to submit request. Please try again.",
@@ -140,9 +165,9 @@ export async function requestAccountDeletionAction(
 
   try {
     const result = await formsProvider.sendPrivacyRequest({
-      email,
-      firstName,
-      lastName,
+      email: parsed.data.email,
+      firstName: parsed.data.firstName,
+      lastName: parsed.data.lastName,
       requestType: "delete",
     });
 
