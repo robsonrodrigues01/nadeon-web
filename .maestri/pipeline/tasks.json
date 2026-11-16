@@ -2095,11 +2095,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Código morto: exports sem uso, componentes órfãos, arquivos não importados (fila permanente #11)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Tecla",
     "lease_ate": "2026-11-16T01:11:08.333Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "DEADCODE.md com lista verificada",
       "nenhuma alteração de código"
@@ -2131,7 +2131,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T01:19:06.294Z",
+    "lease_ate": "2026-11-16T01:19:59.093Z",
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
@@ -2270,7 +2270,7 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Régua3",
     "lease_ate": null,
     "pr": "local",
@@ -2310,10 +2310,10 @@
     "depende_de": [
       "W3-36"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Paleta",
     "lease_ate": "2026-11-16T01:16:58.950Z",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
       "pnpm gate verde",
@@ -2374,11 +2374,11 @@
     "depende_de": [
       "W3-39"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:14:18.402Z",
+    "lease_ate": "2026-11-16T01:19:45.658Z",
     "branch": "agy/W3-45",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "it.fails correspondentes viram testes que passam",
       "pnpm gate verde",
