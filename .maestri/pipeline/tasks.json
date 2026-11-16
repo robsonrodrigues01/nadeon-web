@@ -2491,7 +2491,7 @@
     "depende_de": [
       "W3-43"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Lupa3",
     "lease_ate": null,
     "branch": "agy/W3-51",
@@ -2665,7 +2665,7 @@
     "depende_de": [
       "W3-51"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Lupa3",
     "lease_ate": null,
     "branch": "agy/W3-61",
