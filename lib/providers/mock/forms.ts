@@ -13,7 +13,7 @@ import {
 
 async function logMockSubmission(
   type: string,
-  data: Record<string, unknown>
+  id = `log_${Math.random().toString(36).slice(2, 9)}`
 ): Promise<void> {
   const isDev =
     process.env.NODE_ENV === "development" ||
@@ -27,11 +27,11 @@ async function logMockSubmission(
   const logEntry = {
     timestamp: new Date().toISOString(),
     formType: type,
-    payload: data,
+    id,
   };
 
   // Log to console in development
-  console.log(`[FormsMock] ${type}:`, JSON.stringify(logEntry));
+  console.log("[FormsMock]", JSON.stringify(logEntry));
 
   // Write to .maestri/logs/forms-mock.jsonl only on server
   if (typeof window === "undefined") {
@@ -64,7 +64,7 @@ export class MockFormsProvider implements FormsProvider {
     }
 
     const id = `sub_${Math.random().toString(36).substring(2, 9)}`;
-    await logMockSubmission("subscribe", { list, email, consent, id });
+    await logMockSubmission("subscribe", id);
 
     return FormSubmissionResultSchema.parse({
       success: true,
@@ -74,9 +74,9 @@ export class MockFormsProvider implements FormsProvider {
   }
 
   async sendContact(payload: ContactInput): Promise<FormSubmissionResult> {
-    const validated = ContactInputSchema.parse(payload);
+    ContactInputSchema.parse(payload);
     const id = `contact_${Math.random().toString(36).substring(2, 9)}`;
-    await logMockSubmission("contact", { ...validated, id });
+    await logMockSubmission("contact", id);
 
     return FormSubmissionResultSchema.parse({
       success: true,
@@ -88,9 +88,9 @@ export class MockFormsProvider implements FormsProvider {
   async sendPrivacyRequest(
     payload: PrivacyRequestInput
   ): Promise<FormSubmissionResult> {
-    const validated = PrivacyRequestInputSchema.parse(payload);
+    PrivacyRequestInputSchema.parse(payload);
     const id = `privacy_${Math.random().toString(36).substring(2, 9)}`;
-    await logMockSubmission("privacy_request", { ...validated, id });
+    await logMockSubmission("privacy_request", id);
 
     return FormSubmissionResultSchema.parse({
       success: true,
@@ -103,9 +103,9 @@ export class MockFormsProvider implements FormsProvider {
     type: ApplicationType,
     payload: ApplicationInput
   ): Promise<FormSubmissionResult> {
-    const validated = ApplicationInputSchema.parse(payload);
+    ApplicationInputSchema.parse(payload);
     const id = `app_${type}_${Math.random().toString(36).substring(2, 9)}`;
-    await logMockSubmission(`application:${type}`, { ...validated, id });
+    await logMockSubmission(`application:${type}`, id);
 
     return FormSubmissionResultSchema.parse({
       success: true,
@@ -119,7 +119,10 @@ export class MockFormsProvider implements FormsProvider {
     email: string | null,
     properties?: Record<string, unknown>
   ): Promise<{ success: boolean }> {
-    await logMockSubmission("track_event", { name, email, properties });
+    void name;
+    void email;
+    void properties;
+    await logMockSubmission("track_event");
     return { success: true };
   }
 }
