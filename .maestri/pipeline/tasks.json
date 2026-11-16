@@ -2315,7 +2315,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T01:11:56.412Z",
+    "lease_ate": "2026-11-16T01:16:58.950Z",
     "pr": null,
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
@@ -2359,7 +2359,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:15:38.581Z",
+    "lease_ate": "2026-11-16T01:17:20.549Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
@@ -2397,7 +2397,7 @@
     "depende_de": [
       "W3-38"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Atalaia",
     "lease_ate": null,
     "branch": "agy/W3-46",
