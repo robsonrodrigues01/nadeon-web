@@ -1927,7 +1927,7 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Tecla",
     "lease_ate": null,
     "pr": "local",
@@ -1941,8 +1941,7 @@
     "depende_de": [
       "W3-16"
     ],
-    "branch": "agy/W3-21",
-    "revisor": "Atalaia"
+    "branch": "agy/W3-21"
   },
   {
     "id": "W3-22",
@@ -2097,15 +2096,16 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Código morto: exports sem uso, componentes órfãos, arquivos não importados (fila permanente #11)",
     "depende_de": [],
-    "status": "em_andamento",
-    "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:44:13.757Z",
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
     "branch": null,
     "pr": null,
     "criterios": [
       "DEADCODE.md com lista verificada",
       "nenhuma alteração de código"
-    ]
+    ],
+    "nota": "Luna recusou 2x (falso positivo sobre votacao); refazer com Gemini quando a cota voltar"
   },
   {
     "id": "W3-31",
@@ -2140,6 +2140,38 @@
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
+    ]
+  },
+  {
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T00:46:13.373Z",
+    "branch": null,
+    "pr": null,
+    "id": "W3-33",
+    "titulo": "Resumo para o Robson: cada To be confirmed por rota e a proposta correspondente (fila permanente #14)",
+    "criterios": [
+      "docs/PENDENCIAS-ROBSON.md"
+    ]
+  },
+  {
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Atalaia",
+    "lease_ate": "2026-11-16T00:46:13.404Z",
+    "branch": null,
+    "pr": null,
+    "id": "W3-34",
+    "titulo": "Cobertura de testes: rotas e componentes sem teste de comportamento (fila permanente #10)",
+    "criterios": [
+      "COVERAGE.md"
     ]
   }
 ]
