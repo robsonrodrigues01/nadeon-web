@@ -82,7 +82,7 @@ describe("5.6 Semantic Elements: Quiz", () => {
   });
 
   describe("Pergunta Human", () => {
-    it("renders option buttons, navigation controls (Back, Continue), and progress bar", () => {
+    it("renders option buttons, navigation controls (Back, Continue), and progress bar", async () => {
       const humanQuiz = getQuiz("human")!;
       render(<HumanQuizClient quiz={humanQuiz} />);
 
@@ -90,7 +90,7 @@ describe("5.6 Semantic Elements: Quiz", () => {
       fireEvent.click(screen.getByRole("button", { name: /start the quiz/i }));
 
       // Progress bar
-      expect(screen.getByRole("progressbar")).toBeDefined();
+      expect(await screen.findByRole("progressbar")).toBeDefined();
 
       // Navigation buttons
       expect(
@@ -115,7 +115,7 @@ describe("5.6 Semantic Elements: Quiz", () => {
       fireEvent.click(screen.getByRole("button", { name: "Start dog quiz" }));
 
       // Progress bar
-      expect(screen.getByRole("progressbar")).toBeDefined();
+      expect(await screen.findByRole("progressbar")).toBeDefined();
 
       // Inputs: pet name and weight
       const nameInput = screen.getByLabelText(/name/i, { selector: "input" });
@@ -177,6 +177,8 @@ describe("5.6 Semantic Elements: Quiz", () => {
       // Step through all 5 questions
       fireEvent.click(screen.getByRole("button", { name: /start the quiz/i }));
 
+      await screen.findByRole("progressbar");
+
       // Question 1
       fireEvent.click(screen.getByRole("button", { name: /^35 to 44\b/ }));
       fireEvent.click(
@@ -210,9 +212,10 @@ describe("5.6 Semantic Elements: Quiz", () => {
       );
 
       // Fast forward past analyzing
-      fireEvent.click(
-        screen.getByRole("button", { name: /view results now/i })
-      );
+      const viewResults = await screen.findByRole("button", {
+        name: /view results now/i,
+      });
+      fireEvent.click(viewResults);
 
       // Recommendation result CTA and retake action
       expect(

@@ -1,7 +1,7 @@
 import React from "react";
 import { catalogProvider } from "@/lib/providers";
 import { getQuiz } from "@/lib/quiz";
-import { QuizWizard } from "@/components/commerce/quiz";
+import { QuizWizard } from "@/components/commerce/quiz/quiz-wizard";
 
 export default async function W1_15Section() {
   const [products, kits] = await Promise.all([

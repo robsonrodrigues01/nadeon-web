@@ -348,9 +348,10 @@ describe("Quiz Component Suite (W1-15)", () => {
       // 1. Start screen
       const startBtn = screen.getByRole("button", { name: /start the quiz/i });
       fireEvent.click(startBtn);
+      expect(document.activeElement).toBe(screen.getByTestId("quiz-wizard"));
 
       // 2. Question 1 (Age)
-      const ageOption = screen.getByText("45 to 54");
+      const ageOption = await screen.findByText("45 to 54");
       fireEvent.click(ageOption);
       const continueBtn = screen.getByRole("button", {
         name: /continue to next step/i,
@@ -358,9 +359,9 @@ describe("Quiz Component Suite (W1-15)", () => {
       fireEvent.click(continueBtn);
 
       // 3. Question 2 (Goal)
-      const goalOption = screen.getByText("Daily energy");
+      const goalOption = await screen.findByText("Daily energy");
       fireEvent.click(goalOption);
-      expect(screen.getByText("Question 2")).toBeDefined();
+      expect(await screen.findByText("Question 2")).toBeDefined();
     });
   });
 });
