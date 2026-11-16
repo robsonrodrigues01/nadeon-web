@@ -2260,7 +2260,8 @@
     ],
     "id": "W3-39",
     "titulo": "Testes de comportamento: conta e assinaturas (skip, pause/resume, frequência, produto, quantidade, cancelamento) e perfil (salvar, excluir conta)",
-    "branch": "agy/W3-39"
+    "branch": "agy/W3-39",
+    "nota": "re-revisão com Tecla após W3-54"
   },
   {
     "onda": 3,
@@ -2373,16 +2374,17 @@
     "depende_de": [
       "W3-39"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T04:28:06.953Z",
+    "lease_ate": null,
     "branch": "agy/W3-45",
     "pr": "local",
     "criterios": [
       "it.fails correspondentes viram testes que passam",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "re-revisão com Tecla após W3-54"
   },
   {
     "id": "W3-46",
