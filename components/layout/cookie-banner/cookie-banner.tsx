@@ -2,8 +2,23 @@
 
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useConsent } from "@/lib/consent";
-import { CookieSettingsModal } from "./cookie-settings-modal";
+
+const CookieSettingsModal = dynamic(
+  () =>
+    import("./cookie-settings-modal").then(
+      (module) => module.CookieSettingsModal
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <span className="sr-only" role="status" aria-live="polite">
+        Loading cookie settings
+      </span>
+    ),
+  }
+);
 
 export interface CookieBannerProps {
   isOpen?: boolean;
@@ -121,7 +136,7 @@ export function CookieBanner({
       )}
 
       {/* Categories modal when user clicks Settings */}
-      {!inline && <CookieSettingsModal />}
+      {!inline && isSettingsOpen && <CookieSettingsModal />}
     </>
   );
 }

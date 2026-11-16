@@ -15,8 +15,9 @@ import { useConsent, readCookie, writeCookie } from "@/lib/consent";
 import { subscribeNewsletter } from "@/components/brand/newsletter/actions";
 import { newsletterSchema } from "@/components/brand/newsletter/schema";
 import { cn } from "@/lib/utils";
+import { FIRST_VISIT_POPUP_COOKIE_NAME } from "./constants";
 
-export const FIRST_VISIT_POPUP_COOKIE_NAME = "nadeon_first_visit_popup";
+export { FIRST_VISIT_POPUP_COOKIE_NAME } from "./constants";
 
 export type PopupVariant = "human" | "pet";
 

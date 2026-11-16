@@ -1,11 +1,20 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { mockFormsProvider } from "@/lib/providers/mock/forms";
 import { FormSubmissionResultSchema } from "@/lib/contracts/forms";
 
 describe("FormsProvider Contract", () => {
-  it("subscribe validates email and consent and appends to log", async () => {
+  it("subscribe validates and logs metadata without customer details", async () => {
+    const logPath = path.resolve(
+      process.cwd(),
+      ".maestri/logs/forms-mock.jsonl"
+    );
+    const initialLogSize = fs.existsSync(logPath)
+      ? fs.statSync(logPath).size
+      : 0;
+    const consoleLog = vi.spyOn(console, "log").mockImplementation(() => {});
+
     const res = await mockFormsProvider.subscribe(
       "newsletter-human",
       "test.user@example.com",
@@ -16,15 +25,21 @@ describe("FormsProvider Contract", () => {
     expect(res.success).toBe(true);
     expect(res.id).toMatch(/^sub_/);
 
-    // Verify .maestri/logs/forms-mock.jsonl exists and contains entry
-    const logPath = path.resolve(
-      process.cwd(),
-      ".maestri/logs/forms-mock.jsonl"
-    );
+    // The server log contains metadata only; user input remains out of logs.
     expect(fs.existsSync(logPath)).toBe(true);
-    const content = fs.readFileSync(logPath, "utf-8");
-    expect(content).toContain("newsletter-human");
-    expect(content).toContain("test.user@example.com");
+    const content = fs.readFileSync(logPath, "utf-8").slice(initialLogSize);
+    expect(content).toContain('"formType":"subscribe"');
+    expect(content).toContain(res.id);
+    expect(content).not.toContain("newsletter-human");
+    expect(content).not.toContain("test.user@example.com");
+
+    const consoleEntry = consoleLog.mock.calls.find(
+      ([label]) => label === "[FormsMock]"
+    )?.[1];
+    expect(consoleEntry).toContain(res.id);
+    expect(consoleEntry).not.toContain("newsletter-human");
+    expect(consoleEntry).not.toContain("test.user@example.com");
+    consoleLog.mockRestore();
   });
 
   it("subscribe throws if consent is false or email invalid", async () => {
