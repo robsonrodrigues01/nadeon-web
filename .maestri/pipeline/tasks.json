@@ -2354,7 +2354,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:28:06.915Z",
+    "lease_ate": "2026-11-16T01:30:43.853Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
@@ -2439,8 +2439,7 @@
       "só remoção comprovada por grep e tsc",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Crivo4"
+    ]
   },
   {
     "id": "W3-49",
@@ -2491,7 +2490,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:25:51.543Z",
+    "lease_ate": "2026-11-16T01:30:34.152Z",
     "branch": "agy/W3-51",
     "pr": null,
     "criterios": [
@@ -2510,13 +2509,30 @@
     ],
     "status": "em_andamento",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:29:47.159Z",
+    "lease_ate": "2026-11-16T01:30:15.435Z",
     "branch": "agy/W3-52",
     "pr": null,
     "criterios": [
       "kB antes/depois medidos",
       "pnpm gate verde",
       "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-53",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Acessibilidade estática por rota no HTML servido: um h1, hierarquia de headings, landmarks, labels, nomes acessíveis de botões e links, alt",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Crivo4",
+    "lease_ate": "2026-11-16T01:31:44.974Z",
+    "branch": null,
+    "pr": null,
+    "criterios": [
+      "A11Y-ESTATICA.md",
+      "nenhuma alteração de código"
     ]
   }
 ]
