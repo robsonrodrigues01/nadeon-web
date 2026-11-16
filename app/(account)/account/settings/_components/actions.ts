@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { accountProvider } from "@/lib/providers";
+import { z } from "zod";
+import { accountProvider, formsProvider } from "@/lib/providers";
 import {
   PetInputSchema,
   ProfileInputSchema,
@@ -108,4 +109,83 @@ export async function savePetAction(formData: FormData): Promise<Pet | null> {
   const saved = await accountProvider.savePet(parsed.data);
   revalidatePath("/account/settings");
   return saved;
+}
+
+const DeleteAccountFormSchema = z.object({
+  email: z.string().trim().email(),
+  firstName: z.string().trim().min(1).max(100),
+  lastName: z.string().trim().min(1).max(100),
+  requestType: z.literal("delete"),
+  confirmAccuracy: z.literal("on"),
+});
+
+const DELETE_ACCOUNT_FORM_FIELDS = [
+  "email",
+  "firstName",
+  "lastName",
+  "requestType",
+  "confirmAccuracy",
+] as const;
+
+export type DeleteAccountFormState =
+  | { status: "idle" }
+  | { status: "success"; id: string }
+  | { status: "invalid"; error?: string }
+  | { status: "error"; error?: string };
+
+export async function requestAccountDeletionAction(
+  _previousState: DeleteAccountFormState,
+  formData: FormData
+): Promise<DeleteAccountFormState> {
+  if (
+    DELETE_ACCOUNT_FORM_FIELDS.some(
+      (field) => formData.getAll(field).length > 1
+    )
+  ) {
+    return {
+      status: "invalid",
+      error: "Unable to submit request. Please try again.",
+    };
+  }
+
+  const rawValues = Object.fromEntries(
+    DELETE_ACCOUNT_FORM_FIELDS.map((field) => [
+      field,
+      formData.get(field) ?? undefined,
+    ])
+  );
+
+  const parsed = DeleteAccountFormSchema.safeParse(rawValues);
+  if (!parsed.success) {
+    return {
+      status: "invalid",
+      error: "Unable to submit request. Please try again.",
+    };
+  }
+
+  try {
+    const result = await formsProvider.sendPrivacyRequest({
+      email: parsed.data.email,
+      firstName: parsed.data.firstName,
+      lastName: parsed.data.lastName,
+      requestType: "delete",
+    });
+
+    if (!result.success) {
+      return {
+        status: "error",
+        error: "Unable to submit request. Please try again.",
+      };
+    }
+
+    return {
+      status: "success",
+      id: result.id,
+    };
+  } catch {
+    return {
+      status: "error",
+      error: "Unable to submit request. Please try again.",
+    };
+  }
 }

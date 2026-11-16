@@ -38,16 +38,53 @@ async function logMockSubmission(
     try {
       const fs = await import("node:fs");
       const path = await import("node:path");
-      const filePath = path.resolve(
-        process.env.FORMS_MOCK_LOG || ".maestri/logs/forms-mock.jsonl"
-      );
-      const logDir = path.dirname(filePath);
-      if (!fs.existsSync(logDir)) {
-        fs.mkdirSync(logDir, { recursive: true });
+      const maestriDir = path.resolve(process.cwd(), ".maestri");
+      const logDir = path.join(maestriDir, "logs");
+      const configuredPath = process.env.FORMS_MOCK_LOG;
+      const filePath = configuredPath
+        ? path.resolve(
+            path.isAbsolute(configuredPath)
+              ? configuredPath
+              : path.join(logDir, configuredPath)
+          )
+        : path.join(logDir, "forms-mock.jsonl");
+
+      if (path.dirname(filePath) !== logDir) {
+        throw new Error("Configured log path is outside the allowed directory");
       }
-      fs.appendFileSync(filePath, `${JSON.stringify(logEntry)}\n`, "utf-8");
-    } catch (err) {
-      console.error("[FormsMock] Failed writing log entry:", err);
+
+      for (const directory of [maestriDir, logDir]) {
+        if (fs.existsSync(directory)) {
+          const stats = fs.lstatSync(directory);
+          if (stats.isSymbolicLink() || !stats.isDirectory()) {
+            throw new Error("Configured log directory is not a safe directory");
+          }
+        } else {
+          fs.mkdirSync(directory);
+        }
+      }
+
+      const fileDescriptor = fs.openSync(
+        filePath,
+        fs.constants.O_WRONLY |
+          fs.constants.O_APPEND |
+          fs.constants.O_CREAT |
+          (fs.constants.O_NOFOLLOW ?? 0),
+        0o600
+      );
+      try {
+        fs.writeFileSync(
+          fileDescriptor,
+          `${JSON.stringify(logEntry)}\n`,
+          "utf-8"
+        );
+      } finally {
+        fs.closeSync(fileDescriptor);
+      }
+    } catch {
+      console.error("[FormsMock] Failed writing log entry", {
+        code: "log_write_failed",
+      });
     }
   }
 }

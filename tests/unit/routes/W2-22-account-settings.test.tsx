@@ -12,6 +12,7 @@ import AccountSettingsPage, {
   generateMetadata,
 } from "@/app/(account)/account/settings/page";
 import {
+  requestAccountDeletionAction,
   saveProfileAction,
   signOutAction,
 } from "@/app/(account)/account/settings/_components/actions";
@@ -384,6 +385,136 @@ describe("W2-22 /account/settings", () => {
         .mockResolvedValue();
       await expect(signOutAction()).rejects.toThrow("NEXT_REDIRECT /");
       expect(signOut).toHaveBeenCalled();
+    });
+  });
+
+  describe("requestAccountDeletionAction", () => {
+    function deletionForm(data: Record<string, string | string[]>): FormData {
+      const fd = new FormData();
+      for (const [key, val] of Object.entries(data)) {
+        if (Array.isArray(val)) {
+          for (const item of val) {
+            fd.append(key, item);
+          }
+        } else {
+          fd.append(key, val);
+        }
+      }
+      return fd;
+    }
+
+    const VALID_DELETION = {
+      email: "alex.morgan@example.com",
+      firstName: "Alex",
+      lastName: "Morgan",
+      requestType: "delete",
+      confirmAccuracy: "on",
+    };
+
+    it("envia a solicitação com sucesso quando os campos e a confirmação são válidos", async () => {
+      const sendPrivacyRequest = vi
+        .spyOn(formsProvider, "sendPrivacyRequest")
+        .mockResolvedValue({ success: true, id: "req_del_123" });
+
+      const res = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm(VALID_DELETION)
+      );
+
+      expect(res).toEqual({ status: "success", id: "req_del_123" });
+      expect(sendPrivacyRequest).toHaveBeenCalledWith({
+        email: "alex.morgan@example.com",
+        firstName: "Alex",
+        lastName: "Morgan",
+        requestType: "delete",
+      });
+    });
+
+    it("rejeita quando a confirmação está ausente ou não é 'on'", async () => {
+      const sendPrivacyRequest = vi
+        .spyOn(formsProvider, "sendPrivacyRequest")
+        .mockResolvedValue({ success: true, id: "req_del_123" });
+
+      const withoutConfirm = { ...VALID_DELETION };
+      delete (withoutConfirm as { confirmAccuracy?: string }).confirmAccuracy;
+      const res1 = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm(withoutConfirm)
+      );
+      expect(res1.status).toBe("invalid");
+      expect(sendPrivacyRequest).not.toHaveBeenCalled();
+
+      const res2 = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm({ ...VALID_DELETION, confirmAccuracy: "yes" })
+      );
+      expect(res2.status).toBe("invalid");
+      expect(sendPrivacyRequest).not.toHaveBeenCalled();
+    });
+
+    it("rejeita quando há campo inválido (e-mail, nome vazio ou tipo inválido)", async () => {
+      const sendPrivacyRequest = vi
+        .spyOn(formsProvider, "sendPrivacyRequest")
+        .mockResolvedValue({ success: true, id: "req_del_123" });
+
+      const resEmail = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm({ ...VALID_DELETION, email: "invalid-email" })
+      );
+      expect(resEmail.status).toBe("invalid");
+
+      const resFirst = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm({ ...VALID_DELETION, firstName: "   " })
+      );
+      expect(resFirst.status).toBe("invalid");
+
+      const resLast = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm({ ...VALID_DELETION, lastName: "" })
+      );
+      expect(resLast.status).toBe("invalid");
+
+      const resType = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm({ ...VALID_DELETION, requestType: "access" })
+      );
+      expect(resType.status).toBe("invalid");
+
+      expect(sendPrivacyRequest).not.toHaveBeenCalled();
+    });
+
+    it("rejeita quando há campos duplicados no FormData", async () => {
+      const sendPrivacyRequest = vi
+        .spyOn(formsProvider, "sendPrivacyRequest")
+        .mockResolvedValue({ success: true, id: "req_del_123" });
+
+      const res = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm({
+          ...VALID_DELETION,
+          email: ["alex.morgan@example.com", "hacker@example.com"],
+        })
+      );
+      expect(res.status).toBe("invalid");
+      expect(sendPrivacyRequest).not.toHaveBeenCalled();
+    });
+
+    it("não loga PII em caso de erro ou falha do provider", async () => {
+      const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      vi.spyOn(formsProvider, "sendPrivacyRequest").mockRejectedValue(
+        new Error("Sensitive customer data failure")
+      );
+
+      const res = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm(VALID_DELETION)
+      );
+
+      expect(res.status).toBe("error");
+      expect(logSpy).not.toHaveBeenCalled();
+      expect(errorSpy).not.toHaveBeenCalled();
     });
   });
 

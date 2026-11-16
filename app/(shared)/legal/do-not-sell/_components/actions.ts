@@ -1,11 +1,36 @@
 "use server";
 
 import { formsProvider } from "@/lib/providers";
+import { z } from "zod";
 import {
   PrivacyRequestInputSchema,
   type PrivacyRequestInput,
   type PrivacyRequestType,
 } from "@/lib/contracts/forms";
+
+const PrivacyFormSchema = z.object({
+  email: z.string().trim().email(),
+  firstName: z.string().trim().min(1).max(100),
+  lastName: z.string().trim().min(1).max(100),
+  requestType: z.enum(["access", "delete", "correct", "do_not_sell"]),
+  state: z.string().trim().min(1, "Select your state of residence.").max(100),
+  phone: z.string().trim().max(40).optional(),
+  requestorType: z.enum(["consumer", "agent"]).optional(),
+  correctionDetails: z.string().trim().max(2000).optional(),
+  confirmAccuracy: z.literal("on"),
+});
+
+const PRIVACY_FORM_FIELDS = [
+  "email",
+  "firstName",
+  "lastName",
+  "requestType",
+  "state",
+  "phone",
+  "requestorType",
+  "correctionDetails",
+  "confirmAccuracy",
+] as const;
 
 export type PrivacyFormState =
   | { status: "idle" }
@@ -22,27 +47,36 @@ export async function submitPrivacyRequest(
   _previousState: PrivacyFormState,
   formData: FormData
 ): Promise<PrivacyFormState> {
-  const email = (formData.get("email") as string | null)?.trim() ?? "";
-  const firstName = (formData.get("firstName") as string | null)?.trim() ?? "";
-  const lastName = (formData.get("lastName") as string | null)?.trim() ?? "";
-  const rawRequestType =
-    (formData.get("requestType") as string | null)?.trim() ?? "do_not_sell";
-  const stateOfResidence = (formData.get("state") as string | null)?.trim();
-  const phone = (formData.get("phone") as string | null)?.trim();
-  const requestorType = (
-    formData.get("requestorType") as string | null
-  )?.trim();
-  const correctionDetails = (
-    formData.get("correctionDetails") as string | null
-  )?.trim();
-  const confirmAccuracy = formData.get("confirmAccuracy");
-
-  if (!confirmAccuracy) {
-    return {
-      status: "invalid",
-      error: "Please confirm that the information provided is accurate.",
-    };
+  if (PRIVACY_FORM_FIELDS.some((field) => formData.getAll(field).length > 1)) {
+    return { status: "invalid" };
   }
+
+  const rawValues = Object.fromEntries(
+    PRIVACY_FORM_FIELDS.map((field) => [
+      field,
+      formData.get(field) ?? undefined,
+    ])
+  );
+  const form = PrivacyFormSchema.safeParse(rawValues);
+  if (!form.success) {
+    return rawValues.confirmAccuracy === "on"
+      ? { status: "invalid" }
+      : {
+          status: "invalid",
+          error: "Please confirm that the information provided is accurate.",
+        };
+  }
+
+  const {
+    email,
+    firstName,
+    lastName,
+    requestType: rawRequestType,
+    state: stateOfResidence,
+    phone,
+    requestorType,
+    correctionDetails,
+  } = form.data;
 
   // Map request type to contract
   let requestType: PrivacyRequestType = "do_not_sell";
@@ -86,10 +120,9 @@ export async function submitPrivacyRequest(
   try {
     const result = await formsProvider.sendPrivacyRequest(payload);
     if (!result.success) {
-      console.error(
-        "[PrivacyRequest] Provider rejected submission:",
-        result.message
-      );
+      console.error("[PrivacyRequest] Provider rejected submission", {
+        code: "provider_rejected",
+      });
       return {
         status: "error",
         error: "Unable to submit request. Please try again.",
@@ -101,8 +134,10 @@ export async function submitPrivacyRequest(
       email: parsed.data.email,
       requestType: parsed.data.requestType,
     };
-  } catch (err) {
-    console.error("[PrivacyRequest] Submission failed:", err);
+  } catch {
+    console.error("[PrivacyRequest] Submission failed", {
+      code: "provider_error",
+    });
     return {
       status: "error",
       error: "Unable to submit request. Please try again.",

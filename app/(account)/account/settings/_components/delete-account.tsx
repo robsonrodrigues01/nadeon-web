@@ -4,18 +4,18 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import type { CustomerProfile } from "@/lib/contracts/account";
 import { Button } from "@/components/ui/button";
 import {
-  submitPrivacyRequest,
-  type PrivacyFormState,
-} from "../../../../(shared)/legal/do-not-sell/_components/actions";
+  requestAccountDeletionAction,
+  type DeleteAccountFormState,
+} from "./actions";
 
 interface DeleteAccountProps {
   customer: CustomerProfile;
 }
 
 export function DeleteAccount({ customer }: DeleteAccountProps) {
-  const initialState: PrivacyFormState = { status: "idle" };
+  const initialState: DeleteAccountFormState = { status: "idle" };
   const [state, formAction, isPending] = useActionState(
-    submitPrivacyRequest,
+    requestAccountDeletionAction,
     initialState
   );
   const [confirming, setConfirming] = useState(false);
