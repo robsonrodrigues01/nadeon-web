@@ -2644,16 +2644,15 @@
       "W3-59",
       "W3-58"
     ],
-    "status": "para_revisao",
-    "responsavel": "Compasso",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T04:48:39.891Z",
     "branch": "agy/W3-60",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Crivo4"
+    ]
   },
   {
     "id": "W3-61",
@@ -2710,7 +2709,25 @@
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-64",
+    "onda": 3,
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Pendências da revisão W3-60: logger analítico sem PII e mensagem do provider mock",
+    "depende_de": [
+      "W3-60"
     ],
-    "revisor": "Prisma5"
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W3-64",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
