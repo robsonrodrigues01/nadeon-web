@@ -127,7 +127,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                     height={128}
                     sizes="(max-width: 639px) 96px, 128px"
                     preload
-                    className="object-contain"
+                    className="h-auto w-auto object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -145,7 +145,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                     width={128}
                     height={128}
                     sizes="(max-width: 639px) 96px, 128px"
-                    className="object-contain"
+                    className="h-auto w-auto object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -162,7 +162,8 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                     alt="Renew NAD+ and Resveratrol"
                     width={128}
                     height={128}
-                    className="object-contain"
+                    sizes="(max-width: 639px) 96px, 128px"
+                    className="h-auto w-auto object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -228,7 +229,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                     alt="BioHack NMN 500 mg"
                     width={144}
                     height={144}
-                    className="object-contain"
+                    className="h-auto w-auto object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -246,7 +247,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                     alt="Renew NAD+ and Resveratrol"
                     width={144}
                     height={144}
-                    className="object-contain"
+                    className="h-auto w-auto object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
