@@ -2141,7 +2141,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "revisão com Lente4 após W3-35"
+    "revisor": "Lente4"
   },
   {
     "onda": 3,
@@ -2164,9 +2164,9 @@
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T00:57:12.371Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "id": "W3-34",
@@ -2190,8 +2190,7 @@
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Lente4"
+    ]
   },
   {
     "id": "W3-36",
@@ -2202,7 +2201,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T00:49:49.206Z",
+    "lease_ate": "2026-11-16T00:57:41.223Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -2285,5 +2284,25 @@
     "id": "W3-40",
     "titulo": "Testes de comportamento: filtros e ordenação do catálogo na UI e preços/totais em mercados não USD (produto, kit, carrinho)",
     "branch": "agy/W3-40"
+  },
+  {
+    "id": "W3-41",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Testes de comportamento: FAQ (busca, categorias, accordion), laudos (busca de lote) e skip link por teclado (cobertura itens 4 e 5)",
+    "depende_de": [
+      "W3-34"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Atalaia",
+    "lease_ate": "2026-11-16T00:57:42.594Z",
+    "branch": "agy/W3-41",
+    "pr": null,
+    "criterios": [
+      "testes montados",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
