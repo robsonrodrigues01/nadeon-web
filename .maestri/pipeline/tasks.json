@@ -2138,7 +2138,8 @@
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "no main; aguarda gate verde após W3-63"
   },
   {
     "onda": 3,
@@ -2585,8 +2586,8 @@
     "depende_de": [
       "W3-53"
     ],
-    "status": "em_andamento",
-    "responsavel": "Prisma5",
+    "status": "para_revisao",
+    "responsavel": "Crivo4",
     "lease_ate": null,
     "branch": "agy/W3-56",
     "pr": "local",
@@ -2594,7 +2595,8 @@
       "script da W3-53 sem achados nas rotas tocadas",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "no main; aguarda gate verde após W3-63"
   },
   {
     "id": "W3-58",
@@ -2708,6 +2710,7 @@
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Prisma5"
   }
 ]
