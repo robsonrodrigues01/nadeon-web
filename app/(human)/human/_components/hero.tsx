@@ -126,6 +126,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                     width={128}
                     height={128}
                     className="object-contain"
+                    loading="eager"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">

@@ -47,13 +47,14 @@ export function SubscriptionCard({
       aria-labelledby={headingId}
       className="flex min-w-0 flex-col gap-6 rounded-card border border-border bg-bg p-5 shadow-card md:flex-row md:p-7"
     >
-      <div className="flex h-40 shrink-0 items-center justify-center overflow-hidden rounded-card bg-gradient-sunrise md:h-56 md:w-56">
+      <div className="flex h-40 w-40 shrink-0 items-center justify-center overflow-hidden rounded-card bg-gradient-sunrise md:h-56 md:w-56">
         {image ? (
           <Image
             src={image}
             alt={title}
             width={224}
             height={224}
+            sizes="(min-width: 768px) 224px, 160px"
             className="h-full w-full object-cover"
           />
         ) : null}
