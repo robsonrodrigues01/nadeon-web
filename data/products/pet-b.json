@@ -474,7 +474,7 @@
         "amount": 88,
         "currencyCode": "USD"
       },
-      "images": ["/images/kits/chew-oil.webp"]
+      "images": ["/renders/placeholder.svg"]
     },
     {
       "slug": "chew-good-days",
@@ -500,7 +500,7 @@
         "amount": 73,
         "currencyCode": "USD"
       },
-      "images": ["/images/kits/chew-good-days.webp"]
+      "images": ["/renders/placeholder.svg"]
     },
     {
       "slug": "senior-starter",
@@ -530,7 +530,7 @@
         "amount": 117,
         "currencyCode": "USD"
       },
-      "images": ["/images/kits/senior-starter.webp"]
+      "images": ["/renders/placeholder.svg"]
     },
     {
       "slug": "cat-care",
@@ -556,7 +556,7 @@
         "amount": 64,
         "currencyCode": "USD"
       },
-      "images": ["/images/kits/cat-care.webp"]
+      "images": ["/renders/placeholder.svg"]
     }
   ]
 }

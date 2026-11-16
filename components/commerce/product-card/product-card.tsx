@@ -48,9 +48,7 @@ export function ProductCard({
   // Primary image fallback or first image
   const imageSrc =
     product.images[0] ||
-    (isPet
-      ? "/images/products/more-good-years-front.webp"
-      : "/images/products/biohack-front.webp");
+    (isPet ? "/renders/more-good-years.png" : "/renders/biohack.png");
 
   const handleAddToCart = async () => {
     if (!primaryVariant) return;

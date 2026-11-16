@@ -14,7 +14,7 @@ export interface SearchResultItemProps {
   priceLabel?: string;
 }
 
-const FALLBACK_IMAGE = "/images/products/biohack-front.webp";
+const FALLBACK_IMAGE = "/renders/placeholder.svg";
 
 export function SearchResultItem({
   product,

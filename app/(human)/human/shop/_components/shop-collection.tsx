@@ -288,10 +288,7 @@ export function ShopCollection({
                       aria-label={`View ${product.name} details`}
                     >
                       <Image
-                        src={
-                          product.images[0] ||
-                          "/images/products/biohack-front.webp"
-                        }
+                        src={product.images[0] || "/renders/placeholder.svg"}
                         alt={`${product.name} - ${product.technicalName}`}
                         fill
                         sizes="(min-width: 1280px) 272px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
