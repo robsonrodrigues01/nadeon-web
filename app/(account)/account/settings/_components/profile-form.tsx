@@ -40,7 +40,11 @@ export function ProfileForm({ customer }: ProfileFormProps) {
         Profile
       </h2>
 
-      <form action={action} className="mt-5 grid gap-4 sm:grid-cols-2">
+      <form
+        action={action}
+        noValidate
+        className="mt-5 grid gap-4 sm:grid-cols-2"
+      >
         <div>
           <label htmlFor="profile-first-name" className={LABEL_CLASS}>
             First name

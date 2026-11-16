@@ -237,6 +237,7 @@ export function PrivacyRequestForm({
       <form
         key={resetKey}
         action={formAction}
+        noValidate
         className="mt-6 flex flex-col gap-6"
       >
         {/* Section 1: What would you like to do? */}

@@ -1,8 +1,8 @@
 "use server";
 
-import { z } from "zod";
 import { formsProvider, accountProvider } from "@/lib/providers";
 import { ContactInputSchema } from "@/lib/contracts/forms";
+import { TrackOrderSchema } from "@/app/(shared)/track/_components/schema";
 
 export type ContactState =
   | { status: "idle" }
@@ -23,16 +23,6 @@ export type TrackState =
       itemCount: number;
     }
   | { status: "error" };
-
-// Mesmo formato do campo de número do design: NL- seguido de 6 dígitos.
-const TrackInputSchema = z.object({
-  orderNumber: z
-    .string()
-    .trim()
-    .toUpperCase()
-    .regex(/^NL-\d{6}$/),
-  email: z.string().email().trim(),
-});
 
 export async function sendContactMessage(
   _previous: ContactState,
@@ -65,7 +55,7 @@ export async function lookupOrder(
   _previous: TrackState,
   formData: FormData
 ): Promise<TrackState> {
-  const parsed = TrackInputSchema.safeParse({
+  const parsed = TrackOrderSchema.safeParse({
     orderNumber: formData.get("orderNumber"),
     email: formData.get("email"),
   });

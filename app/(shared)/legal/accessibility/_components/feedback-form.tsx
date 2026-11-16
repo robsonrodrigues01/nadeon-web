@@ -76,7 +76,7 @@ export function FeedbackForm() {
         Tell us about a barrier
       </h3>
 
-      <form action={formAction} className="mt-6 flex flex-col gap-5">
+      <form action={formAction} noValidate className="mt-6 flex flex-col gap-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {/* Name */}
           <div className="flex flex-col gap-1.5">

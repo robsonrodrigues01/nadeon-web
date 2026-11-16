@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { TrackOrderSchema } from "./schema";
 interface OrderLookupProps {
   signInHref: string;
   errorMessage?: string;
@@ -19,11 +20,36 @@ export function OrderLookup({
   initialValues,
 }: OrderLookupProps) {
   const [isPending, setIsPending] = useState(false);
+  const [clientError, setClientError] = useState("");
+  const [invalidField, setInvalidField] = useState("");
   const errorRef = useRef<HTMLParagraphElement>(null);
+  const orderNumberRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (errorMessage) errorRef.current?.focus();
   }, [errorMessage]);
+
+  function validate(event: React.FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const parsed = TrackOrderSchema.safeParse({
+      orderNumber: data.get("orderNumber"),
+      email: data.get("email"),
+    });
+    if (parsed.success) {
+      setClientError("");
+      setInvalidField("");
+      setIsPending(true);
+      return;
+    }
+
+    event.preventDefault();
+    const field = String(parsed.error.issues[0]?.path[0] ?? "orderNumber");
+    setInvalidField(field);
+    setClientError("Check the order number and email.");
+    (field === "email" ? emailRef : orderNumberRef).current?.focus();
+  }
 
   return (
     <section
@@ -43,7 +69,14 @@ export function OrderLookup({
       <form
         method="GET"
         action="/track"
-        onSubmit={() => setIsPending(true)}
+        onSubmit={validate}
+        onChange={() => {
+          if (clientError) {
+            setClientError("");
+            setInvalidField("");
+          }
+        }}
+        noValidate
         className="mt-6 flex flex-col gap-5"
       >
         <div className="flex flex-col gap-2">
@@ -52,6 +85,8 @@ export function OrderLookup({
           </label>
           <input
             id="order-number"
+            ref={orderNumberRef}
+            aria-invalid={invalidField === "orderNumber"}
             name="orderNumber"
             type="text"
             required
@@ -73,6 +108,8 @@ export function OrderLookup({
           </label>
           <input
             id="order-email"
+            ref={emailRef}
+            aria-invalid={invalidField === "email"}
             name="email"
             type="email"
             required
@@ -90,17 +127,15 @@ export function OrderLookup({
           {isPending ? "Tracking..." : "Track order"}
         </Button>
 
-        {errorMessage && (
-          <p
-            ref={errorRef}
-            tabIndex={-1}
-            role="status"
-            aria-live="polite"
-            className="text-sm text-accent"
-          >
-            {errorMessage}
-          </p>
-        )}
+        <p
+          ref={errorRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          className="text-sm text-accent"
+        >
+          {clientError || errorMessage}
+        </p>
       </form>
 
       <p className="mt-6 text-sm text-fg-muted">

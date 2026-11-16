@@ -75,6 +75,33 @@ afterEach(() => {
 });
 
 describe("W3-32 form states", () => {
+  it("announces and focuses the first invalid contact field", () => {
+    render(<ContactForm topics={["Orders & Shipping"]} />);
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+    const status = screen.getByRole("status");
+    expect(status.getAttribute("aria-live")).toBe("polite");
+    expect(status.textContent).toContain("Name is required");
+    expect(document.activeElement).toBe(screen.getByLabelText("Name"));
+  });
+
+  it("announces and focuses the first invalid /help tracking field", () => {
+    render(<TrackForm />);
+    fireEvent.click(screen.getByRole("button", { name: "Track order" }));
+    const status = screen.getByRole("status");
+    expect(status.getAttribute("aria-live")).toBe("polite");
+    expect(status.textContent).toContain("Check the order number and email.");
+    expect(document.activeElement).toBe(screen.getByLabelText("Order number"));
+  });
+
+  it("announces and focuses the first invalid /track field", () => {
+    render(<OrderLookup signInHref="/account" />);
+    fireEvent.click(screen.getByRole("button", { name: "Track order" }));
+    const status = screen.getByRole("status");
+    expect(status.getAttribute("aria-live")).toBe("polite");
+    expect(status.textContent).toContain("Check the order number and email.");
+    expect(document.activeElement).toBe(screen.getByLabelText("Order number"));
+  });
+
   it.each([
     [
       "contact",
@@ -134,8 +161,31 @@ describe("W3-32 form states", () => {
         })
       );
       render(form);
+      if (_name === "contact") {
+        fireEvent.change(screen.getByLabelText("Name"), {
+          target: { value: "Alex" },
+        });
+        fireEvent.change(
+          screen.getByLabelText("Email", { selector: "#contact-email" }),
+          { target: { value: "alex@example.com" } }
+        );
+        fireEvent.change(screen.getByLabelText("Topic"), {
+          target: { value: "Orders & Shipping" },
+        });
+        fireEvent.change(screen.getByLabelText("Message"), {
+          target: { value: "I need help." },
+        });
+      }
+      if (_name === "help tracking") {
+        fireEvent.change(screen.getByLabelText("Order number"), {
+          target: { value: "NL-123456" },
+        });
+        fireEvent.change(screen.getByLabelText("Email"), {
+          target: { value: "alex@example.com" },
+        });
+      }
       const submit = screen.getByRole("button", { name: idle });
-      fireEvent.submit(submit.closest("form")!);
+      fireEvent.click(submit);
       await waitFor(() =>
         expect(
           (screen.getByRole("button", { name: loading }) as HTMLButtonElement)
@@ -147,8 +197,31 @@ describe("W3-32 form states", () => {
         expect(screen.getByRole("status").textContent).toContain(errorText)
       );
       action.mockResolvedValueOnce(successState);
+      if (_name === "contact") {
+        fireEvent.change(screen.getByLabelText("Name"), {
+          target: { value: "Alex" },
+        });
+        fireEvent.change(
+          screen.getByLabelText("Email", { selector: "#contact-email" }),
+          { target: { value: "alex@example.com" } }
+        );
+        fireEvent.change(screen.getByLabelText("Topic"), {
+          target: { value: "Orders & Shipping" },
+        });
+        fireEvent.change(screen.getByLabelText("Message"), {
+          target: { value: "I need help." },
+        });
+      }
+      if (_name === "help tracking") {
+        fireEvent.change(screen.getByLabelText("Order number"), {
+          target: { value: "NL-123456" },
+        });
+        fireEvent.change(screen.getByLabelText("Email"), {
+          target: { value: "alex@example.com" },
+        });
+      }
       const currentSubmit = screen.getByRole("button", { name: idle });
-      fireEvent.submit(currentSubmit.closest("form")!);
+      fireEvent.click(currentSubmit);
       await waitFor(() =>
         expect(screen.getByRole("status").textContent).toContain(successText)
       );
@@ -216,9 +289,10 @@ describe("W3-32 form states", () => {
       })
     );
     render(<ProfileForm customer={customer} />);
-    fireEvent.submit(
-      screen.getByRole("button", { name: "Save changes" }).closest("form")!
-    );
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "bad-email" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
     await waitFor(() =>
       expect(
         (screen.getByRole("button", { name: "Saving..." }) as HTMLButtonElement)
@@ -257,9 +331,7 @@ describe("W3-32 form states", () => {
     );
     render(form);
     expect(screen.getByRole("status").getAttribute("aria-live")).toBe("polite");
-    fireEvent.submit(
-      screen.getByRole("button", { name: idle }).closest("form")!
-    );
+    fireEvent.click(screen.getByRole("button", { name: idle }));
     await waitFor(() =>
       expect(
         (screen.getByRole("button", { name: pending }) as HTMLButtonElement)
@@ -325,17 +397,13 @@ describe("W3-32 form states", () => {
     render(
       <PetForm concernOptions={[]} onCancel={vi.fn()} onSaved={onSaved} />
     );
-    fireEvent.submit(
-      screen.getByRole("button", { name: "Save pet" }).closest("form")!
-    );
+    fireEvent.click(screen.getByRole("button", { name: "Save pet" }));
     await waitFor(() =>
       expect(screen.getByRole("status").textContent).toContain(
         "highlighted fields"
       )
     );
-    fireEvent.submit(
-      screen.getByRole("button", { name: "Save pet" }).closest("form")!
-    );
+    fireEvent.click(screen.getByRole("button", { name: "Save pet" }));
     await waitFor(() => expect(onSaved).toHaveBeenCalledOnce());
   });
 });

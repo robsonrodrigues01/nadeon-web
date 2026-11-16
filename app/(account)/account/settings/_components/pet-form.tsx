@@ -78,7 +78,7 @@ export function PetForm({
         <p className="mt-1 text-sm text-fg/70">All fields editable later</p>
       )}
 
-      <form action={submit} className="mt-5 grid gap-5">
+      <form action={submit} noValidate className="mt-5 grid gap-5">
         {pet ? <input type="hidden" name="id" value={pet.id} /> : null}
         {pet?.photoUrl ? (
           <input type="hidden" name="photoUrl" value={pet.photoUrl} />
