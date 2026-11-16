@@ -84,15 +84,18 @@ export function Gallery({ product }: GalleryProps) {
               tabIndex={isSelected ? 0 : -1}
               onClick={() => setActiveIndex(idx)}
               onKeyDown={(event) => {
-                if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+                if (event.key !== "ArrowRight" && event.key !== "ArrowLeft")
+                  return;
                 event.preventDefault();
                 const nextIndex =
-                  (idx + (event.key === "ArrowRight" ? 1 : -1) + GALLERY_TABS.length) %
+                  (idx +
+                    (event.key === "ArrowRight" ? 1 : -1) +
+                    GALLERY_TABS.length) %
                   GALLERY_TABS.length;
                 setActiveIndex(nextIndex);
                 event.currentTarget.parentElement
-                  ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[nextIndex]
-                  ?.focus();
+                  ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
+                  [nextIndex]?.focus();
               }}
               className={`flex min-h-11 items-center justify-center rounded-field border text-xs font-bold px-2 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                 isSelected

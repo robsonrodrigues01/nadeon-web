@@ -17,7 +17,9 @@ describe("Product gallery keyboard tabs", () => {
     const tabs = screen.getAllByRole("tab");
 
     expect(tabs[0].getAttribute("tabindex")).toBe("0");
-    expect(tabs.slice(1).every((tab) => tab.getAttribute("tabindex") === "-1")).toBe(true);
+    expect(
+      tabs.slice(1).every((tab) => tab.getAttribute("tabindex") === "-1")
+    ).toBe(true);
 
     tabs[0].focus();
     fireEvent.keyDown(tabs[0], { key: "ArrowRight" });
