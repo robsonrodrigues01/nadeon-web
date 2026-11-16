@@ -2041,7 +2041,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T00:46:23.013Z",
+    "lease_ate": "2026-11-16T00:46:49.328Z",
     "branch": "agy/W3-27",
     "pr": "local",
     "criterios": [
@@ -2132,7 +2132,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:43:16.639Z",
+    "lease_ate": "2026-11-16T00:47:31.781Z",
     "branch": "agy/W3-32",
     "pr": null,
     "criterios": [
@@ -2146,11 +2146,11 @@
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
     "lease_ate": "2026-11-16T00:46:13.373Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "id": "W3-33",
     "titulo": "Resumo para o Robson: cada To be confirmed por rota e a proposta correspondente (fila permanente #14)",
     "criterios": [
@@ -2171,6 +2171,23 @@
     "titulo": "Cobertura de testes: rotas e componentes sem teste de comportamento (fila permanente #10)",
     "criterios": [
       "COVERAGE.md"
+    ]
+  },
+  {
+    "id": "W3-35",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Auditoria de imagens: alt, priority só acima da dobra, sizes coerentes, width/height (fila permanente #8)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T00:48:03.669Z",
+    "branch": "agy/W3-35",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
     ]
   }
 ]
