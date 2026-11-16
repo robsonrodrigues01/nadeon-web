@@ -1969,7 +1969,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T00:51:41.067Z",
+    "lease_ate": "2026-11-16T00:55:08.006Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -2115,7 +2115,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:43:42.625Z",
+    "lease_ate": "2026-11-16T00:54:04.092Z",
     "branch": "agy/W3-31",
     "pr": null,
     "criterios": [
@@ -2132,7 +2132,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:47:31.781Z",
+    "lease_ate": "2026-11-16T00:54:15.531Z",
     "branch": "agy/W3-32",
     "pr": null,
     "criterios": [
@@ -2182,7 +2182,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:48:42.707Z",
+    "lease_ate": "2026-11-16T00:54:12.846Z",
     "branch": "agy/W3-35",
     "pr": null,
     "criterios": [
@@ -2214,13 +2214,32 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Texto das rotas comparado ao board, fora dos To be confirmed (fila permanente #9)",
     "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lupa3",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "TEXTO.md por rota",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-38",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Triagem do TEXTO.md (W3-37): só diferenças reais de texto vs board, por rota, prontas para correção",
+    "depende_de": [
+      "W3-37"
+    ],
     "status": "em_andamento",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T00:51:12.977Z",
+    "lease_ate": "2026-11-16T00:55:32.789Z",
     "branch": null,
     "pr": null,
     "criterios": [
-      "TEXTO.md por rota",
+      "TRIAGEM.md curta e verificável",
       "nenhuma alteração de código"
     ]
   }
