@@ -10,8 +10,7 @@ export function KitsHero({ savingsPercent }: SavingsProps) {
   return (
     <section
       aria-labelledby="kits-hero-heading"
-      className="relative w-full overflow-hidden border-b border-border px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:px-18"
-      style={{ backgroundImage: "var(--gradient-sunrise)" }}
+      className="relative w-full overflow-hidden border-b border-border bg-bg px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:px-18"
     >
       <div className="mx-auto max-w-7xl">
         <nav
