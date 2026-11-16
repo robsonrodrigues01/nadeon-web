@@ -185,7 +185,7 @@ export default async function CatsPage({
         <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3">
           {visibleProducts.map((product) => (
             <li key={product.slug}>
-              <ProductCard product={product} />
+              <ProductCard product={product} headingLevel={2} />
             </li>
           ))}
         </ul>

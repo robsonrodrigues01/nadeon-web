@@ -48,18 +48,18 @@ export function IngredientsSection({
                 </header>
 
                 <div className="space-y-1">
-                  <h4 className="text-xs font-semibold uppercase tracking-widest text-fg-muted">
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-fg-muted">
                     What it is
-                  </h4>
+                  </h3>
                   <p className="text-base text-fg leading-relaxed">
                     {ingredient.whatItIs}
                   </p>
                 </div>
 
                 <div className="space-y-1">
-                  <h4 className="text-xs font-semibold uppercase tracking-widest text-fg-muted">
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-fg-muted">
                     Why we use it
-                  </h4>
+                  </h3>
                   <p className="text-base text-fg leading-relaxed">
                     <Claim>{ingredient.whyWeUse}</Claim>
                   </p>
@@ -67,9 +67,9 @@ export function IngredientsSection({
 
                 {ingredient.findIn.length > 0 && (
                   <div className="space-y-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-widest text-fg-muted">
+                    <h3 className="text-xs font-semibold uppercase tracking-widest text-fg-muted">
                       Find it in
-                    </h4>
+                    </h3>
                     <ul className="flex flex-wrap gap-2">
                       {ingredient.findIn.map((name) => (
                         <li

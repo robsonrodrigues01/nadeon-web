@@ -162,6 +162,13 @@ describe("W2-31 /pet/subscribe metadata and SEO", () => {
 });
 
 describe("W2-31 /pet/subscribe semantic structure and headings", () => {
+  it("keeps the subscription preview product heading at level three", async () => {
+    await renderPetSubscribe();
+    expect(
+      screen.getAllByRole("heading", { level: 3, name: "More Good Years" })
+    ).toHaveLength(2);
+  });
+
   it("renders exactly one H1 heading", async () => {
     await renderPetSubscribe();
     const h1s = screen.getAllByRole("heading", { level: 1 });

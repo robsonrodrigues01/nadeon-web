@@ -221,9 +221,9 @@ export function FlexibilitySection({
               </div>
             </div>
             <div>
-              <h4 className="font-sans text-base font-extrabold uppercase tracking-tight text-fg sm:text-lg">
+              <h3 className="font-sans text-base font-extrabold uppercase tracking-tight text-fg sm:text-lg">
                 {productName}
-              </h4>
+              </h3>
               <p className="text-xs text-fg-muted">{productBadge}</p>
               <p className="mt-1 text-xs text-fg/70">
                 Active subscription · {frequencyCopy}

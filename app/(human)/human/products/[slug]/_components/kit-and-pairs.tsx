@@ -202,14 +202,14 @@ export function KitAndPairs({
                     <span className="text-[11px] font-bold uppercase tracking-wider text-fg-muted">
                       {product.format || "Capsules"}
                     </span>
-                    <h4 className="text-lg font-bold font-archivo text-fg mt-1">
+                    <h3 className="text-lg font-bold font-archivo text-fg mt-1">
                       <Link
                         href={`/human/products/${product.slug}`}
                         className="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm"
                       >
                         {product.name}
                       </Link>
-                    </h4>
+                    </h3>
                     <p className="text-xs text-product-amber font-semibold mt-0.5">
                       {product.technicalName}
                     </p>

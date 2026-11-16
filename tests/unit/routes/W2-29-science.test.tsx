@@ -26,6 +26,18 @@ describe("W2-29 /science metadata", () => {
 });
 
 describe("W2-29 /science content", () => {
+  it("renders ingredient detail labels at level three", async () => {
+    await renderScience();
+    const ingredients = document.getElementById("ingredients") as HTMLElement;
+
+    expect(
+      within(ingredients).getAllByRole("heading", {
+        level: 3,
+        name: "What it is",
+      })
+    ).toHaveLength(4);
+  });
+
   it("renders the hero heading as the only h1", async () => {
     await renderScience();
     const headings = screen.getAllByRole("heading", { level: 1 });
