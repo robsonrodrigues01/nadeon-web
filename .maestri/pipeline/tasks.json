@@ -1907,7 +1907,7 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
     "lease_ate": null,
     "pr": "local",
@@ -1929,7 +1929,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:27:14.795Z",
+    "lease_ate": "2026-11-16T00:29:03.383Z",
     "pr": null,
     "criterios": [
       "medição no portal",
@@ -1950,11 +1950,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Erros e avisos de console em todas as rotas (fila permanente #4)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:26:53.056Z",
+    "lease_ate": "2026-11-16T00:28:05.888Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "CONSOLE.md por rota",
       "nenhuma alteração de código"
@@ -1969,7 +1969,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T00:27:47.576Z",
+    "lease_ate": "2026-11-16T00:29:04.726Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -2010,6 +2010,24 @@
     "criterios": [
       "SECURITY.md com achados",
       "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-26",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Maestro",
+    "titulo": "tokens.css fora do pipeline do Tailwind: bg-bg/text-fg/bg-fg não eram gerados (tema não aplicado)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Maestro",
+    "lease_ate": null,
+    "branch": "agy/W3-26",
+    "pr": null,
+    "criterios": [
+      "classes do tema geradas no CSS servido",
+      "pnpm gate verde",
+      "revisão APROVADO"
     ]
   }
 ]
