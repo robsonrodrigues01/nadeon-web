@@ -13,9 +13,32 @@ const FORMAT_TABS = ["All", "Capsules", "Powders", "Tinctures"] as const;
 type TabType = (typeof FORMAT_TABS)[number];
 const PANEL_ID = "daily-routine-panel";
 
+// Powder jar render from public/ used when mock catalog has placeholder.svg
+const ROUTINE_RENDER_OVERRIDES: Record<string, string> = {
+  glow: "/renders/renew.png",
+  prime: "/renders/renew.png",
+};
+
 export function DailyRoutine({ products }: DailyRoutineProps) {
   const [activeTab, setActiveTab] = useState<TabType>("All");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const resolvedProducts = products.map((p) => {
+    const override = ROUTINE_RENDER_OVERRIDES[p.slug];
+    if (
+      override &&
+      (!p.images.length || p.images[0] === "/renders/placeholder.svg")
+    ) {
+      return {
+        ...p,
+        images: [
+          override,
+          ...p.images.filter((img) => img !== "/renders/placeholder.svg"),
+        ],
+      };
+    }
+    return p;
+  });
 
   // WAI-ARIA tabs: arrows move and select, Home/End jump to the ends.
   const handleTabKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -34,8 +57,8 @@ export function DailyRoutine({ products }: DailyRoutineProps) {
 
   const filteredProducts =
     activeTab === "All"
-      ? products
-      : products.filter(
+      ? resolvedProducts
+      : resolvedProducts.filter(
           (p) => p.format.toLowerCase() === activeTab.toLowerCase()
         );
 
