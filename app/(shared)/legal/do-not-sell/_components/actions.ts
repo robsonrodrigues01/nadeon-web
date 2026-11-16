@@ -3,6 +3,7 @@
 import { formsProvider } from "@/lib/providers";
 import {
   PrivacyRequestInputSchema,
+  type PrivacyRequestInput,
   type PrivacyRequestType,
 } from "@/lib/contracts/forms";
 
@@ -68,7 +69,7 @@ export async function submitPrivacyRequest(
     email,
     firstName,
     lastName,
-    state: stateOfResidence,
+    state: stateOfResidence || (requestType === "delete" ? "N/A" : undefined),
     requestType,
     details,
   });
@@ -77,8 +78,13 @@ export async function submitPrivacyRequest(
     return { status: "invalid" };
   }
 
+  const payload: PrivacyRequestInput = { ...parsed.data };
+  if (requestType === "delete" && !stateOfResidence) {
+    delete (payload as { state?: string }).state;
+  }
+
   try {
-    const result = await formsProvider.sendPrivacyRequest(parsed.data);
+    const result = await formsProvider.sendPrivacyRequest(payload);
     if (!result.success) {
       console.error(
         "[PrivacyRequest] Provider rejected submission:",

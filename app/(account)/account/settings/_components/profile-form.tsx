@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import {
   ProfileInputSchema,
   type CustomerProfile,
@@ -18,21 +19,53 @@ const LABEL_CLASS = "mb-2 block text-sm font-bold text-fg/85";
 // Perfil do contrato: Human, Pet ou Both (mesmos termos da tela de criar conta).
 const PROFILE_TYPES = ["Human", "Pet", "Both"] as const;
 
+type ProfileFields = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  birthDate: string;
+  profileType: CustomerProfile["profileType"];
+};
+
+function toProfileFields(customer: CustomerProfile): ProfileFields {
+  return {
+    firstName: customer.firstName,
+    lastName: customer.lastName,
+    email: customer.email,
+    phone: customer.phone ?? "",
+    birthDate: formatBirthday(customer.birthDate),
+    profileType: customer.profileType,
+  };
+}
+
 export interface ProfileFormProps {
   customer: CustomerProfile;
 }
 
 export function ProfileForm({ customer }: ProfileFormProps) {
-  const [state, action, isPending] = useActionState(saveProfileFormAction, {
+  const router = useRouter();
+  const [state, formAction, isPending] = useActionState(saveProfileFormAction, {
     status: "idle",
-  } satisfies ProfileFormState);
+  } as ProfileFormState);
+  const [fields, setFields] = useState(() => toProfileFields(customer));
   const [clientError, setClientError] = useState("");
   const [invalidField, setInvalidField] = useState("");
   const statusRef = useRef<HTMLParagraphElement>(null);
+
   useEffect(() => {
-    if (state.status === "invalid" || state.status === "error")
+    if (state.status === "invalid" || state.status === "error") {
       statusRef.current?.focus();
-  }, [state.status]);
+    }
+    if (state.status === "success" || state.status === "saved") {
+      router.refresh();
+    }
+  }, [router, state]);
+
+  const updateField = <Key extends keyof ProfileFields>(
+    key: Key,
+    value: ProfileFields[Key]
+  ) => setFields((current) => ({ ...current, [key]: value }));
 
   function validate(event: FormEvent<HTMLFormElement>) {
     const form = event.currentTarget;
@@ -79,6 +112,23 @@ export function ProfileForm({ customer }: ProfileFormProps) {
     if (invalidControl instanceof HTMLElement) invalidControl.focus();
   }
 
+  const statusMessage =
+    clientError ||
+    (!clientError && state.status === "invalid"
+      ? "message" in state && state.message
+        ? state.message
+        : "Please check the highlighted fields and try again."
+      : !clientError &&
+          state.status === "error" &&
+          !("message" in state && state.message)
+        ? "Could not save your changes. Please try again."
+        : !clientError &&
+            (state.status === "saved" || state.status === "success")
+          ? "message" in state && state.message
+            ? state.message
+            : "Profile saved."
+          : "");
+
   return (
     <section
       aria-labelledby="profile-heading"
@@ -91,8 +141,18 @@ export function ProfileForm({ customer }: ProfileFormProps) {
         Profile
       </h2>
 
+      {state.status === "error" && "message" in state && state.message ? (
+        <p
+          role="alert"
+          aria-live="assertive"
+          className="mt-4 text-sm text-product-coral"
+        >
+          {state.message}
+        </p>
+      ) : null}
+
       <form
-        action={action}
+        action={formAction}
         onSubmit={validate}
         onChange={() => {
           if (clientError) {
@@ -101,6 +161,7 @@ export function ProfileForm({ customer }: ProfileFormProps) {
           }
         }}
         noValidate
+        aria-busy={isPending}
         className="mt-5 grid gap-4 sm:grid-cols-2"
       >
         <div>
@@ -113,7 +174,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             type="text"
             autoComplete="given-name"
             required
-            defaultValue={customer.firstName}
+            value={fields.firstName}
+            onChange={(event) => updateField("firstName", event.target.value)}
             aria-invalid={invalidField === "firstName" || undefined}
             aria-describedby={
               invalidField === "firstName"
@@ -134,7 +196,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             type="text"
             autoComplete="family-name"
             required
-            defaultValue={customer.lastName}
+            value={fields.lastName}
+            onChange={(event) => updateField("lastName", event.target.value)}
             aria-invalid={invalidField === "lastName" || undefined}
             aria-describedby={
               invalidField === "lastName"
@@ -155,7 +218,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             type="email"
             autoComplete="email"
             required
-            defaultValue={customer.email}
+            value={fields.email}
+            onChange={(event) => updateField("email", event.target.value)}
             aria-invalid={invalidField === "email" || undefined}
             aria-describedby={
               invalidField === "email" ? "profile-validation-error" : undefined
@@ -173,7 +237,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             name="phone"
             type="tel"
             autoComplete="tel"
-            defaultValue={customer.phone ?? ""}
+            value={fields.phone}
+            onChange={(event) => updateField("phone", event.target.value)}
             className={INPUT_CLASS}
           />
         </div>
@@ -188,7 +253,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             type="text"
             inputMode="numeric"
             placeholder="MM / DD"
-            defaultValue={formatBirthday(customer.birthDate)}
+            value={fields.birthDate}
+            onChange={(event) => updateField("birthDate", event.target.value)}
             aria-invalid={invalidField === "birthDate" || undefined}
             aria-describedby={
               invalidField === "birthDate"
@@ -206,7 +272,13 @@ export function ProfileForm({ customer }: ProfileFormProps) {
           <select
             id="profile-type"
             name="profileType"
-            defaultValue={customer.profileType}
+            value={fields.profileType}
+            onChange={(event) =>
+              updateField(
+                "profileType",
+                event.target.value as CustomerProfile["profileType"]
+              )
+            }
             className={INPUT_CLASS}
           >
             {PROFILE_TYPES.map((type) => (
@@ -222,6 +294,7 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             {isPending ? "Saving..." : "Save changes"}
           </Button>
         </div>
+
         <p
           id="profile-validation-error"
           ref={statusRef}
@@ -230,14 +303,7 @@ export function ProfileForm({ customer }: ProfileFormProps) {
           aria-live="polite"
           className="text-sm text-fg-muted sm:col-span-2"
         >
-          {clientError}
-          {!clientError &&
-            state.status === "invalid" &&
-            "Please check the highlighted fields and try again."}
-          {!clientError &&
-            state.status === "error" &&
-            "Could not save your changes. Please try again."}
-          {!clientError && state.status === "saved" && "Changes saved."}
+          {statusMessage}
         </p>
       </form>
     </section>

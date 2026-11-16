@@ -136,3 +136,8 @@
 - 15/11 W2-37 (MarketProvider): revisor Bússola2 mostrou que ler cookies() no app/layout.tsx torna dinâmicas 17 rotas hoje estáticas (legal, FAQ, science, 404, homes). Decisão do Maestro: o provider raiz não lê cookie no servidor (mercado do cookie aplicado no cliente após hidratação); páginas que já são dinâmicas e chamam getVisitorMarket() envolvem seu conteúdo num MarketProvider com initialMarket para o HTML inicial já sair no mercado certo.
 - 15/11 revisão visual W3-06: achados sistêmicos viram W3-09 (shell duplicado), W3-10 (fonte/tema), W3-11 (imagens), W3-12 (overflow 375). Revisão visual W3-07/W3-08 adiada até essas correções. W3-11 autorizada a alterar data/products/*.json só no campo images.
 - 16/11 testes (W3-41): dado sintético é permitido só em fixture de teste, declarado no próprio teste e marcado como TEST (ex.: lote "TEST-LOT-0001"); nunca em data/, lib/providers/mock nem em texto exibido no produto.
+
+- 2026-11-16: fila permanente item 5 adiado (portal intermitente na W3-67); item 6 liberado como W3-69 para o Lente. Gemini pausados para troca de conta do Robson.
+- 2026-11-16: fila item 7 adiado (next build com memória em 48%); item 8 liberado como W3-71.
+- 2026-11-16: fila item 9 adiado (portal instável); item 10 liberado como W3-73 por leitura. W3-68 ampliada com 18 assets da W3-71.
+- 2026-11-16: merges W3-60/W3-64 revertidos (6f147cb, 529f7a1): W3-60 quebrou excluir conta, que reusa submitPrivacyRequest. reset no main foi negado pelo classificador; usado revert.

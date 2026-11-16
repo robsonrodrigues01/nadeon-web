@@ -2249,7 +2249,7 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
     "lease_ate": null,
     "pr": "local",
@@ -2260,7 +2260,8 @@
     ],
     "id": "W3-39",
     "titulo": "Testes de comportamento: conta e assinaturas (skip, pause/resume, frequência, produto, quantidade, cancelamento) e perfil (salvar, excluir conta)",
-    "branch": "agy/W3-39"
+    "branch": "agy/W3-39",
+    "revisor": "Lente"
   },
   {
     "onda": 3,
@@ -2372,9 +2373,9 @@
     "depende_de": [
       "W3-39"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T04:47:07.143Z",
+    "lease_ate": null,
     "branch": "agy/W3-45",
     "pr": "local",
     "criterios": [
@@ -2382,7 +2383,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "conflito com W3-32 em settings; Tecla resolve"
+    "nota": "conflito com W3-32 em settings; Tecla resolve",
+    "revisor": "Lente"
   },
   {
     "id": "W3-46",
@@ -2642,16 +2644,17 @@
       "W3-59",
       "W3-58"
     ],
-    "status": "para_revisao",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T04:48:39.891Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "branch": "agy/W3-60",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "revisor": "Atalaia"
+    "revisor": "Lente",
+    "nota": "Merge revertido em 6f147cb: excluir conta (delete-account.tsx) reusa submitPrivacyRequest do Do Not Sell e agora falha por exigir state e confirmação (W2-22 e W3-39 account-settings). Corrigir dando ao delete-account campos/ação próprios; no re-merge, reverter 6f147cb."
   },
   {
     "id": "W3-61",
@@ -2719,16 +2722,17 @@
     "depende_de": [
       "W3-60"
     ],
-    "status": "em_andamento",
-    "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T04:49:12.560Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "branch": "agy/W3-64",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "revisor": "Atalaia"
+    "revisor": "Lente",
+    "nota": "APROVADO, merge revertido em 529f7a1 junto com W3-60; re-merge depois da W3-60 (reverter 529f7a1)."
   },
   {
     "id": "W3-65",
@@ -2737,14 +2741,224 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "titulo": "Checagem visual rápida pós-merges (W3-42/52/55/56): /human, /pet, /cart, /account/subscriptions em 375/768/1280",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T04:51:32.727Z",
+    "lease_ate": "2026-11-16T04:56:25.148Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "VISUAL.md curto",
       "nenhuma alteração de código"
     ]
+  },
+  {
+    "id": "W3-66",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Revisão visual em 1440 px e 320 px (fila permanente item 3): mesmas rotas do BRIEFING-VISUAL, sem editar código",
+    "depende_de": [],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "VISUAL.md com 1440 e 320 px",
+      "nenhuma alteração de código"
+    ],
+    "nota": "fila permanente item 3, criada pelo Maestro 16/11"
+  },
+  {
+    "id": "W3-67",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Erros e avisos no console por rota (fila permanente item 4), sem editar código",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "CONSOLE.md por rota",
+      "nenhuma alteração de código"
+    ],
+    "nota": "fila item 4; item 3 (W3-66) aguarda Vigia3 após troca de conta"
+  },
+  {
+    "id": "W3-68",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Imagens ausentes (404): os 4 WebP da W3-67 e os 18 assets inventariados na W3-71 (public/images ou fallback seguro)",
+    "depende_de": [
+      "W3-67",
+      "W3-71"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T19:27:07.672Z",
+    "branch": "agy/W3-68",
+    "pr": "local",
+    "criterios": [
+      "sem 404 de /images/products no log do dev",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "achado da W3-67; aguarda construtor após troca de conta"
+  },
+  {
+    "id": "W3-69",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Contraste WCAG AA dos tokens Human e Pet (fila permanente item 6): script Node sobre styles/tokens.css, sem dependência nova, sem editar código do produto",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "CONTRASTE.md com pares texto/fundo e razão",
+      "nenhuma alteração de código"
+    ],
+    "nota": "item 5 adiado: portal instável na W3-67"
+  },
+  {
+    "onda": 3,
+    "depende_de": [
+      "W3-69"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Crivo4",
+    "lease_ate": "2026-11-16T19:35:07.687Z",
+    "pr": "local",
+    "id": "W3-70",
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Contraste AA no tema Pet (achados W3-69): token de texto accent acessível, gradiente como texto, opacidades em newsletter/popup",
+    "branch": "agy/W3-70",
+    "criterios": [
+      "pares da W3-69 com AA",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "ver .maestri/status/W3-69/CONTRASTE.md; aguarda construtor"
+  },
+  {
+    "onda": 3,
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W3-71",
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Imagens (fila permanente item 8): alt, width/height ou fill+sizes, priority só acima da dobra; relatório sem editar código",
+    "branch": null,
+    "criterios": [
+      "IMAGENS.md com arquivo:linha",
+      "nenhuma alteração de código"
+    ],
+    "nota": "item 7 adiado: exige next build e memória em 48%"
+  },
+  {
+    "onda": 3,
+    "depende_de": [
+      "W3-71"
+    ],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W3-72",
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Imagens responsivas (achados W3-71): sizes no KitBrowser, hero Human no slot 96/128px, eager/preload só no LCP",
+    "branch": "agy/W3-72",
+    "criterios": [
+      "achados W3-71 resolvidos",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "ver .maestri/status/W3-71/IMAGENS.md"
+  },
+  {
+    "onda": 3,
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W3-73",
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Cobertura de testes (fila permanente item 10): rotas e componentes sem teste de comportamento, por leitura, sem rodar suíte",
+    "branch": null,
+    "criterios": [
+      "COBERTURA.md com lacunas priorizadas",
+      "nenhuma alteração de código"
+    ],
+    "nota": "item 9 adiado: depende do portal instável"
+  },
+  {
+    "onda": 3,
+    "status": "em_andamento",
+    "responsavel": "Vigia3",
+    "lease_ate": "2026-11-16T19:25:58.685Z",
+    "pr": "local",
+    "id": "W3-74",
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Testes de comportamento das lacunas da W3-73: market/formatter, pauseSubscription, falha de updateProfile, CatFilters e LotBrowser",
+    "depende_de": [
+      "W3-73"
+    ],
+    "branch": "agy/W3-74",
+    "criterios": [
+      "testes novos passam",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "ver .maestri/status/W3-73/COBERTURA.md; aguarda memória verde"
+  },
+  {
+    "onda": 3,
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W3-75",
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Código morto (fila permanente item 11): exports sem uso e componentes órfãos, relatório sem editar código",
+    "depende_de": [],
+    "branch": null,
+    "criterios": [
+      "MORTO.md com arquivo:linha e evidência de zero uso",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-76",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Revisão de segurança local (fila permanente item 12): segredos, server actions sem validação zod, dados do cliente em logs; relatório sem editar código",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "SEGURANCA.md com arquivo:linha",
+      "nenhuma alteração de código"
+    ],
+    "nota": "W3-59/60 já cobriram parte; focar no que entrou depois"
   }
 ]

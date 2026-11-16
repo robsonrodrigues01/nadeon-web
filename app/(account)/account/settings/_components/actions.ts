@@ -6,7 +6,9 @@ import { accountProvider } from "@/lib/providers";
 import {
   PetInputSchema,
   ProfileInputSchema,
+  type CustomerProfile,
   type Pet,
+  type ProfileInput,
 } from "@/lib/contracts/account";
 import { parseBirthday } from "./birthday";
 
@@ -14,13 +16,7 @@ function text(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
 }
 
-export type ProfileFormState = {
-  status: "idle" | "saved" | "invalid" | "error";
-};
-
-export async function saveProfileAction(
-  formData: FormData
-): Promise<ProfileFormState> {
+function parseProfile(formData: FormData): ProfileInput | null {
   const birthDate = parseBirthday(text(formData, "birthDate"));
   const parsed = ProfileInputSchema.safeParse({
     firstName: text(formData, "firstName"),
@@ -37,23 +33,54 @@ export async function saveProfileAction(
     !parsed.data.firstName ||
     !parsed.data.lastName
   ) {
-    return { status: "invalid" };
+    return null;
+  }
+
+  return parsed.data;
+}
+
+export type ProfileFormState =
+  | { status: "idle" }
+  | { status: "saved" }
+  | { status: "invalid"; message?: string }
+  | { status: "success"; profile: CustomerProfile; message: string }
+  | { status: "error"; message: string };
+
+export async function saveProfileWithFeedback(
+  _previousState: ProfileFormState,
+  formData: FormData
+): Promise<ProfileFormState> {
+  const parsed = parseProfile(formData);
+  if (!parsed) {
+    return {
+      status: "invalid",
+      message: "Please check your profile details and try again.",
+    };
   }
 
   try {
-    await accountProvider.updateProfile(parsed.data);
+    const profile = await accountProvider.updateProfile(parsed);
     revalidatePath("/account/settings");
-    return { status: "saved" };
+    return { status: "success", profile, message: "Profile saved." };
   } catch {
-    return { status: "error" };
+    return {
+      status: "error",
+      message: "We couldn't save your profile. Please try again.",
+    };
   }
 }
 
 export async function saveProfileFormAction(
-  _previous: ProfileFormState,
+  previousState: ProfileFormState,
   formData: FormData
 ): Promise<ProfileFormState> {
-  return saveProfileAction(formData);
+  return saveProfileWithFeedback(previousState, formData);
+}
+
+export async function saveProfileAction(
+  formData: FormData
+): Promise<ProfileFormState> {
+  return saveProfileWithFeedback({ status: "idle" }, formData);
 }
 
 export async function signOutAction(): Promise<void> {
