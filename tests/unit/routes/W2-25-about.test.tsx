@@ -70,6 +70,16 @@ describe("W2-25 /about content", () => {
     ).toBeGreaterThan(0);
   });
 
+  it("renders the sixth board-backed quality item", async () => {
+    await renderAbout();
+    expect(
+      screen.getByRole("heading", { name: "NMN purity ≥99%" })
+    ).toBeTruthy();
+    expect(
+      screen.getByText("Purity confirmed on each lot report.")
+    ).toBeTruthy();
+  });
+
   it("does not render design placeholders or fixed example text", async () => {
     const body = await renderAbout();
     const text = body.textContent ?? "";
@@ -77,7 +87,6 @@ describe("W2-25 /about content", () => {
     expect(text).not.toContain("$XX");
     expect(text).not.toContain("(example)");
     expect(text).not.toContain("Lab photo goes here");
-    expect(text).not.toContain("99%");
   });
 
   it("does not hard-code a dollar price in the route content", async () => {

@@ -1967,9 +1967,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Revisão visual em 1440 e 320 px (fila permanente #3)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:01:08.460Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2095,16 +2095,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Código morto: exports sem uso, componentes órfãos, arquivos não importados (fila permanente #11)",
     "depende_de": [],
-    "status": "bloqueada",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Tecla",
     "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "DEADCODE.md com lista verificada",
       "nenhuma alteração de código"
-    ],
-    "nota": "Luna recusou 2x (falso positivo sobre votacao); refazer com Gemini quando a cota voltar"
+    ]
   },
   {
     "id": "W3-31",
@@ -2131,16 +2130,15 @@
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
     "status": "em_andamento",
-    "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T01:01:52.710Z",
+    "responsavel": "Régua3",
+    "lease_ate": "2026-11-16T01:19:59.093Z",
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "nota": "MUDANÇAS: /track validação nativa; correção com Tecla"
+    ]
   },
   {
     "onda": 3,
@@ -2234,11 +2232,11 @@
     "depende_de": [
       "W3-37"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T00:55:32.789Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "TRIAGEM.md curta e verificável",
       "nenhuma alteração de código"
@@ -2251,10 +2249,10 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:56:07.441Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "testes de comportamento montados",
       "pnpm gate verde",
@@ -2271,10 +2269,10 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T01:00:57.698Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "testes de comportamento montados",
       "pnpm gate verde",
@@ -2293,11 +2291,11 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T00:57:42.594Z",
+    "lease_ate": null,
     "branch": "agy/W3-41",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "testes montados",
       "pnpm gate verde",
@@ -2312,9 +2310,9 @@
       "W3-36"
     ],
     "status": "em_andamento",
-    "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T00:59:21.488Z",
-    "pr": null,
+    "responsavel": "Tecla",
+    "lease_ate": "2026-11-16T01:23:28.477Z",
+    "pr": "local",
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
       "pnpm gate verde",
@@ -2331,10 +2329,10 @@
     "depende_de": [
       "W3-36"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:00:25.092Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
       "pnpm gate verde",
@@ -2343,5 +2341,162 @@
     "id": "W3-43",
     "titulo": "QuizWizard dividido por etapa; tela de resultado sob demanda",
     "branch": "agy/W3-43"
+  },
+  {
+    "id": "W3-44",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Overflow horizontal em 320 px nas 7 rotas da W3-23 + reconferir paleta após W3-26",
+    "depende_de": [
+      "W3-23",
+      "W3-26"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T01:27:03.971Z",
+    "branch": "agy/W3-44",
+    "pr": null,
+    "criterios": [
+      "scrollWidth=320 medido no portal nas 7 rotas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-45",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Conta: feedback acessível e dados atualizados após pausar, cancelar, salvar perfil e excluir conta; mensagens de erro das actions (it.fails da W3-39 que não dependem da onda 4)",
+    "depende_de": [
+      "W3-39"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Paleta",
+    "lease_ate": "2026-11-16T01:26:02.885Z",
+    "branch": "agy/W3-45",
+    "pr": "local",
+    "criterios": [
+      "it.fails correspondentes viram testes que passam",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-46",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Corrigir as 31 diferenças reais de texto vs board em 7 rotas (TRIAGEM.md da W3-38)",
+    "depende_de": [
+      "W3-38"
+    ],
+    "status": "entregue",
+    "responsavel": "Atalaia",
+    "lease_ate": null,
+    "branch": "agy/W3-46",
+    "pr": "local",
+    "criterios": [
+      "texto igual ao board",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-47",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "forms.test.ts instável: não depender da última linha do arquivo compartilhado forms-mock.jsonl (usar caminho temporário por teste ou spy)",
+    "depende_de": [],
+    "status": "para_revisao",
+    "responsavel": "Lente4",
+    "lease_ate": null,
+    "branch": "agy/W3-47",
+    "pr": "local",
+    "criterios": [
+      "teste passa em qualquer worktree e em paralelo",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "revisor": "Crivo4"
+  },
+  {
+    "id": "W3-48",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Remover código morto seguro: 3 helpers duplicados e exports sem nenhum uso (DEADCODE.md da W3-30)",
+    "depende_de": [
+      "W3-30"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T01:21:54.399Z",
+    "branch": "agy/W3-48",
+    "pr": null,
+    "criterios": [
+      "só remoção comprovada por grep e tsc",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-49",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Revisão visual completa pós-tema (W3-26): todas as rotas em 375, 768 e 1280 contra os boards",
+    "depende_de": [
+      "W3-26"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Atalaia",
+    "lease_ate": "2026-11-16T01:21:37.662Z",
+    "branch": null,
+    "pr": null,
+    "criterios": [
+      "VISUAL.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-50",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Console por rota de novo, após carregamento sob demanda (W3-42/W3-43) e tema (W3-26)",
+    "depende_de": [
+      "W3-43"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Lupa3",
+    "lease_ate": "2026-11-16T01:26:41.590Z",
+    "branch": null,
+    "pr": null,
+    "criterios": [
+      "CONSOLE.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-51",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Specs Playwright para overlays e quiz sob demanda (W3-42/43) e feedback da conta (W3-45), sem executar no Mac",
+    "depende_de": [
+      "W3-43"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Lente4",
+    "lease_ate": "2026-11-16T01:25:51.543Z",
+    "branch": "agy/W3-51",
+    "pr": null,
+    "criterios": [
+      "typecheck e playwright --list",
+      "revisão APROVADO"
+    ]
   }
 ]

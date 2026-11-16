@@ -96,6 +96,7 @@ describe("Route /pet/quiz (W2-24)", () => {
     async function startDogQuiz() {
       await renderPage();
       fireEvent.click(screen.getByRole("button", { name: "Start dog quiz" }));
+      await screen.findByLabelText(/name/i, { selector: "input" });
     }
 
     it("shows the pet profile fields as labelled inputs", async () => {

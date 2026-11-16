@@ -4,7 +4,7 @@ import React, { useId, useState } from "react";
 
 export interface ScienceFaqItem {
   question: string;
-  answer: string;
+  answer?: string;
 }
 
 // Acordeão de uma coluna: um item aberto por vez, o primeiro abre por padrão.
@@ -23,21 +23,30 @@ export function ScienceFaq({ items }: { items: ScienceFaqItem[] }) {
         return (
           <li key={item.question}>
             <h3>
-              <button
-                type="button"
-                id={buttonId}
-                aria-expanded={isOpen}
-                aria-controls={panelId}
-                onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="flex w-full min-h-11 items-center justify-between gap-4 py-4 text-left font-archivo font-bold text-base text-fg hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
-              >
-                <span>{item.question}</span>
-                <span aria-hidden="true" className="text-xl text-accent">
-                  {isOpen ? "−" : "+"}
-                </span>
-              </button>
+              {item.answer ? (
+                <button
+                  type="button"
+                  id={buttonId}
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  className="flex w-full min-h-11 items-center justify-between gap-4 py-4 text-left font-archivo font-bold text-base text-fg hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+                >
+                  <span>{item.question}</span>
+                  <span aria-hidden="true" className="text-xl text-accent">
+                    {isOpen ? "−" : "+"}
+                  </span>
+                </button>
+              ) : (
+                <div className="flex w-full min-h-11 items-center justify-between gap-4 py-4 text-left font-archivo font-bold text-base text-fg">
+                  <span>{item.question}</span>
+                  <span aria-hidden="true" className="text-xl text-accent">
+                    +
+                  </span>
+                </div>
+              )}
             </h3>
-            {isOpen && (
+            {isOpen && item.answer && (
               <div
                 id={panelId}
                 role="region"

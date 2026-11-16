@@ -90,6 +90,11 @@ const WHY_ITEMS: Array<{ mark?: string; title: string; text: string }> = [
     text: "No proprietary blends. Every amount is listed.",
   },
   {
+    mark: "99%",
+    title: "NMN purity ≥99%",
+    text: "Purity confirmed on each lot report.",
+  },
+  {
     title: "Vet-reviewed pet formulas",
     text: "Every pet product is reviewed by a veterinarian.",
   },

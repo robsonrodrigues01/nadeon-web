@@ -149,6 +149,9 @@ describe("W2-33: /legal/terms route", () => {
     it("renders Section 5 refunds table with payment methods", () => {
       const table = within(mainEl()).getByRole("table");
       expect(table).toBeDefined();
+      expect(table.querySelector("caption")?.textContent?.trim()).toBe(
+        "Refunds"
+      );
       expect(within(table).getByText("Payment method")).toBeDefined();
       expect(within(table).getByText("Refund issued")).toBeDefined();
       expect(within(table).getByText("Credit or debit card")).toBeDefined();

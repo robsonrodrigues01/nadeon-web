@@ -180,6 +180,15 @@ export function FaqBrowser({
                             aria-expanded={open}
                             aria-controls={`faq-answer-${e.id}`}
                             onClick={() => setOpenId(open ? null : e.id)}
+                            onKeyDown={(event) => {
+                              if (
+                                !event.repeat &&
+                                (event.key === "Enter" || event.key === " ")
+                              ) {
+                                event.preventDefault();
+                                setOpenId(open ? null : e.id);
+                              }
+                            }}
                             className="flex min-h-11 w-full items-center justify-between gap-4 py-5 text-left text-base font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:text-lg"
                           >
                             <span>{e.question}</span>
