@@ -17,19 +17,20 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+// TEST-only synthetic lot, kept in this test file per Maestro decision 16/11.
 const fixtureLot: LabLot = {
-  lotNumber: "NL-00001",
-  productSlug: "fixture-product",
-  productName: "Fixture Product",
-  manufacturedDate: "2026-10-02",
-  expiryDate: "2028-10-02",
-  coaUrl: "/coa/NL-00001.pdf",
+  lotNumber: "TEST-LOT-0001",
+  productSlug: "test-product",
+  productName: "TEST Product",
+  manufacturedDate: "TEST-2026-10-02",
+  expiryDate: "TEST-2028-10-02",
+  coaUrl: "/TEST-COA/TEST-LOT-0001.pdf",
   status: "passed",
   testResults: [
     {
-      parameter: "Identity",
-      specification: "HPLC fingerprint matches reference",
-      result: "Confirmed",
+      parameter: "TEST Identity",
+      specification: "TEST HPLC fingerprint matches reference",
+      result: "TEST Confirmed",
       passed: true,
     },
   ],
@@ -94,12 +95,10 @@ describe("W3-41 mounted FAQ behavior", () => {
 
     trigger.focus();
     fireEvent.keyDown(trigger, { key: "Enter" });
-    fireEvent.click(trigger);
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
     expect(answer.hasAttribute("hidden")).toBe(true);
 
     fireEvent.keyDown(trigger, { key: " " });
-    fireEvent.click(trigger);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
     expect(answer.hasAttribute("hidden")).toBe(false);
   });
@@ -110,11 +109,9 @@ describe("W3-41 mounted lab lot lookup behavior", () => {
     vi.spyOn(labsProvider, "listLots").mockResolvedValue([fixtureLot]);
     vi.spyOn(labsProvider, "findLot").mockResolvedValue(fixtureLot);
     vi.spyOn(catalogProvider, "getProducts").mockResolvedValue([]);
-    await renderLabPage("NL-00001");
+    await renderLabPage("TEST-LOT-0001");
 
-    expect(
-      screen.getByRole("heading", { name: "Fixture Product" })
-    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "TEST Product" })).toBeTruthy();
     expect(screen.getByText("All tests passed")).toBeTruthy();
     expect(
       screen.getAllByRole("link", { name: "Download COA (PDF)" })
@@ -123,7 +120,7 @@ describe("W3-41 mounted lab lot lookup behavior", () => {
       screen
         .getAllByRole("link", { name: "Download COA (PDF)" })[0]
         .getAttribute("href")
-    ).toBe("/coa/NL-00001.pdf");
+    ).toBe("/TEST-COA/TEST-LOT-0001.pdf");
   });
 
   it("keeps the query and shows no result when the lot is unknown", async () => {
@@ -153,7 +150,7 @@ describe("W3-41 mounted lab lot lookup behavior", () => {
     const findLot = vi.spyOn(labsProvider, "findLot");
     vi.spyOn(labsProvider, "listLots").mockResolvedValue([]);
     vi.spyOn(catalogProvider, "getProducts").mockResolvedValue([]);
-    await renderLabPage("NL-00001");
+    await renderLabPage("TEST-LOT-0001");
 
     expect(screen.getByText("first lots publishing soon")).toBeTruthy();
     expect(
