@@ -70,7 +70,7 @@ export default async function SubscriptionsPage() {
             </p>
           </header>
 
-          <div className="flex flex-col gap-8 md:flex-row md:items-start">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
             <AccountNav current="subscriptions" customer={customer} />
 
             <div className="flex min-w-0 flex-1 flex-col gap-6">

@@ -25,7 +25,7 @@ interface AccountNavProps {
 }
 
 const itemBase =
-  "flex min-h-11 shrink-0 items-center gap-3 rounded-full border border-border px-4 py-2 text-sm font-bold md:rounded-card md:border-0 md:py-3 md:text-base";
+  "flex min-h-11 shrink-0 items-center gap-3 rounded-full border border-border px-4 py-2 text-sm font-bold lg:rounded-card lg:border-0 lg:py-3 lg:text-base";
 
 /**
  * Account navigation: a horizontal pill row on mobile, a sidebar on desktop.
@@ -33,7 +33,7 @@ const itemBase =
  */
 export function AccountNav({ current, customer }: AccountNavProps) {
   return (
-    <aside className="flex w-full flex-col gap-4 md:w-64 md:shrink-0">
+    <aside className="flex w-full flex-col gap-4 lg:w-64 lg:shrink-0">
       {customer ? (
         <div className="hidden items-center gap-3 border-b border-border pb-4 md:flex">
           <span
@@ -49,7 +49,7 @@ export function AccountNav({ current, customer }: AccountNavProps) {
       ) : null}
 
       <nav aria-label="Account">
-        <ul className="flex gap-2 overflow-x-auto md:flex-col md:gap-1">
+        <ul className="flex gap-2 overflow-x-auto lg:flex-col lg:gap-1">
           {SECTIONS.map((section) => {
             const isCurrent = section.key === current;
             return (
