@@ -2129,7 +2129,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo4",
     "lease_ate": null,
     "branch": "agy/W3-32",
@@ -2138,8 +2138,7 @@
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "nota": "no main; aguarda gate verde após W3-63"
+    ]
   },
   {
     "onda": 3,
@@ -2586,7 +2585,7 @@
     "depende_de": [
       "W3-53"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo4",
     "lease_ate": null,
     "branch": "agy/W3-56",
@@ -2595,8 +2594,7 @@
       "script da W3-53 sem achados nas rotas tocadas",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "nota": "no main; aguarda gate verde após W3-63"
+    ]
   },
   {
     "id": "W3-58",
@@ -2701,7 +2699,7 @@
     "depende_de": [
       "W3-32"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Atalaia",
     "lease_ate": null,
     "branch": "agy/W3-63",
