@@ -108,7 +108,7 @@ export function Newsletter({
         {resolvedTitle}
       </h2>
 
-      <p className="body text-fg-muted text-sm sm:text-base mt-2.5 leading-relaxed opacity-80">
+      <p className="body text-fg-muted text-sm sm:text-base mt-2.5 leading-relaxed">
         {resolvedSubtitle}
       </p>
 
@@ -231,7 +231,7 @@ export function Newsletter({
             </p>
           )}
 
-          <p className="text-[11px] text-fg-muted/70 mt-2.5 leading-normal opacity-70">
+          <p className="text-[11px] text-fg-muted mt-2.5 leading-normal">
             By signing up you agree to our{" "}
             <Link
               href="/legal/terms"

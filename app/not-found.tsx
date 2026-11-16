@@ -357,7 +357,7 @@ export default function NotFound() {
               <div>
                 <h2
                   id="human-crossline-title"
-                  className="font-heading font-extrabold text-[24px] sm:text-[32px] lg:text-[38px] leading-[0.95] tracking-[-0.01em] uppercase bg-gradient-gold bg-clip-text text-transparent"
+                  className="font-heading font-extrabold text-[24px] sm:text-[32px] lg:text-[38px] leading-[0.95] tracking-[-0.01em] uppercase text-fg"
                 >
                   Looking for Nadeon Human?
                 </h2>
