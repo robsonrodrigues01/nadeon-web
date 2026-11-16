@@ -2294,16 +2294,17 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:13:09.996Z",
+    "lease_ate": null,
     "branch": "agy/W3-41",
     "pr": "local",
     "criterios": [
       "testes montados",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lente4"
   },
   {
     "onda": 3,
@@ -2332,10 +2333,10 @@
     "depende_de": [
       "W3-36"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:13:01.786Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
       "pnpm gate verde",
@@ -2343,7 +2344,8 @@
     ],
     "id": "W3-43",
     "titulo": "QuizWizard dividido por etapa; tela de resultado sob demanda",
-    "branch": "agy/W3-43"
+    "branch": "agy/W3-43",
+    "nota": "aguarda revisor"
   },
   {
     "id": "W3-44",
@@ -2377,7 +2379,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:12:41.179Z",
+    "lease_ate": "2026-11-16T01:14:18.402Z",
     "branch": "agy/W3-45",
     "pr": null,
     "criterios": [
@@ -2405,6 +2407,24 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "aguarda revisor"
+    "revisor": "Lupa3"
+  },
+  {
+    "id": "W3-47",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "forms.test.ts instável: não depender da última linha do arquivo compartilhado forms-mock.jsonl (usar caminho temporário por teste ou spy)",
+    "depende_de": [],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W3-47",
+    "pr": null,
+    "criterios": [
+      "teste passa em qualquer worktree e em paralelo",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
