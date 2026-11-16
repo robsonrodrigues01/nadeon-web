@@ -2131,7 +2131,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T01:28:52.614Z",
+    "lease_ate": "2026-11-16T01:35:22.591Z",
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
@@ -2312,7 +2312,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T01:23:28.477Z",
+    "lease_ate": "2026-11-16T01:34:22.504Z",
     "pr": "local",
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
@@ -2493,7 +2493,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:30:34.152Z",
+    "lease_ate": "2026-11-16T01:34:54.977Z",
     "branch": "agy/W3-51",
     "pr": null,
     "criterios": [
@@ -2528,11 +2528,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Acessibilidade estática por rota no HTML servido: um h1, hierarquia de headings, landmarks, labels, nomes acessíveis de botões e links, alt",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T01:31:44.974Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "A11Y-ESTATICA.md",
       "nenhuma alteração de código"
@@ -2544,7 +2544,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:33:43.399Z",
+    "lease_ate": "2026-11-16T01:34:42.366Z",
     "pr": null,
     "criterios": [
       "reproduzido e corrigido, medido no portal",
@@ -2577,5 +2577,25 @@
       "W3-50"
     ],
     "branch": "agy/W3-55"
+  },
+  {
+    "id": "W3-56",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Corrigir os 9 achados de acessibilidade estática (A11Y-ESTATICA.md da W3-53)",
+    "depende_de": [
+      "W3-53"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Crivo4",
+    "lease_ate": "2026-11-16T01:35:23.297Z",
+    "branch": "agy/W3-56",
+    "pr": null,
+    "criterios": [
+      "script da W3-53 sem achados nas rotas tocadas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
