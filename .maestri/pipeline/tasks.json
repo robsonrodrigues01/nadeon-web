@@ -2432,14 +2432,15 @@
     ],
     "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:28:54.772Z",
+    "lease_ate": null,
     "branch": "agy/W3-48",
     "pr": "local",
     "criterios": [
       "só remoção comprovada por grep e tsc",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Crivo4"
   },
   {
     "id": "W3-49",
@@ -2495,6 +2496,26 @@
     "pr": null,
     "criterios": [
       "typecheck e playwright --list",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-52",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rotas acima da média de JS (BUNDLE.md W3-36): reduzir o que sobrar após W3-42/43 em /human, /pet e /cart",
+    "depende_de": [
+      "W3-43"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T01:29:47.159Z",
+    "branch": "agy/W3-52",
+    "pr": null,
+    "criterios": [
+      "kB antes/depois medidos",
+      "pnpm gate verde",
       "revisão APROVADO"
     ]
   }
