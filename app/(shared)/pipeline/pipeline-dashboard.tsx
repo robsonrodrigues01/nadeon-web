@@ -111,7 +111,7 @@ export function PipelineDashboard({ tasks, events }: PipelineDashboardProps) {
   }, [filteredTasks]);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6 md:p-10 font-sans">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-zinc-950 text-zinc-100 p-6 md:p-10 font-sans">
       {/* Header */}
       <header className="mb-8 border-b border-zinc-800 pb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -477,6 +477,6 @@ export function PipelineDashboard({ tasks, events }: PipelineDashboardProps) {
           </table>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
