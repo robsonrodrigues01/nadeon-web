@@ -22,7 +22,7 @@ export function AccountOrdersShell({
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-4 py-8 md:px-8 md:py-12 lg:flex-row lg:gap-10 lg:px-12">
           <AccountSidebar customer={customer} currentPath={currentPath} />
           <div className="min-w-0 flex-1">{children}</div>

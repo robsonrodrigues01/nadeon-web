@@ -53,7 +53,7 @@ export default async function HumanPage() {
     <>
       <JsonLd data={{ ...breadcrumbsLd }} id="breadcrumb-jsonld" />
       <JsonLd data={{ ...faqLd }} id="faq-jsonld" />
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <Hero energyDuoKit={energyDuoKit} kitLines={kitLines} />
         <DailyRoutine products={products} />
         <AgeBands />

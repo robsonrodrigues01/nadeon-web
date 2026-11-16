@@ -40,7 +40,7 @@ export default async function DoseCalculatorPage() {
   ]);
 
   return (
-    <main id="main-content" className="flex-1 bg-bg text-fg">
+    <main id="main-content" className="flex-1 bg-bg text-fg" tabIndex={-1}>
       <JsonLd data={{ ...breadcrumbLd }} id="dose-calculator-breadcrumb-ld" />
 
       <section

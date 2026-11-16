@@ -44,7 +44,7 @@ export default function FaqPage() {
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <FaqBrowser
           entries={FAQ_ENTRIES}
           categories={FAQ_CATEGORIES}

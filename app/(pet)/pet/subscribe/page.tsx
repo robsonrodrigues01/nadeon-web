@@ -94,7 +94,11 @@ export default async function PetSubscribePage() {
 
   return (
     <MarketProvider initialMarket={market}>
-      <main id="main-content" className="flex-1 w-full bg-bg text-fg">
+      <main
+        id="main-content"
+        className="flex-1 w-full bg-bg text-fg"
+        tabIndex={-1}
+      >
         <JsonLd
           data={breadcrumbLd as unknown as Record<string, unknown>}
           id="pet-subscribe-breadcrumb-ld"

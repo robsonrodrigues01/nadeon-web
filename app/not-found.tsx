@@ -132,7 +132,7 @@ export default function NotFound() {
       <AnnouncementBar line="pet" />
       <Header variant="pet" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         {/* 404 Hero with Paw Prints Trail */}
         <section
           aria-labelledby="not-found-heading"

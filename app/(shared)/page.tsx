@@ -103,7 +103,11 @@ export default async function EntrancePage() {
   return (
     <>
       <JsonLd data={organizationJsonLd as unknown as Record<string, unknown>} />
-      <main className="relative w-full min-h-screen overflow-hidden flex flex-col lg:flex-row bg-[rgb(255,246,234)] text-[rgb(42,23,16)] font-sans">
+      <main
+        className="relative w-full min-h-screen overflow-hidden flex flex-col lg:flex-row bg-[rgb(255,246,234)] text-[rgb(42,23,16)] font-sans"
+        id="main-content"
+        tabIndex={-1}
+      >
         {/* Floating Top Center Brand Badge */}
         <header
           role="banner"

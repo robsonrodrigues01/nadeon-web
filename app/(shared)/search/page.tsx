@@ -45,7 +45,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <section
           aria-labelledby="search-heading"
           className="px-5 py-8 sm:px-8 lg:px-18"

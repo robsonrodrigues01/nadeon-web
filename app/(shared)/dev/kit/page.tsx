@@ -22,7 +22,11 @@ export default async function DevKitPage() {
   });
 
   return (
-    <main className="min-h-screen bg-bg text-fg px-4 py-10 sm:px-8 max-w-7xl mx-auto">
+    <main
+      className="min-h-screen bg-bg text-fg px-4 py-10 sm:px-8 max-w-7xl mx-auto"
+      id="main-content"
+      tabIndex={-1}
+    >
       <header className="mb-10 pb-6 border-b border-border">
         <span className="label inline-block rounded-full bg-border px-3 py-1 text-fg-muted font-bold text-xs uppercase tracking-wider mb-2">
           Design System &amp; Brand Kit

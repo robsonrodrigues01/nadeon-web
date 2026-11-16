@@ -131,7 +131,7 @@ export default async function PetProductDetailPage(props: PageProps) {
         />
       )}
 
-      <main id="main-content" className="flex-1 pb-16">
+      <main id="main-content" className="flex-1 pb-16" tabIndex={-1}>
         <section
           aria-label="Product overview and purchase"
           className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-2 sm:pt-4 pb-8 sm:pb-12"

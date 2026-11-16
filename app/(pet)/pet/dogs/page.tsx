@@ -50,7 +50,7 @@ export default async function DogsPage() {
       <>
         <JsonLd data={jsonLdData} id="dogs-collection-ld" />
 
-        <main id="main-content" className="flex-1">
+        <main id="main-content" className="flex-1" tabIndex={-1}>
           {/* 1. Hero Section */}
           <Hero />
 

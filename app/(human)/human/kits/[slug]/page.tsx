@@ -50,7 +50,11 @@ export default async function HumanKitPage({ params }: KitPageProps) {
 
   return (
     <MarketProvider initialMarket={market}>
-      <main className="mx-auto flex w-full max-w-[1200px] flex-col gap-10 px-4 py-8 md:px-8 md:py-12 lg:px-12">
+      <main
+        className="mx-auto flex w-full max-w-[1200px] flex-col gap-10 px-4 py-8 md:px-8 md:py-12 lg:px-12"
+        id="main-content"
+        tabIndex={-1}
+      >
         <JsonLd data={breadcrumbJsonLd as unknown as Record<string, unknown>} />
 
         <nav aria-label="Breadcrumb">

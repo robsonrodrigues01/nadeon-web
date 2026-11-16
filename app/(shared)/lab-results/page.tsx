@@ -73,7 +73,7 @@ export default async function LabResultsPage({
       <AnnouncementBar line="human" />
       <Header variant="human" />
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1" tabIndex={-1}>
         <section
           aria-labelledby="lab-results-hero"
           className="w-full border-b border-border bg-bg py-14 text-fg sm:py-20"
