@@ -3178,8 +3178,8 @@
     "depende_de": [
       "W3-87"
     ],
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Prisma5",
     "lease_ate": null,
     "branch": "agy/W3-88",
     "pr": "local",
@@ -3188,6 +3188,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "baixa; hero.tsx:141-165"
+    "nota": "baixa; hero.tsx:141-165",
+    "revisor": "Lupa"
   }
 ]
