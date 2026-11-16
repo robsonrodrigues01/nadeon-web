@@ -38,11 +38,13 @@ async function logMockSubmission(
     try {
       const fs = await import("node:fs");
       const path = await import("node:path");
-      const logDir = path.resolve(process.cwd(), ".maestri/logs");
+      const filePath = path.resolve(
+        process.env.FORMS_MOCK_LOG || ".maestri/logs/forms-mock.jsonl"
+      );
+      const logDir = path.dirname(filePath);
       if (!fs.existsSync(logDir)) {
         fs.mkdirSync(logDir, { recursive: true });
       }
-      const filePath = path.join(logDir, "forms-mock.jsonl");
       fs.appendFileSync(filePath, `${JSON.stringify(logEntry)}\n`, "utf-8");
     } catch (err) {
       console.error("[FormsMock] Failed writing log entry:", err);
