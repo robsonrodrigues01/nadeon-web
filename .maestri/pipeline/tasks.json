@@ -2341,8 +2341,7 @@
     ],
     "id": "W3-43",
     "titulo": "QuizWizard dividido por etapa; tela de resultado sob demanda",
-    "branch": "agy/W3-43",
-    "revisor": "Lupa3"
+    "branch": "agy/W3-43"
   },
   {
     "id": "W3-44",
@@ -2460,6 +2459,25 @@
     "pr": null,
     "criterios": [
       "VISUAL.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-50",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Console por rota de novo, após carregamento sob demanda (W3-42/W3-43) e tema (W3-26)",
+    "depende_de": [
+      "W3-43"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Lupa3",
+    "lease_ate": "2026-11-16T01:24:09.888Z",
+    "branch": null,
+    "pr": null,
+    "criterios": [
+      "CONSOLE.md",
       "nenhuma alteração de código"
     ]
   }
