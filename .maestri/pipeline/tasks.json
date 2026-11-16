@@ -2873,9 +2873,9 @@
     "depende_de": [
       "W3-71"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo5",
-    "lease_ate": "2026-11-16T21:46:24.865Z",
+    "lease_ate": null,
     "pr": "local",
     "id": "W3-72",
     "papel": "Frontend",
