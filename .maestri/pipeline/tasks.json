@@ -2113,15 +2113,16 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Specs Playwright cobrem as rotas e fluxos novos desde a W3-02 (fila permanente #13)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:54:04.092Z",
+    "lease_ate": null,
     "branch": "agy/W3-31",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "lista de lacunas e specs novas escritas, sem executar Playwright",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "revisão com Lente4 após W3-35"
   },
   {
     "id": "W3-32",
@@ -2130,11 +2131,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Tecla",
     "lease_ate": "2026-11-16T00:54:15.531Z",
     "branch": "agy/W3-32",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
@@ -2162,11 +2163,11 @@
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T00:46:13.404Z",
+    "lease_ate": "2026-11-16T00:57:12.371Z",
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "id": "W3-34",
     "titulo": "Cobertura de testes: rotas e componentes sem teste de comportamento (fila permanente #10)",
     "criterios": [
@@ -2271,9 +2272,9 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Régua3",
+    "lease_ate": "2026-11-16T00:57:12.809Z",
     "pr": null,
     "criterios": [
       "testes de comportamento montados",
