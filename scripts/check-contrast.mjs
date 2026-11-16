@@ -183,6 +183,22 @@ export function getContrastReport(
       "text"
     );
     add(theme, "accent-fg/accent", vars["accent-fg"], vars.accent, 4.5, "text");
+    add(
+      theme,
+      "accent-text/bg",
+      vars["accent-text"] || vars.accent,
+      vars.bg,
+      4.5,
+      "text"
+    );
+    add(
+      theme,
+      "accent-text/bg-elevated",
+      vars["accent-text"] || vars.accent,
+      vars["bg-elevated"],
+      4.5,
+      "text"
+    );
     add(theme, "accent UI/bg", vars.accent, vars.bg, 3, "ui");
     add(
       theme,
