@@ -96,12 +96,8 @@ function loadPipelineData(): { tasks: Task[]; events: PipelineEvent[] } {
 
 export default function PipelinePage() {
   const isDev = process.env.NODE_ENV === "development";
-  const isDashboardEnabled = process.env.PIPELINE_DASHBOARD === "1";
 
-  // Só existe quando NODE_ENV=development ou PIPELINE_DASHBOARD=1; em produção responde 404
-  if (!isDev && !isDashboardEnabled) {
-    notFound();
-  }
+  if (!isDev) notFound();
 
   const { tasks, events } = loadPipelineData();
 

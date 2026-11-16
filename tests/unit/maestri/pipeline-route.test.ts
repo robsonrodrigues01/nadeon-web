@@ -42,13 +42,11 @@ describe("Rota /pipeline - Controle de ambiente e renderização", () => {
     expect(pageElement.props.tasks.length).toBeGreaterThanOrEqual(7);
   });
 
-  it("em produção com PIPELINE_DASHBOARD=1, permite acesso ao painel", () => {
+  it("em produção com PIPELINE_DASHBOARD=1, responde com 404", () => {
     (process.env as Record<string, string | undefined>).NODE_ENV = "production";
     process.env.PIPELINE_DASHBOARD = "1";
 
-    const pageElement = PipelinePage();
-    expect(pageElement).toBeDefined();
-    expect(mockNotFound).not.toHaveBeenCalled();
-    expect(pageElement.props.tasks.length).toBeGreaterThanOrEqual(7);
+    expect(() => PipelinePage()).toThrow("NEXT_NOT_FOUND");
+    expect(mockNotFound).toHaveBeenCalledTimes(1);
   });
 });

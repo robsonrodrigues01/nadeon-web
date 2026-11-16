@@ -6,21 +6,13 @@ import { sections } from "./sections";
 export const dynamic = "force-dynamic";
 
 export default async function DevKitPage() {
+  if (process.env.NODE_ENV === "production") notFound();
+
   const isDev = process.env.NODE_ENV === "development";
   const isPreview = process.env.VERCEL_ENV === "preview";
   const isExplicit = process.env.DEV_KIT === "1";
-  const isVercelProd = process.env.VERCEL_ENV === "production";
 
-  // Restricted to development and preview environments; returns 404 in production
-  if (
-    isVercelProd ||
-    (!isDev &&
-      !isPreview &&
-      !isExplicit &&
-      process.env.NODE_ENV === "production")
-  ) {
-    notFound();
-  }
+  if (!isDev && !isPreview && !isExplicit) notFound();
 
   // Render each section as an element so React owns the call: client sections
   // ("use client") cannot be invoked as functions from the server.
