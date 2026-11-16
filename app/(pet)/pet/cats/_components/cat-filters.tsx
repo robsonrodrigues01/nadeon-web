@@ -18,7 +18,7 @@ export interface CatFiltersProps {
 }
 
 const optionClass =
-  "inline-flex min-h-11 cursor-pointer items-center rounded-pill border border-border bg-bg-elevated px-4 text-sm font-semibold text-fg has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-bg has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent";
+  "inline-flex min-h-11 cursor-pointer items-center rounded-pill border border-border bg-bg-elevated px-4 text-sm font-semibold text-fg has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-accent-fg has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent";
 
 /** Filters update the URL, so the Server Component re-reads the product list. */
 export function CatFilters({

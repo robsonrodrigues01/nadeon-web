@@ -15,6 +15,8 @@
   --accent: #e0a63c;
   --accent-fg: #2a1710;
   --accent-text: #e0a63c;
+  --accent-border: #e0a63c;
+  --accent-ui: #e0a63c;
 
   /* Sombras */
   --shadow-card: 0 22px 36px rgba(0, 0, 0, 0.25);
@@ -32,6 +34,8 @@
   --accent: #e0a63c;
   --accent-fg: #2a1710;
   --accent-text: #8a5200;
+  --accent-border: #b97a22;
+  --accent-ui: #b97a22;
 
   /* Sombras */
   --shadow-card: 0 22px 36px rgba(42, 23, 16, 0.12);
@@ -91,6 +95,8 @@
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
   --color-accent-text: var(--accent-text);
+  --color-accent-border: var(--accent-border);
+  --color-accent-ui: var(--accent-ui);
 
   --color-product-amber: var(--product-amber);
   --color-product-coral: var(--product-coral);
@@ -126,6 +132,10 @@ a.text-accent {
 
 .hover\:text-accent:hover {
   color: var(--accent-text);
+}
+
+.border-accent {
+  border-color: var(--accent-border);
 }
 
 /* Classes utilitárias de tipografia conforme BRAND.md */

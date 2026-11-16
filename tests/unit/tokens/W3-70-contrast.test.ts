@@ -122,13 +122,30 @@ describe("W3-70: WCAG AA contrast for Pet and Human tokens", () => {
       expect(onElevated).toBeGreaterThanOrEqual(4.5);
     });
 
-    it("exposes --color-accent-text in @theme inline and accessible utility classes", () => {
+    it("exposes --color-accent-text, --color-accent-border, and --color-accent-ui in @theme inline and utility classes", () => {
       expect(css).toContain("--color-accent-text: var(--accent-text);");
+      expect(css).toContain("--color-accent-border: var(--accent-border);");
+      expect(css).toContain("--color-accent-ui: var(--accent-ui);");
       expect(css).toContain("color: var(--accent-text);");
+      expect(css).toContain("border-color: var(--accent-border);");
     });
   });
 
   describe("Comprehensive token pair contrast ratios", () => {
+    it("satisfies WCAG 1.4.11 (>= 3:1) for UI/border surfaces on backgrounds in both themes", () => {
+      const humanUi =
+        human["accent-ui"] || human["accent-border"] || human.accent;
+      const petUi = pet["accent-ui"] || pet["accent-border"] || pet.accent;
+
+      expect(contrastRatio(humanUi, human.bg)).toBeGreaterThanOrEqual(3.0);
+      expect(
+        contrastRatio(humanUi, human["bg-elevated"])
+      ).toBeGreaterThanOrEqual(3.0);
+      expect(contrastRatio(petUi, pet.bg)).toBeGreaterThanOrEqual(3.0);
+      expect(contrastRatio(petUi, pet["bg-elevated"])).toBeGreaterThanOrEqual(
+        3.0
+      );
+    });
     it("satisfies WCAG AA (>= 4.5:1) for text pairs in Human theme", () => {
       expect(contrastRatio(human.fg, human.bg)).toBeGreaterThanOrEqual(4.5);
       expect(
@@ -234,6 +251,32 @@ describe("W3-70: WCAG AA contrast for Pet and Human tokens", () => {
       expect(popupContent).not.toContain(
         "text-fg-muted/70 mt-2 text-center leading-normal"
       );
+    });
+  });
+
+  describe("Accessible foreground over bg-accent in components", () => {
+    it("uses text-accent-fg instead of text-bg for checked chips in cat-filters.tsx", () => {
+      const catFilters = fs.readFileSync(
+        path.resolve("app/(pet)/pet/cats/_components/cat-filters.tsx"),
+        "utf8"
+      );
+      expect(catFilters).not.toContain("has-[:checked]:text-bg");
+      expect(catFilters).toContain("has-[:checked]:text-accent-fg");
+      expect(
+        contrastRatio(pet["accent-fg"], pet.accent)
+      ).toBeGreaterThanOrEqual(4.5);
+    });
+
+    it("uses text-accent-fg instead of text-bg for active steps and badges in track-result.tsx", () => {
+      const trackResult = fs.readFileSync(
+        path.resolve("app/(shared)/track/_components/track-result.tsx"),
+        "utf8"
+      );
+      expect(trackResult).not.toMatch(/bg-accent\s+text-bg\b/);
+      expect(trackResult).toContain("bg-accent text-accent-fg");
+      expect(
+        contrastRatio(pet["accent-fg"], pet.accent)
+      ).toBeGreaterThanOrEqual(4.5);
     });
   });
 });
