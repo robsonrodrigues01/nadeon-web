@@ -2875,7 +2875,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Crivo5",
-    "lease_ate": "2026-11-16T21:20:51.558Z",
+    "lease_ate": "2026-11-16T21:30:53.199Z",
     "pr": "local",
     "id": "W3-72",
     "papel": "Frontend",
@@ -3102,7 +3102,7 @@
     ],
     "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T21:19:13.920Z",
+    "lease_ate": "2026-11-16T21:35:42.447Z",
     "branch": "agy/W3-84",
     "pr": "local",
     "criterios": [
@@ -3122,9 +3122,9 @@
     "depende_de": [
       "W3-82"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-16T21:25:24.319Z",
+    "lease_ate": null,
     "branch": "agy/W3-85",
     "pr": "local",
     "criterios": [
