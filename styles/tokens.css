@@ -4,6 +4,7 @@
  */
 
 :root,
+:root[data-theme="human"],
 [data-theme="human"] {
   /* Cores estruturais (Tema Human: escuro, quente) */
   --bg: #2a1710;
@@ -19,6 +20,7 @@
   --shadow-elevated: 0 30px 60px rgba(0, 0, 0, 0.45);
 }
 
+:root[data-theme="pet"],
 [data-theme="pet"] {
   /* Cores estruturais (Tema Pet: claro, acolhedor) */
   --bg: #fff6ea;
