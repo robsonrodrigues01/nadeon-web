@@ -2310,9 +2310,9 @@
     "depende_de": [
       "W3-36"
     ],
-    "status": "para_revisao",
-    "responsavel": "Paleta",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Tecla",
+    "lease_ate": "2026-11-16T01:23:28.477Z",
     "pr": "local",
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
@@ -2321,8 +2321,7 @@
     ],
     "id": "W3-42",
     "titulo": "Fronteira cliente global: carregar sob demanda popup, modal de cookies, gaveta do carrinho e newsletter (next/dynamic)",
-    "branch": "agy/W3-42",
-    "revisor": "Tecla"
+    "branch": "agy/W3-42"
   },
   {
     "onda": 3,
