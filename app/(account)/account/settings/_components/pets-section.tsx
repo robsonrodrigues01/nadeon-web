@@ -168,9 +168,11 @@ export function PetsSection({
           </li>
         ))}
       </ul>
-      <p role="status" aria-live="polite" className="sr-only">
-        {saveMessage}
-      </p>
+      {saveMessage ? (
+        <p role="status" aria-live="polite" className="sr-only">
+          {saveMessage}
+        </p>
+      ) : null}
 
       {editing !== null ? (
         <div id="pet-form-panel">

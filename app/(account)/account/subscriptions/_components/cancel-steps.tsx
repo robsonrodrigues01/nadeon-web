@@ -1,3 +1,6 @@
+"use client";
+
+import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import type {
   Subscription,
@@ -11,9 +14,10 @@ import {
   productTitle,
 } from "./format";
 import {
-  cancelSubscription,
+  cancelSubscriptionWithFeedback,
   changeSubscriptionFrequency,
   skipSubscription,
+  type SubscriptionActionState,
 } from "./subscription-actions";
 
 interface CancelStepsProps {
@@ -35,6 +39,33 @@ export function CancelSteps({
   capabilities,
   locale,
 }: CancelStepsProps) {
+  const initialActionState: SubscriptionActionState = { status: "idle" };
+  const [state, formAction, pending] = useActionState(
+    cancelSubscriptionWithFeedback,
+    initialActionState
+  );
+  if (state.status === "success") {
+    return (
+      <section
+        className={sectionClass}
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <h2 className="font-archivo text-2xl font-extrabold text-fg">
+          Cancelled
+        </h2>
+        <p className="text-sm text-fg-muted">{state.message}</p>
+        <p className="text-sm font-bold text-fg">
+          Subscription status: {state.subscription.status}
+        </p>
+        <Button href="/account/subscriptions" variant="primary">
+          Back to subscriptions
+        </Button>
+      </section>
+    );
+  }
+
   const title = productTitle(subscription.lines);
   const nextDelivery = formatShortDate(subscription.nextBillingDate, locale);
   const deliveryAfter = formatShortDate(
@@ -51,8 +82,18 @@ export function CancelSteps({
   const canSkip = capabilities.canSkip && subscription.status === "active";
 
   return (
-    <form action={cancelSubscription} className="flex flex-col gap-6">
+    <form action={formAction} className="flex flex-col gap-6">
       <input type="hidden" name="id" value={subscription.id} />
+
+      {state.status === "error" ? (
+        <p
+          role="alert"
+          aria-live="assertive"
+          className="text-sm text-product-coral"
+        >
+          {state.message}
+        </p>
+      ) : null}
 
       <section aria-labelledby="cancel-step-reason" className={sectionClass}>
         <p id="cancel-step-reason" className={stepHeading}>
@@ -170,6 +211,7 @@ export function CancelSteps({
           </Button>
           <Button
             type="submit"
+            disabled={pending}
             variant="secondary"
             className="border-product-coral text-product-coral"
           >

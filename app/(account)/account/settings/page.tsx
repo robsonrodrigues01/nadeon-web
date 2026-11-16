@@ -132,7 +132,7 @@ export default async function AccountSettingsPage() {
               market={market}
             />
             <AddressList addresses={addresses} />
-            <DeleteAccount />
+            <DeleteAccount customer={customer} />
           </div>
         </div>
       </main>

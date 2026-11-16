@@ -1,6 +1,13 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  cleanup,
+  fireEvent,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import AccountSettingsPage, {
   generateMetadata,
 } from "@/app/(account)/account/settings/page";
@@ -13,6 +20,7 @@ import {
   parseBirthday,
 } from "@/app/(account)/account/settings/_components/birthday";
 import { mockAccountProvider } from "@/lib/providers/mock/account";
+import { formsProvider } from "@/lib/providers";
 import type { Address, CustomerProfile } from "@/lib/contracts/account";
 
 const redirectMock = vi.hoisted(() =>
@@ -221,14 +229,72 @@ describe("W2-22 /account/settings", () => {
   });
 
   describe("Delete account", () => {
-    it("tem o texto de exclusão e o botão desabilitado Request account deletion", async () => {
+    it("moves focus into the dialog, traps Tab and restores the trigger on Escape", async () => {
+      await renderPage();
+      const trigger = button(
+        screen.getByRole("region", { name: "Delete account" }),
+        "Request account deletion"
+      );
+
+      fireEvent.click(trigger);
+      const dialog = await screen.findByRole("alertdialog", {
+        name: /confirm account deletion request/i,
+      });
+      const cancel = within(dialog).getByRole("button", {
+        name: "Keep my account",
+      });
+      const confirm = within(dialog).getByRole("button", {
+        name: "Confirm deletion",
+      });
+
+      await waitFor(() => expect(document.activeElement).toBe(cancel));
+
+      fireEvent.keyDown(window, { key: "Tab", shiftKey: true });
+      expect(document.activeElement).toBe(confirm);
+
+      fireEvent.keyDown(window, { key: "Tab" });
+      expect(document.activeElement).toBe(cancel);
+
+      fireEvent.keyDown(window, { key: "Escape" });
+
+      await waitFor(() => expect(document.activeElement).toBe(trigger));
+      expect(screen.queryByRole("alertdialog")).toBeNull();
+    });
+
+    it("confirma a solicitação de exclusão e mostra feedback de sucesso", async () => {
+      const sendPrivacyRequest = vi
+        .spyOn(formsProvider, "sendPrivacyRequest")
+        .mockResolvedValue({ success: true, id: "privacy_w2_22" });
       await renderPage();
       const section = screen.getByRole("region", { name: "Delete account" });
 
       within(section).getByText(
         /Order records we must keep by law are retained/
       );
-      expect(button(section, "Request account deletion").disabled).toBe(true);
+      const requestButton = button(section, "Request account deletion");
+      expect(requestButton.disabled).toBe(false);
+
+      fireEvent.click(requestButton);
+      const dialog = await screen.findByRole("alertdialog", {
+        name: /confirm account deletion request/i,
+      });
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Confirm deletion" })
+      );
+
+      await waitFor(() =>
+        expect(sendPrivacyRequest).toHaveBeenCalledWith({
+          email: "alex.morgan@example.com",
+          firstName: "Alex",
+          lastName: "Morgan",
+          requestType: "delete",
+        })
+      );
+      const feedback = (await screen.findAllByRole("status")).find((el) =>
+        el.textContent?.includes("account deletion request")
+      )!;
+      expect(feedback.textContent).toMatch(/account deletion request/i);
+      expect(feedback.textContent).toContain("privacy_w2_22");
     });
   });
 
