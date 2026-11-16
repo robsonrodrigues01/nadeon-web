@@ -2095,16 +2095,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Código morto: exports sem uso, componentes órfãos, arquivos não importados (fila permanente #11)",
     "depende_de": [],
-    "status": "bloqueada",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Tecla",
+    "lease_ate": "2026-11-16T01:11:08.333Z",
     "branch": null,
     "pr": null,
     "criterios": [
       "DEADCODE.md com lista verificada",
       "nenhuma alteração de código"
-    ],
-    "nota": "Luna recusou 2x (falso positivo sobre votacao); refazer com Gemini quando a cota voltar"
+    ]
   },
   {
     "id": "W3-31",
@@ -2130,9 +2129,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T01:01:52.710Z",
+    "lease_ate": null,
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
@@ -2140,7 +2139,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "MUDANÇAS: /track validação nativa; correção com Tecla"
+    "nota": "re-revisão com próximo agente livre (não Tecla)"
   },
   {
     "onda": 3,
@@ -2274,7 +2273,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T01:07:23.426Z",
+    "lease_ate": "2026-11-16T01:10:32.644Z",
     "pr": null,
     "criterios": [
       "testes de comportamento montados",
@@ -2334,7 +2333,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:07:38.083Z",
+    "lease_ate": "2026-11-16T01:09:26.476Z",
     "pr": null,
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
@@ -2357,7 +2356,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:07:23.630Z",
+    "lease_ate": "2026-11-16T01:09:43.230Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
@@ -2397,7 +2396,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T01:05:42.502Z",
+    "lease_ate": "2026-11-16T01:09:56.364Z",
     "branch": "agy/W3-46",
     "pr": null,
     "criterios": [
