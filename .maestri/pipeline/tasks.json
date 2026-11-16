@@ -2129,17 +2129,16 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "para_revisao",
-    "responsavel": "Régua3",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo4",
+    "lease_ate": "2026-11-16T04:31:35.442Z",
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Crivo4"
+    ]
   },
   {
     "onda": 3,
