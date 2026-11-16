@@ -1927,10 +1927,10 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:35:35.975Z",
-    "pr": null,
+    "lease_ate": "2026-11-16T00:40:29.043Z",
+    "pr": "local",
     "criterios": [
       "medição no portal",
       "pnpm gate verde",
@@ -1993,8 +1993,7 @@
       "script de contraste sem dependência nova",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Régua3"
+    ]
   },
   {
     "id": "W3-25",
@@ -2077,7 +2076,7 @@
     "depende_de": [
       "W3-25"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
     "lease_ate": null,
     "pr": "local",
@@ -2104,6 +2103,23 @@
     "criterios": [
       "DEADCODE.md com lista verificada",
       "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-31",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Specs Playwright cobrem as rotas e fluxos novos desde a W3-02 (fila permanente #13)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Régua3",
+    "lease_ate": "2026-11-16T00:40:34.538Z",
+    "branch": "agy/W3-31",
+    "pr": null,
+    "criterios": [
+      "lista de lacunas e specs novas escritas, sem executar Playwright",
+      "revisão APROVADO"
     ]
   }
 ]
