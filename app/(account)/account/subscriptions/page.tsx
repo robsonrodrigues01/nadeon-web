@@ -65,7 +65,7 @@ export default async function SubscriptionsPage() {
           </nav>
 
           <header className="flex flex-col gap-2">
-            <h1 className="font-archivo text-4xl font-extrabold uppercase leading-none text-fg md:text-5xl">
+            <h1 className="font-archivo text-3xl font-extrabold uppercase leading-none text-fg md:text-5xl">
               Subscriptions
             </h1>
             <p className="text-base text-fg-muted">

@@ -85,11 +85,11 @@ export function FormatHero({ current, tabs, jarNames }: FormatHeroProps) {
           {jarNames.map((name) => (
             <div
               key={name}
-              className="flex w-24 flex-col items-center justify-end sm:w-32"
+              className="flex w-20 flex-col items-center justify-end sm:w-32"
             >
-              <div className="h-4 w-20 rounded-t-md bg-bg-elevated sm:w-24" />
-              <div className="flex h-28 w-24 flex-col items-center justify-center rounded-field bg-bg-elevated px-2 text-center shadow-elevated sm:h-36 sm:w-32">
-                <span className="title text-sm font-extrabold uppercase leading-tight text-fg sm:text-base">
+              <div className="h-4 w-16 rounded-t-md bg-bg-elevated sm:w-24" />
+              <div className="flex h-28 w-20 flex-col items-center justify-center rounded-field bg-bg-elevated px-2 text-center shadow-elevated sm:h-36 sm:w-32">
+                <span className="max-w-full break-words text-xs font-extrabold uppercase leading-tight text-fg sm:text-base">
                   {name}
                 </span>
               </div>

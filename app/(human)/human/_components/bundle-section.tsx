@@ -66,7 +66,7 @@ export function BundleSection({ kit, kitLines = [] }: BundleSectionProps) {
               </div>
 
               {price && (
-                <div className="mt-6 flex items-baseline gap-3">
+                <div className="mt-6 flex flex-wrap items-baseline gap-3">
                   <span className="font-archivo text-3xl sm:text-4xl font-black text-fg">
                     {formatMoney(price)}
                   </span>
