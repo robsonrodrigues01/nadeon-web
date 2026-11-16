@@ -2020,7 +2020,7 @@
     "preset": "Maestro",
     "titulo": "tokens.css fora do pipeline do Tailwind: bg-bg/text-fg/bg-fg não eram gerados (tema não aplicado)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Maestro",
     "lease_ate": null,
     "branch": "agy/W3-26",
@@ -2040,9 +2040,9 @@
     "depende_de": [
       "W3-22"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T00:38:04.514Z",
     "branch": "agy/W3-27",
     "pr": null,
     "criterios": [
@@ -2060,7 +2060,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T00:36:02.316Z",
+    "lease_ate": "2026-11-16T00:37:39.317Z",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
@@ -2077,16 +2077,17 @@
     "depende_de": [
       "W3-25"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:33:08.707Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
     ],
     "id": "W3-29",
     "titulo": "Cabeçalhos de segurança em next.config.ts (CSP, frame-ancestors, Referrer-Policy, Permissions-Policy) e /pipeline e /dev/kit 404 em produção sem bypass",
-    "branch": "agy/W3-29"
+    "branch": "agy/W3-29",
+    "revisor": "Escudo"
   }
 ]
