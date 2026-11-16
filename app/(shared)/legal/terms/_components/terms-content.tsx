@@ -226,7 +226,7 @@ export function TermsContent() {
         </aside>
 
         {/* Main Article Content */}
-        <article className="flex-1 max-w-3xl">
+        <article className="w-full min-w-0 flex-1 max-w-3xl">
           {/* Intro paragraph */}
           <p className="text-lg sm:text-xl font-medium leading-relaxed mb-10 text-fg">
             Placeholder intro. These Terms of Service govern your use of

@@ -117,9 +117,9 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
               </div>
             </div>
 
-            <div className="relative flex items-center justify-center gap-4 sm:gap-6">
-              <div className="flex flex-col items-center rounded-card border border-border bg-bg-elevated p-6 shadow-card">
-                <div className="h-32 w-32 relative flex items-center justify-center">
+            <div className="relative grid min-w-0 grid-cols-2 items-center justify-center gap-3 sm:flex sm:gap-6">
+              <div className="flex min-w-0 flex-col items-center rounded-card border border-border bg-bg-elevated p-3 shadow-card sm:p-6">
+                <div className="relative flex h-24 w-24 items-center justify-center sm:h-32 sm:w-32">
                   <Image
                     src="/images/products/biohack-front.webp"
                     alt="BioHack NMN 500 mg"
@@ -136,8 +136,8 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                   NMN 500 mg
                 </span>
               </div>
-              <div className="flex flex-col items-center rounded-card border border-border bg-bg-elevated p-6 shadow-card">
-                <div className="h-32 w-32 relative flex items-center justify-center">
+              <div className="flex min-w-0 flex-col items-center rounded-card border border-border bg-bg-elevated p-3 shadow-card sm:p-6">
+                <div className="relative flex h-24 w-24 items-center justify-center sm:h-32 sm:w-32">
                   <Image
                     src="/images/products/full-charge-front.webp"
                     alt="Full Charge NMN 4-in-1"

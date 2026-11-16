@@ -143,7 +143,7 @@ export default async function PetProductDetailPage(props: PageProps) {
               <PetGallery product={product} />
             </div>
 
-            <div className="lg:col-span-6 xl:col-span-6">
+            <div className="min-w-0 lg:col-span-6 xl:col-span-6">
               {hasVariants && (
                 <PetPurchaseCard
                   product={product}
