@@ -61,7 +61,7 @@ const mockOrders: Order[] = [
         title: "BioHack - 2 Jars (60 days)",
         quantity: 1,
         price: { amount: 118, currencyCode: "USD" },
-        image: "/images/products/biohack-front.webp",
+        image: "/renders/biohack.png",
         variantTitle: "2 Jars",
         variantId: "var_biohack_1",
       },
@@ -91,7 +91,7 @@ const mockOrders: Order[] = [
         title: "More Good Years Soft Chews - 1 Jar",
         quantity: 1,
         price: { amount: 44, currencyCode: "USD" },
-        image: "/images/products/more-good-years-front.webp",
+        image: "/renders/more-good-years.png",
         variantTitle: "1 Jar",
         variantId: "var_mgy_2",
       },
@@ -121,7 +121,7 @@ const mockPets: Pet[] = [
     weightLbs: 68,
     activityLevel: "moderate",
     concerns: ["Joint comfort", "Healthy aging", "Mental sharpness"],
-    photoUrl: "/images/pets/cooper.webp",
+    photoUrl: "/renders/placeholder.svg",
   }),
 ];
 
