@@ -47,3 +47,6 @@ next-env.d.ts
 .maestri/checkpoints
 worktrees
 
+
+# Pasta criada pelo Maestri ao recrutar agente com --role
+.maestri/roles/
