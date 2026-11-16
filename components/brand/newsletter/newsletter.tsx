@@ -86,8 +86,12 @@ export function Newsletter({
           result.message ?? "Unable to subscribe. Please try again."
         );
       }
-    } catch {
-      setServerError("Unable to subscribe. Please try again.");
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred. Please try again.";
+      setServerError(message);
     } finally {
       setIsSubmitting(false);
     }
