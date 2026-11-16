@@ -2642,7 +2642,7 @@
       "W3-59",
       "W3-58"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
     "lease_ate": "2026-11-16T04:48:39.891Z",
     "branch": "agy/W3-60",
@@ -2650,7 +2650,8 @@
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Atalaia"
   },
   {
     "id": "W3-61",
@@ -2726,7 +2727,8 @@
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Atalaia"
   },
   {
     "id": "W3-65",
