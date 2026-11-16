@@ -12,7 +12,7 @@ const PrivacyFormSchema = z.object({
   firstName: z.string().trim().min(1).max(100),
   lastName: z.string().trim().min(1).max(100),
   requestType: z.enum(["access", "delete", "correct", "do_not_sell"]),
-  state: z.string().trim().max(100).optional(),
+  state: z.string().trim().min(1).max(100),
   phone: z.string().trim().max(40).optional(),
   requestorType: z.enum(["consumer", "agent"]).optional(),
   correctionDetails: z.string().trim().max(2000).optional(),
@@ -102,6 +102,7 @@ export async function submitPrivacyRequest(
     email,
     firstName,
     lastName,
+    state: stateOfResidence,
     requestType,
     details,
   });

@@ -2130,15 +2130,16 @@
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
     "status": "para_revisao",
-    "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T01:35:22.591Z",
+    "responsavel": "Crivo4",
+    "lease_ate": null,
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "no main; aguarda gate verde após W3-63"
   },
   {
     "onda": 3,
@@ -2260,8 +2261,7 @@
     ],
     "id": "W3-39",
     "titulo": "Testes de comportamento: conta e assinaturas (skip, pause/resume, frequência, produto, quantidade, cancelamento) e perfil (salvar, excluir conta)",
-    "branch": "agy/W3-39",
-    "revisor": "Prisma5"
+    "branch": "agy/W3-39"
   },
   {
     "onda": 3,
@@ -2310,7 +2310,7 @@
     "depende_de": [
       "W3-36"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Tecla",
     "lease_ate": null,
     "pr": "local",
@@ -2321,8 +2321,7 @@
     ],
     "id": "W3-42",
     "titulo": "Fronteira cliente global: carregar sob demanda popup, modal de cookies, gaveta do carrinho e newsletter (next/dynamic)",
-    "branch": "agy/W3-42",
-    "nota": "re-revisão com Prisma5 após W3-45"
+    "branch": "agy/W3-42"
   },
   {
     "onda": 3,
@@ -2374,9 +2373,9 @@
     "depende_de": [
       "W3-39"
     ],
-    "status": "para_revisao",
-    "responsavel": "Paleta",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Tecla",
+    "lease_ate": "2026-11-16T04:47:07.143Z",
     "branch": "agy/W3-45",
     "pr": "local",
     "criterios": [
@@ -2384,7 +2383,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "revisor": "Prisma5"
+    "nota": "conflito com W3-32 em settings; Tecla resolve"
   },
   {
     "id": "W3-46",
@@ -2491,8 +2490,8 @@
     "depende_de": [
       "W3-43"
     ],
-    "status": "para_revisao",
-    "responsavel": "Lente4",
+    "status": "entregue",
+    "responsavel": "Lupa3",
     "lease_ate": null,
     "branch": "agy/W3-51",
     "pr": "local",
@@ -2510,9 +2509,9 @@
     "depende_de": [
       "W3-43"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:41:36.006Z",
+    "lease_ate": null,
     "branch": "agy/W3-52",
     "pr": "local",
     "criterios": [
@@ -2542,9 +2541,9 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:42:20.988Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "reproduzido e corrigido, medido no portal",
@@ -2556,16 +2555,15 @@
     "depende_de": [
       "W3-50"
     ],
-    "branch": "agy/W3-54",
-    "revisor": "Tecla"
+    "branch": "agy/W3-54"
   },
   {
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T01:41:49.813Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "reproduzido e corrigido, medido no portal",
@@ -2590,14 +2588,15 @@
     ],
     "status": "para_revisao",
     "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T01:49:42.733Z",
+    "lease_ate": null,
     "branch": "agy/W3-56",
     "pr": "local",
     "criterios": [
       "script da W3-53 sem achados nas rotas tocadas",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "no main; aguarda gate verde após W3-63"
   },
   {
     "id": "W3-58",
@@ -2608,9 +2607,9 @@
     "depende_de": [
       "W3-49"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T01:45:29.300Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2625,14 +2624,110 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Revisão de segurança de novo, após W3-28/29/42/45/48 (fila permanente #12)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T01:36:43.102Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
       "SECURITY.md",
       "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-60",
+    "onda": 3,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Achados da revisão de segurança W3-59 (PII em logs de erro, validação incompleta, escrita de log) e médios da W3-58 (/help)",
+    "depende_de": [
+      "W3-59",
+      "W3-58"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T04:48:39.891Z",
+    "branch": "agy/W3-60",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-61",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Ao fechar o popup sem gatilho (aberto automaticamente), mover o foco para #main-content em vez de deixar no body",
+    "depende_de": [
+      "W3-51"
+    ],
+    "status": "entregue",
+    "responsavel": "Lupa3",
+    "lease_ate": null,
+    "branch": "agy/W3-61",
+    "pr": "local",
+    "criterios": [
+      "teste de foco",
+      "spec W3-51 atualizada",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-62",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Verificação geral do main: script de acessibilidade estática da W3-53, check-routes e contraste",
+    "depende_de": [],
+    "status": "para_revisao",
+    "responsavel": "Régua3",
+    "lease_ate": "2026-11-16T04:46:47.121Z",
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "VERIFICACAO.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-63",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Ajustar testes W3-28 (privacy request) e semântico 5.7 (feedback de acessibilidade) aos campos obrigatórios da W3-32",
+    "depende_de": [
+      "W3-32"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Atalaia",
+    "lease_ate": "2026-11-16T04:48:05.921Z",
+    "branch": "agy/W3-63",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-64",
+    "onda": 3,
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Pendências da revisão W3-60: logger analítico sem PII e mensagem do provider mock",
+    "depende_de": [
+      "W3-60"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Crivo4",
+    "lease_ate": "2026-11-16T04:48:51.142Z",
+    "branch": "agy/W3-64",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
     ]
   }
 ]

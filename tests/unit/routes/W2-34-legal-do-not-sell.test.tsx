@@ -330,11 +330,31 @@ describe("W2-34: /legal/do-not-sell route", () => {
         firstName: "Alex",
         lastName: "",
         requestType: "do_not_sell",
+        state: "CA",
         confirmAccuracy: "on",
       });
 
       const res = await submitPrivacyRequest({ status: "idle" }, data);
       expect(res.status).toBe("invalid");
+      expect(sendPrivacyRequest).not.toHaveBeenCalled();
+    });
+
+    it("rejects submission if state of residence is missing, empty, or whitespace", async () => {
+      for (const stateValue of [undefined, "", "   "]) {
+        const payload: Record<string, string> = {
+          email: "alex@example.com",
+          firstName: "Alex",
+          lastName: "Smith",
+          requestType: "do_not_sell",
+          confirmAccuracy: "on",
+        };
+        if (stateValue !== undefined) payload.state = stateValue;
+        const res = await submitPrivacyRequest(
+          { status: "idle" },
+          formData(payload)
+        );
+        expect(res.status).toBe("invalid");
+      }
       expect(sendPrivacyRequest).not.toHaveBeenCalled();
     });
 
@@ -350,6 +370,7 @@ describe("W2-34: /legal/do-not-sell route", () => {
         firstName: "Alex",
         lastName: "Smith",
         requestType: "do_not_sell",
+        state: "CA",
         confirmAccuracy: "on",
       });
 
@@ -368,6 +389,7 @@ describe("W2-34: /legal/do-not-sell route", () => {
         firstName: "Alex",
         lastName: "Smith",
         requestType: "do_not_sell",
+        state: "CA",
         confirmAccuracy: "on",
       });
 

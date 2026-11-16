@@ -92,6 +92,7 @@ describe("W3-28 public form errors", () => {
         firstName: "Pat",
         lastName: "Doe",
         requestType: "do_not_sell",
+        state: "CA",
         confirmAccuracy: "on",
       })
     );
@@ -121,6 +122,7 @@ describe("W3-28 public form errors", () => {
         firstName: "Pat",
         lastName: "Doe",
         requestType: "do_not_sell",
+        state: "CA",
         confirmAccuracy: "on",
       })
     );
@@ -143,6 +145,7 @@ describe("W3-28 public form errors", () => {
       firstName: "Pat",
       lastName: "Doe",
       requestType: "do_not_sell",
+      state: "CA",
     };
     const invalidConfirmation = form({ ...base, confirmAccuracy: "false" });
     const fileField = new FormData();
@@ -150,6 +153,7 @@ describe("W3-28 public form errors", () => {
     fileField.set("firstName", "Pat");
     fileField.set("lastName", "Doe");
     fileField.set("requestType", "do_not_sell");
+    fileField.set("state", "CA");
     fileField.set("confirmAccuracy", "on");
     fileField.set("phone", new File(["unexpected"], "phone.txt"));
 
@@ -159,6 +163,31 @@ describe("W3-28 public form errors", () => {
     expect(await submitPrivacyRequest({ status: "idle" }, fileField)).toEqual({
       status: "invalid",
     });
+    expect(mocks.sendPrivacyRequest).not.toHaveBeenCalled();
+  });
+
+  it("rejects missing, empty, or whitespace-only state of residence before calling the provider", async () => {
+    const base = {
+      email: "person@example.test",
+      firstName: "Pat",
+      lastName: "Doe",
+      requestType: "do_not_sell",
+      confirmAccuracy: "on",
+    };
+
+    const missingState = form(base);
+    const emptyState = form({ ...base, state: "" });
+    const whitespaceState = form({ ...base, state: "   " });
+
+    expect(
+      await submitPrivacyRequest({ status: "idle" }, missingState)
+    ).toEqual({ status: "invalid" });
+    expect(await submitPrivacyRequest({ status: "idle" }, emptyState)).toEqual({
+      status: "invalid",
+    });
+    expect(
+      await submitPrivacyRequest({ status: "idle" }, whitespaceState)
+    ).toEqual({ status: "invalid" });
     expect(mocks.sendPrivacyRequest).not.toHaveBeenCalled();
   });
 

@@ -88,6 +88,14 @@ describe("W2-09: /pet/dogs Route Suite", () => {
   });
 
   describe("Server Page Component (DogsPage)", () => {
+    it("uses level-two headings for top-level dog product cards", async () => {
+      render(await DogsPage());
+
+      expect(
+        screen.getByRole("heading", { level: 2, name: "More Good Years" })
+      ).toBeTruthy();
+    });
+
     it("renders server component with all 6 sections and JSON-LD schema", async () => {
       const jsx = await DogsPage();
       render(jsx);
@@ -267,7 +275,7 @@ describe("W2-09: /pet/dogs Route Suite", () => {
       expect(sortSelect.value).toBe("price-asc");
 
       // Verify Good Days ($29) appears before More Good Years ($44)
-      const headings = screen.getAllByRole("heading", { level: 3 });
+      const headings = screen.getAllByRole("heading", { level: 2 });
       const names = headings.map((h) => h.textContent);
       const goodDaysIdx = names.findIndex((n) => n?.includes("Good Days"));
       const mgyIdx = names.findIndex((n) => n?.includes("More Good Years"));

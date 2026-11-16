@@ -58,9 +58,12 @@ describe("Human Layout (W1-22)", () => {
     expect(screen.getByText(/Tested every lot/i)).toBeDefined();
 
     // Newsletter section
-    const newsletterHeadings = screen.getAllByText(/Join the Nadeon list/i);
+    const newsletterHeadings =
+      await screen.findAllByText(/Join the Nadeon list/i);
     expect(newsletterHeadings.length).toBeGreaterThanOrEqual(1);
-    const emailInputs = screen.getAllByRole("textbox", { name: /email/i });
+    const emailInputs = await screen.findAllByRole("textbox", {
+      name: /email/i,
+    });
     expect(emailInputs.length).toBeGreaterThanOrEqual(1);
 
     // Footer with contentinfo role

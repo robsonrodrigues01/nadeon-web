@@ -79,7 +79,7 @@ describe("W2-10 Route: /pet/cats", () => {
     await renderCats();
 
     const products = screen.getByRole("region", { name: "Products" });
-    const headings = within(products).getAllByRole("heading", { level: 3 });
+    const headings = within(products).getAllByRole("heading", { level: 2 });
     expect(headings.map((h) => h.textContent)).toEqual([
       "High Jump",
       "Purr Mode",
@@ -172,7 +172,7 @@ describe("W2-10 Route: /pet/cats", () => {
     await renderCats({ format: "drops" });
 
     const products = screen.getByRole("region", { name: "Products" });
-    expect(within(products).getAllByRole("heading", { level: 3 })).toHaveLength(
+    expect(within(products).getAllByRole("heading", { level: 2 })).toHaveLength(
       2
     );
   });

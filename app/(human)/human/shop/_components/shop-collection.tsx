@@ -293,9 +293,9 @@ export function ShopCollection({
                           "/images/products/biohack-front.webp"
                         }
                         alt={`${product.name} - ${product.technicalName}`}
-                        width={240}
-                        height={240}
-                        className="max-h-full max-w-full object-contain"
+                        fill
+                        sizes="(min-width: 1280px) 272px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-contain"
                       />
                     </Link>
 
@@ -307,7 +307,7 @@ export function ShopCollection({
 
                   {/* Product Details */}
                   <div className="p-5 flex flex-col flex-1">
-                    <h3
+                    <h2
                       id={`product-heading-${product.slug}`}
                       className="title text-xl font-extrabold uppercase tracking-tight text-fg"
                     >
@@ -317,7 +317,7 @@ export function ShopCollection({
                       >
                         {product.name}
                       </Link>
-                    </h3>
+                    </h2>
 
                     <p className="text-xs sm:text-sm font-bold text-accent mt-1 line-clamp-1">
                       {product.technicalName}

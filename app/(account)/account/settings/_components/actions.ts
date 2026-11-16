@@ -14,8 +14,13 @@ function text(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
 }
 
-// Entrada inválida não grava nada; a página não tem texto de erro no design.
-export async function saveProfileAction(formData: FormData): Promise<void> {
+export type ProfileFormState = {
+  status: "idle" | "saved" | "invalid" | "error";
+};
+
+export async function saveProfileAction(
+  formData: FormData
+): Promise<ProfileFormState> {
   const birthDate = parseBirthday(text(formData, "birthDate"));
   const parsed = ProfileInputSchema.safeParse({
     firstName: text(formData, "firstName"),
@@ -32,11 +37,23 @@ export async function saveProfileAction(formData: FormData): Promise<void> {
     !parsed.data.firstName ||
     !parsed.data.lastName
   ) {
-    return;
+    return { status: "invalid" };
   }
 
-  await accountProvider.updateProfile(parsed.data);
-  revalidatePath("/account/settings");
+  try {
+    await accountProvider.updateProfile(parsed.data);
+    revalidatePath("/account/settings");
+    return { status: "saved" };
+  } catch {
+    return { status: "error" };
+  }
+}
+
+export async function saveProfileFormAction(
+  _previous: ProfileFormState,
+  formData: FormData
+): Promise<ProfileFormState> {
+  return saveProfileAction(formData);
 }
 
 export async function signOutAction(): Promise<void> {

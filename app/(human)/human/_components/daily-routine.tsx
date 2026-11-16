@@ -2,11 +2,11 @@
 
 import React, { useRef, useState } from "react";
 import Link from "next/link";
-import type { Product } from "@/lib/contracts/catalog";
 import { ProductCard } from "@/components/commerce/product-card";
+import type { ProductCardData } from "@/components/commerce/product-card/product-card-data";
 
 export interface DailyRoutineProps {
-  products: Product[];
+  products: ProductCardData[];
 }
 
 const FORMAT_TABS = ["All", "Capsules", "Powders", "Tinctures"] as const;

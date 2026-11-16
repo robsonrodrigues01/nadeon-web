@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import type { Pet } from "@/lib/contracts/account";
+import { PetInputSchema, type Pet } from "@/lib/contracts/account";
 import { savePetAction } from "./actions";
 import type { PetView } from "./pet-views";
 
@@ -40,12 +41,55 @@ export function PetForm({
 }: PetFormProps) {
   const router = useRouter();
   const headingId = "pet-form-heading";
+  const [status, setStatus] = useState<
+    "idle" | "pending" | "invalid" | "error"
+  >("idle");
+  const [invalidField, setInvalidField] = useState("");
+  const statusRef = useRef<HTMLParagraphElement>(null);
+
+  function validate(event: React.FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const weight = String(data.get("weightLbs") ?? "").trim();
+    const parsed = PetInputSchema.safeParse({
+      id: String(data.get("id") ?? "").trim() || undefined,
+      name: String(data.get("name") ?? "").trim(),
+      species: String(data.get("species") ?? ""),
+      breed: String(data.get("breed") ?? "").trim(),
+      birthDate: String(data.get("birthDate") ?? "").trim() || undefined,
+      weightLbs: weight ? Number(weight) : undefined,
+      activityLevel: String(data.get("activityLevel") ?? "") || undefined,
+      concerns: data.getAll("concerns").map(String),
+      photoUrl: String(data.get("photoUrl") ?? "").trim() || undefined,
+    });
+    if (parsed.success) {
+      setInvalidField("");
+      return;
+    }
+
+    event.preventDefault();
+    const field = String(parsed.error.issues[0]?.path[0] ?? "name");
+    setStatus("invalid");
+    setInvalidField(field);
+    const control = form.elements.namedItem(field);
+    const target = control instanceof RadioNodeList ? control[0] : control;
+    if (target instanceof HTMLElement) target.focus();
+  }
 
   async function submit(formData: FormData) {
-    const saved = await savePetAction(formData);
-    if (saved) {
-      onSaved(saved);
-      router.refresh();
+    setStatus("pending");
+    try {
+      const saved = await savePetAction(formData);
+      if (saved) {
+        onSaved(saved);
+        router.refresh();
+      } else {
+        setStatus("invalid");
+        requestAnimationFrame(() => statusRef.current?.focus());
+      }
+    } catch {
+      setStatus("error");
+      requestAnimationFrame(() => statusRef.current?.focus());
     }
   }
 
@@ -64,7 +108,18 @@ export function PetForm({
         <p className="mt-1 text-sm text-fg/70">All fields editable later</p>
       )}
 
-      <form action={submit} className="mt-5 grid gap-5">
+      <form
+        action={submit}
+        onSubmit={validate}
+        onChange={() => {
+          if (invalidField) {
+            setInvalidField("");
+            setStatus("idle");
+          }
+        }}
+        noValidate
+        className="mt-5 grid gap-5"
+      >
         {pet ? <input type="hidden" name="id" value={pet.id} /> : null}
         {pet?.photoUrl ? (
           <input type="hidden" name="photoUrl" value={pet.photoUrl} />
@@ -88,6 +143,12 @@ export function PetForm({
               type="text"
               required
               defaultValue={pet?.name ?? ""}
+              aria-invalid={invalidField === "name" || undefined}
+              aria-describedby={
+                invalidField === "name"
+                  ? "pet-form-validation-error"
+                  : undefined
+              }
               className={INPUT_CLASS}
             />
           </div>
@@ -102,6 +163,12 @@ export function PetForm({
               type="text"
               required
               defaultValue={pet?.breed ?? ""}
+              aria-invalid={invalidField === "breed" || undefined}
+              aria-describedby={
+                invalidField === "breed"
+                  ? "pet-form-validation-error"
+                  : undefined
+              }
               className={INPUT_CLASS}
             />
           </div>
@@ -115,6 +182,12 @@ export function PetForm({
               name="birthDate"
               type="date"
               defaultValue={pet?.birthDate ?? ""}
+              aria-invalid={invalidField === "birthDate" || undefined}
+              aria-describedby={
+                invalidField === "birthDate"
+                  ? "pet-form-validation-error"
+                  : undefined
+              }
               className={INPUT_CLASS}
             />
           </div>
@@ -131,7 +204,12 @@ export function PetForm({
               min="0"
               step="0.1"
               defaultValue={pet?.weightLbs ?? ""}
-              aria-describedby="pet-weight-help"
+              aria-invalid={invalidField === "weightLbs" || undefined}
+              aria-describedby={
+                invalidField === "weightLbs"
+                  ? "pet-weight-help pet-form-validation-error"
+                  : "pet-weight-help"
+              }
               className={INPUT_CLASS}
             />
             <span className="sr-only">lb</span>
@@ -152,6 +230,12 @@ export function PetForm({
                   value={option.value}
                   required
                   defaultChecked={(pet?.species ?? "dog") === option.value}
+                  aria-invalid={invalidField === "species" || undefined}
+                  aria-describedby={
+                    invalidField === "species"
+                      ? "pet-form-validation-error"
+                      : undefined
+                  }
                 />
                 {option.label}
               </label>
@@ -171,6 +255,12 @@ export function PetForm({
                   defaultChecked={
                     (pet?.activityLevel ?? "moderate") === option.value
                   }
+                  aria-invalid={invalidField === "activityLevel" || undefined}
+                  aria-describedby={
+                    invalidField === "activityLevel"
+                      ? "pet-form-validation-error"
+                      : undefined
+                  }
                 />
                 {option.label}
               </label>
@@ -188,6 +278,12 @@ export function PetForm({
                   name="concerns"
                   value={concern}
                   defaultChecked={pet?.concerns.includes(concern) ?? false}
+                  aria-invalid={invalidField === "concerns" || undefined}
+                  aria-describedby={
+                    invalidField === "concerns"
+                      ? "pet-form-validation-error"
+                      : undefined
+                  }
                 />
                 {concern}
               </label>
@@ -196,11 +292,25 @@ export function PetForm({
         </fieldset>
 
         <div className="flex flex-wrap gap-3">
-          <Button type="submit">Save pet</Button>
+          <Button type="submit" disabled={status === "pending"}>
+            {status === "pending" ? "Saving..." : "Save pet"}
+          </Button>
           <Button type="button" variant="secondary" onClick={onCancel}>
             Cancel
           </Button>
         </div>
+        <p
+          id="pet-form-validation-error"
+          ref={statusRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          className="text-sm text-fg-muted"
+        >
+          {status === "invalid" &&
+            "Please check the highlighted fields and try again."}
+          {status === "error" && "Could not save your pet. Please try again."}
+        </p>
       </form>
     </section>
   );
