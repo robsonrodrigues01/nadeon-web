@@ -1,6 +1,6 @@
 # Estado do projeto nadeon-web
 
-Atualizado: 15/11/2026 02:30 BRT (Maestro).
+Atualizado: 16/11/2026 01:45 BRT (Maestro).
 
 - Fluxo: local. Merge no main após revisão APROVADO de outro agente + `pnpm gate` verde, rodado pelo Maestro sob a trava `/tmp/nadeon-heavy.lock`.
 - Onda 0 e onda 1: entregues.
@@ -16,3 +16,7 @@ Atualizado: 15/11/2026 02:30 BRT (Maestro).
 
 - Revisão visual (W3-06 a W3-08) via portal contra os boards concluída. Correções entregues: W3-09 shell duplicado, W3-10 fontes sem ciclo (Archivo/DM Sans), W3-11 e W3-13 imagens pelo catálogo (12 SKUs com placeholder neutro aguardando renders do Robson), W3-12 e cart-line-item sem rolagem horizontal (38 rotas medidas em 375 px), W3-14 banner de cookies não cobre CTAs. Gate: 1105 testes + build verdes. 96 tarefas entregues, nenhuma aberta.
 - Pendente baixo: espaçamento do início do quiz Human (achado vago da W3-08).
+
+- 16/11 madrugada: tema de cores aplicado de fato (W3-26), revisões visuais em 320/375/768/1280/1440, teclado e foco, acessibilidade estática (0 achados após W3-56), contraste (2 pares Pet aguardando decisão do Robson), segurança (W3-25/W3-59), JS por rota reduzido (W3-42/43/52), testes de comportamento (W3-39/40/41), specs Playwright (W3-31/51). Gate do main: 1196 testes + build verdes.
+- Em curso: W3-45 (conta; conflito com W3-32), W3-60 e W3-64 (segurança), W3-65 (checagem visual).
+- Agentes no Antigravity/Gemini com --dangerously-skip-permissions (pedido do Robson); Codex ficou com pouca cota.
