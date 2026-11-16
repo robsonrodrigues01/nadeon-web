@@ -2355,7 +2355,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:22:23.150Z",
+    "lease_ate": "2026-11-16T01:25:40.737Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
@@ -2412,16 +2412,17 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "forms.test.ts instável: não depender da última linha do arquivo compartilhado forms-mock.jsonl (usar caminho temporário por teste ou spy)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T01:22:54.391Z",
+    "lease_ate": null,
     "branch": "agy/W3-47",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "teste passa em qualquer worktree e em paralelo",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "aguarda revisor (não Lente4)"
   },
   {
     "id": "W3-48",
@@ -2473,12 +2474,31 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:24:34.872Z",
+    "lease_ate": "2026-11-16T01:25:30.879Z",
     "branch": null,
     "pr": null,
     "criterios": [
       "CONSOLE.md",
       "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-51",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Specs Playwright para overlays e quiz sob demanda (W3-42/43) e feedback da conta (W3-45), sem executar no Mac",
+    "depende_de": [
+      "W3-43"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Lente4",
+    "lease_ate": "2026-11-16T01:25:51.543Z",
+    "branch": "agy/W3-51",
+    "pr": null,
+    "criterios": [
+      "typecheck e playwright --list",
+      "revisão APROVADO"
     ]
   }
 ]
