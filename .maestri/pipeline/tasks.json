@@ -2666,7 +2666,7 @@
     ],
     "status": "para_revisao",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T04:36:16.802Z",
+    "lease_ate": null,
     "branch": "agy/W3-61",
     "pr": "local",
     "criterios": [
@@ -2674,7 +2674,8 @@
       "spec W3-51 atualizada",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Crivo4"
   },
   {
     "id": "W3-62",
