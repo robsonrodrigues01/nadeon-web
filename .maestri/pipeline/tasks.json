@@ -2138,8 +2138,7 @@
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Atalaia"
+    ]
   },
   {
     "onda": 3,
@@ -2261,8 +2260,7 @@
     ],
     "id": "W3-39",
     "titulo": "Testes de comportamento: conta e assinaturas (skip, pause/resume, frequência, produto, quantidade, cancelamento) e perfil (salvar, excluir conta)",
-    "branch": "agy/W3-39",
-    "revisor": "Tecla"
+    "branch": "agy/W3-39"
   },
   {
     "onda": 3,
@@ -2383,8 +2381,7 @@
       "it.fails correspondentes viram testes que passam",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Tecla"
+    ]
   },
   {
     "id": "W3-46",
@@ -2589,15 +2586,14 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T04:36:35.051Z",
+    "lease_ate": null,
     "branch": "agy/W3-56",
     "pr": "local",
     "criterios": [
       "script da W3-53 sem achados nas rotas tocadas",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "nota": "conflito com W3-55 em product-card.tsx; Prisma5 resolve no branch"
+    ]
   },
   {
     "id": "W3-58",
@@ -2686,7 +2682,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T04:41:33.539Z",
+    "lease_ate": "2026-11-16T04:46:47.121Z",
     "branch": null,
     "pr": null,
     "criterios": [
