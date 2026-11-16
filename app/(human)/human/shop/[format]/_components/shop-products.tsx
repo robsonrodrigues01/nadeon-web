@@ -56,9 +56,9 @@ export function ShopProducts({
         <SortSelect value={sort} goal={activeGoal} />
       </div>
 
-      <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      <ul className="mt-6 grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
         {products.map((product) => (
-          <li key={product.slug}>
+          <li key={product.slug} className="min-w-0">
             <ProductCard product={product} className="h-full" />
           </li>
         ))}

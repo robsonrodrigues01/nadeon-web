@@ -74,7 +74,7 @@ export function ProductCard({
 
   return (
     <article
-      className={`group flex flex-col justify-between overflow-hidden rounded-card border border-border bg-bg-elevated text-fg shadow-card transition-all hover:shadow-elevated ${className}`}
+      className={`group flex min-w-0 flex-col justify-between overflow-hidden rounded-card border border-border bg-bg-elevated text-fg shadow-card transition-all hover:shadow-elevated ${className}`}
       aria-labelledby={`product-heading-${product.slug}`}
     >
       <div>
@@ -102,11 +102,11 @@ export function ProductCard({
         </div>
 
         {/* Content details */}
-        <div className="p-5 sm:p-6">
-          <div className="flex items-baseline justify-between gap-2 mb-1">
+        <div className="min-w-0 p-5 sm:p-6">
+          <div className="mb-1 flex min-w-0 items-baseline justify-between gap-2">
             <h3
               id={`product-heading-${product.slug}`}
-              className="title text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-fg"
+              className="title min-w-0 break-words text-xl font-extrabold uppercase tracking-tight text-fg sm:text-2xl [overflow-wrap:anywhere]"
             >
               <Link
                 href={productHref}
