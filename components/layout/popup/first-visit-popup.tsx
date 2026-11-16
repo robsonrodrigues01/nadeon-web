@@ -171,12 +171,8 @@ export function FirstVisitPopup({
           result.message ?? "Unable to subscribe. Please try again."
         );
       }
-    } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "An unexpected error occurred. Please try again.";
-      setServerError(message);
+    } catch {
+      setServerError("Unable to subscribe. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
