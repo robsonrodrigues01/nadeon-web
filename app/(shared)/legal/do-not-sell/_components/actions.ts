@@ -68,6 +68,7 @@ export async function submitPrivacyRequest(
     email,
     firstName,
     lastName,
+    state: stateOfResidence,
     requestType,
     details,
   });

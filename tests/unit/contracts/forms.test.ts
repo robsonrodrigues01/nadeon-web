@@ -56,6 +56,7 @@ describe("FormsProvider Contract", () => {
       firstName: "Alex",
       lastName: "Morgan",
       email: "alex.morgan@example.com",
+      state: "CA",
       requestType: "do_not_sell",
       details: "Please opt my email out from cross-context sharing.",
     });

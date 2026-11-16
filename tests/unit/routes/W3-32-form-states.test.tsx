@@ -72,6 +72,7 @@ const customer = {
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
+  submitPrivacyRequest.mockReset();
 });
 
 describe("W3-32 form states", () => {
@@ -133,6 +134,34 @@ describe("W3-32 form states", () => {
     const message = document.getElementById(messageId!);
     expect(message?.getAttribute("aria-live")).toBe("polite");
     expect(message?.textContent).toMatch(/confirm that the information/i);
+  });
+
+  it("blocks a Do Not Sell request without a state and focuses the state field", async () => {
+    submitPrivacyRequest.mockResolvedValueOnce({
+      status: "invalid",
+      error: "Select your state of residence.",
+    });
+    render(<PrivacyRequestForm />);
+    fireEvent.change(screen.getByLabelText("First name"), {
+      target: { value: "Alex" },
+    });
+    fireEvent.change(screen.getByLabelText("Last name"), {
+      target: { value: "Smith" },
+    });
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "alex@example.com" },
+    });
+    fireEvent.click(screen.getByRole("checkbox"));
+    const state = screen.getByLabelText("State of residence");
+
+    fireEvent.click(screen.getByRole("button", { name: "Submit request" }));
+
+    await waitFor(() => expect(document.activeElement).toBe(state));
+    expect(state.getAttribute("aria-invalid")).toBe("true");
+    const messageId = state.getAttribute("aria-describedby");
+    expect(messageId).toBeTruthy();
+    expect(document.getElementById(messageId!)?.textContent).toMatch(/state/i);
+    expect(submitPrivacyRequest).not.toHaveBeenCalled();
   });
 
   it("focuses and describes the first invalid newsletter field", async () => {

@@ -142,6 +142,7 @@ export function PrivacyRequestForm({
       email: data.get("email"),
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
+      state: data.get("state"),
       requestType,
       details: undefined,
     });
@@ -386,6 +387,12 @@ export function PrivacyRequestForm({
               name="state"
               required
               defaultValue=""
+              aria-invalid={invalidField === "state" || undefined}
+              aria-describedby={
+                invalidField === "state"
+                  ? "privacy-validation-error"
+                  : undefined
+              }
               className={fieldClass}
             >
               <option value="" disabled>
