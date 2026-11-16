@@ -356,7 +356,7 @@ describe("W2-34: /legal/do-not-sell route", () => {
       const res = await submitPrivacyRequest({ status: "idle" }, data);
       expect(res.status).toBe("error");
       if (res.status === "error") {
-        expect(res.error).toBe("Failed to log privacy request");
+        expect(res.error).toBe("Unable to submit request. Please try again.");
       }
     });
 
@@ -374,7 +374,7 @@ describe("W2-34: /legal/do-not-sell route", () => {
       const res = await submitPrivacyRequest({ status: "idle" }, data);
       expect(res.status).toBe("error");
       if (res.status === "error") {
-        expect(res.error).toBe("Network timeout");
+        expect(res.error).toBe("Unable to submit request. Please try again.");
       }
     });
   });

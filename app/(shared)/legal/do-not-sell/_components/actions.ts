@@ -79,7 +79,14 @@ export async function submitPrivacyRequest(
   try {
     const result = await formsProvider.sendPrivacyRequest(parsed.data);
     if (!result.success) {
-      return { status: "error", error: result.message };
+      console.error(
+        "[PrivacyRequest] Provider rejected submission:",
+        result.message
+      );
+      return {
+        status: "error",
+        error: "Unable to submit request. Please try again.",
+      };
     }
     return {
       status: "success",
@@ -88,9 +95,10 @@ export async function submitPrivacyRequest(
       requestType: parsed.data.requestType,
     };
   } catch (err) {
+    console.error("[PrivacyRequest] Submission failed:", err);
     return {
       status: "error",
-      error: err instanceof Error ? err.message : "Failed to submit request",
+      error: "Unable to submit request. Please try again.",
     };
   }
 }

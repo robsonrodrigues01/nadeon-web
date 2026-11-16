@@ -222,7 +222,10 @@ describe("W2-35: /legal/accessibility route", () => {
       );
 
       expect(result.status).toBe("error");
-      expect(result).toHaveProperty("error", "Service unavailable");
+      expect(result).toHaveProperty(
+        "error",
+        "Unable to submit feedback. Please try again."
+      );
     });
 
     it("handles unexpected provider error exception", async () => {
@@ -238,7 +241,10 @@ describe("W2-35: /legal/accessibility route", () => {
       );
 
       expect(result.status).toBe("error");
-      expect(result).toHaveProperty("error", "Network connection lost");
+      expect(result).toHaveProperty(
+        "error",
+        "Unable to submit feedback. Please try again."
+      );
     });
   });
 });

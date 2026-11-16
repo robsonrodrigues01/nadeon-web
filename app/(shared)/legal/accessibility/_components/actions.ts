@@ -66,15 +66,19 @@ export async function submitAccessibilityFeedback(
     if (res.success) {
       return { status: "success" };
     }
+    console.error(
+      "[AccessibilityFeedback] Provider rejected submission:",
+      res.message
+    );
     return {
       status: "error",
-      error: res.message || "Failed to submit feedback.",
+      error: "Unable to submit feedback. Please try again.",
     };
   } catch (err) {
+    console.error("[AccessibilityFeedback] Submission failed:", err);
     return {
       status: "error",
-      error:
-        err instanceof Error ? err.message : "An unexpected error occurred.",
+      error: "Unable to submit feedback. Please try again.",
     };
   }
 }
