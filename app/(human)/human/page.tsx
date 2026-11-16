@@ -26,6 +26,7 @@ import { HUMAN_FAQS } from "./_components/faqs-data";
 import { buildKitLines } from "./_components/kit-lines";
 import { CrossLineBanner } from "./_components/cross-line-banner";
 import { BottomCta } from "./_components/bottom-cta";
+import { toProductCardData } from "@/components/commerce/product-card/product-card-data";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
@@ -55,7 +56,7 @@ export default async function HumanPage() {
       <JsonLd data={{ ...faqLd }} id="faq-jsonld" />
       <main id="main-content" className="flex-1" tabIndex={-1}>
         <Hero energyDuoKit={energyDuoKit} kitLines={kitLines} />
-        <DailyRoutine products={products} />
+        <DailyRoutine products={products.map(toProductCardData)} />
         <AgeBands />
         <HowItWorks />
         <IngredientsSection />

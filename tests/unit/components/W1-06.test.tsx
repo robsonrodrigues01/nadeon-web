@@ -83,7 +83,26 @@ describe("W1-06 Newsletter Component", () => {
     });
   });
 
-  describe("Validation with Zod and react-hook-form", () => {
+  describe("Newsletter email validation", () => {
+    it("validates on blur and clears the error after a valid edit", async () => {
+      render(<Newsletter variant="human" provider={mockProvider} />);
+
+      const input = screen.getByLabelText(/email address/i);
+      fireEvent.change(input, { target: { value: "invalid" } });
+      fireEvent.blur(input);
+
+      expect(
+        await screen.findByText(/please enter a valid email address/i)
+      ).toBeDefined();
+
+      fireEvent.change(input, { target: { value: "valid@example.com" } });
+      await waitFor(() => {
+        expect(
+          screen.queryByText(/please enter a valid email address/i)
+        ).toBeNull();
+      });
+    });
+
     it("displays error when submitting with empty email", async () => {
       render(<Newsletter variant="human" provider={mockProvider} />);
 
