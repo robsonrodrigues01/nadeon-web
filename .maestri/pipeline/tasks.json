@@ -2131,14 +2131,15 @@
     "depende_de": [],
     "status": "para_revisao",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T01:35:22.591Z",
+    "lease_ate": null,
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Crivo4"
   },
   {
     "onda": 3,
@@ -2260,8 +2261,7 @@
     ],
     "id": "W3-39",
     "titulo": "Testes de comportamento: conta e assinaturas (skip, pause/resume, frequência, produto, quantidade, cancelamento) e perfil (salvar, excluir conta)",
-    "branch": "agy/W3-39",
-    "revisor": "Prisma5"
+    "branch": "agy/W3-39"
   },
   {
     "onda": 3,
@@ -2322,7 +2322,7 @@
     "id": "W3-42",
     "titulo": "Fronteira cliente global: carregar sob demanda popup, modal de cookies, gaveta do carrinho e newsletter (next/dynamic)",
     "branch": "agy/W3-42",
-    "nota": "re-revisão com Prisma5 após W3-45"
+    "revisor": "Atalaia"
   },
   {
     "onda": 3,
@@ -2374,17 +2374,16 @@
     "depende_de": [
       "W3-39"
     ],
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Paleta",
-    "lease_ate": null,
+    "lease_ate": "2026-11-16T04:28:06.953Z",
     "branch": "agy/W3-45",
     "pr": "local",
     "criterios": [
       "it.fails correspondentes viram testes que passam",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Prisma5"
+    ]
   },
   {
     "id": "W3-46",
@@ -2499,7 +2498,8 @@
     "criterios": [
       "typecheck e playwright --list",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lupa3"
   },
   {
     "id": "W3-52",
@@ -2512,14 +2512,15 @@
     ],
     "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:41:36.006Z",
+    "lease_ate": null,
     "branch": "agy/W3-52",
     "pr": "local",
     "criterios": [
       "kB antes/depois medidos",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Prisma5"
   },
   {
     "id": "W3-53",
@@ -2544,7 +2545,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "para_revisao",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:42:20.988Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "reproduzido e corrigido, medido no portal",
@@ -2565,7 +2566,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "para_revisao",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T01:41:49.813Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "reproduzido e corrigido, medido no portal",
@@ -2577,7 +2578,8 @@
     "depende_de": [
       "W3-50"
     ],
-    "branch": "agy/W3-55"
+    "branch": "agy/W3-55",
+    "revisor": "Lente4"
   },
   {
     "id": "W3-56",
@@ -2590,14 +2592,15 @@
     ],
     "status": "para_revisao",
     "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T01:49:42.733Z",
+    "lease_ate": null,
     "branch": "agy/W3-56",
     "pr": "local",
     "criterios": [
       "script da W3-53 sem achados nas rotas tocadas",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Régua3"
   },
   {
     "id": "W3-58",
@@ -2608,9 +2611,9 @@
     "depende_de": [
       "W3-49"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T01:45:29.300Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2625,14 +2628,34 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Revisão de segurança de novo, após W3-28/29/42/45/48 (fila permanente #12)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T01:36:43.102Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
       "SECURITY.md",
       "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-60",
+    "onda": 3,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Achados da revisão de segurança W3-59 (PII em logs de erro, validação incompleta, escrita de log) e médios da W3-58 (/help)",
+    "depende_de": [
+      "W3-59",
+      "W3-58"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T04:28:07.376Z",
+    "branch": "agy/W3-60",
+    "pr": null,
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
     ]
   }
 ]
