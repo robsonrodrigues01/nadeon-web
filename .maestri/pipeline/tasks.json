@@ -2354,7 +2354,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:25:40.737Z",
+    "lease_ate": "2026-11-16T01:27:03.971Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
@@ -2420,7 +2420,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "aguarda revisor (não Lente4)"
+    "revisor": "Crivo4"
   },
   {
     "id": "W3-48",
@@ -2472,7 +2472,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:25:30.879Z",
+    "lease_ate": "2026-11-16T01:26:41.590Z",
     "branch": null,
     "pr": null,
     "criterios": [
