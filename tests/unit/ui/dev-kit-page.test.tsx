@@ -68,13 +68,13 @@ describe("/dev/kit Page", () => {
     expect(mockNotFound).toHaveBeenCalledTimes(1);
   });
 
-  it("allows access in preview mode even with NODE_ENV=production", async () => {
+  it("returns 404 in production even with preview and DEV_KIT flags", async () => {
     (process.env as Record<string, string | undefined>).NODE_ENV = "production";
     process.env.VERCEL_ENV = "preview";
+    process.env.DEV_KIT = "1";
 
-    const jsx = await DevKitPage();
-    expect(jsx).toBeDefined();
-    expect(mockNotFound).not.toHaveBeenCalled();
+    await expect(DevKitPage()).rejects.toThrow("NEXT_NOT_FOUND");
+    expect(mockNotFound).toHaveBeenCalledTimes(1);
   });
 
   it("renders successfully in development mode with both themes, typography scale, tokens, and components", async () => {
