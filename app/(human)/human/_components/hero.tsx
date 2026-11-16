@@ -125,8 +125,9 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                     alt="BioHack NMN 500 mg"
                     width={128}
                     height={128}
+                    sizes="(max-width: 639px) 96px, 128px"
+                    preload
                     className="object-contain"
-                    loading="eager"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -143,6 +144,7 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                     alt="Full Charge NMN 4-in-1"
                     width={128}
                     height={128}
+                    sizes="(max-width: 639px) 96px, 128px"
                     className="object-contain"
                   />
                 </div>
