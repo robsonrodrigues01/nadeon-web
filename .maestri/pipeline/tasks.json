@@ -2701,16 +2701,15 @@
     "depende_de": [
       "W3-32"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T04:51:03.122Z",
+    "lease_ate": null,
     "branch": "agy/W3-63",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Régua3"
+    ]
   },
   {
     "id": "W3-64",
