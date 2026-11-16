@@ -110,6 +110,7 @@ export default async function CancelSubscriptionPage({
                     <Image
                       src={image}
                       alt=""
+                      aria-hidden="true"
                       width={56}
                       height={56}
                       className="h-full w-full object-cover"

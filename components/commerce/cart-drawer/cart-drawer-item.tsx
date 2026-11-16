@@ -92,6 +92,7 @@ export function CartDrawerItem({ item, cartProvider }: CartDrawerItemProps) {
             alt={item.product.title}
             width={80}
             height={80}
+            sizes="(min-width: 640px) 84px, 80px"
             className="w-full h-full object-contain p-1"
           />
         ) : (

@@ -111,7 +111,8 @@ export function BundleSection({ kit, kitLines = [] }: BundleSectionProps) {
                     alt="BioHack NMN 500 mg"
                     width={144}
                     height={144}
-                    className="object-contain"
+                    sizes="(min-width: 640px) 144px, 96px"
+                    className="h-full w-full object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-base font-bold text-fg">
@@ -129,7 +130,8 @@ export function BundleSection({ kit, kitLines = [] }: BundleSectionProps) {
                     alt="Renew NAD+ and Resveratrol"
                     width={144}
                     height={144}
-                    className="object-contain"
+                    sizes="(min-width: 640px) 144px, 96px"
+                    className="h-full w-full object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-base font-bold text-fg">

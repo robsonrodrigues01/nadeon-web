@@ -91,7 +91,6 @@ export function ProductCard({
               width={240}
               height={240}
               className="max-h-full max-w-full object-contain"
-              priority={false}
             />
           </Link>
 
