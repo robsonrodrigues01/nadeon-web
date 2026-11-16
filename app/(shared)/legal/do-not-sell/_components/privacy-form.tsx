@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useActionState } from "react";
 import Link from "next/link";
+import { PrivacyRequestInputSchema } from "@/lib/contracts/forms";
 import { submitPrivacyRequest, type PrivacyFormState } from "./actions";
 
 const US_STATES = [
@@ -95,6 +96,8 @@ export function PrivacyRequestForm({
   const [selectedType, setSelectedType] = useState<string>("do_not_sell");
   const [requestorType, setRequestorType] = useState<string>("consumer");
   const [resetKey, setResetKey] = useState<number>(0);
+  const [clientError, setClientError] = useState("");
+  const [invalidField, setInvalidField] = useState("");
 
   const [state, formAction, isPending] = useActionState(
     submitPrivacyRequest,
@@ -103,9 +106,60 @@ export function PrivacyRequestForm({
   const statusRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (state.status === "invalid" || state.status === "error")
+    if (
+      !clientError &&
+      (state.status === "invalid" || state.status === "error")
+    )
       statusRef.current?.focus();
-  }, [state.status]);
+  }, [state.status, clientError]);
+
+  function validate(event: React.FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    function focusField(name: string) {
+      const control = form.elements.namedItem(name);
+      const target = control instanceof RadioNodeList ? control[0] : control;
+      if (target instanceof HTMLElement) target.focus();
+    }
+    if (!data.get("confirmAccuracy")) {
+      event.preventDefault();
+      setClientError(
+        "Please confirm that the information provided is accurate."
+      );
+      setInvalidField("confirmAccuracy");
+      focusField("confirmAccuracy");
+      return;
+    }
+
+    const rawRequestType = String(data.get("requestType") ?? "do_not_sell");
+    const requestType =
+      rawRequestType === "correct"
+        ? "opt_out"
+        : rawRequestType === "access" || rawRequestType === "delete"
+          ? rawRequestType
+          : "do_not_sell";
+    const parsed = PrivacyRequestInputSchema.safeParse({
+      email: data.get("email"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      requestType,
+      details: undefined,
+    });
+    if (parsed.success) {
+      setClientError("");
+      setInvalidField("");
+      return;
+    }
+
+    event.preventDefault();
+    const field = String(parsed.error.issues[0]?.path[0] ?? "email");
+    setClientError(
+      parsed.error.issues[0]?.message ||
+        "Please fill in all required fields and try again."
+    );
+    setInvalidField(field);
+    focusField(field);
+  }
 
   function handleReset() {
     setSelectedType("do_not_sell");
@@ -237,6 +291,13 @@ export function PrivacyRequestForm({
       <form
         key={resetKey}
         action={formAction}
+        onSubmit={validate}
+        onChange={() => {
+          if (clientError) {
+            setClientError("");
+            setInvalidField("");
+          }
+        }}
         noValidate
         className="mt-6 flex flex-col gap-6"
       >
@@ -360,6 +421,12 @@ export function PrivacyRequestForm({
                 required
                 autoComplete="given-name"
                 placeholder="First name"
+                aria-invalid={invalidField === "firstName" || undefined}
+                aria-describedby={
+                  invalidField === "firstName"
+                    ? "privacy-validation-error"
+                    : undefined
+                }
                 className={fieldClass}
               />
             </div>
@@ -375,6 +442,12 @@ export function PrivacyRequestForm({
                 required
                 autoComplete="family-name"
                 placeholder="Last name"
+                aria-invalid={invalidField === "lastName" || undefined}
+                aria-describedby={
+                  invalidField === "lastName"
+                    ? "privacy-validation-error"
+                    : undefined
+                }
                 className={fieldClass}
               />
             </div>
@@ -390,6 +463,12 @@ export function PrivacyRequestForm({
                 required
                 autoComplete="email"
                 placeholder="you@email.com"
+                aria-invalid={invalidField === "email" || undefined}
+                aria-describedby={
+                  invalidField === "email"
+                    ? "privacy-validation-error"
+                    : undefined
+                }
                 className={fieldClass}
               />
               <p className="text-xs text-fg-muted">
@@ -476,6 +555,12 @@ export function PrivacyRequestForm({
             type="checkbox"
             name="confirmAccuracy"
             required
+            aria-invalid={invalidField === "confirmAccuracy" || undefined}
+            aria-describedby={
+              invalidField === "confirmAccuracy"
+                ? "privacy-validation-error"
+                : undefined
+            }
             className="size-5 mt-0.5 accent-accent shrink-0"
           />
           <span className="text-fg leading-relaxed">
@@ -499,19 +584,23 @@ export function PrivacyRequestForm({
         </div>
 
         <p
+          id="privacy-validation-error"
           ref={statusRef}
           tabIndex={-1}
           role="status"
           aria-live="polite"
           className="text-sm"
         >
-          {state.status === "invalid" && (
+          {clientError && (
+            <span className="text-red-600 font-medium">{clientError}</span>
+          )}
+          {!clientError && state.status === "invalid" && (
             <span className="text-red-600 font-medium">
               {state.error ||
                 "Please fill in all required fields and try again."}
             </span>
           )}
-          {state.status === "error" && (
+          {!clientError && state.status === "error" && (
             <span className="text-red-600 font-medium">
               {state.error ||
                 "An error occurred while submitting your request. Please try again."}

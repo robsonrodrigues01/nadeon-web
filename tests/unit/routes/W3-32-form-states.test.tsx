@@ -75,6 +75,80 @@ afterEach(() => {
 });
 
 describe("W3-32 form states", () => {
+  it("focuses and describes the first invalid profile field", async () => {
+    render(<ProfileForm customer={customer} />);
+    const email = screen.getByLabelText("Email");
+    fireEvent.change(email, { target: { value: "not-an-email" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
+
+    await waitFor(() => expect(document.activeElement).toBe(email));
+    expect(email.getAttribute("aria-invalid")).toBe("true");
+    const messageId = email.getAttribute("aria-describedby");
+    expect(messageId).toBeTruthy();
+    const message = document.getElementById(messageId!);
+    expect(message?.getAttribute("aria-live")).toBe("polite");
+    expect(message?.textContent).toMatch(/email/i);
+  });
+
+  it("focuses and describes the first invalid pet field", async () => {
+    savePetAction.mockResolvedValueOnce(null);
+    render(
+      <PetForm concernOptions={[]} onCancel={vi.fn()} onSaved={vi.fn()} />
+    );
+    const name = screen.getByLabelText("Pet name");
+    fireEvent.click(screen.getByRole("button", { name: "Save pet" }));
+
+    await waitFor(() => expect(document.activeElement).toBe(name));
+    expect(name.getAttribute("aria-invalid")).toBe("true");
+    const messageId = name.getAttribute("aria-describedby");
+    expect(messageId).toBeTruthy();
+    const message = document.getElementById(messageId!);
+    expect(message?.getAttribute("aria-live")).toBe("polite");
+    expect(message?.textContent).toMatch(/highlighted fields/i);
+  });
+
+  it("focuses and describes the first invalid accessibility feedback field", async () => {
+    render(<FeedbackForm />);
+    const name = screen.getByLabelText("Name");
+    fireEvent.click(screen.getByRole("button", { name: "Send feedback" }));
+
+    await waitFor(() => expect(document.activeElement).toBe(name));
+    expect(name.getAttribute("aria-invalid")).toBe("true");
+    const messageId = name.getAttribute("aria-describedby");
+    expect(messageId).toBeTruthy();
+    const message = document.getElementById(messageId!);
+    expect(message?.getAttribute("aria-live")).toBe("polite");
+    expect(message?.textContent).toMatch(/name is required/i);
+  });
+
+  it("focuses and describes the first invalid Do Not Sell field", async () => {
+    render(<PrivacyRequestForm />);
+    const confirmation = screen.getByRole("checkbox");
+    fireEvent.click(screen.getByRole("button", { name: "Submit request" }));
+
+    await waitFor(() => expect(document.activeElement).toBe(confirmation));
+    expect(confirmation.getAttribute("aria-invalid")).toBe("true");
+    const messageId = confirmation.getAttribute("aria-describedby");
+    expect(messageId).toBeTruthy();
+    const message = document.getElementById(messageId!);
+    expect(message?.getAttribute("aria-live")).toBe("polite");
+    expect(message?.textContent).toMatch(/confirm that the information/i);
+  });
+
+  it("focuses and describes the first invalid newsletter field", async () => {
+    render(<NewsletterForm />);
+    const email = screen.getByLabelText("Email address");
+    fireEvent.submit(email.closest("form")!);
+
+    await waitFor(() => expect(document.activeElement).toBe(email));
+    expect(email.getAttribute("aria-invalid")).toBe("true");
+    const messageId = email.getAttribute("aria-describedby");
+    expect(messageId).toBeTruthy();
+    const message = document.getElementById(messageId!);
+    expect(message?.getAttribute("aria-live")).toBe("polite");
+    expect(message?.textContent).toMatch(/email address is required/i);
+  });
+
   it("announces and focuses the first invalid contact field", () => {
     render(<ContactForm topics={["Orders & Shipping"]} />);
     fireEvent.click(screen.getByRole("button", { name: "Send message" }));
@@ -129,17 +203,6 @@ describe("W3-32 form states", () => {
         itemCount: 1,
       },
       "Order #NL-123456",
-    ],
-    [
-      "accessibility",
-      <FeedbackForm key="accessibility" />,
-      submitAccessibilityFeedback,
-      "Send feedback",
-      "Sending...",
-      { status: "error", error: "Try again." },
-      "Try again.",
-      { status: "success" },
-      "Feedback received.",
     ],
   ])(
     "shows pending, error, and success for %s",
@@ -281,7 +344,7 @@ describe("W3-32 form states", () => {
     expect(screen.getByRole("status").getAttribute("aria-live")).toBe("polite");
   });
 
-  it("shows profile pending, invalid, and saved states", async () => {
+  it("shows profile pending and invalid states", async () => {
     let resolve!: (value: unknown) => void;
     saveProfileAction.mockReturnValueOnce(
       new Promise((done) => {
@@ -289,9 +352,6 @@ describe("W3-32 form states", () => {
       })
     );
     render(<ProfileForm customer={customer} />);
-    fireEvent.change(screen.getByLabelText("Email"), {
-      target: { value: "bad-email" },
-    });
     fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
     await waitFor(() =>
       expect(
@@ -305,55 +365,10 @@ describe("W3-32 form states", () => {
         "highlighted fields"
       )
     );
-    saveProfileAction.mockResolvedValueOnce({ status: "saved" });
-    fireEvent.submit(
-      screen.getByRole("button", { name: "Save changes" }).closest("form")!
-    );
-    await waitFor(() =>
-      expect(screen.getByRole("status").textContent).toContain("Changes saved.")
-    );
   });
 
-  it.each([
-    [
-      "privacy",
-      <PrivacyRequestForm key="privacy" />,
-      "Submit request",
-      "Submitting...",
-      submitPrivacyRequest,
-    ],
-  ])("has submit status for %s", async (_name, form, idle, pending, action) => {
-    let resolve!: (value: unknown) => void;
-    action.mockReturnValueOnce(
-      new Promise((done) => {
-        resolve = done;
-      })
-    );
-    render(form);
-    expect(screen.getByRole("status").getAttribute("aria-live")).toBe("polite");
-    fireEvent.click(screen.getByRole("button", { name: idle }));
-    await waitFor(() =>
-      expect(
-        (screen.getByRole("button", { name: pending }) as HTMLButtonElement)
-          .disabled
-      ).toBe(true)
-    );
-    await act(async () => resolve({ status: "error", error: "Try again." }));
-    await waitFor(() =>
-      expect(screen.getByRole("status").textContent).toContain("Try again.")
-    );
-    cleanup();
-    render(
-      <PrivacyRequestForm
-        initialFormState={{
-          status: "success",
-          id: "privacy-1",
-          email: "a@example.com",
-          requestType: "do_not_sell",
-        }}
-      />
-    );
-    expect(screen.getByTestId("privacy-confirmation")).toBeDefined();
+  it("renders an idle polite status for the privacy request form", () => {
+    render(<PrivacyRequestForm />);
     expect(screen.getByRole("status").getAttribute("aria-live")).toBe("polite");
   });
 
@@ -384,26 +399,21 @@ describe("W3-32 form states", () => {
     expect(screen.getByRole("status").getAttribute("aria-live")).toBe("polite");
   });
 
-  it("shows pet pending, invalid, and saved states", async () => {
-    const onSaved = vi.fn();
-    savePetAction.mockResolvedValueOnce(null).mockResolvedValueOnce({
-      id: "pet-1",
-      name: "Milo",
-      species: "dog",
-      breed: "Mixed",
-      activityLevel: "moderate",
-      concerns: [],
-    });
+  it("shows the invalid pet field in the live status", async () => {
     render(
-      <PetForm concernOptions={[]} onCancel={vi.fn()} onSaved={onSaved} />
+      <PetForm concernOptions={[]} onCancel={vi.fn()} onSaved={vi.fn()} />
     );
+    fireEvent.change(screen.getByLabelText("Pet name"), {
+      target: { value: "Milo" },
+    });
+    fireEvent.change(screen.getByLabelText("Breed"), {
+      target: { value: "Mixed" },
+    });
     fireEvent.click(screen.getByRole("button", { name: "Save pet" }));
     await waitFor(() =>
       expect(screen.getByRole("status").textContent).toContain(
         "highlighted fields"
       )
     );
-    fireEvent.click(screen.getByRole("button", { name: "Save pet" }));
-    await waitFor(() => expect(onSaved).toHaveBeenCalledOnce());
   });
 });

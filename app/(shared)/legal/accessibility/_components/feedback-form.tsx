@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useActionState } from "react";
 import { submitAccessibilityFeedback, type FeedbackFormState } from "./actions";
+import { FeedbackInputSchema } from "./schema";
 
 const inputClass =
   "min-h-11 w-full rounded-field border border-border bg-bg-elevated px-4 py-3 text-fg placeholder:text-fg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
@@ -16,13 +17,46 @@ export function FeedbackForm() {
     customState
   );
 
+  const [clientError, setClientError] = useState("");
+  const [invalidField, setInvalidField] = useState("");
   const activeState = customState.status !== "idle" ? customState : serverState;
   const statusRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (activeState.status === "invalid" || activeState.status === "error")
+    if (
+      !clientError &&
+      (activeState.status === "invalid" || activeState.status === "error")
+    )
       statusRef.current?.focus();
-  }, [activeState.status]);
+  }, [activeState.status, clientError]);
+
+  function validate(event: React.FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const parsed = FeedbackInputSchema.safeParse({
+      name: data.get("name"),
+      email: data.get("email"),
+      pageOrFeature: data.get("pageOrFeature") || undefined,
+      description: data.get("description"),
+      preferredReply: data.get("preferredReply") || undefined,
+      assistiveTech: data.get("assistiveTech") || undefined,
+    });
+    if (parsed.success) {
+      setClientError("");
+      setInvalidField("");
+      return;
+    }
+
+    event.preventDefault();
+    const field = String(parsed.error.issues[0]?.path[0] ?? "name");
+    setClientError(
+      parsed.error.issues[0]?.message ||
+        "Please fill in all required fields and try again."
+    );
+    setInvalidField(field);
+    const invalidControl = form.elements.namedItem(field);
+    if (invalidControl instanceof HTMLElement) invalidControl.focus();
+  }
 
   if (activeState.status === "success") {
     return (
@@ -76,7 +110,18 @@ export function FeedbackForm() {
         Tell us about a barrier
       </h3>
 
-      <form action={formAction} noValidate className="mt-6 flex flex-col gap-5">
+      <form
+        action={formAction}
+        onSubmit={validate}
+        onChange={() => {
+          if (clientError) {
+            setClientError("");
+            setInvalidField("");
+          }
+        }}
+        noValidate
+        className="mt-6 flex flex-col gap-5"
+      >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {/* Name */}
           <div className="flex flex-col gap-1.5">
@@ -93,6 +138,12 @@ export function FeedbackForm() {
               required
               autoComplete="name"
               placeholder="Your name"
+              aria-invalid={invalidField === "name" || undefined}
+              aria-describedby={
+                invalidField === "name"
+                  ? "feedback-validation-error"
+                  : undefined
+              }
               className={inputClass}
             />
           </div>
@@ -112,6 +163,12 @@ export function FeedbackForm() {
               required
               autoComplete="email"
               placeholder="you@email.com"
+              aria-invalid={invalidField === "email" || undefined}
+              aria-describedby={
+                invalidField === "email"
+                  ? "feedback-validation-error"
+                  : undefined
+              }
               className={inputClass}
             />
           </div>
@@ -147,6 +204,12 @@ export function FeedbackForm() {
               required
               rows={4}
               placeholder="What happened and what you were trying to do"
+              aria-invalid={invalidField === "description" || undefined}
+              aria-describedby={
+                invalidField === "description"
+                  ? "feedback-validation-error"
+                  : undefined
+              }
               className="w-full rounded-field border border-border bg-bg-elevated px-4 py-3 text-fg placeholder:text-fg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent resize-y min-h-[100px]"
             />
           </div>
@@ -201,19 +264,25 @@ export function FeedbackForm() {
         </div>
 
         <p
+          id="feedback-validation-error"
           ref={statusRef}
           tabIndex={-1}
           role="status"
           aria-live="polite"
           className="text-sm"
         >
-          {activeState.status === "invalid" && (
+          {clientError && (
+            <span className="text-product-coral font-medium">
+              {clientError}
+            </span>
+          )}
+          {!clientError && activeState.status === "invalid" && (
             <span className="text-product-coral font-medium">
               {activeState.error ||
                 "Please fill in all required fields and try again."}
             </span>
           )}
-          {activeState.status === "error" && (
+          {!clientError && activeState.status === "error" && (
             <span className="text-product-coral font-medium">
               {activeState.error ||
                 "An error occurred while submitting feedback. Please try again."}

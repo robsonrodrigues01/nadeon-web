@@ -1,7 +1,7 @@
 "use server";
 
-import { z } from "zod";
 import { formsProvider } from "@/lib/providers";
+import { FeedbackInputSchema } from "./schema";
 
 export type FeedbackFormState =
   | { status: "idle" }
@@ -9,20 +9,11 @@ export type FeedbackFormState =
   | { status: "invalid"; error?: string }
   | { status: "error"; error?: string };
 
-const FeedbackSchema = z.object({
-  name: z.string().trim().min(1, "Name is required"),
-  email: z.string().trim().email("Valid email is required"),
-  pageOrFeature: z.string().trim().optional(),
-  description: z.string().trim().min(1, "Please describe the issue"),
-  preferredReply: z.string().trim().optional(),
-  assistiveTech: z.string().trim().optional(),
-});
-
 export async function submitAccessibilityFeedback(
   _previousState: FeedbackFormState,
   formData: FormData
 ): Promise<FeedbackFormState> {
-  const parsed = FeedbackSchema.safeParse({
+  const parsed = FeedbackInputSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
     pageOrFeature: formData.get("pageOrFeature") || undefined,
