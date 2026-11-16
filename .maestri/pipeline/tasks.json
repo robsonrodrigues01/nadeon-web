@@ -2131,7 +2131,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T01:19:59.093Z",
+    "lease_ate": "2026-11-16T01:28:52.614Z",
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
@@ -2410,7 +2410,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "forms.test.ts instável: não depender da última linha do arquivo compartilhado forms-mock.jsonl (usar caminho temporário por teste ou spy)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Lente4",
     "lease_ate": null,
     "branch": "agy/W3-47",
@@ -2430,11 +2430,11 @@
     "depende_de": [
       "W3-30"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:21:54.399Z",
+    "lease_ate": "2026-11-16T01:28:54.772Z",
     "branch": "agy/W3-48",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "só remoção comprovada por grep e tsc",
       "pnpm gate verde",
@@ -2452,7 +2452,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T01:21:37.662Z",
+    "lease_ate": "2026-11-16T01:29:06.808Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -2471,7 +2471,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:27:53.058Z",
+    "lease_ate": "2026-11-16T01:29:04.007Z",
     "branch": null,
     "pr": null,
     "criterios": [
