@@ -51,9 +51,10 @@ export function SearchResultItem({
     >
       <Image
         src={imageSrc}
-        alt=""
+        alt={`${product.name} - ${product.technicalName}`}
         width={120}
         height={120}
+        sizes="(min-width: 640px) 120px, 96px"
         className="h-24 w-24 shrink-0 object-contain sm:h-30 sm:w-30"
       />
 

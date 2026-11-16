@@ -226,7 +226,7 @@ export function TermsContent() {
         </aside>
 
         {/* Main Article Content */}
-        <article className="flex-1 max-w-3xl">
+        <article className="w-full min-w-0 flex-1 max-w-3xl">
           {/* Intro paragraph */}
           <p className="text-lg sm:text-xl font-medium leading-relaxed mb-10 text-fg">
             Placeholder intro. These Terms of Service govern your use of
@@ -430,9 +430,7 @@ export function TermsContent() {
             <div className="rounded-card overflow-hidden border border-border bg-bg-elevated mb-4 shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
-                  <caption className="sr-only">
-                    Refund processing timelines by payment method
-                  </caption>
+                  <caption className="sr-only">Refunds</caption>
                   <thead
                     data-theme="human"
                     className="bg-bg text-fg text-xs font-bold uppercase tracking-wider"

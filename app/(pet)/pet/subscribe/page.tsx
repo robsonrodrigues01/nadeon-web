@@ -21,21 +21,21 @@ import { SubscriptionFaq } from "./_components/subscription-faq";
 import { buildSubscriptionFaqs } from "./_components/subscription-faq-data";
 import { BottomCta } from "./_components/bottom-cta";
 import { PetRegulatoryNotice } from "../_components/pet-regulatory-notice";
+import { getSubscriptionDiscountPercentage } from "@/lib/subscriptions/plan-utils";
 import {
-  getSubscriptionDiscountPercentage,
   getSubscriptionIntervals,
   formatIntervalsText,
-  getUniqueSellingPlans,
-  getProductSubscriptionDiscount,
 } from "./_components/plan-utils";
 
 export {
   getSubscriptionDiscountPercentage,
+  getProductSubscriptionDiscount,
+  getUniqueSellingPlans,
+} from "@/lib/subscriptions/plan-utils";
+export {
   getSubscriptionIntervals,
   formatIntervalsText,
-  getUniqueSellingPlans,
-  getProductSubscriptionDiscount,
-};
+} from "./_components/plan-utils";
 
 export const getSubscriptionDiscount = getSubscriptionDiscountPercentage;
 

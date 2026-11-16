@@ -29,6 +29,7 @@ import {
   BottomCtaBanner,
   PetRegulatoryNotice,
 } from "./_components";
+import { toProductCardData } from "@/components/commerce/product-card/product-card-data";
 
 export const metadata: Metadata = buildMetadata({
   title: "Nadeon Pet | Cellular Longevity for Dogs, Cats & Horses",
@@ -66,7 +67,7 @@ export default async function PetPage() {
         <WhoForSection />
         <ShopByNeedSection />
         <DoseByWeightSection />
-        <BestSellersSection products={petProducts} />
+        <BestSellersSection products={petProducts.map(toProductCardData)} />
         <TasteTestSection />
         <ByLifeStageSection />
         <WhyNmnSection />

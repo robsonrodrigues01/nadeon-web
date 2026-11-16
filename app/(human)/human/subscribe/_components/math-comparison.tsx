@@ -2,7 +2,7 @@ import React from "react";
 import type { Product } from "@/lib/contracts/catalog";
 import type { Market } from "@/lib/market/types";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
-import { getProductSubscriptionDiscount } from "./plan-utils";
+import { getProductSubscriptionDiscount } from "@/lib/subscriptions/plan-utils";
 
 export interface MathComparisonProps {
   products: Product[];

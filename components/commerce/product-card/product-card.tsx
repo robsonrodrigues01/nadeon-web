@@ -3,16 +3,17 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Product } from "@/lib/contracts/catalog";
 import type { Cart, CartProvider } from "@/lib/contracts/cart";
 import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
 import { useMarket } from "@/lib/market/context";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { Button } from "@/components/ui/button";
 import { Claim } from "./claim";
+import type { ProductCardData } from "./product-card-data";
 
 export interface ProductCardProps {
-  product: Product;
+  product: ProductCardData;
+  headingLevel?: 2 | 3;
   className?: string;
   cartProvider?: CartProvider;
   onAddToCartSuccess?: (cart: Cart) => void;
@@ -20,6 +21,7 @@ export interface ProductCardProps {
 
 export function ProductCard({
   product,
+  headingLevel = 3,
   className = "",
   cartProvider = defaultCartProvider,
   onAddToCartSuccess,
@@ -41,6 +43,7 @@ export function ProductCard({
   const isPet = product.line === "pet";
   const isEquine = product.species === "horse";
   const productHref = `/${isPet ? "pet" : "human"}/products/${product.slug}`;
+  const ProductHeading = headingLevel === 2 ? "h2" : "h3";
 
   // Primary image fallback or first image
   const imageSrc =
@@ -88,10 +91,9 @@ export function ProductCard({
             <Image
               src={imageSrc}
               alt={`${product.name} - ${product.technicalName}`}
-              width={240}
-              height={240}
-              className="max-h-full max-w-full object-contain"
-              priority={false}
+              fill
+              sizes="(min-width: 1280px) 272px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+              className="object-contain"
             />
           </Link>
 
@@ -104,7 +106,7 @@ export function ProductCard({
         {/* Content details */}
         <div className="min-w-0 p-5 sm:p-6">
           <div className="mb-1 flex min-w-0 items-baseline justify-between gap-2">
-            <h3
+            <ProductHeading
               id={`product-heading-${product.slug}`}
               className="title min-w-0 break-words text-xl font-extrabold uppercase tracking-tight text-fg sm:text-2xl [overflow-wrap:anywhere]"
             >
@@ -114,7 +116,7 @@ export function ProductCard({
               >
                 {product.name}
               </Link>
-            </h3>
+            </ProductHeading>
           </div>
 
           <p className="text-sm text-fg-muted font-medium mb-3 line-clamp-2">

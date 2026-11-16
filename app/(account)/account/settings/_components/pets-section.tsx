@@ -39,6 +39,7 @@ export function PetsSection({
     setPets(initialPets);
   }
   const [editing, setEditing] = useState<Editing>(null);
+  const [saveMessage, setSaveMessage] = useState("");
   const [selectedId, setSelectedId] = useState<string | undefined>(
     initialPets[0]?.id
   );
@@ -56,6 +57,7 @@ export function PetsSection({
       return [...current, view];
     });
     setSelectedId((current) => current ?? view.id);
+    setSaveMessage("Pet saved.");
     setEditing(null);
   }
 
@@ -166,6 +168,11 @@ export function PetsSection({
           </li>
         ))}
       </ul>
+      {saveMessage ? (
+        <p role="status" aria-live="polite" className="sr-only">
+          {saveMessage}
+        </p>
+      ) : null}
 
       {editing !== null ? (
         <div id="pet-form-panel">

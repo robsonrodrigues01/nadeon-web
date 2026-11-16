@@ -88,7 +88,7 @@ export function CartEmpty({
                         src={product.image}
                         alt={product.name}
                         fill
-                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        sizes="(min-width: 1024px) calc((min(1152px, 100vw - 64px) - 72px) / 4), (min-width: 640px) calc((100vw - 88px) / 2), calc(100vw - 32px)"
                         className="object-contain p-6"
                       />
                     )}

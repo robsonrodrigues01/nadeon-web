@@ -39,17 +39,10 @@ function parseProfile(formData: FormData): ProfileInput | null {
   return parsed.data;
 }
 
-// Entrada inválida não grava nada; a página não tem texto de erro no design.
-export async function saveProfileAction(formData: FormData): Promise<void> {
-  const parsed = parseProfile(formData);
-  if (!parsed) return;
-
-  await accountProvider.updateProfile(parsed);
-  revalidatePath("/account/settings");
-}
-
 export type ProfileFormState =
   | { status: "idle" }
+  | { status: "saved" }
+  | { status: "invalid"; message?: string }
   | { status: "success"; profile: CustomerProfile; message: string }
   | { status: "error"; message: string };
 
@@ -60,7 +53,7 @@ export async function saveProfileWithFeedback(
   const parsed = parseProfile(formData);
   if (!parsed) {
     return {
-      status: "error",
+      status: "invalid",
       message: "Please check your profile details and try again.",
     };
   }
@@ -75,6 +68,19 @@ export async function saveProfileWithFeedback(
       message: "We couldn't save your profile. Please try again.",
     };
   }
+}
+
+export async function saveProfileFormAction(
+  previousState: ProfileFormState,
+  formData: FormData
+): Promise<ProfileFormState> {
+  return saveProfileWithFeedback(previousState, formData);
+}
+
+export async function saveProfileAction(
+  formData: FormData
+): Promise<ProfileFormState> {
+  return saveProfileWithFeedback({ status: "idle" }, formData);
 }
 
 export async function signOutAction(): Promise<void> {

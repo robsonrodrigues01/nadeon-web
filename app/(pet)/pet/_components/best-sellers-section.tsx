@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import type { Product } from "@/lib/contracts/catalog";
 import { ProductCard } from "@/components/commerce/product-card";
+import type { ProductCardData } from "@/components/commerce/product-card/product-card-data";
 
 export interface BestSellersSectionProps {
-  products: Product[];
+  products: ProductCardData[];
 }
 
 type TabType = "Chews" | "Treats" | "Oils" | "Powder";

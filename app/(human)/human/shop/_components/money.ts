@@ -10,14 +10,3 @@ export function formatMoney(money: Money, locale = "en-US"): string {
     currency: money.currencyCode,
   }).format(money.amount);
 }
-
-export function formatAmount(
-  amount: number,
-  currencyCode = "USD",
-  locale = "en-US"
-): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currencyCode,
-  }).format(amount);
-}

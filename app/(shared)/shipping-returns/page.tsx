@@ -590,9 +590,9 @@ export default async function ShippingReturnsPage() {
                   >
                     {item.step}
                   </span>
-                  <h4 className="mt-4 font-archivo text-lg font-bold text-fg">
+                  <h3 className="mt-4 font-archivo text-lg font-bold text-fg">
                     {item.title}
-                  </h4>
+                  </h3>
                   <p className="mt-2 text-xs leading-relaxed text-fg-muted sm:text-sm">
                     {item.description}
                   </p>

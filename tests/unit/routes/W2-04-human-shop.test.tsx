@@ -117,6 +117,15 @@ describe("W2-04: /human/shop Route & Components", () => {
   });
 
   describe("ShopCollection Component (Filters, Sort, Products, Compare)", () => {
+    it("uses level-two headings for top-level product cards", async () => {
+      const products = await mockCatalogProvider.getProducts({ line: "human" });
+      render(<ShopCollection products={products} />);
+
+      expect(
+        screen.getByRole("heading", { level: 2, name: "BioHack" })
+      ).toBeTruthy();
+    });
+
     it("renders format filter buttons with counts and handles filtering", async () => {
       const products = await mockCatalogProvider.getProducts({ line: "human" });
       render(<ShopCollection products={products} />);
@@ -143,26 +152,26 @@ describe("W2-04: /human/shop Route & Components", () => {
       expect(allBtn.getAttribute("aria-pressed")).toBe("false");
       expect(screen.getByText("3 products")).toBeTruthy();
       expect(
-        screen.getByRole("heading", { level: 3, name: "BioHack" })
+        screen.getByRole("heading", { level: 2, name: "BioHack" })
       ).toBeTruthy();
       expect(
-        screen.getByRole("heading", { level: 3, name: "Full Charge" })
+        screen.getByRole("heading", { level: 2, name: "Full Charge" })
       ).toBeTruthy();
       expect(
-        screen.getByRole("heading", { level: 3, name: "Renew" })
+        screen.getByRole("heading", { level: 2, name: "Renew" })
       ).toBeTruthy();
       expect(
-        screen.queryByRole("heading", { level: 3, name: "Glow" })
+        screen.queryByRole("heading", { level: 2, name: "Glow" })
       ).toBeNull();
 
       // Filter by Powders
       fireEvent.click(powdersBtn);
       expect(screen.getByText("2 products")).toBeTruthy();
       expect(
-        screen.getByRole("heading", { level: 3, name: "Glow" })
+        screen.getByRole("heading", { level: 2, name: "Glow" })
       ).toBeTruthy();
       expect(
-        screen.getByRole("heading", { level: 3, name: "Prime" })
+        screen.getByRole("heading", { level: 2, name: "Prime" })
       ).toBeTruthy();
       expect(
         screen.queryByRole("heading", { level: 3, name: "BioHack" })
@@ -194,7 +203,7 @@ describe("W2-04: /human/shop Route & Components", () => {
       expect(beautyBtn.getAttribute("aria-pressed")).toBe("true");
       expect(screen.getByText("1 products")).toBeTruthy();
       expect(
-        screen.getByRole("heading", { level: 3, name: "Glow" })
+        screen.getByRole("heading", { level: 2, name: "Glow" })
       ).toBeTruthy();
 
       // Toggle off Beauty
@@ -238,7 +247,7 @@ describe("W2-04: /human/shop Route & Components", () => {
 
       // Verify BioHack card details
       const biohackHeading = screen.getByRole("heading", {
-        level: 3,
+        level: 2,
         name: "BioHack",
       });
       expect(biohackHeading).toBeTruthy();

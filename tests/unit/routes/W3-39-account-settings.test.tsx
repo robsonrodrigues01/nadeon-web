@@ -151,7 +151,9 @@ describe("W3-39 /account/settings mounted behavior", () => {
         requestType: "delete",
       })
     );
-    const confirmation = await screen.findByRole("status");
+    const confirmation = (await screen.findAllByRole("status")).find((el) =>
+      el.textContent?.includes("account deletion request")
+    )!;
     expect(confirmation.textContent).toMatch(/account deletion request/i);
     expect(confirmation.textContent).toContain("privacy_123");
   });

@@ -1,30 +1,43 @@
 import { describe, it, expect } from "vitest";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { mockFormsProvider } from "@/lib/providers/mock/forms";
 import { FormSubmissionResultSchema } from "@/lib/contracts/forms";
 
 describe("FormsProvider Contract", () => {
-  it("subscribe validates email and consent and appends to log", async () => {
-    const res = await mockFormsProvider.subscribe(
-      "newsletter-human",
-      "test.user@example.com",
-      true
-    );
+  it("subscribe validates email and consent and appends its redacted entry", async () => {
+    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), "forms-mock-"));
+    const logPath = path.join(logDir, "forms-mock.jsonl");
+    const previousLogPath = process.env.FORMS_MOCK_LOG;
 
-    expect(() => FormSubmissionResultSchema.parse(res)).not.toThrow();
-    expect(res.success).toBe(true);
-    expect(res.id).toMatch(/^sub_/);
+    try {
+      process.env.FORMS_MOCK_LOG = logPath;
+      const res = await mockFormsProvider.subscribe(
+        "newsletter-human",
+        "test.user@example.com",
+        true
+      );
 
-    // Verify .maestri/logs/forms-mock.jsonl exists and contains entry
-    const logPath = path.resolve(
-      process.cwd(),
-      ".maestri/logs/forms-mock.jsonl"
-    );
-    expect(fs.existsSync(logPath)).toBe(true);
-    const content = fs.readFileSync(logPath, "utf-8");
-    expect(content).toContain("newsletter-human");
-    expect(content).toContain("test.user@example.com");
+      expect(() => FormSubmissionResultSchema.parse(res)).not.toThrow();
+      expect(res.success).toBe(true);
+      expect(res.id).toMatch(/^sub_/);
+
+      const [line] = fs.readFileSync(logPath, "utf-8").trim().split("\n");
+      const entry = JSON.parse(line);
+      expect(entry).toMatchObject({ formType: "subscribe", id: res.id });
+      expect(entry).not.toHaveProperty("email");
+      expect(entry).not.toHaveProperty("name");
+      expect(entry).not.toHaveProperty("message");
+      expect(line).not.toContain("test.user@example.com");
+    } finally {
+      if (previousLogPath === undefined) {
+        delete process.env.FORMS_MOCK_LOG;
+      } else {
+        process.env.FORMS_MOCK_LOG = previousLogPath;
+      }
+      fs.rmSync(logDir, { recursive: true, force: true });
+    }
   });
 
   it("subscribe throws if consent is false or email invalid", async () => {
@@ -56,6 +69,7 @@ describe("FormsProvider Contract", () => {
       firstName: "Alex",
       lastName: "Morgan",
       email: "alex.morgan@example.com",
+      state: "CA",
       requestType: "do_not_sell",
       details: "Please opt my email out from cross-context sharing.",
     });

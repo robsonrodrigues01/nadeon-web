@@ -200,7 +200,7 @@ export function DogProductsSection({
           </div>
 
           {/* Right Toolbar: Product count + Sort selector */}
-          <div className="flex items-center justify-between gap-4 sm:justify-end">
+          <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-end sm:gap-4">
             <span className="text-sm font-medium text-fg-muted whitespace-nowrap">
               {displayedProducts.length} products for dogs
             </span>
@@ -238,16 +238,20 @@ export function DogProductsSection({
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {displayedProducts.map((product) => (
-              <ProductCard key={product.slug} product={product} />
+              <ProductCard
+                key={product.slug}
+                product={product}
+                headingLevel={2}
+              />
             ))}
 
             {/* Promo Card: Which one for my dog? */}
             <div className="flex flex-col justify-between rounded-card bg-fg p-6 sm:p-7 text-bg shadow-card">
               <div>
                 <PawIcon className="h-10 w-10 text-product-amber" />
-                <h3 className="title mt-4 text-2xl font-extrabold uppercase leading-tight text-bg">
+                <h2 className="title mt-4 text-2xl font-extrabold uppercase leading-tight text-bg">
                   Which one for my dog?
-                </h3>
+                </h2>
                 <p className="body mt-2 text-sm text-bg/80 leading-relaxed">
                   Age, size and needs. Five questions, one routine.
                 </p>
@@ -264,9 +268,9 @@ export function DogProductsSection({
 
             {/* Promo Card: Chew + oil bundles */}
             <div className="flex flex-col justify-center gap-3 rounded-card border-2 border-dashed border-fg/30 p-6 sm:p-7 bg-bg/40">
-              <h3 className="title text-2xl font-extrabold uppercase leading-tight text-fg">
+              <h2 className="title text-2xl font-extrabold uppercase leading-tight text-fg">
                 Chew + oil bundles
-              </h3>
+              </h2>
               <p className="body text-sm text-fg/80 leading-relaxed">
                 Pair a daily chew with the matching oil and save 15%.
               </p>

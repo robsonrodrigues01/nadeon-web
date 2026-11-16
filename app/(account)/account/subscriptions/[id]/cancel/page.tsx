@@ -93,7 +93,7 @@ export default async function CancelSubscriptionPage({
             Cancel subscription
           </h1>
 
-          <div className="flex flex-col gap-8 md:flex-row md:items-start">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
             <AccountNav current="subscriptions" customer={customer} />
 
             <div className="flex min-w-0 flex-1 flex-col gap-6">
@@ -110,6 +110,7 @@ export default async function CancelSubscriptionPage({
                     <Image
                       src={image}
                       alt=""
+                      aria-hidden="true"
                       width={56}
                       height={56}
                       className="h-full w-full object-cover"

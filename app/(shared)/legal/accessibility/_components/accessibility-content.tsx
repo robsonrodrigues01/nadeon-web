@@ -60,7 +60,7 @@ export function AccessibilityHero() {
 
         <h1
           id="accessibility-hero-heading"
-          className="hero text-fg tracking-tight text-4xl sm:text-6xl lg:text-7xl uppercase"
+          className="font-archivo text-fg tracking-tight text-3xl sm:text-6xl lg:text-7xl font-extrabold uppercase leading-tight break-words"
         >
           Accessibility statement
         </h1>
@@ -205,7 +205,7 @@ export function AccessibilityContent() {
           >
             <h2
               id="heading-our-commitment"
-              className="hero text-2xl sm:text-3xl text-fg"
+              className="font-archivo text-2xl sm:text-3xl font-extrabold uppercase leading-tight text-fg break-words"
             >
               <span className="text-accent mr-2">1.</span>
               Our commitment
@@ -229,7 +229,7 @@ export function AccessibilityContent() {
           >
             <h2
               id="heading-standards-we-follow"
-              className="hero text-2xl sm:text-3xl text-fg"
+              className="font-archivo text-2xl sm:text-3xl font-extrabold uppercase leading-tight text-fg break-words"
             >
               <span className="text-accent mr-2">2.</span>
               Standards we follow
@@ -287,7 +287,7 @@ export function AccessibilityContent() {
           >
             <h2
               id="heading-measures-we-take"
-              className="hero text-2xl sm:text-3xl text-fg"
+              className="font-archivo text-2xl sm:text-3xl font-extrabold uppercase leading-tight text-fg break-words"
             >
               <span className="text-accent mr-2">3.</span>
               Measures we take
@@ -404,7 +404,7 @@ export function AccessibilityContent() {
           >
             <h2
               id="heading-compatibility"
-              className="hero text-2xl sm:text-3xl text-fg"
+              className="font-archivo text-2xl sm:text-3xl font-extrabold uppercase leading-tight text-fg break-words"
             >
               <span className="text-accent mr-2">4.</span>
               Compatibility
@@ -452,7 +452,7 @@ export function AccessibilityContent() {
           >
             <h2
               id="heading-known-limitations"
-              className="hero text-2xl sm:text-3xl text-fg"
+              className="font-archivo text-2xl sm:text-3xl font-extrabold uppercase leading-tight text-fg break-words"
             >
               <span className="text-accent mr-2">5.</span>
               Known limitations
@@ -521,7 +521,7 @@ export function AccessibilityContent() {
           >
             <h2
               id="heading-feedback-and-contact"
-              className="hero text-2xl sm:text-3xl text-fg"
+              className="font-archivo text-2xl sm:text-3xl font-extrabold uppercase leading-tight text-fg break-words"
             >
               <span className="text-accent mr-2">6.</span>
               Feedback and contact
@@ -581,7 +581,7 @@ export function AccessibilityContent() {
           >
             <h2
               id="heading-alternative-formats"
-              className="hero text-2xl sm:text-3xl text-fg"
+              className="font-archivo text-2xl sm:text-3xl font-extrabold uppercase leading-tight text-fg break-words"
             >
               <span className="text-accent mr-2">7.</span>
               Alternative formats

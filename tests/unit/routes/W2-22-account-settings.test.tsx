@@ -290,7 +290,9 @@ describe("W2-22 /account/settings", () => {
           requestType: "delete",
         })
       );
-      const feedback = await screen.findByRole("status");
+      const feedback = (await screen.findAllByRole("status")).find((el) =>
+        el.textContent?.includes("account deletion request")
+      )!;
       expect(feedback.textContent).toMatch(/account deletion request/i);
       expect(feedback.textContent).toContain("privacy_w2_22");
     });

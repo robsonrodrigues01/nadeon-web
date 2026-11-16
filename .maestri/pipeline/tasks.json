@@ -1967,11 +1967,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Revisão visual em 1440 e 320 px (fila permanente #3)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T00:55:08.006Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "VISUAL.md por rota",
       "nenhuma alteração de código"
@@ -2095,16 +2095,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Código morto: exports sem uso, componentes órfãos, arquivos não importados (fila permanente #11)",
     "depende_de": [],
-    "status": "bloqueada",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Tecla",
     "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "DEADCODE.md com lista verificada",
       "nenhuma alteração de código"
-    ],
-    "nota": "Luna recusou 2x (falso positivo sobre votacao); refazer com Gemini quando a cota voltar"
+    ]
   },
   {
     "id": "W3-31",
@@ -2113,11 +2112,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Specs Playwright cobrem as rotas e fluxos novos desde a W3-02 (fila permanente #13)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:54:04.092Z",
+    "lease_ate": null,
     "branch": "agy/W3-31",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "lista de lacunas e specs novas escritas, sem executar Playwright",
       "revisão APROVADO"
@@ -2130,11 +2129,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "em_andamento",
-    "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:54:15.531Z",
+    "status": "para_revisao",
+    "responsavel": "Crivo4",
+    "lease_ate": null,
     "branch": "agy/W3-32",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
@@ -2162,11 +2161,11 @@
     "papel": "QA",
     "preset": "Luna 6 Low (GPT)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T00:46:13.404Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "id": "W3-34",
     "titulo": "Cobertura de testes: rotas e componentes sem teste de comportamento (fila permanente #10)",
     "criterios": [
@@ -2180,11 +2179,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Auditoria de imagens: alt, priority só acima da dobra, sizes coerentes, width/height (fila permanente #8)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:54:12.846Z",
+    "lease_ate": null,
     "branch": "agy/W3-35",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
@@ -2197,11 +2196,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Tamanho do JS por rota a partir do .next do último build; rotas acima da média e causas (fila permanente #7)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T00:49:49.206Z",
+    "lease_ate": null,
     "branch": null,
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "BUNDLE.md",
       "nenhuma alteração de código"
@@ -2233,13 +2232,462 @@
     "depende_de": [
       "W3-37"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T00:55:32.789Z",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "TRIAGEM.md curta e verificável",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-34"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Compasso",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "testes de comportamento montados",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-39",
+    "titulo": "Testes de comportamento: conta e assinaturas (skip, pause/resume, frequência, produto, quantidade, cancelamento) e perfil (salvar, excluir conta)",
+    "branch": "agy/W3-39"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-34"
+    ],
+    "status": "entregue",
+    "responsavel": "Régua3",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "testes de comportamento montados",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-40",
+    "titulo": "Testes de comportamento: filtros e ordenação do catálogo na UI e preços/totais em mercados não USD (produto, kit, carrinho)",
+    "branch": "agy/W3-40"
+  },
+  {
+    "id": "W3-41",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Testes de comportamento: FAQ (busca, categorias, accordion), laudos (busca de lote) e skip link por teclado (cobertura itens 4 e 5)",
+    "depende_de": [
+      "W3-34"
+    ],
+    "status": "entregue",
+    "responsavel": "Atalaia",
+    "lease_ate": null,
+    "branch": "agy/W3-41",
+    "pr": "local",
+    "criterios": [
+      "testes montados",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-36"
+    ],
+    "status": "entregue",
+    "responsavel": "Tecla",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-42",
+    "titulo": "Fronteira cliente global: carregar sob demanda popup, modal de cookies, gaveta do carrinho e newsletter (next/dynamic)",
+    "branch": "agy/W3-42"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-36"
+    ],
+    "status": "entregue",
+    "responsavel": "Lente4",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-43",
+    "titulo": "QuizWizard dividido por etapa; tela de resultado sob demanda",
+    "branch": "agy/W3-43"
+  },
+  {
+    "id": "W3-44",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Overflow horizontal em 320 px nas 7 rotas da W3-23 + reconferir paleta após W3-26",
+    "depende_de": [
+      "W3-23",
+      "W3-26"
+    ],
+    "status": "entregue",
+    "responsavel": "Prisma5",
+    "lease_ate": null,
+    "branch": "agy/W3-44",
+    "pr": "local",
+    "criterios": [
+      "scrollWidth=320 medido no portal nas 7 rotas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-45",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Conta: feedback acessível e dados atualizados após pausar, cancelar, salvar perfil e excluir conta; mensagens de erro das actions (it.fails da W3-39 que não dependem da onda 4)",
+    "depende_de": [
+      "W3-39"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Tecla",
+    "lease_ate": "2026-11-16T04:47:07.143Z",
+    "branch": "agy/W3-45",
+    "pr": "local",
+    "criterios": [
+      "it.fails correspondentes viram testes que passam",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "conflito com W3-32 em settings; Tecla resolve"
+  },
+  {
+    "id": "W3-46",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Corrigir as 31 diferenças reais de texto vs board em 7 rotas (TRIAGEM.md da W3-38)",
+    "depende_de": [
+      "W3-38"
+    ],
+    "status": "entregue",
+    "responsavel": "Atalaia",
+    "lease_ate": null,
+    "branch": "agy/W3-46",
+    "pr": "local",
+    "criterios": [
+      "texto igual ao board",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-47",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "forms.test.ts instável: não depender da última linha do arquivo compartilhado forms-mock.jsonl (usar caminho temporário por teste ou spy)",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente4",
+    "lease_ate": null,
+    "branch": "agy/W3-47",
+    "pr": "local",
+    "criterios": [
+      "teste passa em qualquer worktree e em paralelo",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-48",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Remover código morto seguro: 3 helpers duplicados e exports sem nenhum uso (DEADCODE.md da W3-30)",
+    "depende_de": [
+      "W3-30"
+    ],
+    "status": "entregue",
+    "responsavel": "Compasso",
+    "lease_ate": null,
+    "branch": "agy/W3-48",
+    "pr": "local",
+    "criterios": [
+      "só remoção comprovada por grep e tsc",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-49",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Revisão visual completa pós-tema (W3-26): todas as rotas em 375, 768 e 1280 contra os boards",
+    "depende_de": [
+      "W3-26"
+    ],
+    "status": "entregue",
+    "responsavel": "Atalaia",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "VISUAL.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-50",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Console por rota de novo, após carregamento sob demanda (W3-42/W3-43) e tema (W3-26)",
+    "depende_de": [
+      "W3-43"
+    ],
+    "status": "entregue",
+    "responsavel": "Lupa3",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "CONSOLE.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-51",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Specs Playwright para overlays e quiz sob demanda (W3-42/43) e feedback da conta (W3-45), sem executar no Mac",
+    "depende_de": [
+      "W3-43"
+    ],
+    "status": "entregue",
+    "responsavel": "Lupa3",
+    "lease_ate": null,
+    "branch": "agy/W3-51",
+    "pr": "local",
+    "criterios": [
+      "typecheck e playwright --list",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-52",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rotas acima da média de JS (BUNDLE.md W3-36): reduzir o que sobrar após W3-42/43 em /human, /pet e /cart",
+    "depende_de": [
+      "W3-43"
+    ],
+    "status": "entregue",
+    "responsavel": "Compasso",
+    "lease_ate": null,
+    "branch": "agy/W3-52",
+    "pr": "local",
+    "criterios": [
+      "kB antes/depois medidos",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-53",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Acessibilidade estática por rota no HTML servido: um h1, hierarquia de headings, landmarks, labels, nomes acessíveis de botões e links, alt",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Crivo4",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "A11Y-ESTATICA.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "entregue",
+    "responsavel": "Lupa3",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "reproduzido e corrigido, medido no portal",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-54",
+    "titulo": "URGENTE: quiz Human fica em Analyzing após as 5 respostas (regressão provável da W3-43, resultado sob demanda)",
+    "depende_de": [
+      "W3-50"
+    ],
+    "branch": "agy/W3-54"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "status": "entregue",
+    "responsavel": "Atalaia",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "reproduzido e corrigido, medido no portal",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-55",
+    "titulo": "7 avisos de dimensão de imagem (W3-50) + overflow do cancelamento de assinatura em 768 px (W3-49)",
+    "depende_de": [
+      "W3-50"
+    ],
+    "branch": "agy/W3-55"
+  },
+  {
+    "id": "W3-56",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Corrigir os 9 achados de acessibilidade estática (A11Y-ESTATICA.md da W3-53)",
+    "depende_de": [
+      "W3-53"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": null,
+    "branch": "agy/W3-56",
+    "pr": "local",
+    "criterios": [
+      "script da W3-53 sem achados nas rotas tocadas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-58",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Completar a revisão visual pós-tema nas rotas que a W3-49 não cobriu",
+    "depende_de": [
+      "W3-49"
+    ],
+    "status": "entregue",
+    "responsavel": "Tecla",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "VISUAL.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-59",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Revisão de segurança de novo, após W3-28/29/42/45/48 (fila permanente #12)",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Paleta",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "SECURITY.md",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-60",
+    "onda": 3,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Achados da revisão de segurança W3-59 (PII em logs de erro, validação incompleta, escrita de log) e médios da W3-58 (/help)",
+    "depende_de": [
+      "W3-59",
+      "W3-58"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Compasso",
+    "lease_ate": null,
+    "branch": "agy/W3-60",
+    "pr": "local",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "revisor": "Crivo4"
+  },
+  {
+    "id": "W3-61",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Ao fechar o popup sem gatilho (aberto automaticamente), mover o foco para #main-content em vez de deixar no body",
+    "depende_de": [
+      "W3-51"
+    ],
+    "status": "entregue",
+    "responsavel": "Lupa3",
+    "lease_ate": null,
+    "branch": "agy/W3-61",
+    "pr": "local",
+    "criterios": [
+      "teste de foco",
+      "spec W3-51 atualizada",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-62",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Verificação geral do main: script de acessibilidade estática da W3-53, check-routes e contraste",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Régua3",
+    "lease_ate": "2026-11-16T04:46:47.121Z",
     "branch": null,
     "pr": null,
     "criterios": [
-      "TRIAGEM.md curta e verificável",
+      "VERIFICACAO.md",
       "nenhuma alteração de código"
     ]
   }

@@ -199,4 +199,41 @@ describe("W3-21 keyboard accessibility", () => {
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(document.activeElement).toBe(trigger);
   });
+
+  it("returns focus to main content when the popup trigger was removed", async () => {
+    function Harness() {
+      const [open, setOpen] = useState(false);
+      const [consentAccepted, setConsentAccepted] = useState(false);
+      return (
+        <>
+          {!consentAccepted && (
+            <button
+              type="button"
+              onClick={() => {
+                setConsentAccepted(true);
+                setOpen(true);
+              }}
+            >
+              Accept all
+            </button>
+          )}
+          <main id="main-content" tabIndex={-1}>
+            Page content
+          </main>
+          <ConsentProvider forceBannerOpen={false}>
+            <FirstVisitPopup isOpen={open} onDismiss={() => setOpen(false)} />
+          </ConsentProvider>
+        </>
+      );
+    }
+
+    render(<Harness />);
+    fireEvent.click(screen.getByRole("button", { name: "Accept all" }));
+    await screen.findByRole("dialog");
+    fireEvent.keyDown(window, { key: "Escape" });
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    expect(document.activeElement).toBe(
+      document.getElementById("main-content")
+    );
+  });
 });

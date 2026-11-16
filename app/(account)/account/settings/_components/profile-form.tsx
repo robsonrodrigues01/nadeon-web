@@ -1,11 +1,15 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import type { CustomerProfile } from "@/lib/contracts/account";
+import {
+  ProfileInputSchema,
+  type CustomerProfile,
+} from "@/lib/contracts/account";
 import { Button } from "@/components/ui/button";
-import { saveProfileWithFeedback, type ProfileFormState } from "./actions";
-import { formatBirthday } from "./birthday";
+import { saveProfileFormAction, type ProfileFormState } from "./actions";
+import { formatBirthday, parseBirthday } from "./birthday";
 
 const INPUT_CLASS =
   "min-h-11 w-full rounded-field border border-border bg-bg/40 px-4 py-3 text-base text-fg placeholder:text-fg/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
@@ -41,21 +45,89 @@ export interface ProfileFormProps {
 
 export function ProfileForm({ customer }: ProfileFormProps) {
   const router = useRouter();
-  const initialState: ProfileFormState = { status: "idle" };
-  const [state, formAction, isPending] = useActionState(
-    saveProfileWithFeedback,
-    initialState
-  );
+  const [state, formAction, isPending] = useActionState(saveProfileFormAction, {
+    status: "idle",
+  } as ProfileFormState);
   const [fields, setFields] = useState(() => toProfileFields(customer));
+  const [clientError, setClientError] = useState("");
+  const [invalidField, setInvalidField] = useState("");
+  const statusRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (state.status === "success") router.refresh();
+    if (state.status === "invalid" || state.status === "error") {
+      statusRef.current?.focus();
+    }
+    if (state.status === "success" || state.status === "saved") {
+      router.refresh();
+    }
   }, [router, state]);
 
   const updateField = <Key extends keyof ProfileFields>(
     key: Key,
     value: ProfileFields[Key]
   ) => setFields((current) => ({ ...current, [key]: value }));
+
+  function validate(event: FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const firstName = String(data.get("firstName") ?? "").trim();
+    const lastName = String(data.get("lastName") ?? "").trim();
+    const birthday = parseBirthday(String(data.get("birthDate") ?? ""));
+    const parsed = ProfileInputSchema.safeParse({
+      firstName,
+      lastName,
+      email: String(data.get("email") ?? "").trim(),
+      phone: String(data.get("phone") ?? "").trim() || undefined,
+      birthDate: birthday ?? undefined,
+      profileType: String(data.get("profileType") ?? "") || undefined,
+    });
+
+    const field = !firstName
+      ? "firstName"
+      : !lastName
+        ? "lastName"
+        : !parsed.success
+          ? String(parsed.error.issues[0]?.path[0] ?? "email")
+          : birthday === null
+            ? "birthDate"
+            : "";
+    if (!field) {
+      setClientError("");
+      setInvalidField("");
+      return;
+    }
+
+    event.preventDefault();
+    setInvalidField(field);
+    setClientError(
+      field === "firstName"
+        ? "First name is required."
+        : field === "lastName"
+          ? "Last name is required."
+          : field === "email"
+            ? "Enter a valid email address."
+            : "Enter a valid birthday or leave it blank."
+    );
+    const invalidControl = form.elements.namedItem(field);
+    if (invalidControl instanceof HTMLElement) invalidControl.focus();
+  }
+
+  const statusMessage =
+    clientError ||
+    (!clientError && state.status === "invalid"
+      ? "message" in state && state.message
+        ? state.message
+        : "Please check the highlighted fields and try again."
+      : !clientError &&
+          state.status === "error" &&
+          !("message" in state && state.message)
+        ? "Could not save your changes. Please try again."
+        : !clientError &&
+            (state.status === "saved" || state.status === "success")
+          ? "message" in state && state.message
+            ? state.message
+            : "Profile saved."
+          : "");
 
   return (
     <section
@@ -69,12 +141,7 @@ export function ProfileForm({ customer }: ProfileFormProps) {
         Profile
       </h2>
 
-      {state.status === "success" ? (
-        <p role="status" aria-live="polite" className="mt-4 text-sm text-fg">
-          {state.message}
-        </p>
-      ) : null}
-      {state.status === "error" ? (
+      {state.status === "error" && "message" in state && state.message ? (
         <p
           role="alert"
           aria-live="assertive"
@@ -83,8 +150,17 @@ export function ProfileForm({ customer }: ProfileFormProps) {
           {state.message}
         </p>
       ) : null}
+
       <form
         action={formAction}
+        onSubmit={validate}
+        onChange={() => {
+          if (clientError) {
+            setClientError("");
+            setInvalidField("");
+          }
+        }}
+        noValidate
         aria-busy={isPending}
         className="mt-5 grid gap-4 sm:grid-cols-2"
       >
@@ -100,6 +176,12 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             required
             value={fields.firstName}
             onChange={(event) => updateField("firstName", event.target.value)}
+            aria-invalid={invalidField === "firstName" || undefined}
+            aria-describedby={
+              invalidField === "firstName"
+                ? "profile-validation-error"
+                : undefined
+            }
             className={INPUT_CLASS}
           />
         </div>
@@ -116,6 +198,12 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             required
             value={fields.lastName}
             onChange={(event) => updateField("lastName", event.target.value)}
+            aria-invalid={invalidField === "lastName" || undefined}
+            aria-describedby={
+              invalidField === "lastName"
+                ? "profile-validation-error"
+                : undefined
+            }
             className={INPUT_CLASS}
           />
         </div>
@@ -132,6 +220,10 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             required
             value={fields.email}
             onChange={(event) => updateField("email", event.target.value)}
+            aria-invalid={invalidField === "email" || undefined}
+            aria-describedby={
+              invalidField === "email" ? "profile-validation-error" : undefined
+            }
             className={INPUT_CLASS}
           />
         </div>
@@ -163,6 +255,12 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             placeholder="MM / DD"
             value={fields.birthDate}
             onChange={(event) => updateField("birthDate", event.target.value)}
+            aria-invalid={invalidField === "birthDate" || undefined}
+            aria-describedby={
+              invalidField === "birthDate"
+                ? "profile-validation-error"
+                : undefined
+            }
             className={INPUT_CLASS}
           />
         </div>
@@ -196,6 +294,17 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             {isPending ? "Saving..." : "Save changes"}
           </Button>
         </div>
+
+        <p
+          id="profile-validation-error"
+          ref={statusRef}
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
+          className="text-sm text-fg-muted sm:col-span-2"
+        >
+          {statusMessage}
+        </p>
       </form>
     </section>
   );
