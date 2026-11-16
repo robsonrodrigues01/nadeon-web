@@ -2647,13 +2647,14 @@
     ],
     "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T04:41:49.098Z",
+    "lease_ate": null,
     "branch": "agy/W3-60",
     "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Crivo4"
   },
   {
     "id": "W3-61",
