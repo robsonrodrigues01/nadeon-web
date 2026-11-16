@@ -2129,7 +2129,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo4",
     "lease_ate": null,
     "branch": "agy/W3-32",
@@ -2138,8 +2138,7 @@
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "nota": "no main; aguarda gate verde após W3-63"
+    ]
   },
   {
     "onda": 3,
@@ -2586,7 +2585,7 @@
     "depende_de": [
       "W3-53"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo4",
     "lease_ate": null,
     "branch": "agy/W3-56",
@@ -2595,8 +2594,7 @@
       "script da W3-53 sem achados nas rotas tocadas",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "nota": "no main; aguarda gate verde após W3-63"
+    ]
   },
   {
     "id": "W3-58",
@@ -2644,7 +2642,7 @@
       "W3-59",
       "W3-58"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
     "lease_ate": "2026-11-16T04:48:39.891Z",
     "branch": "agy/W3-60",
@@ -2652,7 +2650,8 @@
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Atalaia"
   },
   {
     "id": "W3-61",
@@ -2682,9 +2681,9 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "titulo": "Verificação geral do main: script de acessibilidade estática da W3-53, check-routes e contraste",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T04:46:47.121Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2701,11 +2700,11 @@
     "depende_de": [
       "W3-32"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T04:48:05.921Z",
+    "lease_ate": null,
     "branch": "agy/W3-63",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
@@ -2720,14 +2719,32 @@
     "depende_de": [
       "W3-60"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo4",
+    "lease_ate": "2026-11-16T04:49:12.560Z",
     "branch": "agy/W3-64",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
+    ],
+    "revisor": "Atalaia"
+  },
+  {
+    "id": "W3-65",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Checagem visual rápida pós-merges (W3-42/52/55/56): /human, /pet, /cart, /account/subscriptions em 375/768/1280",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Régua3",
+    "lease_ate": "2026-11-16T04:51:32.727Z",
+    "branch": null,
+    "pr": null,
+    "criterios": [
+      "VISUAL.md curto",
+      "nenhuma alteração de código"
     ]
   }
 ]
