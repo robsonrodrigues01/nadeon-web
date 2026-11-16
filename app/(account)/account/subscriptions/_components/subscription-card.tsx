@@ -1,3 +1,6 @@
+"use client";
+
+import { useActionState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
@@ -12,7 +15,11 @@ import {
   shipsTo,
   totalQuantity,
 } from "./format";
-import { pauseSubscription, skipSubscription } from "./subscription-actions";
+import {
+  pauseSubscriptionWithFeedback,
+  skipSubscriptionWithFeedback,
+  type SubscriptionActionState,
+} from "./subscription-actions";
 
 interface SubscriptionCardProps {
   subscription: Subscription;
@@ -37,10 +44,26 @@ export function SubscriptionCard({
   const { lines } = subscription;
   const title = productTitle(lines);
   const image = lines.find((line) => line.image)?.image;
-  const isActive = subscription.status === "active";
   const headingId = `subscription-${subscription.id}`;
   const locale = market.locale;
   const shipsToLabel = shipsTo(subscription.deliveryAddress);
+  const initialActionState: SubscriptionActionState = { status: "idle" };
+  const [skipState, skipAction, skipPending] = useActionState(
+    skipSubscriptionWithFeedback,
+    initialActionState
+  );
+  const [pauseState, pauseAction, pausePending] = useActionState(
+    pauseSubscriptionWithFeedback,
+    initialActionState
+  );
+  const displayedSubscription =
+    pauseState.status === "success"
+      ? pauseState.subscription
+      : skipState.status === "success"
+        ? skipState.subscription
+        : subscription;
+  const isActive = displayedSubscription.status === "active";
+  const feedback = pauseState.status !== "idle" ? pauseState : skipState;
 
   return (
     <article
@@ -72,13 +95,16 @@ export function SubscriptionCard({
               aria-hidden="true"
               className="h-2 w-2 rounded-full bg-accent"
             />
-            {STATUS_LABEL[subscription.status]}
+            {STATUS_LABEL[displayedSubscription.status]}
           </span>
         </div>
 
         <p className="flex flex-wrap items-baseline gap-2">
           <span className="font-archivo text-2xl font-extrabold text-fg md:text-3xl">
-            {formatMoneyWithMarket(subscription.estimatedTotal, market)}
+            {formatMoneyWithMarket(
+              displayedSubscription.estimatedTotal,
+              market
+            )}
           </span>
           <span className="text-xs text-fg-muted">per delivery</span>
         </p>
@@ -87,16 +113,20 @@ export function SubscriptionCard({
           <div className="min-w-0">
             <dt className={dtClass}>Next charge</dt>
             <dd className={ddClass}>
-              {formatShortDate(subscription.nextBillingDate, locale)}
+              {formatShortDate(displayedSubscription.nextBillingDate, locale)}
             </dd>
           </div>
           <div className="min-w-0">
             <dt className={dtClass}>Frequency</dt>
-            <dd className={ddClass}>Every {subscription.intervalDays} days</dd>
+            <dd className={ddClass}>
+              Every {displayedSubscription.intervalDays} days
+            </dd>
           </div>
           <div className="min-w-0">
             <dt className={dtClass}>Quantity</dt>
-            <dd className={ddClass}>{totalQuantity(lines)}</dd>
+            <dd className={ddClass}>
+              {totalQuantity(displayedSubscription.lines)}
+            </dd>
           </div>
           {shipsToLabel ? (
             <div>
@@ -108,9 +138,14 @@ export function SubscriptionCard({
 
         <div className="flex flex-wrap gap-2">
           {isActive && capabilities.canSkip ? (
-            <form action={skipSubscription}>
-              <input type="hidden" name="id" value={subscription.id} />
-              <Button type="submit" variant="secondary" size="sm">
+            <form action={skipAction}>
+              <input type="hidden" name="id" value={displayedSubscription.id} />
+              <Button
+                type="submit"
+                variant="secondary"
+                size="sm"
+                disabled={skipPending}
+              >
                 Skip next
               </Button>
             </form>
@@ -136,19 +171,39 @@ export function SubscriptionCard({
             </Button>
           ) : null}
           {isActive && capabilities.canPause ? (
-            <form action={pauseSubscription}>
-              <input type="hidden" name="id" value={subscription.id} />
-              <Button type="submit" variant="secondary" size="sm">
+            <form action={pauseAction}>
+              <input type="hidden" name="id" value={displayedSubscription.id} />
+              <Button
+                type="submit"
+                variant="secondary"
+                size="sm"
+                disabled={pausePending}
+              >
                 Pause
               </Button>
             </form>
           ) : null}
         </div>
 
-        {capabilities.canCancel && subscription.status !== "cancelled" ? (
+        {feedback.status === "success" ? (
+          <p className="text-sm text-fg" role="status" aria-live="polite">
+            {feedback.message}
+          </p>
+        ) : feedback.status === "error" ? (
+          <p
+            className="text-sm text-product-coral"
+            role="alert"
+            aria-live="assertive"
+          >
+            {feedback.message}
+          </p>
+        ) : null}
+
+        {capabilities.canCancel &&
+        displayedSubscription.status !== "cancelled" ? (
           <div className="min-w-0">
             <Button
-              href={`/account/subscriptions/${encodeURIComponent(subscription.id)}/cancel`}
+              href={`/account/subscriptions/${encodeURIComponent(displayedSubscription.id)}/cancel`}
               variant="link"
               size="sm"
               className="text-product-coral"

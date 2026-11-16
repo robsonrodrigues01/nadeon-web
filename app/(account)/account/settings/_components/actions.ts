@@ -6,7 +6,9 @@ import { accountProvider } from "@/lib/providers";
 import {
   PetInputSchema,
   ProfileInputSchema,
+  type CustomerProfile,
   type Pet,
+  type ProfileInput,
 } from "@/lib/contracts/account";
 import { parseBirthday } from "./birthday";
 
@@ -14,8 +16,7 @@ function text(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
 }
 
-// Entrada inválida não grava nada; a página não tem texto de erro no design.
-export async function saveProfileAction(formData: FormData): Promise<void> {
+function parseProfile(formData: FormData): ProfileInput | null {
   const birthDate = parseBirthday(text(formData, "birthDate"));
   const parsed = ProfileInputSchema.safeParse({
     firstName: text(formData, "firstName"),
@@ -32,11 +33,48 @@ export async function saveProfileAction(formData: FormData): Promise<void> {
     !parsed.data.firstName ||
     !parsed.data.lastName
   ) {
-    return;
+    return null;
   }
 
-  await accountProvider.updateProfile(parsed.data);
+  return parsed.data;
+}
+
+// Entrada inválida não grava nada; a página não tem texto de erro no design.
+export async function saveProfileAction(formData: FormData): Promise<void> {
+  const parsed = parseProfile(formData);
+  if (!parsed) return;
+
+  await accountProvider.updateProfile(parsed);
   revalidatePath("/account/settings");
+}
+
+export type ProfileFormState =
+  | { status: "idle" }
+  | { status: "success"; profile: CustomerProfile; message: string }
+  | { status: "error"; message: string };
+
+export async function saveProfileWithFeedback(
+  _previousState: ProfileFormState,
+  formData: FormData
+): Promise<ProfileFormState> {
+  const parsed = parseProfile(formData);
+  if (!parsed) {
+    return {
+      status: "error",
+      message: "Please check your profile details and try again.",
+    };
+  }
+
+  try {
+    const profile = await accountProvider.updateProfile(parsed);
+    revalidatePath("/account/settings");
+    return { status: "success", profile, message: "Profile saved." };
+  } catch {
+    return {
+      status: "error",
+      message: "We couldn't save your profile. Please try again.",
+    };
+  }
 }
 
 export async function signOutAction(): Promise<void> {

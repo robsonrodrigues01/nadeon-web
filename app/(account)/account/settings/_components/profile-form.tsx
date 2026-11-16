@@ -1,6 +1,10 @@
+"use client";
+
+import { useActionState, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import type { CustomerProfile } from "@/lib/contracts/account";
 import { Button } from "@/components/ui/button";
-import { saveProfileAction } from "./actions";
+import { saveProfileWithFeedback, type ProfileFormState } from "./actions";
 import { formatBirthday } from "./birthday";
 
 const INPUT_CLASS =
@@ -11,11 +15,48 @@ const LABEL_CLASS = "mb-2 block text-sm font-bold text-fg/85";
 // Perfil do contrato: Human, Pet ou Both (mesmos termos da tela de criar conta).
 const PROFILE_TYPES = ["Human", "Pet", "Both"] as const;
 
+type ProfileFields = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  birthDate: string;
+  profileType: CustomerProfile["profileType"];
+};
+
+function toProfileFields(customer: CustomerProfile): ProfileFields {
+  return {
+    firstName: customer.firstName,
+    lastName: customer.lastName,
+    email: customer.email,
+    phone: customer.phone ?? "",
+    birthDate: formatBirthday(customer.birthDate),
+    profileType: customer.profileType,
+  };
+}
+
 export interface ProfileFormProps {
   customer: CustomerProfile;
 }
 
 export function ProfileForm({ customer }: ProfileFormProps) {
+  const router = useRouter();
+  const initialState: ProfileFormState = { status: "idle" };
+  const [state, formAction, isPending] = useActionState(
+    saveProfileWithFeedback,
+    initialState
+  );
+  const [fields, setFields] = useState(() => toProfileFields(customer));
+
+  useEffect(() => {
+    if (state.status === "success") router.refresh();
+  }, [router, state]);
+
+  const updateField = <Key extends keyof ProfileFields>(
+    key: Key,
+    value: ProfileFields[Key]
+  ) => setFields((current) => ({ ...current, [key]: value }));
+
   return (
     <section
       aria-labelledby="profile-heading"
@@ -28,8 +69,23 @@ export function ProfileForm({ customer }: ProfileFormProps) {
         Profile
       </h2>
 
+      {state.status === "success" ? (
+        <p role="status" aria-live="polite" className="mt-4 text-sm text-fg">
+          {state.message}
+        </p>
+      ) : null}
+      {state.status === "error" ? (
+        <p
+          role="alert"
+          aria-live="assertive"
+          className="mt-4 text-sm text-product-coral"
+        >
+          {state.message}
+        </p>
+      ) : null}
       <form
-        action={saveProfileAction}
+        action={formAction}
+        aria-busy={isPending}
         className="mt-5 grid gap-4 sm:grid-cols-2"
       >
         <div>
@@ -42,7 +98,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             type="text"
             autoComplete="given-name"
             required
-            defaultValue={customer.firstName}
+            value={fields.firstName}
+            onChange={(event) => updateField("firstName", event.target.value)}
             className={INPUT_CLASS}
           />
         </div>
@@ -57,7 +114,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             type="text"
             autoComplete="family-name"
             required
-            defaultValue={customer.lastName}
+            value={fields.lastName}
+            onChange={(event) => updateField("lastName", event.target.value)}
             className={INPUT_CLASS}
           />
         </div>
@@ -72,7 +130,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             type="email"
             autoComplete="email"
             required
-            defaultValue={customer.email}
+            value={fields.email}
+            onChange={(event) => updateField("email", event.target.value)}
             className={INPUT_CLASS}
           />
         </div>
@@ -86,7 +145,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             name="phone"
             type="tel"
             autoComplete="tel"
-            defaultValue={customer.phone ?? ""}
+            value={fields.phone}
+            onChange={(event) => updateField("phone", event.target.value)}
             className={INPUT_CLASS}
           />
         </div>
@@ -101,7 +161,8 @@ export function ProfileForm({ customer }: ProfileFormProps) {
             type="text"
             inputMode="numeric"
             placeholder="MM / DD"
-            defaultValue={formatBirthday(customer.birthDate)}
+            value={fields.birthDate}
+            onChange={(event) => updateField("birthDate", event.target.value)}
             className={INPUT_CLASS}
           />
         </div>
@@ -113,7 +174,13 @@ export function ProfileForm({ customer }: ProfileFormProps) {
           <select
             id="profile-type"
             name="profileType"
-            defaultValue={customer.profileType}
+            value={fields.profileType}
+            onChange={(event) =>
+              updateField(
+                "profileType",
+                event.target.value as CustomerProfile["profileType"]
+              )
+            }
             className={INPUT_CLASS}
           >
             {PROFILE_TYPES.map((type) => (
@@ -125,7 +192,9 @@ export function ProfileForm({ customer }: ProfileFormProps) {
         </div>
 
         <div className="sm:col-span-2">
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Saving..." : "Save changes"}
+          </Button>
         </div>
       </form>
     </section>

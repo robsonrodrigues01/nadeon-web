@@ -4,11 +4,17 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { accountProvider, subscriptionProvider } from "@/lib/providers";
+import type { Subscription } from "@/lib/contracts/subscription";
 import { CANCEL_REASONS } from "./cancel-reasons";
 
 const LIST_PATH = "/account/subscriptions";
 
 const IdSchema = z.string().min(1);
+
+export type SubscriptionActionState =
+  | { status: "idle" }
+  | { status: "success"; message: string; subscription: Subscription }
+  | { status: "error"; message: string };
 
 function readString(formData: FormData, name: string): string | undefined {
   const value = formData.get(name);
@@ -81,4 +87,75 @@ export async function cancelSubscription(formData: FormData): Promise<void> {
 export async function signOutAccount(): Promise<void> {
   await accountProvider.signOut();
   redirect("/");
+}
+
+async function updateWithFeedback(
+  formData: FormData,
+  update: (id: string) => Promise<Subscription>,
+  message: string
+): Promise<SubscriptionActionState> {
+  const id = IdSchema.safeParse(readString(formData, "id"));
+  if (!id.success) {
+    return {
+      status: "error",
+      message: "We couldn't update your subscription. Please try again.",
+    };
+  }
+
+  try {
+    const subscription = await update(id.data);
+    revalidatePath(LIST_PATH);
+    return { status: "success", message, subscription };
+  } catch {
+    return {
+      status: "error",
+      message: "We couldn't update your subscription. Please try again.",
+    };
+  }
+}
+
+export async function skipSubscriptionWithFeedback(
+  _previousState: SubscriptionActionState,
+  formData: FormData
+): Promise<SubscriptionActionState> {
+  return updateWithFeedback(
+    formData,
+    (id) => subscriptionProvider.skip(id),
+    "Next delivery skipped."
+  );
+}
+
+export async function pauseSubscriptionWithFeedback(
+  _previousState: SubscriptionActionState,
+  formData: FormData
+): Promise<SubscriptionActionState> {
+  return updateWithFeedback(
+    formData,
+    (id) => subscriptionProvider.pause(id),
+    "Subscription paused."
+  );
+}
+
+export async function cancelSubscriptionWithFeedback(
+  _previousState: SubscriptionActionState,
+  formData: FormData
+): Promise<SubscriptionActionState> {
+  const parsed = CancelInputSchema.safeParse({
+    id: readString(formData, "id"),
+    reason: readString(formData, "reason"),
+    feedback: readString(formData, "feedback") || undefined,
+  });
+  if (!parsed.success) {
+    return {
+      status: "error",
+      message: "Choose a cancellation reason before continuing.",
+    };
+  }
+
+  return updateWithFeedback(
+    formData,
+    (id) =>
+      subscriptionProvider.cancel(id, parsed.data.reason, parsed.data.feedback),
+    "Cancellation complete."
+  );
 }

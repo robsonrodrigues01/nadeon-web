@@ -248,56 +248,63 @@ describe("W3-39 /account/subscriptions mounted behavior", () => {
         "I need to reduce expenses"
       )
     );
+    const confirmation = await screen.findByRole("status");
+    expect(confirmation.textContent).toMatch(/cancelled/i);
+    expect(confirmation.textContent).toContain(
+      "Subscription status: cancelled"
+    );
   });
 
   it.todo(
     "switches frequency through the cancel flow; JSDOM cannot resolve Next server formAction references, and W2-21 tests the action directly"
   );
 
-  it.fails(
-    "updates visible status and shows feedback when a provider action succeeds",
-    async () => {
-      const sub = await freshSubscription("sub_biohack_001");
-      vi.spyOn(subscriptionProvider, "pause").mockResolvedValue({
-        ...sub,
-        status: "paused",
-      });
-      await renderList([sub]);
+  it("updates visible status and shows feedback when a provider action succeeds", async () => {
+    const sub = await freshSubscription("sub_biohack_001");
+    vi.spyOn(subscriptionProvider, "pause").mockResolvedValue({
+      ...sub,
+      status: "paused",
+    });
+    await renderList([sub]);
 
-      const card = screen.getByRole("article", { name: "BioHack - 1 Jar" });
-      fireEvent.click(within(card).getByRole("button", { name: "Pause" }));
+    const card = screen.getByRole("article", { name: "BioHack - 1 Jar" });
+    fireEvent.click(within(card).getByRole("button", { name: "Pause" }));
 
-      await waitFor(() =>
-        expect(within(card).getByText("Paused")).toBeTruthy()
-      );
-      expect(screen.getByRole("status").textContent).toMatch(/paused/i);
-    }
-  );
+    await waitFor(() => expect(within(card).getByText("Paused")).toBeTruthy());
+    expect(screen.getByRole("status").textContent).toMatch(/paused/i);
+  });
 
-  it.todo(
-    "shows an inline error after provider failure; server action currently propagates it with no rendered error state"
-  );
+  it("shows a friendly inline error if a provider action fails", async () => {
+    vi.spyOn(subscriptionProvider, "pause").mockRejectedValue(
+      new Error("Provider unavailable")
+    );
+    const sub = await freshSubscription("sub_biohack_001");
+    await renderList([sub]);
+    const card = screen.getByRole("article", { name: "BioHack - 1 Jar" });
 
-  it.fails(
-    "reflects cancellation and displays success feedback after submit",
-    async () => {
-      const sub = await freshSubscription("sub_biohack_001");
-      vi.spyOn(subscriptionProvider, "cancel").mockResolvedValue({
-        ...sub,
-        status: "cancelled",
-      });
-      await renderCancel(sub);
-      fireEvent.click(
-        screen.getByRole("radio", { name: "It is too expensive" })
-      );
-      fireEvent.click(
-        screen.getByRole("button", { name: "Cancel subscription" })
-      );
+    fireEvent.click(within(card).getByRole("button", { name: "Pause" }));
+    const alert = await within(card).findByRole("alert");
+    expect(alert.textContent).toBe(
+      "We couldn't update your subscription. Please try again."
+    );
+    expect(alert.getAttribute("aria-live")).toBe("assertive");
+  });
 
-      await waitFor(() =>
-        expect(screen.getByRole("heading", { name: "Cancelled" })).toBeTruthy()
-      );
-      expect(screen.getByRole("status").textContent).toMatch(/cancel/i);
-    }
-  );
+  it("reflects cancellation and displays success feedback after submit", async () => {
+    const sub = await freshSubscription("sub_biohack_001");
+    vi.spyOn(subscriptionProvider, "cancel").mockResolvedValue({
+      ...sub,
+      status: "cancelled",
+    });
+    await renderCancel(sub);
+    fireEvent.click(screen.getByRole("radio", { name: "It is too expensive" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Cancel subscription" })
+    );
+
+    await waitFor(() =>
+      expect(screen.getByRole("heading", { name: "Cancelled" })).toBeTruthy()
+    );
+    expect(screen.getByRole("status").textContent).toMatch(/cancel/i);
+  });
 });
