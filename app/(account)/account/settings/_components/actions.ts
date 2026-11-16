@@ -111,7 +111,7 @@ export async function savePetAction(formData: FormData): Promise<Pet | null> {
   return saved;
 }
 
-export const DeleteAccountFormSchema = z.object({
+const DeleteAccountFormSchema = z.object({
   email: z.string().trim().email(),
   firstName: z.string().trim().min(1).max(100),
   lastName: z.string().trim().min(1).max(100),
@@ -119,7 +119,7 @@ export const DeleteAccountFormSchema = z.object({
   confirmAccuracy: z.literal("on"),
 });
 
-export const DELETE_ACCOUNT_FORM_FIELDS = [
+const DELETE_ACCOUNT_FORM_FIELDS = [
   "email",
   "firstName",
   "lastName",
