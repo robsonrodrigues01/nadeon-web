@@ -88,9 +88,9 @@ export function ProductCard({
             <Image
               src={imageSrc}
               alt={`${product.name} - ${product.technicalName}`}
-              width={240}
-              height={240}
-              className="max-h-full max-w-full object-contain"
+              fill
+              sizes="(min-width: 1280px) 272px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+              className="object-contain"
             />
           </Link>
 
