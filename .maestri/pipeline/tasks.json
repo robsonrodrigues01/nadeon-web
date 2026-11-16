@@ -2330,7 +2330,7 @@
     "depende_de": [
       "W3-36"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Lente4",
     "lease_ate": null,
     "pr": "local",
@@ -2473,7 +2473,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T01:24:09.888Z",
+    "lease_ate": "2026-11-16T01:24:34.872Z",
     "branch": null,
     "pr": null,
     "criterios": [
