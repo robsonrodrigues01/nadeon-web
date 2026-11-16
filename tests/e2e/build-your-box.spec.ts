@@ -128,10 +128,13 @@ if (!process.env.VITEST) {
       await expect(dogOption).toBeChecked();
 
       // Weight band: 21-50 lbs
-      const weightOption = page.getByRole("radio", { name: /21.*50/i });
-      if (await weightOption.isVisible()) {
-        await weightOption.check();
-      }
+      const weightOption = page.getByRole("radio", {
+        name: "21 to 50 lbs",
+        exact: true,
+      });
+      await expect(weightOption).toBeVisible();
+      await weightOption.check();
+      await expect(weightOption).toBeChecked();
 
       // Age: Adult
       const adultOption = page.getByRole("radio", { name: /adult/i });
