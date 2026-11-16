@@ -2345,7 +2345,7 @@
     "id": "W3-43",
     "titulo": "QuizWizard dividido por etapa; tela de resultado sob demanda",
     "branch": "agy/W3-43",
-    "nota": "aguarda revisor"
+    "revisor": "Lupa3"
   },
   {
     "id": "W3-44",
@@ -2359,7 +2359,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T01:13:37.550Z",
+    "lease_ate": "2026-11-16T01:15:38.581Z",
     "branch": "agy/W3-44",
     "pr": null,
     "criterios": [
@@ -2406,8 +2406,7 @@
       "texto igual ao board",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Lupa3"
+    ]
   },
   {
     "id": "W3-47",
