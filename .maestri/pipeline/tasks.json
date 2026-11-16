@@ -2122,7 +2122,7 @@
       "lista de lacunas e specs novas escritas, sem executar Playwright",
       "revisão APROVADO"
     ],
-    "nota": "revisão com Lente4 após W3-35"
+    "revisor": "Tecla"
   },
   {
     "id": "W3-32",
@@ -2133,14 +2133,15 @@
     "depende_de": [],
     "status": "para_revisao",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:54:15.531Z",
+    "lease_ate": null,
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "nota": "revisão com Lente4 após W3-35"
   },
   {
     "onda": 3,
