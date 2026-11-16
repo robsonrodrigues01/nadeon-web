@@ -20,6 +20,7 @@ import SubscriptionsPage, {
 import CancelSubscriptionPage, {
   metadata as cancelMetadata,
 } from "@/app/(account)/account/subscriptions/[id]/cancel/page";
+import { SubscriptionCard } from "@/app/(account)/account/subscriptions/_components/subscription-card";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { DEFAULT_MARKET } from "@/lib/market/markets";
 import { subscriptionProvider } from "@/lib/providers";
@@ -160,6 +161,29 @@ describe("W2-21 /account/subscriptions", () => {
     } finally {
       spy.mockRestore();
     }
+  });
+
+  it("renders the mounted Pause button with form and subscription id when canPause is true", async () => {
+    const subs = await subscriptionProvider.list();
+    const activeSub = subs.find((s) => s.status === "active")!;
+    const caps = await subscriptionProvider.capabilities();
+
+    render(
+      <SubscriptionCard
+        subscription={activeSub}
+        capabilities={caps}
+        market={DEFAULT_MARKET}
+      />
+    );
+
+    const pauseBtn = screen.getByRole("button", { name: "Pause" });
+    expect(pauseBtn.getAttribute("type")).toBe("submit");
+    const pauseForm = pauseBtn.closest("form");
+    expect(pauseForm).not.toBeNull();
+    const idInput = pauseForm?.querySelector(
+      'input[name="id"]'
+    ) as HTMLInputElement;
+    expect(idInput?.value).toBe(activeSub.id);
   });
 });
 

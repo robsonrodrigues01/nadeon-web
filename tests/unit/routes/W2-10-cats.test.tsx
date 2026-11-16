@@ -1,10 +1,19 @@
 // @vitest-environment jsdom
 import { describe, it, expect, afterEach, vi } from "vitest";
-import { render, screen, cleanup, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  cleanup,
+  within,
+  fireEvent,
+} from "@testing-library/react";
 import CatsPage, { metadata } from "@/app/(pet)/pet/cats/page";
+import { CatFilters } from "@/app/(pet)/pet/cats/_components/cat-filters";
+
+const pushMock = vi.hoisted(() => vi.fn());
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: vi.fn() }),
+  useRouter: () => ({ push: pushMock }),
   notFound: () => {
     throw new Error("NEXT_NOT_FOUND");
   },
@@ -32,6 +41,7 @@ describe("W2-10 Route: /pet/cats", () => {
   afterEach(() => {
     cleanup();
     marketCookie = undefined;
+    pushMock.mockClear();
   });
 
   it("formats prices in the cookie market currency (Canada converts USD to CAD)", async () => {
@@ -211,5 +221,122 @@ describe("W2-10 Route: /pet/cats", () => {
     expect(text).not.toContain("$XX");
     expect(text).not.toContain("(example)");
     expect(text).not.toMatch(/placeholder/i);
+  });
+});
+
+describe("W3-74 CatFilters component behavior", () => {
+  const formatsFixture = [
+    { value: "drops", label: "Drops", count: 2 },
+    { value: "chews", label: "Chews", count: 1 },
+  ];
+
+  afterEach(() => {
+    cleanup();
+    pushMock.mockClear();
+  });
+
+  it("updates URL with format when a format option is selected", () => {
+    render(
+      <CatFilters
+        basePath="/pet/cats"
+        format=""
+        sort="featured"
+        total={3}
+        formats={formatsFixture}
+      />
+    );
+
+    const dropsRadio = screen.getByRole("radio", { name: /Drops 2/i });
+    fireEvent.click(dropsRadio);
+
+    expect(pushMock).toHaveBeenCalledWith("/pet/cats?format=drops");
+  });
+
+  it("clears format from URL when 'All' is selected", () => {
+    render(
+      <CatFilters
+        basePath="/pet/cats"
+        format="drops"
+        sort="featured"
+        total={3}
+        formats={formatsFixture}
+      />
+    );
+
+    const allRadio = screen.getByRole("radio", { name: /All 3/i });
+    fireEvent.click(allRadio);
+
+    expect(pushMock).toHaveBeenCalledWith("/pet/cats");
+  });
+
+  it("updates URL with sort query when sort is changed to best-selling", () => {
+    render(
+      <CatFilters
+        basePath="/pet/cats"
+        format=""
+        sort="featured"
+        total={3}
+        formats={formatsFixture}
+      />
+    );
+
+    const sortSelect = screen.getByLabelText("Sort");
+    fireEvent.change(sortSelect, { target: { value: "best-selling" } });
+
+    expect(pushMock).toHaveBeenCalledWith("/pet/cats?sort=best-selling");
+  });
+
+  it("omits sort query from URL when sort is changed back to featured", () => {
+    render(
+      <CatFilters
+        basePath="/pet/cats"
+        format=""
+        sort="best-selling"
+        total={3}
+        formats={formatsFixture}
+      />
+    );
+
+    const sortSelect = screen.getByLabelText("Sort");
+    fireEvent.change(sortSelect, { target: { value: "featured" } });
+
+    expect(pushMock).toHaveBeenCalledWith("/pet/cats");
+  });
+
+  it("preserves sort when format changes and preserves format when sort changes", () => {
+    const { unmount } = render(
+      <CatFilters
+        basePath="/pet/cats"
+        format=""
+        sort="best-selling"
+        total={3}
+        formats={formatsFixture}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("radio", { name: /Drops 2/i }));
+    expect(pushMock).toHaveBeenCalledWith(
+      "/pet/cats?format=drops&sort=best-selling"
+    );
+
+    unmount();
+    pushMock.mockClear();
+
+    render(
+      <CatFilters
+        basePath="/pet/cats"
+        format="drops"
+        sort="featured"
+        total={3}
+        formats={formatsFixture}
+      />
+    );
+
+    fireEvent.change(screen.getByLabelText("Sort"), {
+      target: { value: "best-selling" },
+    });
+    expect(pushMock).toHaveBeenCalledWith(
+      "/pet/cats?format=drops&sort=best-selling"
+    );
   });
 });

@@ -22,7 +22,7 @@ export const PrivacyRequestInputSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1),
   lastName: z.string().min(1),
-  state: z.string().trim().min(1, "Select your state of residence."),
+  state: z.string().trim().min(1, "Select your state of residence.").optional(),
   requestType: PrivacyRequestTypeSchema,
   details: z.string().optional(),
 });

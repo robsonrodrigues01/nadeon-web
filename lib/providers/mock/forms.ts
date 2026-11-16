@@ -38,19 +38,63 @@ async function logMockSubmission(
     try {
       const fs = await import("node:fs");
       const path = await import("node:path");
-      const filePath = path.resolve(
-        process.env.FORMS_MOCK_LOG || ".maestri/logs/forms-mock.jsonl"
-      );
-      const logDir = path.dirname(filePath);
-      if (!fs.existsSync(logDir)) {
-        fs.mkdirSync(logDir, { recursive: true });
+      const maestriDir = path.resolve(process.cwd(), ".maestri");
+      const logDir = path.join(maestriDir, "logs");
+      const configuredPath = process.env.FORMS_MOCK_LOG;
+      const filePath = configuredPath
+        ? path.resolve(
+            path.isAbsolute(configuredPath)
+              ? configuredPath
+              : path.join(logDir, configuredPath)
+          )
+        : path.join(logDir, "forms-mock.jsonl");
+
+      if (path.dirname(filePath) !== logDir) {
+        throw new Error("Configured log path is outside the allowed directory");
       }
-      fs.appendFileSync(filePath, `${JSON.stringify(logEntry)}\n`, "utf-8");
-    } catch (err) {
-      console.error("[FormsMock] Failed writing log entry:", err);
+
+      for (const directory of [maestriDir, logDir]) {
+        if (fs.existsSync(directory)) {
+          const stats = fs.lstatSync(directory);
+          if (stats.isSymbolicLink() || !stats.isDirectory()) {
+            throw new Error("Configured log directory is not a safe directory");
+          }
+        } else {
+          fs.mkdirSync(directory);
+        }
+      }
+
+      const fileDescriptor = fs.openSync(
+        filePath,
+        fs.constants.O_WRONLY |
+          fs.constants.O_APPEND |
+          fs.constants.O_CREAT |
+          (fs.constants.O_NOFOLLOW ?? 0),
+        0o600
+      );
+      try {
+        fs.writeFileSync(
+          fileDescriptor,
+          `${JSON.stringify(logEntry)}\n`,
+          "utf-8"
+        );
+      } finally {
+        fs.closeSync(fileDescriptor);
+      }
+    } catch {
+      console.error("[FormsMock] Failed writing log entry", {
+        code: "log_write_failed",
+      });
     }
   }
 }
+
+export const ALLOWED_NEWSLETTER_LISTS = [
+  "newsletter",
+  "newsletter-human",
+  "newsletter-pet",
+] as const;
+export type AllowedNewsletterList = (typeof ALLOWED_NEWSLETTER_LISTS)[number];
 
 export class MockFormsProvider implements FormsProvider {
   async subscribe(
@@ -58,8 +102,11 @@ export class MockFormsProvider implements FormsProvider {
     email: string,
     consent: boolean
   ): Promise<FormSubmissionResult> {
+    if (!list || typeof list !== "string" || !list.trim()) {
+      throw new Error("Invalid newsletter list");
+    }
     if (!email || !email.includes("@")) {
-      throw new Error(`Invalid email address: ${email}`);
+      throw new Error("Invalid email address");
     }
     if (!consent) {
       throw new Error("Consent is required to subscribe");
@@ -71,12 +118,15 @@ export class MockFormsProvider implements FormsProvider {
     return FormSubmissionResultSchema.parse({
       success: true,
       id,
-      message: `Subscribed ${email} to ${list} successfully`,
+      message: "Subscribed successfully",
     });
   }
 
   async sendContact(payload: ContactInput): Promise<FormSubmissionResult> {
-    ContactInputSchema.parse(payload);
+    const parsed = ContactInputSchema.safeParse(payload);
+    if (!parsed.success) {
+      throw new Error("Invalid contact form data");
+    }
     const id = `contact_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission("contact", id);
 
@@ -90,7 +140,10 @@ export class MockFormsProvider implements FormsProvider {
   async sendPrivacyRequest(
     payload: PrivacyRequestInput
   ): Promise<FormSubmissionResult> {
-    PrivacyRequestInputSchema.parse(payload);
+    const parsed = PrivacyRequestInputSchema.safeParse(payload);
+    if (!parsed.success) {
+      throw new Error("Invalid privacy request data");
+    }
     const id = `privacy_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission("privacy_request", id);
 
@@ -105,7 +158,10 @@ export class MockFormsProvider implements FormsProvider {
     type: ApplicationType,
     payload: ApplicationInput
   ): Promise<FormSubmissionResult> {
-    ApplicationInputSchema.parse(payload);
+    const parsed = ApplicationInputSchema.safeParse(payload);
+    if (!parsed.success) {
+      throw new Error("Invalid application data");
+    }
     const id = `app_${type}_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission(`application:${type}`, id);
 

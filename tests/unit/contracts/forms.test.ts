@@ -7,11 +7,15 @@ import { FormSubmissionResultSchema } from "@/lib/contracts/forms";
 
 describe("FormsProvider Contract", () => {
   it("subscribe validates email and consent and appends its redacted entry", async () => {
-    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), "forms-mock-"));
-    const logPath = path.join(logDir, "forms-mock.jsonl");
+    const logDir = fs.realpathSync(
+      fs.mkdtempSync(path.join(os.tmpdir(), "forms-mock-"))
+    );
+    const logPath = path.join(logDir, ".maestri", "logs", "forms-mock.jsonl");
     const previousLogPath = process.env.FORMS_MOCK_LOG;
+    const previousCwd = process.cwd();
 
     try {
+      process.chdir(logDir);
       process.env.FORMS_MOCK_LOG = logPath;
       const res = await mockFormsProvider.subscribe(
         "newsletter-human",
@@ -22,6 +26,7 @@ describe("FormsProvider Contract", () => {
       expect(() => FormSubmissionResultSchema.parse(res)).not.toThrow();
       expect(res.success).toBe(true);
       expect(res.id).toMatch(/^sub_/);
+      expect(res.message).not.toContain("test.user@example.com");
 
       const [line] = fs.readFileSync(logPath, "utf-8").trim().split("\n");
       const entry = JSON.parse(line);
@@ -36,6 +41,7 @@ describe("FormsProvider Contract", () => {
       } else {
         process.env.FORMS_MOCK_LOG = previousLogPath;
       }
+      process.chdir(previousCwd);
       fs.rmSync(logDir, { recursive: true, force: true });
     }
   });
@@ -45,9 +51,15 @@ describe("FormsProvider Contract", () => {
       mockFormsProvider.subscribe("newsletter", "user@example.com", false)
     ).rejects.toThrow(/Consent is required/);
 
-    await expect(
-      mockFormsProvider.subscribe("newsletter", "invalid-email", true)
-    ).rejects.toThrow(/Invalid email/);
+    const errorPromise = mockFormsProvider.subscribe(
+      "newsletter",
+      "invalid-email",
+      true
+    );
+    await expect(errorPromise).rejects.toThrow("Invalid email address");
+    await expect(errorPromise).rejects.toThrowError(
+      expect.not.stringContaining("invalid-email")
+    );
   });
 
   it("sendContact validates payload and submits successfully", async () => {
