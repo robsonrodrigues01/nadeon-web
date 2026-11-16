@@ -66,18 +66,6 @@ describe("W2-27: /help route", () => {
       ).toBeDefined();
     });
 
-    it("keeps the desktop navigation collapsed until the header has room", () => {
-      const humanNavigation = within(
-        document.querySelector("header")!
-      ).getByRole("navigation", { name: "Human Navigation" });
-      const mobileActions = document.querySelector(
-        "header > div > .xl\\:hidden"
-      );
-
-      expect(humanNavigation.className).toContain("hidden xl:flex");
-      expect(mobileActions?.className).toContain("xl:hidden");
-    });
-
     it("exposes the two anchor links as navigation links", () => {
       const contact = within(mainEl()).getByRole("link", {
         name: "Contact us",

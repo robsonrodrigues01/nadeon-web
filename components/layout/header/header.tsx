@@ -102,7 +102,7 @@ export function Header({
         {/* Desktop Primary Navigation */}
         <nav
           aria-label={isPet ? "Pet Navigation" : "Human Navigation"}
-          className="hidden xl:flex items-center gap-7 lg:gap-9"
+          className="hidden md:flex items-center gap-7 lg:gap-9"
         >
           {navItems.map((item) => (
             <Link
@@ -116,7 +116,7 @@ export function Header({
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden xl:flex items-center gap-4 lg:gap-6">
+        <div className="hidden md:flex items-center gap-4 lg:gap-6">
           <Link
             href={switchTarget.href}
             className="text-xs sm:text-sm font-bold text-fg/70 transition-colors hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm py-2"
@@ -150,7 +150,7 @@ export function Header({
         </div>
 
         {/* Mobile Action Controls */}
-        <div className="flex xl:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-2">
           <Link
             href="/search"
             aria-label="Search products"
@@ -200,7 +200,7 @@ export function Header({
           role="region"
           aria-label="Mobile Navigation Menu"
           className={cn(
-            "xl:hidden w-full border-t border-border px-6 py-6 transition-all animate-in fade-in slide-in-from-top-2",
+            "md:hidden w-full border-t border-border px-6 py-6 transition-all animate-in fade-in slide-in-from-top-2",
             isPet ? "bg-bg text-fg" : "bg-bg-elevated text-fg"
           )}
         >

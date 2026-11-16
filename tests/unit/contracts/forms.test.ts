@@ -7,15 +7,11 @@ import { FormSubmissionResultSchema } from "@/lib/contracts/forms";
 
 describe("FormsProvider Contract", () => {
   it("subscribe validates email and consent and appends its redacted entry", async () => {
-    const logDir = fs.realpathSync(
-      fs.mkdtempSync(path.join(os.tmpdir(), "forms-mock-"))
-    );
-    const logPath = path.join(logDir, ".maestri", "logs", "forms-mock.jsonl");
+    const logDir = fs.mkdtempSync(path.join(os.tmpdir(), "forms-mock-"));
+    const logPath = path.join(logDir, "forms-mock.jsonl");
     const previousLogPath = process.env.FORMS_MOCK_LOG;
-    const previousCwd = process.cwd();
 
     try {
-      process.chdir(logDir);
       process.env.FORMS_MOCK_LOG = logPath;
       const res = await mockFormsProvider.subscribe(
         "newsletter-human",
@@ -40,7 +36,6 @@ describe("FormsProvider Contract", () => {
       } else {
         process.env.FORMS_MOCK_LOG = previousLogPath;
       }
-      process.chdir(previousCwd);
       fs.rmSync(logDir, { recursive: true, force: true });
     }
   });

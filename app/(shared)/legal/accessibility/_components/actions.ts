@@ -57,17 +57,16 @@ export async function submitAccessibilityFeedback(
     if (res.success) {
       return { status: "success" };
     }
-    console.error("[AccessibilityFeedback] Provider rejected submission", {
-      code: "provider_rejected",
-    });
+    console.error(
+      "[AccessibilityFeedback] Provider rejected submission:",
+      res.message
+    );
     return {
       status: "error",
       error: "Unable to submit feedback. Please try again.",
     };
-  } catch {
-    console.error("[AccessibilityFeedback] Submission failed", {
-      code: "provider_error",
-    });
+  } catch (err) {
+    console.error("[AccessibilityFeedback] Submission failed:", err);
     return {
       status: "error",
       error: "Unable to submit feedback. Please try again.",
