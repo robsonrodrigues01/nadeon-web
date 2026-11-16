@@ -2,7 +2,9 @@ import {
   type AccountProvider,
   type Address,
   type CustomerProfile,
+  type GuestOrderLookupInput,
   type Order,
+  type OrderLine,
   type Pet,
   type PetInput,
   type ProfileInput,
@@ -70,6 +72,9 @@ const mockOrders: Order[] = [
       {
         variantId: "var_biohack_1",
         quantity: 1,
+        image: "/renders/biohack.png",
+        title: "BioHack - 2 Jars (60 days)",
+        price: { amount: 118, currencyCode: "USD" },
       },
     ],
     total: { amount: 118, currencyCode: "USD" },
@@ -77,7 +82,9 @@ const mockOrders: Order[] = [
     trackingNumber: "1Z9999999999999999",
     trackingUrl: "https://www.ups.com/track?tracknum=1Z9999999999999999",
     url: "/account/orders/ord_100234",
+    copyLink: "/account/orders/ord_100234",
     statusUrl: "https://track.nadeonlabs.com/orders/NL-100234",
+    canReorder: true,
   }),
   OrderSchema.parse({
     id: "ord_100189",
@@ -100,6 +107,9 @@ const mockOrders: Order[] = [
       {
         variantId: "var_mgy_2",
         quantity: 1,
+        image: "/renders/more-good-years.png",
+        title: "More Good Years Soft Chews - 1 Jar",
+        price: { amount: 44, currencyCode: "USD" },
       },
     ],
     total: { amount: 44, currencyCode: "USD" },
@@ -107,7 +117,9 @@ const mockOrders: Order[] = [
     trackingNumber: "1Z8888888888888888",
     trackingUrl: "https://www.ups.com/track?tracknum=1Z8888888888888888",
     url: "/account/orders/ord_100189",
+    copyLink: "/account/orders/ord_100189",
     statusUrl: "https://track.nadeonlabs.com/orders/NL-100189",
+    canReorder: true,
   }),
 ];
 
@@ -152,9 +164,20 @@ export class MockAccountProvider implements AccountProvider {
   }
 
   async lookupGuestOrder(
-    orderNumber: string,
-    email: string
+    orderNumberOrInput: string | GuestOrderLookupInput,
+    emailArg?: string
   ): Promise<Order | null> {
+    let orderNumber: string;
+    let email: string;
+
+    if (typeof orderNumberOrInput === "object" && orderNumberOrInput !== null) {
+      orderNumber = orderNumberOrInput.orderNumber;
+      email = orderNumberOrInput.email;
+    } else {
+      orderNumber = orderNumberOrInput;
+      email = emailArg ?? "";
+    }
+
     if (!orderNumber || !email) {
       return null;
     }
@@ -170,6 +193,25 @@ export class MockAccountProvider implements AccountProvider {
       return matchNumber && matchEmail;
     });
     return found ? { ...found } : null;
+  }
+
+  async reorder(orderId: string): Promise<OrderLine[]> {
+    const order = await this.getOrder(orderId);
+    if (!order) {
+      throw new Error(`Order not found: ${orderId}`);
+    }
+    if (order.lines && order.lines.length > 0) {
+      return [...order.lines];
+    }
+    return order.items
+      .filter((item) => Boolean(item.variantId))
+      .map((item) => ({
+        variantId: item.variantId!,
+        quantity: item.quantity,
+        image: item.image,
+        title: item.title,
+        price: item.price,
+      }));
   }
 
   async getAddresses(): Promise<Address[]> {

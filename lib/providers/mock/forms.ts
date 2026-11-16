@@ -97,6 +97,18 @@ export const ALLOWED_NEWSLETTER_LISTS = [
 export type AllowedNewsletterList = (typeof ALLOWED_NEWSLETTER_LISTS)[number];
 
 export class MockFormsProvider implements FormsProvider {
+  private lastContactSubmission?: ContactInput;
+
+  getLastContactSubmission(): ContactInput | undefined {
+    return this.lastContactSubmission
+      ? { ...this.lastContactSubmission }
+      : undefined;
+  }
+
+  clearLastContactSubmission(): void {
+    this.lastContactSubmission = undefined;
+  }
+
   async subscribe(
     list: string,
     email: string,
@@ -127,13 +139,16 @@ export class MockFormsProvider implements FormsProvider {
     if (!parsed.success) {
       throw new Error("Invalid contact form data");
     }
+    this.lastContactSubmission = parsed.data;
     const id = `contact_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission("contact", id);
 
     return FormSubmissionResultSchema.parse({
       success: true,
       id,
-      message: "Contact message sent successfully",
+      message: parsed.data.copy
+        ? "Contact message sent successfully (copy requested)"
+        : "Contact message sent successfully",
     });
   }
 
