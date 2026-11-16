@@ -1969,7 +1969,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T00:55:08.006Z",
+    "lease_ate": "2026-11-16T00:55:44.211Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -2180,15 +2180,16 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Auditoria de imagens: alt, priority só acima da dobra, sizes coerentes, width/height (fila permanente #8)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:54:12.846Z",
+    "lease_ate": null,
     "branch": "agy/W3-35",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lente4"
   },
   {
     "id": "W3-36",
@@ -2242,5 +2243,45 @@
       "TRIAGEM.md curta e verificável",
       "nenhuma alteração de código"
     ]
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-34"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T00:56:07.441Z",
+    "pr": null,
+    "criterios": [
+      "testes de comportamento montados",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-39",
+    "titulo": "Testes de comportamento: conta e assinaturas (skip, pause/resume, frequência, produto, quantidade, cancelamento) e perfil (salvar, excluir conta)",
+    "branch": "agy/W3-39"
+  },
+  {
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "depende_de": [
+      "W3-34"
+    ],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": null,
+    "criterios": [
+      "testes de comportamento montados",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W3-40",
+    "titulo": "Testes de comportamento: filtros e ordenação do catálogo na UI e preços/totais em mercados não USD (produto, kit, carrinho)",
+    "branch": "agy/W3-40"
   }
 ]
