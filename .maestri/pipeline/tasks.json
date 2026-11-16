@@ -2645,11 +2645,11 @@
       "W3-59",
       "W3-58"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T04:35:24.568Z",
+    "lease_ate": "2026-11-16T04:41:49.098Z",
     "branch": "agy/W3-60",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
@@ -2674,8 +2674,7 @@
       "spec W3-51 atualizada",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Crivo4"
+    ]
   },
   {
     "id": "W3-62",
@@ -2686,7 +2685,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T04:37:46.868Z",
+    "lease_ate": "2026-11-16T04:41:33.539Z",
     "branch": null,
     "pr": null,
     "criterios": [
