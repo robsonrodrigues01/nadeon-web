@@ -1921,8 +1921,7 @@
     "depende_de": [
       "W3-15"
     ],
-    "branch": "agy/W3-20",
-    "revisor": "Paleta"
+    "branch": "agy/W3-20"
   },
   {
     "onda": 3,
@@ -1930,7 +1929,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:25:52.651Z",
+    "lease_ate": "2026-11-16T00:27:14.795Z",
     "pr": null,
     "criterios": [
       "medição no portal",
@@ -1953,7 +1952,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:25:39.142Z",
+    "lease_ate": "2026-11-16T00:26:53.056Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -1970,7 +1969,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T00:24:18.232Z",
+    "lease_ate": "2026-11-16T00:27:47.576Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -1987,13 +1986,30 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:26:20.700Z",
+    "lease_ate": "2026-11-16T00:26:44.760Z",
     "branch": "agy/W3-24",
     "pr": null,
     "criterios": [
       "script de contraste sem dependência nova",
       "pnpm gate verde",
       "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-25",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Revisão de segurança local: segredos, server actions sem zod, dados do cliente em logs, cabeçalhos (fila permanente #12)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Paleta",
+    "lease_ate": "2026-11-16T00:27:59.889Z",
+    "branch": null,
+    "pr": null,
+    "criterios": [
+      "SECURITY.md com achados",
+      "nenhuma alteração de código"
     ]
   }
 ]
