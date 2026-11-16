@@ -2095,9 +2095,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Código morto: exports sem uso, componentes órfãos, arquivos não importados (fila permanente #11)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T01:11:08.333Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2261,7 +2261,7 @@
     "id": "W3-39",
     "titulo": "Testes de comportamento: conta e assinaturas (skip, pause/resume, frequência, produto, quantidade, cancelamento) e perfil (salvar, excluir conta)",
     "branch": "agy/W3-39",
-    "nota": "revisão junto com W3-45"
+    "revisor": "Paleta"
   },
   {
     "onda": 3,
@@ -2312,7 +2312,7 @@
     ],
     "status": "para_revisao",
     "responsavel": "Paleta",
-    "lease_ate": "2026-11-16T01:16:58.950Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
@@ -2321,7 +2321,8 @@
     ],
     "id": "W3-42",
     "titulo": "Fronteira cliente global: carregar sob demanda popup, modal de cookies, gaveta do carrinho e newsletter (next/dynamic)",
-    "branch": "agy/W3-42"
+    "branch": "agy/W3-42",
+    "revisor": "Tecla"
   },
   {
     "onda": 3,
@@ -2376,14 +2377,15 @@
     ],
     "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T01:19:45.658Z",
+    "lease_ate": null,
     "branch": "agy/W3-45",
     "pr": "local",
     "criterios": [
       "it.fails correspondentes viram testes que passam",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Paleta"
   },
   {
     "id": "W3-46",
@@ -2419,6 +2421,26 @@
     "pr": null,
     "criterios": [
       "teste passa em qualquer worktree e em paralelo",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-48",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Remover código morto seguro: 3 helpers duplicados e exports sem nenhum uso (DEADCODE.md da W3-30)",
+    "depende_de": [
+      "W3-30"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T01:21:00.693Z",
+    "branch": "agy/W3-48",
+    "pr": null,
+    "criterios": [
+      "só remoção comprovada por grep e tsc",
       "pnpm gate verde",
       "revisão APROVADO"
     ]
