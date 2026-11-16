@@ -1852,9 +1852,9 @@
     "depende_de": [
       "W3-08"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-15T23:30:10.958Z",
+    "lease_ate": null,
     "branch": "agy/W3-17",
     "pr": "local",
     "criterios": [
@@ -1887,7 +1887,7 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
     "lease_ate": null,
     "pr": "local",
@@ -1907,10 +1907,10 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:23:15.736Z",
-    "pr": null,
+    "lease_ate": null,
+    "pr": "local",
     "criterios": [
       "medição no portal",
       "pnpm gate verde",
@@ -1921,7 +1921,8 @@
     "depende_de": [
       "W3-15"
     ],
-    "branch": "agy/W3-20"
+    "branch": "agy/W3-20",
+    "revisor": "Paleta"
   },
   {
     "onda": 3,
@@ -1929,7 +1930,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": "2026-11-16T00:18:55.199Z",
+    "lease_ate": "2026-11-16T00:25:52.651Z",
     "pr": null,
     "criterios": [
       "medição no portal",
@@ -1952,7 +1953,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:22:36.259Z",
+    "lease_ate": "2026-11-16T00:25:39.142Z",
     "branch": null,
     "pr": null,
     "criterios": [
@@ -1975,6 +1976,24 @@
     "criterios": [
       "VISUAL.md por rota",
       "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-24",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Contraste WCAG AA dos pares de tokens Human e Pet (fila permanente #6)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Compasso",
+    "lease_ate": "2026-11-16T00:26:20.700Z",
+    "branch": "agy/W3-24",
+    "pr": null,
+    "criterios": [
+      "script de contraste sem dependência nova",
+      "pnpm gate verde",
+      "revisão APROVADO"
     ]
   }
 ]
