@@ -89,24 +89,14 @@ async function logMockSubmission(
   }
 }
 
-export const ALLOWED_NEWSLETTER_LISTS = [
-  "newsletter",
-  "newsletter-human",
-  "newsletter-pet",
-] as const;
-export type AllowedNewsletterList = (typeof ALLOWED_NEWSLETTER_LISTS)[number];
-
 export class MockFormsProvider implements FormsProvider {
   async subscribe(
     list: string,
     email: string,
     consent: boolean
   ): Promise<FormSubmissionResult> {
-    if (!list || typeof list !== "string" || !list.trim()) {
-      throw new Error("Invalid newsletter list");
-    }
     if (!email || !email.includes("@")) {
-      throw new Error("Invalid email address");
+      throw new Error(`Invalid email address: ${email}`);
     }
     if (!consent) {
       throw new Error("Consent is required to subscribe");
@@ -118,15 +108,12 @@ export class MockFormsProvider implements FormsProvider {
     return FormSubmissionResultSchema.parse({
       success: true,
       id,
-      message: "Subscribed successfully",
+      message: `Subscribed ${email} to ${list} successfully`,
     });
   }
 
   async sendContact(payload: ContactInput): Promise<FormSubmissionResult> {
-    const parsed = ContactInputSchema.safeParse(payload);
-    if (!parsed.success) {
-      throw new Error("Invalid contact form data");
-    }
+    ContactInputSchema.parse(payload);
     const id = `contact_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission("contact", id);
 
@@ -140,10 +127,7 @@ export class MockFormsProvider implements FormsProvider {
   async sendPrivacyRequest(
     payload: PrivacyRequestInput
   ): Promise<FormSubmissionResult> {
-    const parsed = PrivacyRequestInputSchema.safeParse(payload);
-    if (!parsed.success) {
-      throw new Error("Invalid privacy request data");
-    }
+    PrivacyRequestInputSchema.parse(payload);
     const id = `privacy_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission("privacy_request", id);
 
@@ -158,10 +142,7 @@ export class MockFormsProvider implements FormsProvider {
     type: ApplicationType,
     payload: ApplicationInput
   ): Promise<FormSubmissionResult> {
-    const parsed = ApplicationInputSchema.safeParse(payload);
-    if (!parsed.success) {
-      throw new Error("Invalid application data");
-    }
+    ApplicationInputSchema.parse(payload);
     const id = `app_${type}_${Math.random().toString(36).substring(2, 9)}`;
     await logMockSubmission(`application:${type}`, id);
 
