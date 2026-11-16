@@ -41,8 +41,45 @@ describe("W3-64 mock provider error and data leakage prevention", () => {
       true
     );
     expect(result.success).toBe(true);
-    expect(result.message).toBe("Subscribed to newsletter-human successfully");
+    expect(result.message).toBe("Subscribed successfully");
     expect(result.message).not.toContain(sensitiveEmail);
+    expect(result.message).not.toContain("newsletter-human");
+  });
+
+  it("does not echo PII when arbitrary list containing personal data is passed to MockFormsProvider", async () => {
+    const provider = new MockFormsProvider();
+    const sensitiveList = "user.pii+list@example.com-custom-list";
+
+    const result = await provider.subscribe(
+      sensitiveList,
+      "subscriber@example.com",
+      true
+    );
+    expect(result.success).toBe(true);
+    expect(result.message).toBe("Subscribed successfully");
+    expect(result.message).not.toContain(sensitiveList);
+    expect(result.message).not.toContain("user.pii+list@example.com");
+  });
+
+  it("does not echo PII in Server Action response when list contains personal data", async () => {
+    const sensitiveList = "secret-pii-phone-5551234567";
+
+    const result = await subscribeNewsletter(
+      sensitiveList,
+      "subscriber@example.com",
+      true
+    );
+    expect(result.success).toBe(true);
+    expect(result.message).toBe("Subscribed successfully");
+    expect(result.message).not.toContain(sensitiveList);
+    expect(result.message).not.toContain("5551234567");
+  });
+
+  it("throws safe error on invalid or empty list without leaking input", async () => {
+    const provider = new MockFormsProvider();
+    await expect(
+      provider.subscribe("", "subscriber@example.com", true)
+    ).rejects.toThrow("Invalid newsletter list");
   });
 
   it("does not contain personal data in error messages for invalid contact/privacy/application payloads", async () => {

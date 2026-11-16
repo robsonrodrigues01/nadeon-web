@@ -52,12 +52,22 @@ async function logMockSubmission(
   }
 }
 
+export const ALLOWED_NEWSLETTER_LISTS = [
+  "newsletter",
+  "newsletter-human",
+  "newsletter-pet",
+] as const;
+export type AllowedNewsletterList = (typeof ALLOWED_NEWSLETTER_LISTS)[number];
+
 export class MockFormsProvider implements FormsProvider {
   async subscribe(
     list: string,
     email: string,
     consent: boolean
   ): Promise<FormSubmissionResult> {
+    if (!list || typeof list !== "string" || !list.trim()) {
+      throw new Error("Invalid newsletter list");
+    }
     if (!email || !email.includes("@")) {
       throw new Error("Invalid email address");
     }
@@ -71,7 +81,7 @@ export class MockFormsProvider implements FormsProvider {
     return FormSubmissionResultSchema.parse({
       success: true,
       id,
-      message: `Subscribed to ${list} successfully`,
+      message: "Subscribed successfully",
     });
   }
 

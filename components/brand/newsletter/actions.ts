@@ -17,7 +17,15 @@ export async function subscribeNewsletter(
         message: "Unable to complete subscription. Please try again.",
       };
     }
-    return result;
+    const safeMessage =
+      result.message && !result.message.includes(list)
+        ? result.message
+        : "Subscribed successfully";
+    return {
+      success: true,
+      id: result.id,
+      message: safeMessage,
+    };
   } catch {
     return {
       success: false,
