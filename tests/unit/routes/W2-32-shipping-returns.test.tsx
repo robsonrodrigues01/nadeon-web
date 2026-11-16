@@ -27,6 +27,14 @@ describe("W2-32: /shipping-returns route", () => {
   });
 
   describe("page structure & content", () => {
+    it("uses level-three headings for the return steps", async () => {
+      const html = await getHtml();
+      expect(html).toMatch(/<h3[^>]*>Start a return<\/h3>/);
+      expect(html).toMatch(/<h3[^>]*>Tell us why<\/h3>/);
+      expect(html).toMatch(/<h3[^>]*>Send it back<\/h3>/);
+      expect(html).toMatch(/<h3[^>]*>Get your refund<\/h3>/);
+    });
+
     async function getHtml(): Promise<string> {
       const element = await ShippingReturnsPage();
       return renderToStaticMarkup(element);

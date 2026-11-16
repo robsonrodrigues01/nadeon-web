@@ -89,6 +89,16 @@ describe("Route /human/products/[slug] (W2-06)", () => {
   });
 
   describe("Page layout, semantic elements, and Section 5.2 buttons & fields", () => {
+    it("keeps related product card headings at level three", async () => {
+      render(
+        await ProductPage({ params: Promise.resolve({ slug: "biohack" }) })
+      );
+
+      expect(
+        screen.getByRole("heading", { level: 3, name: "Full Charge" })
+      ).toBeTruthy();
+    });
+
     it("uses the catalog image and product-specific alt text", async () => {
       const jsx = await ProductPage({
         params: Promise.resolve({ slug: "powerhouse" }),

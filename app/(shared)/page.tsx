@@ -113,48 +113,50 @@ export default async function EntrancePage() {
           role="banner"
           className="absolute left-1/2 top-6 lg:top-[34px] -translate-x-1/2 z-20 bg-[rgba(22,16,12,0.92)] border border-[rgb(217,164,67)] rounded-full px-3.5 py-2 lg:px-[22px] lg:py-3 shadow-lg pointer-events-auto"
         >
-          <Link
-            href="/"
-            aria-label="Nadeon Labs Homepage"
-            className="flex items-center gap-1.5 lg:gap-2.25 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(217,164,67)] rounded-full"
-          >
-            <svg
-              viewBox="0 0 32 32"
-              fill="none"
-              aria-hidden="true"
-              className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] shrink-0"
+          <nav aria-label="Home" className="flex">
+            <Link
+              href="/"
+              aria-label="Nadeon Labs Homepage"
+              className="flex items-center gap-1.5 lg:gap-2.25 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(217,164,67)] rounded-full"
             >
-              <defs>
-                <linearGradient
-                  id="header-nadeon-gold-grad"
-                  x1="0%"
-                  y1="0%"
-                  x2="100%"
-                  y2="100%"
-                >
-                  <stop offset="0%" stopColor="rgb(248,220,134)" />
-                  <stop offset="50%" stopColor="rgb(224,166,60)" />
-                  <stop offset="100%" stopColor="rgb(185,122,34)" />
-                </linearGradient>
-              </defs>
-              <circle
-                cx="16"
-                cy="16"
-                r="14"
-                stroke="url(#header-nadeon-gold-grad)"
-                strokeWidth="2.5"
-              />
-              <circle
-                cx="16"
-                cy="16"
-                r="7"
-                fill="url(#header-nadeon-gold-grad)"
-              />
-            </svg>
-            <span className="font-archivo font-extrabold text-[13px] lg:text-[18px] leading-none whitespace-nowrap bg-gradient-gold bg-clip-text text-transparent">
-              Nadeon <span className="font-normal">Labs</span>
-            </span>
-          </Link>
+              <svg
+                viewBox="0 0 32 32"
+                fill="none"
+                aria-hidden="true"
+                className="w-[22px] h-[22px] lg:w-[30px] lg:h-[30px] shrink-0"
+              >
+                <defs>
+                  <linearGradient
+                    id="header-nadeon-gold-grad"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stopColor="rgb(248,220,134)" />
+                    <stop offset="50%" stopColor="rgb(224,166,60)" />
+                    <stop offset="100%" stopColor="rgb(185,122,34)" />
+                  </linearGradient>
+                </defs>
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="14"
+                  stroke="url(#header-nadeon-gold-grad)"
+                  strokeWidth="2.5"
+                />
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="7"
+                  fill="url(#header-nadeon-gold-grad)"
+                />
+              </svg>
+              <span className="font-archivo font-extrabold text-[13px] lg:text-[18px] leading-none whitespace-nowrap bg-gradient-gold bg-clip-text text-transparent">
+                Nadeon <span className="font-normal">Labs</span>
+              </span>
+            </Link>
+          </nav>
         </header>
 
         {/* Human Side (Left / Top on mobile) */}

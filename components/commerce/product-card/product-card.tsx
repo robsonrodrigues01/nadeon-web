@@ -13,6 +13,7 @@ import type { ProductCardData } from "./product-card-data";
 
 export interface ProductCardProps {
   product: ProductCardData;
+  headingLevel?: 2 | 3;
   className?: string;
   cartProvider?: CartProvider;
   onAddToCartSuccess?: (cart: Cart) => void;
@@ -20,6 +21,7 @@ export interface ProductCardProps {
 
 export function ProductCard({
   product,
+  headingLevel = 3,
   className = "",
   cartProvider = defaultCartProvider,
   onAddToCartSuccess,
@@ -41,6 +43,7 @@ export function ProductCard({
   const isPet = product.line === "pet";
   const isEquine = product.species === "horse";
   const productHref = `/${isPet ? "pet" : "human"}/products/${product.slug}`;
+  const ProductHeading = headingLevel === 2 ? "h2" : "h3";
 
   // Primary image fallback or first image
   const imageSrc =
@@ -103,7 +106,7 @@ export function ProductCard({
         {/* Content details */}
         <div className="min-w-0 p-5 sm:p-6">
           <div className="mb-1 flex min-w-0 items-baseline justify-between gap-2">
-            <h3
+            <ProductHeading
               id={`product-heading-${product.slug}`}
               className="title min-w-0 break-words text-xl font-extrabold uppercase tracking-tight text-fg sm:text-2xl [overflow-wrap:anywhere]"
             >
@@ -113,7 +116,7 @@ export function ProductCard({
               >
                 {product.name}
               </Link>
-            </h3>
+            </ProductHeading>
           </div>
 
           <p className="text-sm text-fg-muted font-medium mb-3 line-clamp-2">

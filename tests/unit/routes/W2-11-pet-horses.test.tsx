@@ -44,10 +44,10 @@ describe("W2-11: /pet/horses route", () => {
 
       // Mock horse products render as cards
       expect(
-        screen.getByRole("heading", { level: 3, name: /long stride/i })
+        screen.getByRole("heading", { level: 2, name: /long stride/i })
       ).toBeTruthy();
       expect(
-        screen.getByRole("heading", { level: 3, name: /solid ground/i })
+        screen.getByRole("heading", { level: 2, name: /solid ground/i })
       ).toBeTruthy();
 
       // No template placeholders leak into text
@@ -81,7 +81,7 @@ describe("W2-11: /pet/horses route", () => {
         name: "Horse formulas",
       });
       const headings = within(productsRegion)
-        .getAllByRole("heading", { level: 3 })
+        .getAllByRole("heading", { level: 2 })
         .map((h) => h.textContent);
       expect(headings).toEqual(["Long Stride", "Solid Ground"]);
     });

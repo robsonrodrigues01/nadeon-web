@@ -49,10 +49,7 @@ function expectedMarketPrice(amount: number, market: Market): string {
 function cardNames(region: HTMLElement): string[] {
   return within(region)
     .getAllByRole("article")
-    .map(
-      (card) =>
-        within(card).getByRole("heading", { level: 3 }).textContent ?? ""
-    );
+    .map((card) => within(card).getByRole("heading").textContent ?? "");
 }
 
 function formatQuery(href: string): { sort?: string; goal?: string } {
