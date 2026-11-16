@@ -1868,7 +1868,7 @@
     "onda": 3,
     "papel": "Frontend",
     "preset": "Luna 6 Low (GPT)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Compasso",
     "lease_ate": null,
     "pr": "local",
@@ -1911,7 +1911,7 @@
     "preset": "Luna 6 Low (GPT)",
     "status": "em_andamento",
     "responsavel": "Compasso",
-    "lease_ate": "2026-11-16T00:22:55.527Z",
+    "lease_ate": "2026-11-16T00:23:15.736Z",
     "pr": null,
     "criterios": [
       "medição no portal",
