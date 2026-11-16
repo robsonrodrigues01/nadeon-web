@@ -1861,8 +1861,7 @@
       "comparação no portal com o board",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Prisma5"
+    ]
   },
   {
     "onda": 3,
@@ -1902,8 +1901,7 @@
     "depende_de": [
       "W3-15"
     ],
-    "branch": "agy/W3-19",
-    "revisor": "Nível2"
+    "branch": "agy/W3-19"
   },
   {
     "onda": 3,
@@ -1959,6 +1957,23 @@
     "pr": null,
     "criterios": [
       "CONSOLE.md por rota",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-23",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Revisão visual em 1440 e 320 px (fila permanente #3)",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T00:24:18.232Z",
+    "branch": null,
+    "pr": null,
+    "criterios": [
+      "VISUAL.md por rota",
       "nenhuma alteração de código"
     ]
   }
