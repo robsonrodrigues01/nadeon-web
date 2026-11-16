@@ -2703,13 +2703,14 @@
     ],
     "status": "em_andamento",
     "responsavel": "Atalaia",
-    "lease_ate": "2026-11-16T04:49:32.377Z",
+    "lease_ate": "2026-11-16T04:51:03.122Z",
     "branch": "agy/W3-63",
     "pr": null,
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Régua3"
   },
   {
     "id": "W3-64",
@@ -2728,6 +2729,23 @@
     "criterios": [
       "pnpm gate verde",
       "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-65",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Checagem visual rápida pós-merges (W3-42/52/55/56): /human, /pet, /cart, /account/subscriptions em 375/768/1280",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Régua3",
+    "lease_ate": "2026-11-16T04:51:32.727Z",
+    "branch": null,
+    "pr": null,
+    "criterios": [
+      "VISUAL.md curto",
+      "nenhuma alteração de código"
     ]
   }
 ]
