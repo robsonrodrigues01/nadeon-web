@@ -2489,9 +2489,9 @@
     "depende_de": [
       "W3-43"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Lupa3",
-    "lease_ate": "2026-11-16T04:30:25.173Z",
+    "lease_ate": null,
     "branch": "agy/W3-51",
     "pr": "local",
     "criterios": [
@@ -2652,6 +2652,27 @@
     "branch": "agy/W3-60",
     "pr": null,
     "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W3-61",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Ao fechar o popup sem gatilho (aberto automaticamente), mover o foco para #main-content em vez de deixar no body",
+    "depende_de": [
+      "W3-51"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Lupa3",
+    "lease_ate": "2026-11-16T04:32:02.595Z",
+    "branch": "agy/W3-61",
+    "pr": null,
+    "criterios": [
+      "teste de foco",
+      "spec W3-51 atualizada",
       "pnpm gate verde",
       "revisão APROVADO"
     ]
