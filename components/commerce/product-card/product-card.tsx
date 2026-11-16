@@ -3,16 +3,16 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Product } from "@/lib/contracts/catalog";
 import type { Cart, CartProvider } from "@/lib/contracts/cart";
 import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
 import { useMarket } from "@/lib/market/context";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { Button } from "@/components/ui/button";
 import { Claim } from "./claim";
+import type { ProductCardData } from "./product-card-data";
 
 export interface ProductCardProps {
-  product: Product;
+  product: ProductCardData;
   className?: string;
   cartProvider?: CartProvider;
   onAddToCartSuccess?: (cart: Cart) => void;
