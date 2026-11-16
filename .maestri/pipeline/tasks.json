@@ -2129,17 +2129,16 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "para_revisao",
-    "responsavel": "Tecla",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Régua3",
+    "lease_ate": "2026-11-16T01:19:06.294Z",
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
       "cada formulário com estados acessíveis (aria-live, disabled durante envio)",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Régua3"
+    ]
   },
   {
     "onda": 3,
@@ -2282,8 +2281,7 @@
     ],
     "id": "W3-40",
     "titulo": "Testes de comportamento: filtros e ordenação do catálogo na UI e preços/totais em mercados não USD (produto, kit, carrinho)",
-    "branch": "agy/W3-40",
-    "revisor": "Atalaia"
+    "branch": "agy/W3-40"
   },
   {
     "id": "W3-41",
@@ -2294,17 +2292,16 @@
     "depende_de": [
       "W3-34"
     ],
-    "status": "para_revisao",
-    "responsavel": "Lupa3",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Atalaia",
+    "lease_ate": "2026-11-16T01:19:06.246Z",
     "branch": "agy/W3-41",
     "pr": "local",
     "criterios": [
       "testes montados",
       "pnpm gate verde",
       "revisão APROVADO"
-    ],
-    "revisor": "Lente4"
+    ]
   },
   {
     "onda": 3,
@@ -2415,9 +2412,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "forms.test.ts instável: não depender da última linha do arquivo compartilhado forms-mock.jsonl (usar caminho temporário por teste ou spy)",
     "depende_de": [],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Lente4",
+    "lease_ate": "2026-11-16T01:19:06.810Z",
     "branch": "agy/W3-47",
     "pr": null,
     "criterios": [
