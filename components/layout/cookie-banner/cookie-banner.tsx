@@ -2,8 +2,29 @@
 
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useConsent } from "@/lib/consent";
-import { CookieSettingsModal } from "./cookie-settings-modal";
+import {
+  DeferredOverlayBoundary,
+  DeferredOverlayFallback,
+  useDeferredOverlayReturnFocus,
+} from "@/components/layout/deferred-overlay-fallback";
+
+const CookieSettingsModal = dynamic(
+  () =>
+    import("./cookie-settings-modal").then(
+      (module) => module.CookieSettingsModal
+    ),
+  {
+    ssr: false,
+    loading: () => <DeferredOverlayFallback />,
+  }
+);
+
+function LoadedCookieSettingsModal() {
+  const returnFocusRef = useDeferredOverlayReturnFocus();
+  return <CookieSettingsModal returnFocusRef={returnFocusRef} />;
+}
 
 export interface CookieBannerProps {
   isOpen?: boolean;
@@ -19,12 +40,14 @@ export function CookieBanner({
   className = "",
 }: CookieBannerProps) {
   const bannerRef = useRef<HTMLElement>(null);
+  const settingsTriggerRef = useRef<HTMLElement | null>(null);
   const {
     isBannerOpen,
     isSettingsOpen,
     acceptAll,
     rejectNonEssential,
     openSettings,
+    closeSettings,
   } = useConsent();
   const isVisible = forceVisible || (isOpen ?? isBannerOpen);
 
@@ -96,7 +119,10 @@ export function CookieBanner({
             <div className="flex items-center gap-2 sm:gap-3 shrink-0 flex-wrap sm:flex-nowrap">
               <button
                 type="button"
-                onClick={openSettings}
+                onClick={(event) => {
+                  settingsTriggerRef.current = event.currentTarget;
+                  openSettings();
+                }}
                 className="min-h-11 px-3 py-2 text-xs sm:text-sm font-bold underline text-fg hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full transition-colors cursor-pointer"
               >
                 Settings
@@ -121,7 +147,15 @@ export function CookieBanner({
       )}
 
       {/* Categories modal when user clicks Settings */}
-      {!inline && <CookieSettingsModal />}
+      {!inline && isSettingsOpen && (
+        <DeferredOverlayBoundary
+          label="cookie settings"
+          onEscape={closeSettings}
+          returnFocusRef={settingsTriggerRef}
+        >
+          <LoadedCookieSettingsModal />
+        </DeferredOverlayBoundary>
+      )}
     </>
   );
 }
