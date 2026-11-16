@@ -15,6 +15,7 @@
     "data:check": "node scripts/check-placeholders.mjs && node scripts/data-check.mjs",
     "routes:check": "node scripts/check-routes.mjs",
     "tokens:check": "node scripts/check-tokens.mjs",
+    "contrast:check": "node scripts/check-contrast.mjs",
     "tokens:audit": "node scripts/design-audit.mjs",
     "security:audit": "pnpm audit --audit-level=high --ignore GHSA-2464-fhr4-w9xw --ignore GHSA-673q-mjm6-r5xr --ignore GHSA-p3m5-59mp-jv5r",
     "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && pnpm data:check",
