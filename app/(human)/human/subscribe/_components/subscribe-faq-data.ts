@@ -44,5 +44,3 @@ export function getSubscribeFaqs(
     },
   ];
 }
-
-export const SUBSCRIBE_FAQS: FaqItem[] = getSubscribeFaqs(null);
