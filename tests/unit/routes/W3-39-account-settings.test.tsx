@@ -1,28 +1,10 @@
 // @vitest-environment jsdom
-import { afterEach, describe, expect, it, vi } from "vitest";
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const redirectMock = vi.hoisted(() => vi.fn());
 const revalidatePathMock = vi.hoisted(() => vi.fn());
-const routerRefreshMock = vi.hoisted(() => vi.fn());
+let routerRefreshMock = vi.fn();
 
-vi.mock("next/navigation", () => ({
-  redirect: redirectMock,
-  useRouter: () => ({
-    refresh: routerRefreshMock,
-    push: vi.fn(),
-    replace: vi.fn(),
-    prefetch: vi.fn(),
-    back: vi.fn(),
-    forward: vi.fn(),
-  }),
-}));
 vi.mock("next/cache", () => ({ revalidatePath: revalidatePathMock }));
 vi.mock("next/headers", () => ({
   cookies: async () => ({ get: () => undefined }),
@@ -33,16 +15,44 @@ vi.mock("@/components/layout/announcement-bar", () => ({
   AnnouncementBar: () => null,
 }));
 
-import AccountSettingsPage from "@/app/(account)/account/settings/page";
-import { accountProvider, formsProvider } from "@/lib/providers";
 import type { CustomerProfile } from "@/lib/contracts/account";
+
+let cleanup: typeof import("@testing-library/react").cleanup;
+let fireEvent: typeof import("@testing-library/react").fireEvent;
+let render: typeof import("@testing-library/react").render;
+let screen: typeof import("@testing-library/react").screen;
+let waitFor: typeof import("@testing-library/react").waitFor;
+let AccountSettingsPage: typeof import("@/app/(account)/account/settings/page").default;
+let accountProvider: typeof import("@/lib/providers").accountProvider;
+let formsProvider: typeof import("@/lib/providers").formsProvider;
+
+beforeEach(async () => {
+  vi.resetModules();
+  routerRefreshMock = vi.fn();
+  vi.doMock("next/navigation", () => ({
+    redirect: redirectMock,
+    useRouter: () => ({
+      refresh: routerRefreshMock,
+      push: vi.fn(),
+      replace: vi.fn(),
+      prefetch: vi.fn(),
+      back: vi.fn(),
+      forward: vi.fn(),
+    }),
+  }));
+  ({ cleanup, fireEvent, render, screen, waitFor } =
+    await import("@testing-library/react"));
+  ({ default: AccountSettingsPage } =
+    await import("@/app/(account)/account/settings/page"));
+  ({ accountProvider, formsProvider } = await import("@/lib/providers"));
+});
 
 async function renderSettings() {
   return render(await AccountSettingsPage());
 }
 
 afterEach(() => {
-  cleanup();
+  cleanup?.();
   vi.restoreAllMocks();
   redirectMock.mockClear();
   revalidatePathMock.mockClear();
@@ -102,7 +112,7 @@ describe("W3-39 /account/settings mounted behavior", () => {
         }) as HTMLInputElement
       ).value
     ).toBe("Alexandra");
-    expect(routerRefreshMock).toHaveBeenCalled();
+    await waitFor(() => expect(routerRefreshMock).toHaveBeenCalled());
   });
 
   it("shows a friendly profile error after provider failure", async () => {
