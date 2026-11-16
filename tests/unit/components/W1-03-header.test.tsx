@@ -3,7 +3,13 @@
  */
 import React from "react";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  within,
+} from "@testing-library/react";
 import { Header } from "@/components/layout/header";
 import { useCartStore } from "@/lib/providers/client";
 
@@ -153,6 +159,27 @@ describe("W1-03 Header Component", () => {
       // Close menu with Escape key
       fireEvent.keyDown(window, { key: "Escape" });
       expect(toggleButton.getAttribute("aria-expanded")).toBe("false");
+    });
+
+    it("returns focus to the mobile menu button when Escape closes a focused menu item", () => {
+      render(<Header variant="human" />);
+
+      const trigger = screen.getByRole("button", {
+        name: "Open navigation menu",
+      });
+      trigger.focus();
+      fireEvent.click(trigger);
+
+      const menu = screen.getByRole("region", {
+        name: "Mobile Navigation Menu",
+      });
+      within(menu).getByRole("link", { name: "Shop" }).focus();
+      fireEvent.keyDown(window, { key: "Escape" });
+
+      expect(
+        screen.queryByRole("region", { name: "Mobile Navigation Menu" })
+      ).toBeNull();
+      expect(document.activeElement).toBe(trigger);
     });
   });
 });

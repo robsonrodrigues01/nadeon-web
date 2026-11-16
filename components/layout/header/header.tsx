@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useCallback,
   useSyncExternalStore,
+  useRef,
 } from "react";
 import Link from "next/link";
 import { Search, Menu, X } from "lucide-react";
@@ -48,6 +49,7 @@ export function Header({
 }: HeaderProps) {
   const isPet = variant === "pet";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
 
   // Cart count synchronized via useSyncExternalStore (SSR-safe, React 19 compliant)
   const cartCount = useSyncExternalStore(
@@ -76,6 +78,7 @@ export function Header({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         closeMenu();
+        menuTriggerRef.current?.focus();
       }
     };
 
@@ -175,6 +178,7 @@ export function Header({
           </Link>
 
           <button
+            ref={menuTriggerRef}
             type="button"
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation-menu"
