@@ -2121,8 +2121,7 @@
     "criterios": [
       "lista de lacunas e specs novas escritas, sem executar Playwright",
       "revisão APROVADO"
-    ],
-    "revisor": "Tecla"
+    ]
   },
   {
     "id": "W3-32",
@@ -2131,9 +2130,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Estados de formulário: loading, erro, sucesso e vazio em contato, newsletter, settings, do-not-sell, track e accessibility (fila permanente #5)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Tecla",
-    "lease_ate": null,
+    "lease_ate": "2026-11-16T01:01:03.638Z",
     "branch": "agy/W3-32",
     "pr": "local",
     "criterios": [
@@ -2141,7 +2140,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "MUDANÇAS: /track validação nativa; correção com Tecla após revisar W3-31"
+    "nota": "MUDANÇAS: /track validação nativa; correção com Tecla"
   },
   {
     "onda": 3,
@@ -2274,7 +2273,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:57:12.809Z",
+    "lease_ate": "2026-11-16T01:00:57.698Z",
     "pr": null,
     "criterios": [
       "testes de comportamento montados",
@@ -2334,7 +2333,7 @@
     ],
     "status": "em_andamento",
     "responsavel": "Lente4",
-    "lease_ate": "2026-11-16T00:59:52.296Z",
+    "lease_ate": "2026-11-16T01:00:25.092Z",
     "pr": null,
     "criterios": [
       "JS por rota menor (medir antes/depois com o método do BUNDLE.md)",
