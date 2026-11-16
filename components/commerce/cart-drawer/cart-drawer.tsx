@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, type RefObject } from "react";
 import { Dialog } from "radix-ui";
 import {
   cartProvider as defaultCartProvider,
@@ -21,6 +21,7 @@ export interface CartDrawerProps {
   theme?: "human" | "pet";
   cart?: Cart;
   cartProvider?: CartProvider;
+  returnFocusRef?: RefObject<HTMLElement | null>;
 }
 
 export function CartDrawer({
@@ -29,6 +30,7 @@ export function CartDrawer({
   theme,
   cart: customCart,
   cartProvider = defaultCartProvider,
+  returnFocusRef,
 }: CartDrawerProps) {
   const store = useCartDrawerStore();
   const liveCart = useCartStore((state) => state.cart);
@@ -61,7 +63,8 @@ export function CartDrawer({
         <Dialog.Content
           onOpenAutoFocus={() => {
             previousActiveElement.current =
-              document.activeElement as HTMLElement;
+              returnFocusRef?.current ??
+              (document.activeElement as HTMLElement);
           }}
           onCloseAutoFocus={(event) => {
             event.preventDefault();

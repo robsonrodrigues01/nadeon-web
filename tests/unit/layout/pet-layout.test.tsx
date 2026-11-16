@@ -57,9 +57,11 @@ describe("Pet Layout (W1-22)", () => {
     expect(screen.getByText(/Tested every lot/i)).toBeDefined();
 
     // Newsletter section (Pet variant: "Join the pack")
-    const newsletterHeadings = screen.getAllByText(/Join the pack/i);
+    const newsletterHeadings = await screen.findAllByText(/Join the pack/i);
     expect(newsletterHeadings.length).toBeGreaterThanOrEqual(1);
-    const emailInputs = screen.getAllByRole("textbox", { name: /email/i });
+    const emailInputs = await screen.findAllByRole("textbox", {
+      name: /email/i,
+    });
     expect(emailInputs.length).toBeGreaterThanOrEqual(1);
 
     // Footer with contentinfo role and Pet regulatory statements

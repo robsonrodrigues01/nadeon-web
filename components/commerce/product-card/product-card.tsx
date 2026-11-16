@@ -3,16 +3,16 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Product } from "@/lib/contracts/catalog";
 import type { Cart, CartProvider } from "@/lib/contracts/cart";
 import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
 import { useMarket } from "@/lib/market/context";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { Button } from "@/components/ui/button";
 import { Claim } from "./claim";
+import type { ProductCardData } from "./product-card-data";
 
 export interface ProductCardProps {
-  product: Product;
+  product: ProductCardData;
   headingLevel?: 2 | 3;
   className?: string;
   cartProvider?: CartProvider;
@@ -91,9 +91,9 @@ export function ProductCard({
             <Image
               src={imageSrc}
               alt={`${product.name} - ${product.technicalName}`}
-              width={240}
-              height={240}
-              className="max-h-full max-w-full object-contain"
+              fill
+              sizes="(min-width: 1280px) 272px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+              className="object-contain"
             />
           </Link>
 

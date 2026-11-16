@@ -3,11 +3,11 @@ import { campaignConfig } from "@/lib/providers";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { TrustStrip } from "@/components/brand/trust-strip";
-import { Newsletter } from "@/components/brand/newsletter";
+import { DeferredNewsletter } from "@/components/brand/newsletter/deferred-newsletter";
 import { Footer } from "@/components/layout/footer";
-import { CartDrawer } from "@/components/commerce/cart-drawer";
+import { DeferredCartDrawer } from "@/components/commerce/cart-drawer/deferred-cart-drawer";
 import { CookieBanner } from "@/components/layout/cookie-banner";
-import { FirstVisitPopup } from "@/components/layout/popup";
+import { DeferredFirstVisitPopup } from "@/components/layout/popup/deferred-first-visit-popup";
 import { ConsentProvider } from "@/lib/consent";
 
 export default async function HumanLayout({
@@ -27,11 +27,11 @@ export default async function HumanLayout({
         <Header variant="human" />
         <div className="flex-1">{children}</div>
         <TrustStrip line="human" />
-        <Newsletter variant="human" />
+        <DeferredNewsletter variant="human" />
         <Footer line="human" />
-        <CartDrawer theme="human" />
+        <DeferredCartDrawer theme="human" />
         <CookieBanner />
-        <FirstVisitPopup variant="human" />
+        <DeferredFirstVisitPopup variant="human" />
       </div>
     </ConsentProvider>
   );

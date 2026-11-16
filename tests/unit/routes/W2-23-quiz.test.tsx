@@ -9,6 +9,7 @@ import { QuizFooter } from "@/app/(human)/human/quiz/_components/quiz-footer";
 import { QuizAnalyzing, QuizResultHuman } from "@/components/commerce/quiz";
 import { getQuiz, evaluateQuizRecommendation } from "@/lib/quiz";
 import { catalogProvider } from "@/lib/providers";
+import { QuizWizard } from "@/components/commerce/quiz/quiz-wizard";
 
 // Mock next/navigation
 const pushMock = vi.fn();
@@ -107,6 +108,32 @@ describe("Route /human/quiz Suite (W2-23)", () => {
   });
 
   describe("Quiz Flow Elements (Catalog Section 5.6)", () => {
+    it("completes all five Human questions and shows the result after analysis", async () => {
+      const humanQuiz = getQuiz("human");
+      render(<QuizWizard initialQuiz={humanQuiz!} />);
+
+      fireEvent.click(screen.getByRole("button", { name: /start the quiz/i }));
+      for (const answer of [
+        "35 to 44",
+        "Daily energy",
+        "Most days",
+        "Capsules",
+        "No, I am new to NMN",
+      ]) {
+        fireEvent.click(
+          await screen.findByRole("button", { name: new RegExp(`^${answer}`) })
+        );
+        fireEvent.click(
+          screen.getByRole("button", { name: /continue to next step/i })
+        );
+      }
+
+      expect(await screen.findByTestId("quiz-analyzing")).toBeTruthy();
+      expect(
+        await screen.findByTestId("quiz-result-human", {}, { timeout: 5000 })
+      ).toBeTruthy();
+    });
+
     it("Start Screen: renders semantic Start button, time and question count without placeholders", () => {
       const humanQuiz = getQuiz("human");
       expect(humanQuiz).toBeDefined();

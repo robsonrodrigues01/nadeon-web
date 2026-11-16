@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useId, useState } from "react";
+import React, { type FormEvent, useId, useState } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { subscribeNewsletter } from "./actions";
 import type {
@@ -11,7 +9,7 @@ import type {
   FormSubmissionResult,
 } from "@/lib/contracts/forms";
 import { cn } from "@/lib/utils";
-import { newsletterSchema, type NewsletterFormData } from "./schema";
+import { newsletterSchema } from "./schema";
 
 export type NewsletterVariant = "human" | "pet";
 
@@ -51,33 +49,37 @@ export function Newsletter({
     subtitle ??
     "10% off your first order, plus new science, launches and members-only offers. No spam.";
 
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [successResult, setSuccessResult] =
     useState<FormSubmissionResult | null>(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<NewsletterFormData>({
-    resolver: zodResolver(newsletterSchema),
-    defaultValues: {
-      email: "",
-    },
-    mode: "onTouched",
-  });
+  const validateEmail = (value: string) => {
+    const parsed = newsletterSchema.safeParse({ email: value });
+    setEmailError(
+      parsed.success ? null : (parsed.error.issues[0]?.message ?? null)
+    );
+    return parsed;
+  };
 
-  const onSubmit = async (data: NewsletterFormData) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setEmailTouched(true);
+    const parsed = validateEmail(email);
+    if (!parsed.success) return;
+
     setServerError(null);
+    setIsSubmitting(true);
     try {
       // Newsletter requires affirmative acceptance of terms and privacy policy
       const result = provider
-        ? await provider.subscribe(resolvedList, data.email, true)
-        : await subscribeNewsletter(resolvedList, data.email, true);
+        ? await provider.subscribe(resolvedList, parsed.data.email, true)
+        : await subscribeNewsletter(resolvedList, parsed.data.email, true);
       if (result.success) {
         setSuccessResult(result);
-        reset();
         onSuccess?.(result);
       } else {
         setServerError(
@@ -90,6 +92,8 @@ export function Newsletter({
           ? err.message
           : "An unexpected error occurred. Please try again.";
       setServerError(message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -131,7 +135,7 @@ export function Newsletter({
         </div>
       ) : (
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={onSubmit}
           noValidate
           className="mt-5"
           aria-label={resolvedTitle}
@@ -144,24 +148,34 @@ export function Newsletter({
               <input
                 id={inputId}
                 type="email"
+                name="email"
                 autoComplete="email"
                 placeholder="Email address"
                 disabled={isSubmitting}
-                aria-invalid={errors.email ? "true" : "false"}
+                value={email}
+                onChange={(event) => {
+                  const value = event.currentTarget.value;
+                  setEmail(value);
+                  if (emailTouched) validateEmail(value);
+                }}
+                onBlur={() => {
+                  setEmailTouched(true);
+                  validateEmail(email);
+                }}
+                aria-invalid={emailError ? "true" : "false"}
                 aria-describedby={
-                  errors.email ? errorId : serverError ? errorId : undefined
+                  emailError ? errorId : serverError ? errorId : undefined
                 }
                 className={cn(
                   "w-full min-h-11 h-11 px-5 rounded-full text-sm outline-none transition-colors",
                   "bg-fg/10 text-fg placeholder:text-fg-muted/70",
                   "focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg",
-                  errors.email
+                  emailError
                     ? "border border-product-coral"
                     : isPet
                       ? "border border-border/60 hover:border-border"
                       : "border border-border hover:border-accent/40"
                 )}
-                {...register("email")}
               />
             </div>
 
@@ -189,7 +203,7 @@ export function Newsletter({
             </button>
           </div>
 
-          {errors.email && (
+          {emailError && (
             <p
               id={errorId}
               role="alert"
@@ -199,11 +213,11 @@ export function Newsletter({
                 className="w-3.5 h-3.5 shrink-0"
                 aria-hidden="true"
               />
-              <span>{errors.email.message}</span>
+              <span>{emailError}</span>
             </p>
           )}
 
-          {serverError && !errors.email && (
+          {serverError && !emailError && (
             <p
               id={errorId}
               role="alert"

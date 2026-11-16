@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useId, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useId,
+  useRef,
+  type RefObject,
+} from "react";
 import { useConsent } from "@/lib/consent";
 import { X } from "lucide-react";
 
@@ -8,6 +14,7 @@ export interface CookieSettingsModalProps {
   isOpen?: boolean;
   onClose?: () => void;
   inline?: boolean;
+  returnFocusRef?: RefObject<HTMLElement | null>;
 }
 
 interface CookieSettingsFormProps {
@@ -193,6 +200,7 @@ export function CookieSettingsModal({
   isOpen,
   onClose,
   inline = false,
+  returnFocusRef,
 }: CookieSettingsModalProps) {
   const {
     consent,
@@ -218,7 +226,8 @@ export function CookieSettingsModal({
       modalRef.current?.querySelector<HTMLElement>('[role="dialog"]');
     if (!dialog) return;
 
-    previousActiveElement.current = document.activeElement as HTMLElement;
+    previousActiveElement.current =
+      returnFocusRef?.current ?? (document.activeElement as HTMLElement);
     const focusableSelector =
       'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])';
     const focusables = dialog.querySelectorAll<HTMLElement>(focusableSelector);
@@ -252,7 +261,7 @@ export function CookieSettingsModal({
       window.removeEventListener("keydown", handleKeyDown);
       previousActiveElement.current?.focus();
     };
-  }, [active, inline, handleClose]);
+  }, [active, inline, handleClose, returnFocusRef]);
 
   if (!active) return null;
 

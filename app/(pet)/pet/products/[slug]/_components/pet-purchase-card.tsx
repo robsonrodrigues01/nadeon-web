@@ -235,7 +235,7 @@ export function PetPurchaseCard({
   };
 
   return (
-    <div className={`flex flex-col gap-6 text-fg ${className}`}>
+    <div className={`flex min-w-0 flex-col gap-6 text-fg ${className}`}>
       {/* Top badges */}
       <div className="flex items-center gap-2 flex-wrap">
         <span className="inline-flex items-center rounded-pill bg-fg text-bg px-3 py-1 text-xs font-extrabold uppercase tracking-wider">
@@ -338,7 +338,7 @@ export function PetPurchaseCard({
       </div>
 
       {/* Purchase Configuration Card */}
-      <div className="rounded-card border border-border bg-bg-elevated p-5 sm:p-6 shadow-card">
+      <div className="min-w-0 rounded-card border border-border bg-bg-elevated p-5 sm:p-6 shadow-card">
         {/* Animal regulatory note */}
         <div
           className="mb-4 rounded-field border border-border bg-bg p-3 text-xs font-semibold text-accent"
@@ -353,7 +353,7 @@ export function PetPurchaseCard({
         </div>
 
         {/* Purchase Mode Fieldset */}
-        <fieldset className="space-y-4 border-none p-0 m-0">
+        <fieldset className="min-w-0 space-y-4 border-none p-0 m-0">
           <legend className="sr-only">Purchase options</legend>
 
           {/* Option A: Subscribe & Save */}

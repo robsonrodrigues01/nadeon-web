@@ -8,6 +8,7 @@ import React, {
   useCallback,
   useSyncExternalStore,
   type FormEvent,
+  type RefObject,
 } from "react";
 import Link from "next/link";
 import { X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
@@ -15,8 +16,9 @@ import { useConsent, readCookie, writeCookie } from "@/lib/consent";
 import { subscribeNewsletter } from "@/components/brand/newsletter/actions";
 import { newsletterSchema } from "@/components/brand/newsletter/schema";
 import { cn } from "@/lib/utils";
+import { FIRST_VISIT_POPUP_COOKIE_NAME } from "./constants";
 
-export const FIRST_VISIT_POPUP_COOKIE_NAME = "nadeon_first_visit_popup";
+export { FIRST_VISIT_POPUP_COOKIE_NAME } from "./constants";
 
 export type PopupVariant = "human" | "pet";
 
@@ -62,6 +64,8 @@ export interface FirstVisitPopupProps {
    */
   cookieName?: string;
 
+  returnFocusRef?: RefObject<HTMLElement | null>;
+
   /**
    * Additional wrapper class names.
    */
@@ -79,6 +83,7 @@ export function FirstVisitPopup({
   onClose,
   onSuccess,
   cookieName = FIRST_VISIT_POPUP_COOKIE_NAME,
+  returnFocusRef,
   className = "",
 }: FirstVisitPopupProps) {
   const { isBannerOpen, record } = useConsent();
@@ -181,7 +186,8 @@ export function FirstVisitPopup({
   useEffect(() => {
     if (!isVisible || inline) return;
 
-    previousActiveElement.current = document.activeElement as HTMLElement;
+    previousActiveElement.current =
+      returnFocusRef?.current ?? (document.activeElement as HTMLElement);
 
     const modalEl = modalRef.current;
     if (!modalEl) return;
@@ -237,7 +243,7 @@ export function FirstVisitPopup({
         previousActiveElement.current.focus();
       }
     };
-  }, [isVisible, inline, handleDismiss]);
+  }, [isVisible, inline, handleDismiss, returnFocusRef]);
 
   if (!isVisible) return null;
 

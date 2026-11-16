@@ -200,7 +200,7 @@ export function DogProductsSection({
           </div>
 
           {/* Right Toolbar: Product count + Sort selector */}
-          <div className="flex items-center justify-between gap-4 sm:justify-end">
+          <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-end sm:gap-4">
             <span className="text-sm font-medium text-fg-muted whitespace-nowrap">
               {displayedProducts.length} products for dogs
             </span>
