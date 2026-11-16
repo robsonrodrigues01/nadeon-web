@@ -2758,9 +2758,9 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "titulo": "Revisão visual em 1440 px e 320 px (fila permanente item 3): mesmas rotas do BRIEFING-VISUAL, sem editar código",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-16T20:29:17.987Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2873,9 +2873,9 @@
     "depende_de": [
       "W3-71"
     ],
-    "status": "para_revisao",
-    "responsavel": "Trilho",
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo5",
+    "lease_ate": "2026-11-16T20:40:43.434Z",
     "pr": "local",
     "id": "W3-72",
     "papel": "Frontend",
@@ -2887,7 +2887,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "ver .maestri/status/W3-71/IMAGENS.md Gate rodado pelo Maestro com rede em 8d94ade: verde, 1237 testes + build (sandbox do Trilho sem rede).",
+    "nota": "ver .maestri/status/W3-71/IMAGENS.md Gate rodado pelo Maestro com rede em 8d94ade: verde, 1237 testes + build (sandbox do Trilho sem rede). MUDANÇAS (Lente): falta sizes 96/128 na imagem Full Charge em hero.tsx:140-148. Volta ao Trilho após W3-66.",
     "revisor": "Lente"
   },
   {
@@ -2910,8 +2910,8 @@
   },
   {
     "onda": 3,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Prisma5",
     "lease_ate": null,
     "pr": "local",
     "id": "W3-74",
@@ -2984,9 +2984,9 @@
   },
   {
     "onda": 3,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T20:49:23.040Z",
     "pr": "local",
     "id": "W3-78",
     "papel": "QA",
@@ -3042,9 +3042,9 @@
   {
     "onda": 3,
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T20:27:35.324Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "id": "W3-81",
@@ -3060,8 +3060,8 @@
     "onda": 3,
     "depende_de": [],
     "status": "em_andamento",
-    "responsavel": "Crivo4",
-    "lease_ate": "2026-11-16T20:29:26.572Z",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-16T20:50:15.529Z",
     "branch": null,
     "pr": "local",
     "id": "W3-82",
@@ -3072,5 +3072,43 @@
       "TECLADO.md por rota",
       "nenhuma alteração de código"
     ]
+  },
+  {
+    "id": "W3-83",
+    "onda": 3,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Texto da página vs board (fila permanente item 9): diferenças fora de To be confirmed, rotas não cobertas por W3-06 a W3-08",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lente",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "TEXTO.md por rota",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W3-84",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Achados médios da W3-66 (1440/320): placeholders Glow/Prime na rotina Human, hierarquia do título no hero Pet e no H1 do Track, painéis ausentes em Account Settings, newsletter duplicada em Cart/Track",
+    "depende_de": [
+      "W3-66"
+    ],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W3-84",
+    "pr": "local",
+    "criterios": [
+      "achados médios W3-66 resolvidos",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "ver .maestri/status/W3-66/VISUAL.md"
   }
 ]
