@@ -3190,5 +3190,260 @@
     ],
     "nota": "baixa; hero.tsx:141-165",
     "revisor": "Lupa"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-16T23:16:51.208Z",
+    "pr": "local",
+    "id": "W4-00",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Contrato antes da onda 4: campos em lib/contracts e mock para Copy link, Reorder, consulta de pedido de visitante (/track estado B), miniaturas de pedido e copy em ContactInput (Send me a copy)",
+    "branch": "agy/W4-00",
+    "criterios": [
+      "contratos e mock com testes",
+      "nenhuma rota alterada",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "DECISIONS onda 2 (W2-27, Copy link/Reorder). Só lib/contracts, lib/providers/mock e testes."
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-00"
+    ],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-00b",
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Ligar nas rotas os campos da W4-00: /track estado B, Track order e Send me a copy em /help, Copy link, Reorder e miniaturas em pedidos da conta",
+    "branch": "agy/W4-00b",
+    "criterios": [
+      "fluxos com testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-01",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Testar login por código (Customer Account API) e sellingPlanId no carrinho",
+    "branch": "agy/W4-01",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "loja Shopify real com Subscriptions e os 5 planos; URL de retorno HTTPS cadastrada",
+    "nota": "aguardando Robson: loja Shopify real com Subscriptions e os 5 planos; URL de retorno HTTPS cadastrada"
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-01"
+    ],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-02",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Ações de assinatura expostas pela Customer Account API e capabilities()",
+    "branch": "agy/W4-02",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "Shopify Subscriptions instalado com os planos",
+    "nota": "aguardando Robson: Shopify Subscriptions instalado com os planos"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-03",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Script que compara products.json com a Shopify (handles, preços, variantes, selling plans) e falha na diferença",
+    "branch": "agy/W4-03",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "21 SKUs cadastrados na Shopify com handles e preços finais",
+    "nota": "aguardando Robson: 21 SKUs cadastrados na Shopify com handles e preços finais"
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-03"
+    ],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-04",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Shopify Markets: mercados, moedas, frete internacional e aviso de impostos",
+    "branch": "agy/W4-04",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "mercados e regras de frete definidos na Shopify (W3-79: políticas de envio)",
+    "nota": "aguardando Robson: mercados e regras de frete definidos na Shopify (W3-79: políticas de envio)"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-05",
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Marca do checkout e dos e-mails nativos da Shopify",
+    "branch": "agy/W4-05",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "acesso à loja Shopify real",
+    "nota": "aguardando Robson: acesso à loja Shopify real"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-06",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Webhooks Shopify em /api/webhooks: checkout_started e order_completed no Mailyte, revalidação em products/update",
+    "branch": "agy/W4-06",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "loja Shopify real e chave de API do Mailyte",
+    "nota": "aguardando Robson: loja Shopify real e chave de API do Mailyte"
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-06"
+    ],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-07",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Jornadas Mailyte: boas-vindas com cupom 10%, carrinho abandonado, pedido de review, pesquisa de origem",
+    "branch": "agy/W4-07",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "conta Mailyte e chave de API (contacts:write, messages:send, contact_events:write)",
+    "nota": "aguardando Robson: conta Mailyte e chave de API (contacts:write, messages:send, contact_events:write)"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-08",
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Medição: GA4, Clarity, Meta Pixel, canais Google e Facebook, domínio cruzado, Search Console, Bing, Merchant Center",
+    "branch": "agy/W4-08",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "IDs e acessos das contas de medição",
+    "nota": "aguardando Robson: IDs e acessos das contas de medição"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-09",
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Customer Privacy API ligada ao banner",
+    "branch": "agy/W4-09",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "loja Shopify real; decisão sobre GPC (W3-79)",
+    "nota": "aguardando Robson: loja Shopify real; decisão sobre GPC (W3-79)"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-10",
+    "papel": "Conteúdo",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Materiais e decisões do Robson listados na W3-79 (textos legais, frete, contatos, fotos, FAQ, cancelamento)",
+    "branch": "agy/W4-10",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "materiais do Robson; ver .maestri/status/W3-79/PLACEHOLDERS.md",
+    "nota": "aguardando Robson: materiais do Robson; ver .maestri/status/W3-79/PLACEHOLDERS.md"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "id": "W4-11",
+    "papel": "Frontend",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Páginas de detalhe de kit (/human/kits/[slug], /pet): manter com design aprovado ou remover",
+    "branch": "agy/W4-11",
+    "criterios": [
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "decisão do Robson (W3-83)",
+    "nota": "aguardando Robson: decisão do Robson (W3-83)"
   }
 ]

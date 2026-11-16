@@ -78,3 +78,7 @@ Toda tarefa só é aceita com:
 - Revisão por um agente diferente do autor.
 - Evidência anexada no PR: comandos rodados e saídas, screenshots em 375, 768 e 1280 px para tarefas de interface.
 - Checkpoint final em `.maestri/agents/states/<agent_id>.json`.
+
+## Retomada (16/11/2026 20:05 BRT)
+
+Este arquivo é o handoff original de requisitos. Estado corrente em PROJECT_STATE.md, próximas ações em NEXT_ACTIONS.md, decisões em DECISIONS.md, eventos em logs/events.jsonl e pipeline em pipeline/tasks.json.

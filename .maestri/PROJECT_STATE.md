@@ -20,3 +20,15 @@ Atualizado: 16/11/2026 01:45 BRT (Maestro).
 - 16/11 madrugada: tema de cores aplicado de fato (W3-26), revisões visuais em 320/375/768/1280/1440, teclado e foco, acessibilidade estática (0 achados após W3-56), contraste (2 pares Pet aguardando decisão do Robson), segurança (W3-25/W3-59), JS por rota reduzido (W3-42/43/52), testes de comportamento (W3-39/40/41), specs Playwright (W3-31/51). Gate do main: 1196 testes + build verdes.
 - Em curso: W3-45 (conta; conflito com W3-32), W3-60 e W3-64 (segurança), W3-65 (checagem visual).
 - Agentes no Antigravity/Gemini com --dangerously-skip-permissions (pedido do Robson); Codex ficou com pouca cota.
+
+## 16/11/2026 20:05 BRT (Maestro)
+
+- Onda 3 FECHADA: 87 tarefas, todas entregues (W3-01 a W3-88). Total do pipeline: 164 entregues até a W3-88.
+- Main local em 3e47c94 + checkpoints; gate: 1302 testes + build verdes. GitHub: origin/main em aa946eb, main local 453 commits à frente. Push só com aprovação do Robson.
+- Entraram hoje: segurança Do Not Sell e action própria de exclusão de conta (W3-60, W3-64), imagens 404 e responsivas (W3-68, W3-72, W3-88), contraste AA Pet (W3-70), testes de cobertura (W3-74), specs Playwright (W3-78), correções visuais e de teclado (W3-84, W3-85).
+- Incidente: merge W3-60 quebrou excluir conta (delete-account.tsx reusava submitPrivacyRequest); revertido e corrigido com action própria (DECISIONS 16/11).
+- Fila permanente: todos os 14 itens feitos; itens 1 e 4 com segunda passada sem achados novos (W3-86, W3-87).
+- Onda 4 lançada: W4-00 (contrato, com mock) em andamento com Prisma5; W4-00b depende dela; W4-01 a W4-11 bloqueadas com motivo (Shopify real, Mailyte, IDs de medição, materiais e decisões do Robson).
+- Agentes: Prisma5 (Gemini, com rede), Trilho e Crivo5 (Codex sem bypass: sem rede e sem portal confiável, o Maestro roda o gate com rede), revisores Lente e Lupa (Codex). Vigia3 (Antigravity sem bypass) ocioso, trava em permissão. Crivo4 Gemini esgotou cota (reset ~99h), virou Crivo5.
+- Auditor de Operações: aparece como terminal "Terminal", roda Claude Code e não tem rotina de 60 s. Correção proposta ao Robson, aguardando.
+- Memória do Mac oscila em amarelo (kern.memorystatus_vm_pressure_level = 2); dev server do main rodando para tarefas de portal.
