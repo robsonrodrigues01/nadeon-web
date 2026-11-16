@@ -1950,9 +1950,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Erros e avisos de console em todas as rotas (fila permanente #4)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Régua3",
-    "lease_ate": "2026-11-16T00:28:05.888Z",
+    "lease_ate": null,
     "branch": null,
     "pr": "local",
     "criterios": [
@@ -2019,13 +2019,34 @@
     "preset": "Maestro",
     "titulo": "tokens.css fora do pipeline do Tailwind: bg-bg/text-fg/bg-fg não eram gerados (tema não aplicado)",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Maestro",
     "lease_ate": null,
     "branch": "agy/W3-26",
-    "pr": null,
+    "pr": "local",
     "criterios": [
       "classes do tema geradas no CSS servido",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "revisor": "Régua3"
+  },
+  {
+    "id": "W3-27",
+    "onda": 3,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Avisos de imagem do console: proporção da galeria de produto e priority só na LCP de /human/kits (W3-22)",
+    "depende_de": [
+      "W3-22"
+    ],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W3-27",
+    "pr": null,
+    "criterios": [
+      "console sem aviso de imagem nas rotas",
       "pnpm gate verde",
       "revisão APROVADO"
     ]
