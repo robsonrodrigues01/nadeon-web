@@ -33,6 +33,10 @@ const FAQ_ITEMS: ScienceFaqItem[] = [
     answer:
       "No. NMN is a precursor, the building block your cells convert into NAD+ in a single enzyme step. NAD+ is the coenzyme itself. We make formulas with each, and some people use both.",
   },
+  { question: "Is there clinical research on NMN?" },
+  { question: "How much NMN is in BioHack?" },
+  { question: "Why do some formulas add resveratrol or TMG?" },
+  { question: "Should I talk to my doctor first?" },
 ];
 
 const TRUST_ITEMS: TrustItem[] = [
