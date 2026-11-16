@@ -14,6 +14,7 @@ import AccountSettingsPage, {
 import {
   requestAccountDeletionAction,
   saveProfileAction,
+  saveProfileFormAction,
   signOutAction,
 } from "@/app/(account)/account/settings/_components/actions";
 import {
@@ -377,6 +378,61 @@ describe("W2-22 /account/settings", () => {
         .mockResolvedValue({} as CustomerProfile);
       await saveProfileAction(profileForm({ ...VALID, firstName: "   " }));
       expect(update).not.toHaveBeenCalled();
+    });
+
+    it("saveProfileFormAction retorna status error, mensagem e sem revalidate quando updateProfile falha", async () => {
+      vi.spyOn(mockAccountProvider, "updateProfile").mockRejectedValue(
+        new Error("Database connection failed")
+      );
+
+      const result = await saveProfileFormAction(
+        { status: "idle" },
+        profileForm(VALID)
+      );
+
+      expect(result).toEqual({
+        status: "error",
+        message: "We couldn't save your profile. Please try again.",
+      });
+      expect(revalidatePathMock).not.toHaveBeenCalled();
+    });
+
+    it("saveProfileFormAction retorna status invalid e sem revalidate quando dados são inválidos", async () => {
+      const update = vi.spyOn(mockAccountProvider, "updateProfile");
+
+      const result = await saveProfileFormAction(
+        { status: "idle" },
+        profileForm({ ...VALID, email: "invalid-email" })
+      );
+
+      expect(result).toEqual({
+        status: "invalid",
+        message: "Please check your profile details and try again.",
+      });
+      expect(update).not.toHaveBeenCalled();
+      expect(revalidatePathMock).not.toHaveBeenCalled();
+    });
+
+    it("saveProfileFormAction retorna status success e revalida quando updateProfile tem sucesso", async () => {
+      const updatedProfile = {
+        firstName: "Alex",
+        lastName: "Morgan",
+      } as CustomerProfile;
+      vi.spyOn(mockAccountProvider, "updateProfile").mockResolvedValue(
+        updatedProfile
+      );
+
+      const result = await saveProfileFormAction(
+        { status: "idle" },
+        profileForm(VALID)
+      );
+
+      expect(result).toEqual({
+        status: "success",
+        profile: updatedProfile,
+        message: "Profile saved.",
+      });
+      expect(revalidatePathMock).toHaveBeenCalledWith("/account/settings");
     });
 
     it("sign out encerra a sessão e volta para a home", async () => {

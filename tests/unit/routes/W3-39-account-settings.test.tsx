@@ -151,11 +151,15 @@ describe("W3-39 /account/settings mounted behavior", () => {
         requestType: "delete",
       })
     );
-    const confirmation = (await screen.findAllByRole("status")).find((el) =>
-      el.textContent?.includes("account deletion request")
-    )!;
-    expect(confirmation.textContent).toMatch(/account deletion request/i);
-    expect(confirmation.textContent).toContain("privacy_123");
+    await waitFor(async () => {
+      const statuses = await screen.findAllByRole("status");
+      const confirmation = statuses.find((el) =>
+        el.textContent?.includes("account deletion request")
+      );
+      expect(confirmation).toBeDefined();
+      expect(confirmation!.textContent).toMatch(/account deletion request/i);
+      expect(confirmation!.textContent).toContain("privacy_123");
+    });
   });
 
   it("shows a friendly error if the deletion request provider fails", async () => {

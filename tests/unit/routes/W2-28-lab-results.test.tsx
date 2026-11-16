@@ -1,9 +1,16 @@
 // @vitest-environment jsdom
 import { describe, it, expect, afterEach } from "vitest";
-import { render, screen, cleanup, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  cleanup,
+  within,
+  fireEvent,
+} from "@testing-library/react";
 import LabResultsPage, {
   generateMetadata,
 } from "@/app/(shared)/lab-results/page";
+import { LotBrowser } from "@/app/(shared)/lab-results/_components/lot-browser";
 import { LotResult } from "@/app/(shared)/lab-results/_components/lot-result";
 import type { LabLot } from "@/lib/contracts/labs";
 
@@ -138,4 +145,92 @@ describe("W2-28 LotResult block", () => {
       within(list).getByText("HPLC fingerprint matches reference")
     ).toBeTruthy();
   });
+});
+
+describe("W3-74 LotBrowser component behavior", () => {
+  const petFixtureLot: LabLot = {
+    lotNumber: "NL-00002",
+    productSlug: "pet-fixture-product",
+    productName: "Pet Fixture Product",
+    manufacturedDate: "2026-10-03",
+    expiryDate: "2028-10-03",
+    coaUrl: "/coa/NL-00002.pdf",
+    status: "passed",
+    testResults: [],
+  };
+
+  const lineBySlug: Record<string, "human" | "pet"> = {
+    "fixture-product": "human",
+    "pet-fixture-product": "pet",
+  };
+
+  it("renders empty state message when lots array is empty", () => {
+    render(<LotBrowser lots={[]} lineBySlug={{}} />);
+
+    expect(screen.getByText("first lots publishing soon")).toBeTruthy();
+    expect(screen.queryByRole("table")).toBeNull();
+  });
+
+  it("filters lots by Human, Pet, and All lines, updating aria-pressed and visible rows", () => {
+    render(
+      <LotBrowser lots={[fixtureLot, petFixtureLot]} lineBySlug={lineBySlug} />
+    );
+
+    const allBtn = screen.getByRole("button", { name: "All" });
+    const humanBtn = screen.getByRole("button", { name: "Human" });
+    const petBtn = screen.getByRole("button", { name: "Pet" });
+
+    // Initial state: "All" is pressed, both rows are visible
+    expect(allBtn.getAttribute("aria-pressed")).toBe("true");
+    expect(humanBtn.getAttribute("aria-pressed")).toBe("false");
+    expect(petBtn.getAttribute("aria-pressed")).toBe("false");
+    expect(screen.getByText("Fixture Product")).toBeTruthy();
+    expect(screen.getByText("Pet Fixture Product")).toBeTruthy();
+
+    // Filter to Human
+    fireEvent.click(humanBtn);
+    expect(allBtn.getAttribute("aria-pressed")).toBe("false");
+    expect(humanBtn.getAttribute("aria-pressed")).toBe("true");
+    expect(petBtn.getAttribute("aria-pressed")).toBe("false");
+    expect(screen.getByText("Fixture Product")).toBeTruthy();
+    expect(screen.queryByText("Pet Fixture Product")).toBeNull();
+
+    // Filter to Pet
+    fireEvent.click(petBtn);
+    expect(allBtn.getAttribute("aria-pressed")).toBe("false");
+    expect(humanBtn.getAttribute("aria-pressed")).toBe("false");
+    expect(petBtn.getAttribute("aria-pressed")).toBe("true");
+    expect(screen.queryByText("Fixture Product")).toBeNull();
+    expect(screen.getByText("Pet Fixture Product")).toBeTruthy();
+
+    // Restore to All
+    fireEvent.click(allBtn);
+    expect(allBtn.getAttribute("aria-pressed")).toBe("true");
+    expect(humanBtn.getAttribute("aria-pressed")).toBe("false");
+    expect(petBtn.getAttribute("aria-pressed")).toBe("false");
+    expect(screen.getByText("Fixture Product")).toBeTruthy();
+    expect(screen.getByText("Pet Fixture Product")).toBeTruthy();
+  });
+
+  it.fails(
+    "shows an empty state message when the selected line filter has no matching lots",
+    () => {
+      // Only human lots provided
+      render(
+        <LotBrowser
+          lots={[fixtureLot]}
+          lineBySlug={{ "fixture-product": "human" }}
+        />
+      );
+
+      // Filtering to Pet results in 0 visible lots
+      fireEvent.click(screen.getByRole("button", { name: "Pet" }));
+
+      // Currently LotBrowser renders null when visible.length === 0, leaving an empty void
+      // instead of displaying an empty state message like "No lots found" or "first lots publishing soon"
+      expect(
+        screen.getByText(/first lots publishing soon|no lots found/i)
+      ).toBeTruthy();
+    }
+  );
 });
