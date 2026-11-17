@@ -36,6 +36,12 @@ export function getProvidersMode(): ProvidersMode {
   return process.env.PROVIDERS === "live" ? "live" : "mock";
 }
 
+function getMailyteProvider(mode: ProvidersMode): MailyteProvider {
+  return mode === "live" || process.env.MAILYTE_MODE === "live"
+    ? liveMailyteProvider
+    : mockMailyteProvider;
+}
+
 export function getProviders(mode: ProvidersMode = getProvidersMode()) {
   if (mode === "live") {
     return {
@@ -47,7 +53,7 @@ export function getProviders(mode: ProvidersMode = getProvidersMode()) {
       formsProvider: liveFormsProvider,
       labsProvider: liveLabsProvider,
       campaignConfig: liveCampaignConfig,
-      mailyteProvider: liveMailyteProvider,
+      mailyteProvider: getMailyteProvider(mode),
     };
   }
 
@@ -60,7 +66,7 @@ export function getProviders(mode: ProvidersMode = getProvidersMode()) {
     formsProvider: mockFormsProvider,
     labsProvider: mockLabsProvider,
     campaignConfig: mockCampaignConfig,
-    mailyteProvider: mockMailyteProvider,
+    mailyteProvider: getMailyteProvider(mode),
   };
 }
 
@@ -99,8 +105,8 @@ export const campaignConfig: CampaignConfig = isLive
   : mockCampaignConfig;
 
 export const mailyteProvider: MailyteProvider = isLive
-  ? liveMailyteProvider
-  : mockMailyteProvider;
+  ? getMailyteProvider("live")
+  : getMailyteProvider("mock");
 
 export {
   mockCatalogProvider,
