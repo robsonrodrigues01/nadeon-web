@@ -102,4 +102,19 @@ describe("W5-01 semantic compare formulas route", () => {
       ])
     );
   });
+
+  it("keeps the table header fixed/sticky during vertical scrolling in its scroll container", async () => {
+    render(await ComparePage());
+
+    const table = screen.getByRole("table", { name: "Formula comparison" });
+    const scrollContainer = table.parentElement;
+    expect(scrollContainer).toBeTruthy();
+    expect(scrollContainer?.className).toContain("overflow-auto");
+    expect(scrollContainer?.className).toMatch(/max-h-/);
+
+    const thead = table.querySelector("thead");
+    expect(thead).toBeTruthy();
+    expect(thead?.className).toContain("sticky");
+    expect(thead?.className).toContain("top-0");
+  });
 });

@@ -182,21 +182,24 @@ export function CompareFormulas({ products, market }: CompareFormulasProps) {
             </label>
           </div>
 
-          <div className="hidden overflow-x-auto rounded-card border border-border md:block">
+          <div className="hidden overflow-auto max-h-[75vh] rounded-card border border-border md:block">
             <table
               aria-label="Formula comparison"
               className="w-full min-w-[900px] border-collapse text-left"
             >
-              <thead className="sticky top-0 z-10 bg-bg-elevated">
+              <thead className="sticky top-0 z-20 bg-bg-elevated shadow-xs">
                 <tr>
-                  <th scope="col" className="min-w-36 p-4 text-sm font-bold">
+                  <th
+                    scope="col"
+                    className="sticky top-0 left-0 z-30 bg-bg-elevated min-w-36 border-r border-border p-4 text-sm font-bold"
+                  >
                     Formula details
                   </th>
                   {products.map((product) => (
                     <th
                       key={product.slug}
                       scope="col"
-                      className="min-w-40 border-l border-border p-4 align-top"
+                      className="sticky top-0 z-20 bg-bg-elevated min-w-40 border-l border-border p-4 align-top"
                     >
                       <Link
                         href={`/human/products/${product.slug}`}
@@ -221,7 +224,7 @@ export function CompareFormulas({ products, market }: CompareFormulasProps) {
                   <tr key={row.label} className="border-t border-border">
                     <th
                       scope="row"
-                      className="bg-bg-elevated p-4 text-sm font-bold"
+                      className="sticky left-0 z-10 bg-bg-elevated border-r border-border p-4 text-sm font-bold"
                     >
                       {row.label}
                     </th>
@@ -238,7 +241,7 @@ export function CompareFormulas({ products, market }: CompareFormulasProps) {
                 <tr className="border-t border-border">
                   <th
                     scope="row"
-                    className="bg-bg-elevated p-4 text-sm font-bold"
+                    className="sticky left-0 z-10 bg-bg-elevated border-r border-border p-4 text-sm font-bold"
                   >
                     Purchase
                   </th>
