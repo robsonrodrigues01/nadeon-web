@@ -9,22 +9,15 @@ import { TrackResult } from "./track-result";
 interface TrackViewProps {
   signInHref: string;
   market: Market;
-  initialOrder?: Order | null;
-  initialErrorMessage?: string;
   initialOrderNumber?: string;
-  initialEmail?: string;
 }
 
 export function TrackView({
   signInHref,
   market,
-  initialOrder = null,
-  initialErrorMessage,
   initialOrderNumber,
-  initialEmail,
 }: TrackViewProps) {
-  const [actionOrder, setActionOrder] = useState<Order | null>(null);
-  const order = actionOrder ?? initialOrder;
+  const [order, setOrder] = useState<Order | null>(null);
 
   if (order) {
     return <TrackResult order={order} market={market} />;
@@ -34,12 +27,10 @@ export function TrackView({
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
       <OrderLookup
         signInHref={signInHref}
-        errorMessage={initialErrorMessage}
         initialValues={{
           orderNumber: initialOrderNumber,
-          email: initialEmail,
         }}
-        onOrderFound={(foundOrder) => setActionOrder(foundOrder)}
+        onOrderFound={(foundOrder) => setOrder(foundOrder)}
       />
 
       <aside

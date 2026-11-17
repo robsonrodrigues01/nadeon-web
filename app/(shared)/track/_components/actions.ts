@@ -16,8 +16,8 @@ export type TrackActionResult =
  */
 export async function lookupOrder(formData: FormData): Promise<Order | null> {
   const parsed = TrackOrderSchema.safeParse({
-    orderNumber: formData.get("orderNumber"),
-    email: formData.get("email"),
+    orderNumber: String(formData.get("orderNumber") ?? "").trim(),
+    email: String(formData.get("email") ?? "").trim(),
   });
   if (!parsed.success) {
     return null;
@@ -43,8 +43,8 @@ export async function lookupOrderAction(
         : new FormData();
 
   const parsed = TrackOrderSchema.safeParse({
-    orderNumber: formData.get("orderNumber"),
-    email: formData.get("email"),
+    orderNumber: String(formData.get("orderNumber") ?? "").trim(),
+    email: String(formData.get("email") ?? "").trim(),
   });
   if (!parsed.success) {
     const field = String(parsed.error.issues[0]?.path[0] ?? "orderNumber") as

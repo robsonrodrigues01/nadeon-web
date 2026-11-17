@@ -45,6 +45,7 @@ vi.mock("next/headers", () => ({
 import TrackOrderPage from "@/app/(shared)/track/page";
 import { OrderLookup } from "@/app/(shared)/track/_components/order-lookup";
 import { TrackView } from "@/app/(shared)/track/_components/track-view";
+import { TrackResult } from "@/app/(shared)/track/_components/track-result";
 import { lookupOrderAction } from "@/app/(shared)/track/_components/actions";
 import { DEFAULT_MARKET } from "@/lib/market";
 import {
@@ -109,35 +110,38 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       canReorder: true,
     });
 
-    it("renderiza o Estado B com detalhes do pedido, miniatura e link de cópia", async () => {
+    it("renderiza o Estado B com detalhes do pedido, miniatura e link de cópia via consulta por POST Server Action", async () => {
       mockLookupGuestOrder.mockResolvedValue(sampleGuestOrder);
 
-      const jsx = await TrackOrderPage({
-        searchParams: Promise.resolve({
-          orderNumber: "TEST-NL-0001",
-          email: "test@example.com",
-        }),
-      });
-      render(jsx);
+      const formData = new FormData();
+      formData.set("orderNumber", "TEST-NL-0001");
+      formData.set("email", "test@example.com");
 
-      expect(mockLookupGuestOrder).toHaveBeenCalledWith(
-        "TEST-NL-0001",
-        "test@example.com"
-      );
-      expect(
-        screen.getByRole("heading", { name: "Order #TEST-NL-0001" })
-      ).toBeDefined();
-      expect(screen.getAllByText("Delivered").length).toBeGreaterThan(0);
+      const result = await lookupOrderAction(formData);
+      expect(result.status).toBe("found");
 
-      // Confere renderização da miniatura da imagem (Next Image com alt descritivo)
-      const thumbnail = screen.getByRole("img", {
-        name: "BioHack - 2 Jars (60 days)",
-      });
-      expect(thumbnail).toBeDefined();
-      expect(thumbnail.getAttribute("src")).toContain("biohack.png");
+      if (result.status === "found") {
+        render(<TrackResult order={result.order} market={DEFAULT_MARKET} />);
 
-      // Confere botão de cópia do link do pedido
-      expect(screen.getByRole("button", { name: "Copy link" })).toBeDefined();
+        expect(mockLookupGuestOrder).toHaveBeenCalledWith(
+          "TEST-NL-0001",
+          "test@example.com"
+        );
+        expect(
+          screen.getByRole("heading", { name: "Order #TEST-NL-0001" })
+        ).toBeDefined();
+        expect(screen.getAllByText("Delivered").length).toBeGreaterThan(0);
+
+        // Confere renderização da miniatura da imagem (Next Image com alt descritivo)
+        const thumbnail = screen.getByRole("img", {
+          name: "BioHack - 2 Jars (60 days)",
+        });
+        expect(thumbnail).toBeDefined();
+        expect(thumbnail.getAttribute("src")).toContain("biohack.png");
+
+        // Confere botão de cópia do link do pedido
+        expect(screen.getByRole("button", { name: "Copy link" })).toBeDefined();
+      }
     });
 
     it("exibe mensagem de erro acessível com aria-describedby e role status", () => {
@@ -205,13 +209,7 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
     });
 
     it("TrackView transiciona de Estado A para Estado B ao receber pedido encontrado via ação", async () => {
-      const { rerender } = render(
-        <TrackView
-          signInHref="/account/login"
-          market={DEFAULT_MARKET}
-          initialOrder={null}
-        />
-      );
+      render(<TrackView signInHref="/account/login" market={DEFAULT_MARKET} />);
 
       // Inicialmente em Estado A (formulário de busca)
       expect(
@@ -220,20 +218,24 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       expect(
         screen.queryByRole("heading", { name: /Order #TEST-NL-0001/ })
       ).toBeNull();
+    });
 
-      // Transiciona para Estado B com o pedido encontrado
-      rerender(
-        <TrackView
-          signInHref="/account/login"
-          market={DEFAULT_MARKET}
-          initialOrder={sampleGuestOrder}
-        />
-      );
+    it("TrackOrderPage não consulta pedido via searchParams nem lê e-mail da URL", async () => {
+      mockLookupGuestOrder.mockResolvedValue(sampleGuestOrder);
 
+      const jsx = await TrackOrderPage({
+        searchParams: Promise.resolve({
+          orderNumber: "TEST-NL-0001",
+        }),
+      });
+      render(jsx);
+
+      // Garante que o provider não foi chamado por query string
+      expect(mockLookupGuestOrder).not.toHaveBeenCalled();
+      // Permanece no formulário de busca
       expect(
-        screen.getByRole("heading", { name: "Order #TEST-NL-0001" })
+        screen.getByRole("heading", { name: "Find your order" })
       ).toBeDefined();
-      expect(screen.getAllByText("Delivered").length).toBeGreaterThan(0);
     });
   });
 

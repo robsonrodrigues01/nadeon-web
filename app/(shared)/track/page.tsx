@@ -10,8 +10,6 @@ import { Header } from "@/components/layout/header";
 import { TrustStrip } from "@/components/brand/trust-strip";
 import { Footer } from "@/components/layout/footer";
 import { TrackView } from "./_components/track-view";
-import { TrackOrderSchema } from "./_components/schema";
-import type { Order } from "@/lib/contracts/account";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
@@ -47,7 +45,6 @@ const HELP_LINKS = [
 interface TrackOrderPageProps {
   searchParams?: Promise<{
     orderNumber?: string;
-    email?: string;
   }>;
 }
 
@@ -56,38 +53,10 @@ export default async function TrackOrderPage({
 }: TrackOrderPageProps = {}) {
   const params = searchParams ? await searchParams : undefined;
   const rawOrderNumber = params?.orderNumber?.trim();
-  const rawEmail = params?.email?.trim();
 
   const cookieStore = await cookies();
   const marketId = cookieStore.get(MARKET_COOKIE_NAME)?.value;
   const market = getMarket(marketId) ?? DEFAULT_MARKET;
-
-  let initialOrder: Order | null = null;
-  let initialErrorMessage: string | undefined;
-
-  // Suporte de compatibilidade para links com parâmetros e testes unitários existentes
-  if (rawOrderNumber && rawEmail) {
-    const parsed = TrackOrderSchema.safeParse({
-      orderNumber: rawOrderNumber,
-      email: rawEmail,
-    });
-    if (!parsed.success) {
-      initialErrorMessage = "Check the order number and email.";
-    } else {
-      try {
-        initialOrder = await accountProvider.lookupGuestOrder(
-          parsed.data.orderNumber,
-          parsed.data.email
-        );
-      } catch {
-        initialErrorMessage = "Unable to look up your order. Please try again.";
-      }
-      if (!initialOrder && !initialErrorMessage) {
-        initialErrorMessage =
-          "No order found with that number and email. Please check your confirmation email.";
-      }
-    }
-  }
 
   const signInHref = await accountProvider.signInUrl("/track");
 
@@ -129,10 +98,7 @@ export default async function TrackOrderPage({
             <TrackView
               signInHref={signInHref}
               market={market}
-              initialOrder={initialOrder}
-              initialErrorMessage={initialErrorMessage}
               initialOrderNumber={rawOrderNumber}
-              initialEmail={rawEmail}
             />
           </div>
 
