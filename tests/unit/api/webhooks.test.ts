@@ -247,6 +247,49 @@ describe("POST /api/webhooks", () => {
     expect(allLogs).not.toContain("test.shopper@example.com");
   });
 
+  it("uses Shopify webhook IDs to ignore repeated checkout and order deliveries", async () => {
+    const deliveries = [
+      [
+        "checkouts/create",
+        "TEST-delivery-checkout",
+        { id: "TEST-checkout-9902" },
+      ],
+      ["orders/create", "TEST-delivery-order", { id: "TEST-order-8803" }],
+    ] as const;
+
+    for (const [topic, webhookId, payload] of deliveries) {
+      const body = JSON.stringify(payload);
+      const makeRequest = () =>
+        new Request("http://localhost:3000/api/webhooks", {
+          method: "POST",
+          headers: {
+            "x-shopify-hmac-sha256": signPayload(body, TEST_SECRET),
+            "x-shopify-topic": topic,
+            "x-shopify-webhook-id": webhookId,
+          },
+          body,
+        });
+
+      expect((await POST(makeRequest())).status).toBe(200);
+      expect((await POST(makeRequest())).status).toBe(200);
+    }
+
+    expect(mockMailyteProvider.getRecordedEvents()).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          eventName: "checkout_started",
+          uniqueId: "TEST-delivery-checkout",
+        }),
+        expect.objectContaining({
+          eventName: "order_completed",
+          uniqueId: "TEST-delivery-order",
+        }),
+      ])
+    );
+    expect(mockMailyteProvider.getRecordedEvents()).toHaveLength(2);
+    expect(revalidatePathMock).not.toHaveBeenCalled();
+  });
+
   it("processes orders/create and triggers Mailyte order_completed without logging PII", async () => {
     const payload = {
       id: "TEST-order-8802",
