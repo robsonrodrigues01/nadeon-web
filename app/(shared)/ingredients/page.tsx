@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { getVisitorMarket } from "@/lib/market/visitor";
-import { catalogProvider } from "@/lib/providers";
-import { mockContentProvider } from "@/lib/providers/mock/content";
-import type { ContentProvider } from "@/lib/contracts/content";
+import { catalogProvider, contentProvider } from "@/lib/providers";
 import { buildMetadata } from "@/lib/seo";
 import { IngredientGlossary } from "./_components/ingredient-glossary";
 
@@ -12,8 +10,6 @@ export const metadata: Metadata = buildMetadata({
   description: "To be confirmed.",
   pathname: "/ingredients",
 });
-
-const contentProvider: ContentProvider = mockContentProvider;
 
 export default async function IngredientsPage() {
   const [glossary, ingredients, products, market] = await Promise.all([
