@@ -3787,5 +3787,543 @@
       "revisão APROVADO"
     ],
     "revisor": "Lupa"
+  },
+  {
+    "id": "W4-25",
+    "onda": 4,
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Teclado, foco e estados de formulário das telas novas da onda 4 (fila itens 2 e 5): banner de cookies, /track estado B, /help Track order e Send me a copy, Copy link e Reorder",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "criterios": [
+      "QA.md por tela",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W4-26",
+    "onda": 4,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Achados W4-25: link persistente Cookie settings no rodapé que reabre preferências (evento nadeon_open_consent_settings) para revogar consentimento; foco não cai no BODY ao fechar o banner; erro do /track com role=alert",
+    "depende_de": [
+      "W4-25"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T20:48:39.543Z",
+    "branch": "agy/W4-26",
+    "pr": "local",
+    "criterios": [
+      "achados W4-25 resolvidos com teste",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "revisor": "Lupa"
+  },
+  {
+    "onda": 5,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T20:53:08.154Z",
+    "pr": "local",
+    "criterios": [
+      "contratos e mock com testes",
+      "nenhuma rota alterada",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-00a",
+    "id": "W5-00a",
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Contrato e mock de conteúdo: artigos do journal (Human, Pet, categorias), guias de raça, glossário de ingredientes, especialistas e cursos; textos só do board, o resto To be confirmed",
+    "depende_de": []
+  },
+  {
+    "onda": 5,
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T20:53:14.741Z",
+    "pr": "local",
+    "criterios": [
+      "contratos e mock com testes",
+      "nenhuma rota alterada",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-00b",
+    "id": "W5-00b",
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Contrato e mock de comércio e conta: reviews (listar e escrever), perfil de pet, preferências de e-mail, gift card, lojas físicas (where to buy), pedido de atacado, ofertas",
+    "depende_de": []
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-01",
+    "id": "W5-01",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /human/compare com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-02",
+    "id": "W5-02",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /pet/benefit/[beneficio] com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-03",
+    "id": "W5-03",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /pet/concern/[problema] com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-04",
+    "id": "W5-04",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /offers/[oferta] com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-05",
+    "id": "W5-05",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /ingredients com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-06",
+    "id": "W5-06",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /gift-card com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-07",
+    "id": "W5-07",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /pet/breeds com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-08",
+    "id": "W5-08",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /pet/breeds/[raca] com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-09",
+    "id": "W5-09",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /account/pets com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-10",
+    "id": "W5-10",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /account/email-preferences com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-11",
+    "id": "W5-11",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /experts com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-12",
+    "id": "W5-12",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /journal e /pet/journal com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-13",
+    "id": "W5-13",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /journal/[categoria] com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-14",
+    "id": "W5-14",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /journal/[slug] com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-15",
+    "id": "W5-15",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /wholesale com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-16",
+    "id": "W5-16",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /where-to-buy com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-17",
+    "id": "W5-17",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /lp/[campanha] (listicle, product advertorial, seasonal) com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-18",
+    "id": "W5-18",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /professionals com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-19",
+    "id": "W5-19",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /affiliates com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-20",
+    "id": "W5-20",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /courses/[curso] com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00a"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-21",
+    "id": "W5-21",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /reviews com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
+  },
+  {
+    "onda": 5,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "rota com board desktop e mobile",
+      "testes de comportamento",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "branch": "agy/W5-22",
+    "id": "W5-22",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rota /reviews/write e botão Write a review com mocks, pelo board e pelo catálogo seção 5",
+    "depende_de": [
+      "W5-00b"
+    ]
   }
 ]

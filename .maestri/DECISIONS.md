@@ -148,3 +148,5 @@
 - 2026-11-17: skills verificadas (codex plugin list, agy plugin list): ponytail 5.3.3 e mattpocock-skills 1.3.2 ativos no Codex e no Antigravity. Construtores: ponytail full + tdd + diagnosing-bugs; revisores: ponytail-review. Seções Skills nos briefings; DONE e REVIEW registram "Skills usadas:".
 - 2026-11-17: itens 12 e 4 da fila voltam (W4-16, W4-17) porque a onda 4 mudou webhooks, actions, consentimento, medição, /track e /help.
 - 2026-11-17: item 13 da fila volta (W4-24): fluxos novos da onda 4 sem spec Playwright.
+- 2026-11-17: itens 2 e 5 da fila voltam (W4-25) para as telas novas da onda 4.
+- 2026-11-17: Robson pediu adiantar a onda 5 (Crescimento) com mocks antes do lançamento. W5-00a/W5-00b (contratos) primeiro, depois uma rota por tarefa (W5-01 a W5-22). Texto só do board; o resto To be confirmed com proposta em docs/.
