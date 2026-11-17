@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { contentProvider } from "@/lib/providers";
 import { buildBreadcrumbJsonLd, buildMetadata, JsonLd } from "@/lib/seo";
-import { Claim } from "@/components/commerce/product-card/claim";
 import { PetRegulatoryNotice } from "../../_components/pet-regulatory-notice";
 import { AddKitButton } from "./_components/add-kit-button";
 import { GuideFaq } from "./_components/guide-faq";
@@ -111,9 +110,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
           </h1>
 
           <p className="mt-4 text-base sm:text-xl text-fg-muted max-w-3xl leading-relaxed">
-            A care guide for Labs at every age: common health topics by life
-            stage, weight and exercise, food, and a supplement dose for To be
-            confirmed lb dogs.
+            To be confirmed.
           </p>
 
           {/* Author & Reviewer Bylines */}
@@ -321,15 +318,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
               About the breed
             </h2>
             <div className="text-base text-fg-muted leading-relaxed flex flex-col gap-3">
-              <p>
-                Labs are friendly, food-motivated and built to work. This
-                paragraph introduces temperament, history and what daily life
-                with a Lab looks like.
-              </p>
-              <p>
-                Sample copy. Short sentences, plain words, one idea per
-                paragraph, with links to related guides.
-              </p>
+              <p>To be confirmed.</p>
             </div>
           </section>
 
@@ -344,10 +333,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
             <h2 className="font-archivo font-extrabold text-2xl sm:text-3xl uppercase tracking-tight text-fg">
               Common health topics by life stage
             </h2>
-            <p className="text-sm text-fg-muted">
-              Sample copy. Topics to discuss with your vet at each stage. Not a
-              diagnosis list.
-            </p>
+            <p className="text-sm text-fg-muted">To be confirmed.</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
               <div className="p-5 rounded-2xl border border-border/80 bg-bg-elevated/40 flex flex-col gap-2">
@@ -355,11 +341,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                   Puppy
                 </div>
                 <div className="text-xs font-bold text-accent">0 to 1 year</div>
-                <ul className="text-xs text-fg-muted space-y-1.5 mt-2 list-disc list-inside">
-                  <li>Steady growth, not too fast</li>
-                  <li>Hip and elbow screening talk</li>
-                  <li>Vaccines and parasite plan</li>
-                </ul>
+                <p className="text-xs text-fg-muted mt-2">To be confirmed.</p>
               </div>
 
               <div className="p-5 rounded-2xl border border-border/80 bg-bg-elevated/40 flex flex-col gap-2">
@@ -369,11 +351,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                 <div className="text-xs font-bold text-accent">
                   1 to 7 years
                 </div>
-                <ul className="text-xs text-fg-muted space-y-1.5 mt-2 list-disc list-inside">
-                  <li>Weight creep is common</li>
-                  <li>Ear checks after swimming</li>
-                  <li>Daily joint-friendly exercise</li>
-                </ul>
+                <p className="text-xs text-fg-muted mt-2">To be confirmed.</p>
               </div>
 
               <div className="p-5 rounded-2xl border border-border/80 bg-bg-elevated/40 flex flex-col gap-2">
@@ -381,11 +359,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                   Senior
                 </div>
                 <div className="text-xs font-bold text-accent">7+ years</div>
-                <ul className="text-xs text-fg-muted space-y-1.5 mt-2 list-disc list-inside">
-                  <li>Stiffness after rest</li>
-                  <li>Lumps, teeth and eyes</li>
-                  <li>Twice-yearly vet visits</li>
-                </ul>
+                <p className="text-xs text-fg-muted mt-2">To be confirmed.</p>
               </div>
             </div>
           </section>
@@ -402,8 +376,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
               Weight & exercise
             </h2>
             <p className="text-sm text-fg-muted leading-relaxed">
-              Exercise and healthy body composition are essential for
-              large-breed joint wellness.
+              To be confirmed.
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
@@ -423,10 +396,10 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                   Daily activity
                 </div>
                 <div className="font-archivo font-extrabold text-lg text-fg mt-1">
-                  60 to 90 min
+                  To be confirmed
                 </div>
                 <div className="text-[10px] text-fg-muted opacity-75">
-                  (split in two)
+                  To be confirmed
                 </div>
               </div>
               <div className="p-4 rounded-xl border border-border/70 bg-bg-elevated/30 text-center">
@@ -434,10 +407,10 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                   Low-impact
                 </div>
                 <div className="font-archivo font-extrabold text-lg text-fg mt-1">
-                  Swim & fetch
+                  To be confirmed
                 </div>
                 <div className="text-[10px] text-fg-muted opacity-75">
-                  (favorites)
+                  To be confirmed
                 </div>
               </div>
               <div className="p-4 rounded-xl border border-border/70 bg-bg-elevated/30 text-center">
@@ -445,10 +418,10 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                   Rib check
                 </div>
                 <div className="font-archivo font-extrabold text-lg text-fg mt-1">
-                  Light touch
+                  To be confirmed
                 </div>
                 <div className="text-[10px] text-fg-muted opacity-75">
-                  (feel ribs)
+                  To be confirmed
                 </div>
               </div>
             </div>
@@ -465,12 +438,9 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
             <h2 className="font-archivo font-extrabold text-2xl sm:text-3xl uppercase tracking-tight text-fg">
               Nutrition notes
             </h2>
-            <ul className="text-sm text-fg-muted space-y-2.5 list-disc list-inside leading-relaxed">
-              <li>Measure meals: Labs tend to ask for more than they need.</li>
-              <li>Count treats as part of the daily total.</li>
-              <li>Large-breed puppy food for steady growth.</li>
-              <li>Ask your vet about food changes for seniors.</li>
-            </ul>
+            <p className="text-sm text-fg-muted leading-relaxed">
+              To be confirmed.
+            </p>
           </section>
 
           {/* Section 05: Supplement guide for Labradors */}
@@ -484,28 +454,19 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
             <h2 className="font-archivo font-extrabold text-2xl sm:text-3xl uppercase tracking-tight text-fg">
               Supplement guide for Labradors
             </h2>
-            <p className="text-sm text-fg-muted">
-              How NMN fits a Lab routine and which formula suits each age.*
-            </p>
+            <p className="text-sm text-fg-muted">To be confirmed.</p>
 
             <div className="p-5 rounded-2xl border border-accent/40 bg-accent/10 flex flex-col gap-2">
               <span className="text-xs font-bold tracking-wider uppercase text-accent">
-                DOSE FOR A 55 TO 80 LB LABRADOR
+                DOSE GUIDELINES
               </span>
               <div className="font-archivo font-extrabold text-xl text-fg">
                 Dose: To be confirmed
               </div>
               <p className="text-xs text-fg-muted">
-                Product names, formats and dosages are To be confirmed. Give
-                with or after a meal. Check with your vet first.*
+                Product names, formats and dosages are To be confirmed. Check
+                with your veterinarian.*
               </p>
-            </div>
-
-            <div className="text-xs text-fg-muted italic">
-              <Claim showDisclaimer={false}>
-                Dose is from the label for this weight range. Check with your
-                vet first. Supports healthy aging and joint function.*
-              </Claim>
             </div>
           </section>
 
@@ -520,16 +481,12 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
             <h2 className="font-archivo font-extrabold text-2xl sm:text-3xl uppercase tracking-tight text-fg">
               When to see your vet
             </h2>
-            <ul className="text-sm text-fg-muted space-y-2 list-disc list-inside leading-relaxed">
-              <li>Limping or stiffness that lasts more than a day</li>
-              <li>Sudden change in appetite, thirst or weight</li>
-              <li>Vomiting or diarrhea for more than 24 hours</li>
-              <li>New lumps, or a lump that changes</li>
-              <li>Collapse or trouble breathing after exercise</li>
-            </ul>
+            <p className="text-sm text-fg-muted leading-relaxed">
+              To be confirmed.
+            </p>
             <p className="text-xs text-fg-muted font-bold mt-2">
-              If something feels wrong, call your vet. Supplements do not
-              replace veterinary care.
+              If something feels wrong, call your veterinarian. Supplements do
+              not replace veterinary care.
             </p>
           </section>
 
@@ -651,8 +608,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                 Find the right formula for your Lab
               </h2>
               <p className="text-sm text-fg-muted mt-2 leading-relaxed">
-                Answer 6 quick questions about age, size and goals. Get a
-                formula and a dose by weight.
+                To be confirmed.
               </p>
             </div>
             <Link

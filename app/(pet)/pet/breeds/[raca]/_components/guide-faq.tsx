@@ -10,19 +10,19 @@ interface GuideFaqProps {
 const FAQ_ITEMS = [
   {
     q: "How many chews should a 70 lb Labrador take?",
-    a: "Dose: To be confirmed. Label dose and veterinary recommendation are To be confirmed. Check with your vet first.*",
+    a: "Dose: To be confirmed. Label dose and veterinary recommendation are To be confirmed. Check with your veterinarian.*",
   },
   {
     q: "Can I give chews and oil together?",
-    a: "To be confirmed. Combination routines will be reviewed and published with veterinary guidance.",
+    a: "To be confirmed.",
   },
   {
     q: "At what age is a Labrador a senior?",
-    a: "Typically around 7 years of age, though individual dogs vary. Consult your veterinarian for tailored life-stage screening.",
+    a: "To be confirmed. Consult your veterinarian for tailored life-stage evaluation.",
   },
   {
     q: "My Lab is a picky eater. Is there another format?",
-    a: "To be confirmed. We offer soft chews, treats, oils and powders across our Pet product line.",
+    a: "To be confirmed.",
   },
   {
     q: "Do I need to talk to my vet first?",

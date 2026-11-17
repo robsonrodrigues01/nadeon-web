@@ -160,4 +160,27 @@ describe("W5-08 /pet/breeds/[raca] Route & Semantic Controls", () => {
 
     expect(screen.getByText(/labrador questions/i)).toBeDefined();
   });
+
+  it("does not render unconfirmed clinical advice, dosage claims or vet recommendations", async () => {
+    const params = Promise.resolve({ raca: "labrador-retriever" });
+    const page = await BreedGuidePage({ params });
+    render(page);
+
+    const bodyText = document.body.textContent || "";
+
+    // Unconfirmed dosage statements
+    expect(bodyText).not.toMatch(/dose is from the label/i);
+    expect(bodyText).not.toMatch(/dose by weight/i);
+
+    // Unconfirmed health claims
+    expect(bodyText).not.toMatch(/supports healthy aging and joint function/i);
+
+    // Unconfirmed exercise numbers
+    expect(bodyText).not.toMatch(/60 to 90 min/i);
+
+    // Unconfirmed clinical screenings & medical advice
+    expect(bodyText).not.toMatch(/hip and elbow screening/i);
+    expect(bodyText).not.toMatch(/twice-yearly vet visits/i);
+    expect(bodyText).not.toMatch(/limping or stiffness that lasts/i);
+  });
 });
