@@ -6,8 +6,6 @@ export interface GiftCardFormProps {
   market: Market;
 }
 
-export const PRESET_AMOUNTS = [25, 50, 100, 200] as const;
-
 export interface GiftCardFaqItem {
   question: string;
   answer: string;

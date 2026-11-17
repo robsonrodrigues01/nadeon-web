@@ -174,6 +174,50 @@ export class MockCartProvider implements CartProvider {
     const newLines = [...currentCart.lines];
 
     for (const input of lines) {
+      if (
+        input.variantId.startsWith("gift_") ||
+        input.variantId.startsWith("gift-card")
+      ) {
+        const amount = Number(input.customAttributes?.amount) || 0;
+        const currencyCode = input.customAttributes?.currencyCode || "USD";
+        const existingIndex = newLines.findIndex(
+          (l) => l.variantId === input.variantId
+        );
+
+        if (existingIndex >= 0) {
+          const existing = newLines[existingIndex];
+          const newQty = existing.quantity + input.quantity;
+          newLines[existingIndex] = {
+            ...existing,
+            quantity: newQty,
+            total: {
+              amount: Number((amount * newQty).toFixed(2)),
+              currencyCode,
+            },
+          };
+        } else {
+          const lineId = `line_${Math.random().toString(36).substring(2, 9)}`;
+          newLines.push({
+            id: lineId,
+            variantId: input.variantId,
+            quantity: input.quantity,
+            product: {
+              id: "gift-card",
+              title: "Nadeon Gift Card",
+              handle: "gift-card",
+              line: "human",
+            },
+            price: { amount, currencyCode },
+            total: {
+              amount: Number((amount * input.quantity).toFixed(2)),
+              currencyCode,
+            },
+            customAttributes: input.customAttributes,
+          });
+        }
+        continue;
+      }
+
       // Find matching product variant
       let matchedProduct = null;
       let matchedVariant = null;

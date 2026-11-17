@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     title: "Give a gift card | Nadeon Labs",
     description:
-      "Let them choose their own Nadeon formula. Delivered by email, on the date you pick.",
+      "Let them choose their own To be confirmed. Delivered by email, on the date you pick.",
     pathname: "/gift-card",
   });
 }

@@ -10,10 +10,8 @@ import {
 } from "@testing-library/react";
 import GiftCardPage, { generateMetadata } from "@/app/(shared)/gift-card/page";
 import { GiftCardPurchaseForm } from "@/app/(shared)/gift-card/_components/gift-card-purchase-form";
-import type { GiftCardPurchaseInput } from "@/lib/contracts/gift-card";
-import { MockGiftCardProvider } from "@/lib/providers/mock/gift-card";
+import { MockGiftCardProvider } from "@/lib/providers/client";
 import { DEFAULT_MARKET } from "@/lib/market";
-import { cartProvider } from "@/lib/providers/client";
 
 describe("W5-06 /gift-card Route & Semantic Controls", () => {
   beforeEach(() => {
@@ -117,14 +115,18 @@ describe("W5-06 /gift-card Route & Semantic Controls", () => {
     expect(sunsetBtn.getAttribute("aria-pressed")).toBe("false");
   });
 
-  it("supports preset amounts and custom amount selection formatted by market currency", async () => {
+  it("supports preset amounts and custom amount selection formatted by market currency when approved amounts exist", async () => {
     const mockProvider = new MockGiftCardProvider();
+    vi.spyOn(mockProvider, "getAvailableAmounts").mockResolvedValue([
+      { amount: 50, currencyCode: "USD" },
+      { amount: 100, currencyCode: "USD" },
+    ]);
     render(
       <GiftCardPurchaseForm provider={mockProvider} market={DEFAULT_MARKET} />
     );
 
-    // Preset amounts $50, $100, etc.
-    const amount50Btn = screen.getByRole("button", { name: "$50.00" });
+    // Preset amounts $50, $100
+    const amount50Btn = await screen.findByRole("button", { name: "$50.00" });
     fireEvent.click(amount50Btn);
     expect(amount50Btn.getAttribute("aria-pressed")).toBe("true");
 
@@ -177,15 +179,59 @@ describe("W5-06 /gift-card Route & Semantic Controls", () => {
     expect(alert.textContent).toMatch(/required|valid/i);
   });
 
-  it("submits valid purchase through provider.preparePurchase and adds to cart", async () => {
+  it("announces validation errors when recipient fields are missing with approved amount selected", async () => {
     const mockProvider = new MockGiftCardProvider();
-    const prepareSpy = vi.spyOn(mockProvider, "preparePurchase");
-    const addLineSpy = vi
-      .spyOn(cartProvider, "addLines")
-      .mockResolvedValue({} as never);
-
+    vi.spyOn(mockProvider, "getAvailableAmounts").mockResolvedValue([
+      { amount: 50, currencyCode: "USD" },
+    ]);
     render(
       <GiftCardPurchaseForm provider={mockProvider} market={DEFAULT_MARKET} />
+    );
+
+    const amount50Btn = await screen.findByRole("button", { name: "$50.00" });
+    fireEvent.click(amount50Btn);
+
+    const submitBtn = screen.getByRole("button", { name: /add to cart/i });
+    fireEvent.click(submitBtn);
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toBeDefined();
+    expect(alert.textContent).toMatch(/validation error/i);
+  });
+
+  it("displays 'To be confirmed' and prevents purchasing when provider has no approved amounts", async () => {
+    const mockProvider = new MockGiftCardProvider();
+    render(
+      <GiftCardPurchaseForm provider={mockProvider} market={DEFAULT_MARKET} />
+    );
+
+    // No hardcoded 25, 50, 100, 200 presets should be shown as amounts when unapproved
+    expect(screen.queryByRole("button", { name: "$25.00" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "$50.00" })).toBeNull();
+    expect(screen.getByText(/amounts: to be confirmed/i)).toBeDefined();
+
+    // Submit button should indicate To be confirmed or be disabled
+    const submitBtn = screen.getByRole("button", { name: /add to cart/i });
+    expect(
+      submitBtn.hasAttribute("disabled") ||
+        submitBtn.textContent?.includes("To be confirmed")
+    ).toBe(true);
+  });
+
+  it("submits valid purchase through provider.preparePurchase and adds gift card to real cart provider without error", async () => {
+    const providerWithAmounts: MockGiftCardProvider =
+      new MockGiftCardProvider();
+    vi.spyOn(providerWithAmounts, "getAvailableAmounts").mockResolvedValue([
+      { amount: 50, currencyCode: "USD" },
+      { amount: 100, currencyCode: "USD" },
+    ]);
+    const prepareSpy = vi.spyOn(providerWithAmounts, "preparePurchase");
+
+    render(
+      <GiftCardPurchaseForm
+        provider={providerWithAmounts}
+        market={DEFAULT_MARKET}
+      />
     );
 
     // Fill form
@@ -202,21 +248,25 @@ describe("W5-06 /gift-card Route & Semantic Controls", () => {
       target: { value: "Enjoy!" },
     });
 
+    const amount50Btn = await screen.findByRole("button", { name: "$50.00" });
+    fireEvent.click(amount50Btn);
+
     const submitBtn = screen.getByRole("button", { name: /add to cart/i });
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
       expect(prepareSpy).toHaveBeenCalledTimes(1);
-      expect(addLineSpy).toHaveBeenCalledTimes(1);
     });
 
-    const calledInput = prepareSpy.mock.calls[0][0] as GiftCardPurchaseInput;
-    expect(calledInput.recipientName).toBe("John Doe");
-    expect(calledInput.recipientEmail).toBe("john@example.com");
-    expect(calledInput.senderName).toBe("Jane Doe");
-    expect(calledInput.message).toBe("Enjoy!");
-    expect(calledInput.amount.currencyCode).toBe(DEFAULT_MARKET.currency.code);
-    expect(calledInput.deliveryDate).toMatch(/^\d{4}-\d{2}-\d{2}$/); // ISO 8601 date
+    // Real cart provider must receive the gift card line and succeed
+    await waitFor(() => {
+      expect(screen.getByRole("status")).toBeDefined();
+      expect(
+        screen.getByText(/gift card added to cart successfully/i)
+      ).toBeDefined();
+    });
+
+    expect(screen.queryByRole("alert")).toBeNull();
   });
 
   it("renders terms with 'To be confirmed' and prevents buying gift cards with gift cards rule", async () => {

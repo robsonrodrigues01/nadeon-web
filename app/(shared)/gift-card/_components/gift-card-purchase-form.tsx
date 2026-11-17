@@ -8,10 +8,8 @@ import {
 } from "@/lib/contracts/gift-card";
 import type { Market } from "@/lib/market/types";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
-import { cartProvider } from "@/lib/providers/client";
-import { MockGiftCardProvider } from "@/lib/providers/mock/gift-card";
+import { cartProvider, giftCardProvider } from "@/lib/providers/client";
 import { GiftCardPreview } from "./gift-card-preview";
-import { PRESET_AMOUNTS } from "./types";
 
 interface GiftCardPurchaseFormProps {
   provider?: GiftCardProvider;
@@ -23,13 +21,13 @@ export function GiftCardPurchaseForm({
   market,
 }: GiftCardPurchaseFormProps) {
   const activeProvider = useMemo(
-    () => provider ?? new MockGiftCardProvider(),
+    () => provider ?? giftCardProvider,
     [provider]
   );
 
   // State
   const [design, setDesign] = useState<GiftCardDesign>("espresso");
-  const [presetAmount, setPresetAmount] = useState<number>(50);
+  const [presetAmount, setPresetAmount] = useState<number>(0);
   const [isCustomAmount, setIsCustomAmount] = useState<boolean>(false);
   const [customAmount, setCustomAmount] = useState<string>("");
   const [recipientName, setRecipientName] = useState<string>("");
@@ -49,9 +47,7 @@ export function GiftCardPurchaseForm({
   const [isPending, startTransition] = useTransition();
 
   // Load available amounts if provider returns any
-  const [availablePresets, setAvailablePresets] = useState<number[]>([
-    ...PRESET_AMOUNTS,
-  ]);
+  const [availablePresets, setAvailablePresets] = useState<number[]>([]);
 
   useEffect(() => {
     activeProvider.getAvailableAmounts(market.currency.code).then((amounts) => {
@@ -66,13 +62,16 @@ export function GiftCardPurchaseForm({
   const numericAmount = isCustomAmount
     ? parseFloat(customAmount) || 0
     : presetAmount;
-  const formattedAmount = formatMoneyWithMarket(
-    {
-      amount: numericAmount > 0 ? numericAmount : 0,
-      currencyCode: market.currency.code,
-    },
-    market
-  );
+  const formattedAmount =
+    numericAmount > 0
+      ? formatMoneyWithMarket(
+          {
+            amount: numericAmount,
+            currencyCode: market.currency.code,
+          },
+          market
+        )
+      : "To be confirmed";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,6 +80,11 @@ export function GiftCardPurchaseForm({
 
     if (numericAmount <= 0) {
       setErrorMessage("Please select or enter a valid gift card amount.");
+      return;
+    }
+
+    if (availablePresets.length === 0 && !isCustomAmount) {
+      setErrorMessage("Gift card amounts are To be confirmed.");
       return;
     }
 
@@ -111,17 +115,28 @@ export function GiftCardPurchaseForm({
     startTransition(async () => {
       try {
         const result = await activeProvider.preparePurchase(parsed.data);
-        setSuccessId(result.id);
 
-        // Add to cart
+        // Add to cart using the ID returned by preparePurchase
         if (typeof cartProvider.addLines === "function") {
           await cartProvider.addLines([
             {
-              variantId: `gift-card-${design}-${numericAmount}`,
+              variantId: result.id,
               quantity,
+              customAttributes: {
+                amount: String(numericAmount),
+                currencyCode: market.currency.code,
+                design,
+                recipientName: recipientName.trim(),
+                recipientEmail: recipientEmail.trim(),
+                senderName: senderName.trim(),
+                deliveryDate: effectiveDeliveryDate,
+              },
             },
           ]);
         }
+
+        // Only mark success after cart addition finishes successfully
+        setSuccessId(result.id);
       } catch (err: unknown) {
         const msg =
           err instanceof Error
@@ -155,37 +170,43 @@ export function GiftCardPurchaseForm({
             Choose an amount
           </legend>
 
-          <div
-            role="group"
-            aria-label="Preset gift card amounts"
-            className="grid grid-cols-2 sm:grid-cols-4 gap-2.5"
-          >
-            {availablePresets.map((val) => {
-              const isSelected = !isCustomAmount && presetAmount === val;
-              const label = formatMoneyWithMarket(
-                { amount: val, currencyCode: market.currency.code },
-                market
-              );
-              return (
-                <button
-                  key={val}
-                  type="button"
-                  onClick={() => {
-                    setIsCustomAmount(false);
-                    setPresetAmount(val);
-                  }}
-                  aria-pressed={isSelected}
-                  className={`min-h-12 py-3 px-2 rounded-xl font-bold text-sm sm:text-base border transition-all cursor-pointer text-center ${
-                    isSelected
-                      ? "bg-gradient-gold text-accent-fg border-transparent font-extrabold shadow-sm"
-                      : "border-border/80 text-fg hover:border-fg bg-bg-elevated/40"
-                  }`}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
+          {availablePresets.length > 0 ? (
+            <div
+              role="group"
+              aria-label="Preset gift card amounts"
+              className="grid grid-cols-2 sm:grid-cols-4 gap-2.5"
+            >
+              {availablePresets.map((val) => {
+                const isSelected = !isCustomAmount && presetAmount === val;
+                const label = formatMoneyWithMarket(
+                  { amount: val, currencyCode: market.currency.code },
+                  market
+                );
+                return (
+                  <button
+                    key={val}
+                    type="button"
+                    onClick={() => {
+                      setIsCustomAmount(false);
+                      setPresetAmount(val);
+                    }}
+                    aria-pressed={isSelected}
+                    className={`min-h-12 py-3 px-2 rounded-xl font-bold text-sm sm:text-base border transition-all cursor-pointer text-center ${
+                      isSelected
+                        ? "bg-gradient-gold text-accent-fg border-transparent font-extrabold shadow-sm"
+                        : "border-border/80 text-fg hover:border-fg bg-bg-elevated/40"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="p-3.5 rounded-xl border border-border/80 bg-bg-elevated/40 text-fg-muted font-bold text-sm">
+              Amounts: To be confirmed
+            </div>
+          )}
 
           <div className="flex flex-col gap-2 mt-1">
             <button
@@ -200,15 +221,7 @@ export function GiftCardPurchaseForm({
             >
               <span>Custom amount</span>
               <span className="text-xs text-fg-muted">
-                {formatMoneyWithMarket(
-                  { amount: 10, currencyCode: market.currency.code },
-                  market
-                )}{" "}
-                to{" "}
-                {formatMoneyWithMarket(
-                  { amount: 1000, currencyCode: market.currency.code },
-                  market
-                )}
+                Limits: To be confirmed
               </span>
             </button>
 
@@ -227,8 +240,7 @@ export function GiftCardPurchaseForm({
                   <input
                     id="custom-gift-amount"
                     type="number"
-                    min={10}
-                    max={1000}
+                    min={1}
                     step={1}
                     value={customAmount}
                     onChange={(e) => setCustomAmount(e.target.value)}
@@ -462,7 +474,11 @@ export function GiftCardPurchaseForm({
             disabled={isPending}
             className="flex-1 min-h-12 py-3 px-6 rounded-full bg-gradient-gold text-accent-fg font-extrabold text-sm sm:text-base hover:opacity-95 active:scale-[0.98] transition-all cursor-pointer shadow-sm text-center disabled:opacity-50"
           >
-            {isPending ? "Adding..." : `Add to cart · ${formattedAmount}`}
+            {isPending
+              ? "Adding..."
+              : numericAmount > 0
+                ? `Add to cart · ${formattedAmount}`
+                : "Add to cart · To be confirmed"}
           </button>
         </div>
 
