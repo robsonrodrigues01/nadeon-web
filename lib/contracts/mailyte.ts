@@ -11,6 +11,7 @@ export type MailyteEvent = z.infer<typeof MailyteEventSchema>;
 
 export const MailyteCheckoutStartedInputSchema = z.object({
   checkoutId: z.string(),
+  idempotencyKey: z.string().optional(),
   email: z.string().email().nullable().optional(),
   totalPrice: z.string().optional(),
   currency: z.string().optional(),
@@ -25,6 +26,7 @@ export type CheckoutStartedInput = MailyteCheckoutStartedInput;
 
 export const MailyteOrderCompletedInputSchema = z.object({
   orderId: z.string(),
+  idempotencyKey: z.string().optional(),
   orderNumber: z.string().optional(),
   email: z.string().email().nullable().optional(),
   totalPrice: z.string().optional(),

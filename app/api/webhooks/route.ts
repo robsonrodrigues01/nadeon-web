@@ -61,6 +61,7 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const topic = request.headers.get("x-shopify-topic") ?? "";
+  const webhookId = request.headers.get("x-shopify-webhook-id") ?? undefined;
 
   switch (topic) {
     case "checkouts/create": {
@@ -86,6 +87,7 @@ export async function POST(request: Request): Promise<Response> {
 
       const checkoutEvent = MailyteCheckoutStartedInputSchema.safeParse({
         checkoutId,
+        idempotencyKey: webhookId,
         email,
         totalPrice,
         currency,
@@ -132,6 +134,7 @@ export async function POST(request: Request): Promise<Response> {
 
       const orderEvent = MailyteOrderCompletedInputSchema.safeParse({
         orderId,
+        idempotencyKey: webhookId,
         orderNumber,
         email,
         totalPrice,

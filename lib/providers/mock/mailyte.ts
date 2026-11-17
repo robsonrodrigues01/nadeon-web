@@ -26,6 +26,20 @@ export class MockMailyteProvider implements MailyteProvider {
       throw new Error("Invalid Mailyte event payload");
     }
 
+    // shortcut: dedupe lasts only for this mock instance; use persistent provider idempotency for production retries.
+    const duplicate = this.recordedEvents.find(
+      (recorded) =>
+        recorded.eventName === parsed.data.eventName &&
+        recorded.uniqueId === parsed.data.uniqueId
+    );
+    if (duplicate) {
+      return MailyteTrackingResultSchema.parse({
+        success: true,
+        eventId: duplicate.eventId,
+        uniqueId: duplicate.uniqueId,
+      });
+    }
+
     const eventId = `m_evt_${Math.random().toString(36).substring(2, 9)}`;
     const timestamp = parsed.data.timestamp || new Date().toISOString();
 
@@ -55,7 +69,7 @@ export class MockMailyteProvider implements MailyteProvider {
     return this.trackEvent({
       eventName: "checkout_started",
       email: parsed.data.email,
-      uniqueId: parsed.data.checkoutId,
+      uniqueId: parsed.data.idempotencyKey ?? parsed.data.checkoutId,
       properties: {
         totalPrice: parsed.data.totalPrice,
         currency: parsed.data.currency,
@@ -76,7 +90,7 @@ export class MockMailyteProvider implements MailyteProvider {
     return this.trackEvent({
       eventName: "order_completed",
       email: parsed.data.email,
-      uniqueId: parsed.data.orderId,
+      uniqueId: parsed.data.idempotencyKey ?? parsed.data.orderId,
       properties: {
         orderNumber: parsed.data.orderNumber,
         totalPrice: parsed.data.totalPrice,
