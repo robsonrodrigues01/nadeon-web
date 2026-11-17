@@ -10,15 +10,15 @@
 - **Contexto:** Convenção de roteamento intermediário no Next.js 16.3.
 - **Decisão:** O middleware foi substituído pelo proxy em proxy.ts (ou proxy.js), com função proxy executada no runtime nodejs.
 
-## ADR-003: Integração e Deploy na Vercel
+## ADR-003: Integração e Deploy na Netlify
 - **Status:** Aceito
-- **Contexto:** Conexão contínua entre GitHub e Vercel para prévias automáticas.
-- **Decisão:** Repositório nadeon-web conectado ao GitHub e ao projeto Vercel, com commits vinculados ao autor configurado.
+- **Contexto:** Conexão contínua entre GitHub e Netlify para prévias automáticas.
+- **Decisão:** Repositório nadeon-web conectado ao GitHub e ao projeto Netlify, com commits vinculados ao autor configurado.
 
 ## ADR-004: Abertura e Domínio
 - **Status:** Aceito
 - **Contexto:** Condição de entrada no ar do site de produção.
-- **Decisão:** O domínio nadeonlabs.com só entra no ar com a Shopify integrada e apta para vendas. Até o lançamento, todo o trabalho é validado nas prévias da Vercel.
+- **Decisão:** O domínio nadeonlabs.com só entra no ar com a Shopify integrada e apta para vendas. Até o lançamento, todo o trabalho é validado nas prévias da Netlify.
 
 ## ADR-005: Cronograma e Ritmo das Ondas
 - **Status:** Aceito
@@ -123,7 +123,7 @@
 ## ADR-025: Gestão de DNS
 - **Status:** Aceito
 - **Contexto:** Virada de tráfego do domínio nadeonlabs.com.
-- **Decisão:** Página provisória atual mantida até o corte final. No dia da abertura, apontamento do DNS no Cloudflare em modo DNS-only direto para a Vercel.
+- **Decisão:** Página provisória atual mantida até o corte final. No dia da abertura, apontamento do DNS no Cloudflare em modo DNS-only direto para a Netlify.
 
 ## Decisões do Maestro na onda 2 (14/11/2026)
 - Rewards fica fora do lançamento (onda D do plano); rotas mostram só o que o contrato tem.
@@ -151,3 +151,5 @@
 - 2026-11-17: itens 2 e 5 da fila voltam (W4-25) para as telas novas da onda 4.
 - 2026-11-17: Robson pediu adiantar a onda 5 (Crescimento) com mocks antes do lançamento. W5-00a/W5-00b (contratos) primeiro, depois uma rota por tarefa (W5-01 a W5-22). Texto só do board; o resto To be confirmed com proposta em docs/.
 - 2026-11-17: Mailyte real (Robson já tem chave e DNS). Deduplicação entre processos de webhooks (W4-23) resolvida pelo unique_id do Mailyte, sem armazenamento próprio.
+- 2026-11-17: Robson decidiu trocar a Vercel pela Netlify para hospedagem (substitui ADR de deploy e a virada de DNS para a Vercel; DNS do lançamento passa a apontar para a Netlify). Netlify suporta Next >= 13.5 pelo adaptador OpenNext (App Router, Server Actions, ISR, middleware). Pendências: confirmar proxy do Next 16 e next/font/google na Netlify; remover @vercel/analytics e @vercel/speed-insights. Agent Runners da Netlify não substituem os agentes do Maestri.
+- 2026-11-17: W4-29 aprovada pelo Maestro apesar do achado do Lente: menções à Vercel só no histórico do tasks.json, que não se reescreve.

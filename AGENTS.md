@@ -30,7 +30,7 @@ PR e sem usar `gh pr`. Cumprida a entrega do autor na regra 12, grave `DONE` com
 o SHA do commit, a saída do `pnpm verify`, resumo, riscos e evidências; salve
 checkpoint em `agents/states/<agent_id>.json` no estado central. O Maestro atribui
 a revisão e faz o merge no `main` local após aprovação.
-`vercel --prod`, domínio, DNS, credenciais de produção, pagamentos reais e gastos
+Deploys de produção, domínio, DNS, credenciais, pagamentos reais e gastos
 exigem aprovação explícita do Robson. Segredos ficam fora do Git.
 
 Capacidade do Mac (16 GB, travou em 14/11): no seu worktree rode só os testes da

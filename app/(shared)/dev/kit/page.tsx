@@ -9,10 +9,10 @@ export default async function DevKitPage() {
   if (process.env.NODE_ENV === "production") notFound();
 
   const isDev = process.env.NODE_ENV === "development";
-  const isPreview = process.env.VERCEL_ENV === "preview";
+  const isDeployPreview = process.env.CONTEXT === "deploy-preview";
   const isExplicit = process.env.DEV_KIT === "1";
 
-  if (!isDev && !isPreview && !isExplicit) notFound();
+  if (!isDev && !isDeployPreview && !isExplicit) notFound();
 
   // Render each section as an element so React owns the call: client sections
   // ("use client") cannot be invoked as functions from the server.
