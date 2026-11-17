@@ -1,10 +1,12 @@
 import {
   type MailyteCheckoutStartedInput,
+  type MailyteContactStatusInput,
   type MailyteEvent,
   type MailyteOrderCompletedInput,
   type MailyteProvider,
   type MailyteTrackingResult,
   MailyteCheckoutStartedInputSchema,
+  MailyteContactStatusInputSchema,
   MailyteEventSchema,
   MailyteOrderCompletedInputSchema,
   MailyteTrackingResultSchema,
@@ -19,6 +21,10 @@ export interface RecordedMockEvent {
 
 export class MockMailyteProvider implements MailyteProvider {
   private recordedEvents: RecordedMockEvent[] = [];
+
+  async updateContactStatus(input: MailyteContactStatusInput): Promise<void> {
+    MailyteContactStatusInputSchema.parse(input);
+  }
 
   async trackEvent(event: MailyteEvent): Promise<MailyteTrackingResult> {
     const parsed = MailyteEventSchema.safeParse(event);

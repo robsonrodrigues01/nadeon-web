@@ -3893,9 +3893,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T22:41:47.689Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3960,9 +3960,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T22:38:51.993Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3984,9 +3984,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T22:37:59.427Z",
+    "status": "entregue",
+    "responsavel": "Crivo6",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4003,13 +4003,13 @@
       "W5-00b"
     ],
     "revisor": "Lente",
-    "nota": "MUDANÇAS (Lente); volta à Prisma5 depois da W5-01"
+    "nota": "2a MUDANÇAS (Lente); volta à Prisma5 após W5-07"
   },
   {
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T22:45:16.546Z",
+    "lease_ate": "2026-11-17T23:30:50.722Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4025,13 +4025,15 @@
     "depende_de": [
       "W5-00a",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lupa",
+    "nota": "MUDANÇAS; volta a Prisma5 quando liberar"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T23:13:42.419Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4047,13 +4049,14 @@
     "depende_de": [
       "W5-00a",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T23:29:54.480Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4073,9 +4076,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T23:19:38.108Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4091,13 +4094,14 @@
     "depende_de": [
       "W5-00b",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lente"
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T22:42:45.074Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4113,13 +4117,14 @@
     "depende_de": [
       "W5-00a",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lente"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T23:27:33.800Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4136,7 +4141,8 @@
       "W5-00a",
       "W5-00c"
     ],
-    "nota": " Ao criar /pet/journal, religar o link Visit the journal da página de benefício (W5-02)."
+    "nota": "MUDANÇAS; volta a Trilho quando liberar",
+    "revisor": "Lente"
   },
   {
     "onda": 5,
@@ -4184,9 +4190,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T23:27:54.193Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4206,9 +4212,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T23:14:07.815Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4224,7 +4230,8 @@
     "depende_de": [
       "W5-00b",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
@@ -4316,9 +4323,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T22:40:51.149Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4333,7 +4340,8 @@
     "titulo": "Rota /reviews com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00b"
-    ]
+    ],
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
