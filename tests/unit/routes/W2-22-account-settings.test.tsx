@@ -292,12 +292,14 @@ describe("W2-22 /account/settings", () => {
           requestType: "delete",
         })
       );
-      const feedback = await screen.findByText(
-        /We received your account deletion request/
-      );
-      expect(feedback.getAttribute("role")).toBe("status");
-      expect(feedback.textContent).toMatch(/account deletion request/i);
-      expect(feedback.textContent).toContain("privacy_w2_22");
+      await waitFor(() => {
+        const feedback = screen.getByText(
+          /We received your account deletion request/
+        );
+        expect(feedback.getAttribute("role")).toBe("status");
+        expect(feedback.textContent).toMatch(/account deletion request/i);
+        expect(feedback.textContent).toContain("privacy_w2_22");
+      });
     });
   });
 

@@ -5,19 +5,27 @@ import { cartProvider } from "@/lib/providers/client";
 import type { OrderLine } from "@/lib/contracts/account";
 import { Button } from "@/components/ui/button";
 
+export interface OrderActionsProps {
+  lines?: OrderLine[];
+  orderUrl?: string;
+  copyLink?: string;
+  canReorder?: boolean;
+  showBuyAgain?: boolean;
+}
+
 export function OrderActions({
   lines,
   orderUrl,
+  copyLink,
+  canReorder = true,
   showBuyAgain = false,
-}: {
-  lines?: OrderLine[];
-  orderUrl?: string;
-  showBuyAgain?: boolean;
-}) {
+}: OrderActionsProps) {
   const [message, setMessage] = useState("");
 
+  const effectiveCopyLink = copyLink ?? orderUrl;
+
   async function buyAgain() {
-    if (!lines?.length) return;
+    if (!canReorder || !lines?.length) return;
     try {
       await cartProvider.addLines(lines);
       setMessage("Added to cart");
@@ -26,11 +34,11 @@ export function OrderActions({
     }
   }
 
-  async function copyLink() {
-    if (!orderUrl) return;
+  async function handleCopyLink() {
+    if (!effectiveCopyLink) return;
     try {
       await navigator.clipboard.writeText(
-        new URL(orderUrl, window.location.origin).toString()
+        new URL(effectiveCopyLink, window.location.origin).toString()
       );
       setMessage("Link copied");
     } catch {
@@ -44,14 +52,14 @@ export function OrderActions({
         <Button
           variant="primary"
           size="sm"
-          disabled={!lines?.length}
+          disabled={!canReorder || !lines?.length}
           onClick={buyAgain}
         >
           Buy again
         </Button>
       )}
-      {orderUrl && (
-        <Button variant="secondary" size="sm" onClick={copyLink}>
+      {effectiveCopyLink && (
+        <Button variant="secondary" size="sm" onClick={handleCopyLink}>
           Copy link
         </Button>
       )}

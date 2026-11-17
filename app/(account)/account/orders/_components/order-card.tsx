@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import type { OrderRowView } from "./order-view";
 import { OrderStatusBadge } from "./order-status-badge";
@@ -23,19 +24,38 @@ export function OrderCard({ row }: OrderCardProps) {
         <p className="text-sm text-fg-muted">Placed {row.placedLabel}</p>
       </div>
 
-      <ul className="flex min-w-0 flex-col gap-1 text-sm text-fg">
-        {row.itemTitles.map((title, index) => (
-          <li
-            key={`${row.id}-item-${index}`}
-            className="flex items-center gap-3"
-          >
-            <span
-              aria-hidden="true"
-              className="h-10 w-10 shrink-0 rounded-field bg-bg"
-            />
-            <span className="font-bold">{title}</span>
-          </li>
-        ))}
+      <ul className="flex min-w-0 flex-col gap-2 text-sm text-fg">
+        {(
+          row.items ??
+          row.itemTitles.map((t) => ({ title: t, image: undefined }))
+        ).map((item, index) => {
+          const imageSrc =
+            "image" in item && typeof item.image === "string"
+              ? item.image
+              : undefined;
+          return (
+            <li
+              key={`${row.id}-item-${index}`}
+              className="flex items-center gap-3"
+            >
+              {imageSrc ? (
+                <Image
+                  src={imageSrc}
+                  alt={item.title}
+                  width={40}
+                  height={40}
+                  className="size-10 shrink-0 rounded-field object-cover bg-bg"
+                />
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="size-10 shrink-0 rounded-field bg-bg border border-border"
+                />
+              )}
+              <span className="font-bold">{item.title}</span>
+            </li>
+          );
+        })}
       </ul>
 
       <div className="flex flex-col items-start gap-2">
@@ -69,7 +89,9 @@ export function OrderCard({ row }: OrderCardProps) {
         <OrderActions
           lines={row.lines}
           orderUrl={row.url}
-          showBuyAgain={row.status === "delivered"}
+          copyLink={row.copyLink}
+          canReorder={row.canReorder}
+          showBuyAgain={row.status === "delivered" || Boolean(row.canReorder)}
         />
         <Button variant="secondary" size="sm" href={detailsHref}>
           Details

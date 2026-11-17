@@ -5,10 +5,17 @@ import { Button } from "@/components/ui/button";
 
 interface CopyButtonProps {
   text: string;
+  label?: string;
+  copiedLabel?: string;
   className?: string;
 }
 
-export function CopyButton({ text, className }: CopyButtonProps) {
+export function CopyButton({
+  text,
+  label = "Copy number",
+  copiedLabel = "Copied!",
+  className,
+}: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -31,7 +38,7 @@ export function CopyButton({ text, className }: CopyButtonProps) {
       onClick={handleCopy}
       className={className}
     >
-      {copied ? "Copied!" : "Copy number"}
+      {copied ? copiedLabel : label}
     </Button>
   );
 }

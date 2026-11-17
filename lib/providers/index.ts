@@ -6,6 +6,7 @@ import type { ReviewsProvider } from "@/lib/contracts/reviews";
 import type { FormsProvider } from "@/lib/contracts/forms";
 import type { LabsProvider } from "@/lib/contracts/labs";
 import type { CampaignConfig } from "@/lib/contracts/campaign";
+import type { MailyteProvider } from "@/lib/contracts/mailyte";
 
 import { mockCatalogProvider } from "./mock/catalog";
 import { mockCartProvider } from "./mock/cart";
@@ -15,6 +16,7 @@ import { mockReviewsProvider } from "./mock/reviews";
 import { mockFormsProvider } from "./mock/forms";
 import { mockLabsProvider } from "./mock/labs";
 import { mockCampaignConfig } from "./mock/campaign";
+import { mockMailyteProvider } from "./mock/mailyte";
 
 import {
   liveCatalogProvider,
@@ -25,6 +27,7 @@ import {
   liveFormsProvider,
   liveLabsProvider,
   liveCampaignConfig,
+  liveMailyteProvider,
 } from "./live";
 
 export type ProvidersMode = "mock" | "live";
@@ -44,6 +47,7 @@ export function getProviders(mode: ProvidersMode = getProvidersMode()) {
       formsProvider: liveFormsProvider,
       labsProvider: liveLabsProvider,
       campaignConfig: liveCampaignConfig,
+      mailyteProvider: liveMailyteProvider,
     };
   }
 
@@ -56,6 +60,7 @@ export function getProviders(mode: ProvidersMode = getProvidersMode()) {
     formsProvider: mockFormsProvider,
     labsProvider: mockLabsProvider,
     campaignConfig: mockCampaignConfig,
+    mailyteProvider: mockMailyteProvider,
   };
 }
 
@@ -93,6 +98,10 @@ export const campaignConfig: CampaignConfig = isLive
   ? liveCampaignConfig
   : mockCampaignConfig;
 
+export const mailyteProvider: MailyteProvider = isLive
+  ? liveMailyteProvider
+  : mockMailyteProvider;
+
 export {
   mockCatalogProvider,
   mockCartProvider,
@@ -102,6 +111,7 @@ export {
   mockFormsProvider,
   mockLabsProvider,
   mockCampaignConfig,
+  mockMailyteProvider,
   liveCatalogProvider,
   liveCartProvider,
   liveAccountProvider,
@@ -110,4 +120,5 @@ export {
   liveFormsProvider,
   liveLabsProvider,
   liveCampaignConfig,
+  liveMailyteProvider,
 };

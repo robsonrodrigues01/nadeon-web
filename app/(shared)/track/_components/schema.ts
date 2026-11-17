@@ -6,8 +6,8 @@ export const TrackOrderSchema = z.object({
     .string()
     .trim()
     .toUpperCase()
-    .regex(/^NL-\d{6}$/),
-  email: z.email().trim(),
+    .regex(/^(NL-\d{6}|TEST-NL-\d+)$/i),
+  email: z.string().trim().email(),
 });
 
 export type TrackOrderInput = z.infer<typeof TrackOrderSchema>;

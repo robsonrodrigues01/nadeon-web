@@ -72,13 +72,16 @@ export function TrackForm() {
         <input
           id="track-order-number"
           ref={orderNumberRef}
-          aria-invalid={invalidField === "orderNumber"}
+          aria-invalid={
+            invalidField === "orderNumber" || state.status === "invalid"
+          }
+          aria-describedby="track-status-message"
           name="orderNumber"
           type="text"
           required
           autoComplete="off"
           autoCapitalize="characters"
-          pattern="[Nn][Ll]-[0-9]{6}"
+          pattern="([Nn][Ll]-[0-9]{6}|[Tt][Ee][Ss][Tt]-[Nn][Ll]-[0-9]+)"
           placeholder="e.g. NL-100234"
           className={fieldClass}
         />
@@ -91,7 +94,8 @@ export function TrackForm() {
         <input
           id="track-email"
           ref={emailRef}
-          aria-invalid={invalidField === "email"}
+          aria-invalid={invalidField === "email" || state.status === "invalid"}
+          aria-describedby="track-status-message"
           name="email"
           type="email"
           required
@@ -106,6 +110,7 @@ export function TrackForm() {
       </Button>
 
       <div
+        id="track-status-message"
         ref={statusRef}
         tabIndex={-1}
         role="status"

@@ -3,7 +3,12 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup, within } from "@testing-library/react";
 import TrackOrderPage, { generateMetadata } from "@/app/(shared)/track/page";
 import { TrackOrderSchema } from "@/app/(shared)/track/_components/schema";
-import { lookupOrder } from "@/app/(shared)/track/_components/actions";
+import {
+  lookupOrder,
+  lookupOrderAction,
+} from "@/app/(shared)/track/_components/actions";
+import { TrackResult } from "@/app/(shared)/track/_components/track-result";
+import { DEFAULT_MARKET } from "@/lib/market";
 import { accountProvider } from "@/lib/providers";
 import { OrderSchema } from "@/lib/contracts/account";
 
@@ -164,7 +169,7 @@ describe("W2-18: /track route", () => {
     });
   });
 
-  describe("rendered page (state B, guest order result)", () => {
+  describe("guest order lookup via server action (state B)", () => {
     it("looks up the order by number and email and renders the returned order", async () => {
       const lookup = vi
         .spyOn(accountProvider, "lookupGuestOrder")
@@ -188,19 +193,21 @@ describe("W2-18: /track route", () => {
           })
         );
 
-      const jsx = await TrackOrderPage({
-        searchParams: Promise.resolve({
-          orderNumber: " nl-100234 ",
-          email: " guest@example.com ",
-        }),
-      });
-      render(jsx);
+      const formData = new FormData();
+      formData.set("orderNumber", " nl-100234 ");
+      formData.set("email", " guest@example.com ");
 
+      const result = await lookupOrderAction(formData);
+      expect(result.status).toBe("found");
       expect(lookup).toHaveBeenCalledWith("NL-100234", "guest@example.com");
-      expect(
-        screen.getByRole("heading", { name: "Order #NL-100234" })
-      ).toBeTruthy();
-      expect(screen.getByText("Tracking 1Z100234")).toBeTruthy();
+
+      if (result.status === "found") {
+        render(<TrackResult order={result.order} market={DEFAULT_MARKET} />);
+        expect(
+          screen.getByRole("heading", { name: "Order #NL-100234" })
+        ).toBeTruthy();
+        expect(screen.getByText("Tracking 1Z100234")).toBeTruthy();
+      }
       lookup.mockRestore();
     });
 
@@ -209,17 +216,15 @@ describe("W2-18: /track route", () => {
         new Error("provider unavailable")
       );
 
-      const jsx = await TrackOrderPage({
-        searchParams: Promise.resolve({
-          orderNumber: "NL-100234",
-          email: "guest@example.com",
-        }),
-      });
-      render(jsx);
+      const formData = new FormData();
+      formData.set("orderNumber", "NL-100234");
+      formData.set("email", "guest@example.com");
 
-      expect(screen.getByRole("status").textContent).toContain(
-        "Unable to look up your order"
-      );
+      const result = await lookupOrderAction(formData);
+      expect(result.status).toBe("error");
+      if (result.status === "error") {
+        expect(result.errorMessage).toContain("Unable to look up your order");
+      }
     });
   });
 });
