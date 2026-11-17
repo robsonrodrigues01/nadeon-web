@@ -39,3 +39,9 @@ Atualizado: 16/11/2026 01:45 BRT (Maestro).
 - Gate do main: 1358 testes + build verdes. Main local, sem push.
 - Bloqueadas: W4-01 a W4-11 (Shopify real por último, por decisão do Robson; Mailyte aguardando o site oficial; IDs de medição; materiais W3-79; decisão do detalhe de kit).
 - Skills em uso: ponytail full + tdd + diagnosing-bugs (construtores), ponytail-review (revisores). Auditor em Codex/Luna com rotina de 1 min.
+
+## 17/11/2026 03:35 BRT (Maestro)
+
+- Segunda rodada da onda 4 entregue: revisão de segurança W4-16 gerou W4-19 (P1 consentimento), W4-20 (sessão e dono do ID nas actions), W4-21 (webhook idempotente), W4-22 (/track mínimo); W4-17 console limpo; W4-18 aviso de imagem.
+- Gate do main: 1379 testes + build verdes. Main local, sem push.
+- Bloqueadas: W4-01 a W4-11 (Shopify por último; Mailyte aguardando site; IDs de medição; materiais W3-79; detalhe de kit) e W4-23 (deduplicação entre processos: escolha de armazenamento compartilhado).

@@ -3689,9 +3689,9 @@
     "depende_de": [
       "W4-16"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T06:22:21.210Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "achado W4-16 resolvido com teste",
