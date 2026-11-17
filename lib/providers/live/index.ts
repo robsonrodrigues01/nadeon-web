@@ -57,6 +57,7 @@ import type { StoreLocatorProvider } from "@/lib/contracts/store-locator";
 import type { WholesaleProvider } from "@/lib/contracts/wholesale";
 import type {
   MailyteCheckoutStartedInput,
+  MailyteContactStatusInput,
   MailyteEvent,
   MailyteOrderCompletedInput,
   MailyteProvider,
@@ -64,6 +65,7 @@ import type {
 } from "@/lib/contracts/mailyte";
 import {
   MailyteCheckoutStartedInputSchema,
+  MailyteContactStatusInputSchema,
   MailyteEventSchema,
   MailyteOrderCompletedInputSchema,
 } from "@/lib/contracts/mailyte";
@@ -300,6 +302,44 @@ export class LiveCampaignConfig implements CampaignConfig {
 }
 
 export class LiveMailyteProvider implements MailyteProvider {
+  async updateContactStatus(input: MailyteContactStatusInput): Promise<void> {
+    const parsed = MailyteContactStatusInputSchema.safeParse(input);
+    if (!parsed.success) {
+      throw new Error("Invalid Mailyte contact status payload");
+    }
+
+    const apiKey = process.env.MAILYTE_API_KEY;
+    if (!apiKey) {
+      throw new Error("MAILYTE_API_KEY is required for the live provider");
+    }
+
+    const { email, status } = parsed.data;
+    const body =
+      status === "subscribed"
+        ? {
+            email,
+            status,
+            consented_at: parsed.data.consentedAt,
+            consent_source: parsed.data.consentSource,
+          }
+        : { email, status };
+
+    try {
+      const response = await fetch("https://app.mailyte.com/api/v1/contacts", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      if (response.status !== 200 && response.status !== 201)
+        throw new Error("Mailyte contact status update failed");
+    } catch {
+      throw new Error("Unable to update email consent status.");
+    }
+  }
+
   private async postContactEvent(
     event: MailyteEvent
   ): Promise<MailyteTrackingResult> {

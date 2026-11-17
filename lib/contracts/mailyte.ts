@@ -39,6 +39,26 @@ export type MailyteOrderCompletedInput = z.infer<
 >;
 export type OrderCompletedInput = MailyteOrderCompletedInput;
 
+export const MailyteContactStatusInputSchema = z.discriminatedUnion("status", [
+  z
+    .object({
+      email: z.string().trim().email(),
+      status: z.literal("unsubscribed"),
+    })
+    .strict(),
+  z
+    .object({
+      email: z.string().trim().email(),
+      status: z.literal("subscribed"),
+      consentedAt: z.string().datetime({ offset: true }),
+      consentSource: z.string().trim().min(1).max(50),
+    })
+    .strict(),
+]);
+export type MailyteContactStatusInput = z.infer<
+  typeof MailyteContactStatusInputSchema
+>;
+
 export const MailyteTrackingResultSchema = z.object({
   success: z.boolean(),
   eventId: z.string(),
@@ -47,6 +67,7 @@ export const MailyteTrackingResultSchema = z.object({
 export type MailyteTrackingResult = z.infer<typeof MailyteTrackingResultSchema>;
 
 export interface MailyteProvider {
+  updateContactStatus(input: MailyteContactStatusInput): Promise<void>;
   trackEvent(event: MailyteEvent): Promise<MailyteTrackingResult>;
   sendCheckoutStarted(
     input: MailyteCheckoutStartedInput
