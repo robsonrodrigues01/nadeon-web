@@ -16,6 +16,11 @@ export const ReviewSchema = z.object({
 });
 export type Review = z.infer<typeof ReviewSchema>;
 
+export const StoredReviewSchema = ReviewSchema.extend({
+  orderId: z.string().min(1),
+});
+export type StoredReview = z.infer<typeof StoredReviewSchema>;
+
 export const ReviewsFilterSchema = z.object({
   productSlug: z.string().optional(),
   rating: z.number().int().min(1).max(5).optional(),

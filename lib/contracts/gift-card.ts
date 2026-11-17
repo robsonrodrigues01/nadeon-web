@@ -11,7 +11,7 @@ export const GiftCardPurchaseInputSchema = z.object({
   recipientEmail: z.string().email(),
   senderName: z.string().min(1),
   message: z.string().optional(),
-  deliveryDate: z.string().min(1),
+  deliveryDate: z.iso.date(),
 });
 export type GiftCardPurchaseInput = z.infer<typeof GiftCardPurchaseInputSchema>;
 

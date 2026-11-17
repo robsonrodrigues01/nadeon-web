@@ -1,6 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { mockReviewsProvider } from "@/lib/providers/mock/reviews";
-import { ReviewSchema, ReviewSummarySchema } from "@/lib/contracts/reviews";
+import {
+  ReviewSchema,
+  ReviewSummarySchema,
+  StoredReviewSchema,
+} from "@/lib/contracts/reviews";
 
 describe("ReviewsProvider Contract", () => {
   it("list returns empty array by default for launch state", async () => {
@@ -20,6 +24,7 @@ describe("ReviewsProvider Contract", () => {
       expect(rev.productSlug).toBe("biohack");
       expect(rev.rating).toBeGreaterThanOrEqual(1);
       expect(rev.rating).toBeLessThanOrEqual(5);
+      expect(rev.verifiedBuyer).toBe(false);
     }
   });
 
@@ -61,6 +66,17 @@ describe("ReviewsProvider Contract", () => {
     expect(review.authorName).toBe("TEST Reviewer");
     expect(review.verifiedBuyer).toBe(true);
     expect(review).not.toHaveProperty("authorEmail");
+    expect(review).not.toHaveProperty("orderId");
+    expect(() =>
+      StoredReviewSchema.parse({ ...review, orderId: "ord_TEST_0001" })
+    ).not.toThrow();
+    const [listedReview] = (
+      await mockReviewsProvider.list({
+        productSlug: "biohack",
+      })
+    ).reviews;
+    expect(listedReview.verifiedBuyer).toBe(true);
+    expect(listedReview).not.toHaveProperty("orderId");
 
     const summaryAfter = await mockReviewsProvider.summary("biohack");
     expect(summaryAfter.totalReviews).toBe(1);

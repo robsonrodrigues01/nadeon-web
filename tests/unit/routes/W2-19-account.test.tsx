@@ -360,7 +360,7 @@ describe("Route /account (W2-19)", () => {
         screen.getByRole("heading", { level: 1, name: "My account" })
       ).toBeTruthy();
       expect(
-        screen.getByRole("heading", { level: 2, name: "Hi, Alex" })
+        screen.getByRole("heading", { level: 2, name: "Hi, TEST Alex" })
       ).toBeTruthy();
       expect(
         screen.getByRole("button", { name: "Skip this delivery" })

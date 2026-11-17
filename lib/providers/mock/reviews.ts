@@ -1,10 +1,12 @@
 import {
   type Review,
   type ReviewSummary,
+  type StoredReview,
   type ReviewsFilter,
   type ReviewsProvider,
   type SubmitReviewInput,
   ReviewSchema,
+  StoredReviewSchema,
   ReviewSummarySchema,
   SubmitReviewInputSchema,
 } from "@/lib/contracts/reviews";
@@ -18,7 +20,7 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
     title: "Remarkable sustained energy and clarity",
     body: "After three weeks on BioHack, my afternoon brain fog is completely gone. Laboratory purity is evident.",
     authorName: "Sarah M.",
-    verifiedBuyer: true,
+    verifiedBuyer: false,
     helpfulVotes: 14,
     createdAt: "2026-10-15T14:30:00.000Z",
     images: ["/renders/placeholder.svg"],
@@ -30,7 +32,7 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
     title: "Best NAD+ formula on the market",
     body: "Clean formulation, no flush, and easy on the stomach. The 60-day subscription is great value.",
     authorName: "David K.",
-    verifiedBuyer: true,
+    verifiedBuyer: false,
     helpfulVotes: 8,
     createdAt: "2026-10-22T09:15:00.000Z",
     images: [],
@@ -43,21 +45,23 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
     body: "Within two weeks Cooper was climbing stairs with ease and eager for our morning walks.",
     authorName: "Alex M.",
     petSpecies: "dog",
-    verifiedBuyer: true,
+    verifiedBuyer: false,
     helpfulVotes: 23,
     createdAt: "2026-10-28T16:45:00.000Z",
     images: ["/renders/placeholder.svg"],
   }),
 ];
 
-const submittedReviews: Review[] = [];
+const submittedReviews: StoredReview[] = [];
 
 export class MockReviewsProvider implements ReviewsProvider {
   async list(
     filter?: ReviewsFilter
   ): Promise<{ reviews: Review[]; total: number }> {
     // Launch state default is empty list, unless includeDevSamples is requested
-    let pool: Review[] = [...submittedReviews];
+    let pool: Review[] = submittedReviews.map((review) =>
+      ReviewSchema.parse(review)
+    );
     if (filter?.includeDevSamples) {
       pool = [...pool, ...DEV_KIT_SAMPLE_REVIEWS];
     }
@@ -137,8 +141,9 @@ export class MockReviewsProvider implements ReviewsProvider {
       throw new Error("Review must be linked to a matching purchased order");
     }
 
-    const newReview = ReviewSchema.parse({
+    const newReview = StoredReviewSchema.parse({
       id: `rev_${Math.random().toString(36).substring(2, 9)}`,
+      orderId: order.id,
       productSlug: validatedInput.productSlug,
       rating: validatedInput.rating,
       title: validatedInput.title,
@@ -152,7 +157,7 @@ export class MockReviewsProvider implements ReviewsProvider {
     });
 
     submittedReviews.unshift(newReview);
-    return { ...newReview };
+    return ReviewSchema.parse(newReview);
   }
 }
 

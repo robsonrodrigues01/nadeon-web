@@ -49,12 +49,22 @@ describe("Wave 5 contracts and mocks", () => {
       recipientEmail: "gift-recipient@example.com",
       senderName: "TEST Sender",
       message: "TEST gift message",
-      deliveryDate: "today",
+      deliveryDate: "2026-12-01",
     });
 
     expect(result.id).toMatch(/^gift_TEST_/);
     expect(JSON.stringify(result)).not.toContain("gift-recipient@example.com");
     expect(JSON.stringify(result)).not.toContain("TEST gift message");
+    await expect(
+      provider.preparePurchase({
+        amount: { amount: 50, currencyCode: "USD" },
+        design: "sunset",
+        recipientName: "TEST Recipient",
+        recipientEmail: "gift-recipient@example.com",
+        senderName: "TEST Sender",
+        deliveryDate: "tomorrow",
+      })
+    ).rejects.toThrow();
   });
 
   it("returns no locations until approved store data is available", async () => {

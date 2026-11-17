@@ -20,35 +20,34 @@ import {
 } from "@/lib/contracts/account";
 
 let mockSession: Session | null = SessionSchema.parse({
-  accessToken: "mock_tok_alex_123456789",
+  accessToken: "mock_tok_TEST_123456789",
   expiresAt: new Date(Date.now() + 86400 * 1000 * 30).toISOString(),
-  customerId: "cust_alex_example",
+  customerId: "cust_TEST_alex_example",
 });
 
 let mockCustomer: CustomerProfile = CustomerProfileSchema.parse({
-  id: "cust_alex_example",
-  firstName: "Alex",
-  lastName: "Morgan",
-  email: "alex.morgan@example.com",
-  phone: "+1 (555) 234-5678",
-  birthDate: "1988-05-14",
+  id: "cust_TEST_alex_example",
+  firstName: "TEST Alex",
+  lastName: "TEST Morgan",
+  email: "test.alex.morgan@example.com",
+  phone: "TEST-000-000-0000",
   profileType: "Both",
-  defaultAddressId: "addr_alex_primary",
+  defaultAddressId: "addr_TEST_primary",
 });
 
 const mockAddresses: Address[] = [
   AddressSchema.parse({
-    id: "addr_alex_primary",
-    firstName: "Alex",
-    lastName: "Morgan",
-    company: "Acme Bio Labs",
-    address1: "742 Evergreen Terrace",
-    address2: "Apt 4B",
-    city: "Austin",
+    id: "addr_TEST_primary",
+    firstName: "TEST Alex",
+    lastName: "TEST Morgan",
+    company: "TEST Acme Bio Labs",
+    address1: "TEST 742 Evergreen Terrace",
+    address2: "TEST Apt 4B",
+    city: "TEST Austin",
     province: "TX",
-    zip: "78701",
+    zip: "TEST-78701",
     country: "US",
-    phone: "+1 (555) 234-5678",
+    phone: "TEST-000-000-0000",
     isDefault: true,
   }),
 ];

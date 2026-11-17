@@ -13,7 +13,7 @@ describe("AccountProvider Contract", () => {
     const session = await mockAccountProvider.getSession();
     if (session) {
       expect(() => SessionSchema.parse(session)).not.toThrow();
-      expect(session.customerId).toBe("cust_alex_example");
+      expect(session.customerId).toBe("cust_TEST_alex_example");
     }
   });
 
@@ -23,13 +23,13 @@ describe("AccountProvider Contract", () => {
     expect(url).toContain("%2Faccount%2Forders");
   });
 
-  it("getCustomer returns realistic Alex (example) profile satisfying schema", async () => {
+  it("getCustomer returns a clearly marked synthetic profile satisfying schema", async () => {
     const customer = await mockAccountProvider.getCustomer();
     expect(customer).not.toBeNull();
     expect(() => CustomerProfileSchema.parse(customer)).not.toThrow();
-    expect(customer?.firstName).toBe("Alex");
-    expect(customer?.lastName).toBe("Morgan");
-    expect(customer?.email).toBe("alex.morgan@example.com");
+    expect(customer?.firstName).toBe("TEST Alex");
+    expect(customer?.lastName).toBe("TEST Morgan");
+    expect(customer?.email).toBe("test.alex.morgan@example.com");
     expect(customer?.profileType).toBe("Both");
   });
 
@@ -45,8 +45,8 @@ describe("AccountProvider Contract", () => {
 
     // reset back
     await mockAccountProvider.updateProfile({
-      firstName: "Alex",
-      phone: "+1 (555) 234-5678",
+      firstName: "TEST Alex",
+      phone: "TEST-000-000-0000",
     });
   });
 
@@ -82,6 +82,8 @@ describe("AccountProvider Contract", () => {
       expect(addr.address1).toBeTruthy();
       expect(addr.city).toBeTruthy();
       expect(addr.country).toBe("US");
+      expect(addr.firstName).toMatch(/^TEST /);
+      expect(addr.address1).toMatch(/^TEST /);
     }
   });
 
