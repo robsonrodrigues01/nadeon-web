@@ -3870,7 +3870,7 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
     "lease_ate": "2026-11-17T22:20:03.012Z",
     "pr": "local",
@@ -3888,14 +3888,14 @@
     "depende_de": [
       "W5-00b"
     ],
-    "revisor": "Lente",
+    "revisor": "Lupa",
     "nota": "MUDANÇAS (Lente): ver REVIEW.md; volta ao Crivo6 depois da W5-03"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T22:25:29.168Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3961,7 +3961,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T22:16:13.564Z",
+    "lease_ate": "2026-11-17T22:26:07.901Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3980,9 +3980,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T22:25:35.059Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4395,6 +4395,7 @@
       "nenhuma dependência ou referência à Vercel",
       "build e testes verdes",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lente"
   }
 ]
