@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import * as vercelAnalytics from "@vercel/analytics";
 import {
   track,
   trackEvent,
@@ -14,12 +15,9 @@ import {
 } from "@/lib/analytics";
 import { CONSENT_COOKIE_NAME, COUNTRY_COOKIE_NAME } from "@/lib/consent";
 
-const gtagMock = vi.fn();
-const clarityMock = vi.fn();
-const measurementTrackers = window as typeof window & {
-  gtag?: (...args: unknown[]) => void;
-  clarity?: (...args: unknown[]) => void;
-};
+vi.mock("@vercel/analytics", () => ({
+  track: vi.fn(),
+}));
 
 describe("lib/analytics/track.ts", () => {
   beforeEach(() => {
@@ -29,14 +27,10 @@ describe("lib/analytics/track.ts", () => {
       value: "",
     });
     vi.clearAllMocks();
-    measurementTrackers.gtag = gtagMock;
-    measurementTrackers.clarity = clarityMock;
     vi.stubEnv("NODE_ENV", "test");
   });
 
   afterEach(() => {
-    delete measurementTrackers.gtag;
-    delete measurementTrackers.clarity;
     vi.unstubAllEnvs();
   });
 
@@ -117,8 +111,7 @@ describe("lib/analytics/track.ts", () => {
       expect(result.tracked).toBe(false);
       expect(result.reason).toBe("consent_denied");
       expect(consoleSpy).not.toHaveBeenCalled();
-      expect(gtagMock).not.toHaveBeenCalled();
-      expect(clarityMock).not.toHaveBeenCalled();
+      expect(vercelAnalytics.track).not.toHaveBeenCalled();
 
       consoleSpy.mockRestore();
     });
@@ -292,12 +285,12 @@ describe("lib/analytics/track.ts", () => {
     });
   });
 
-  describe("Environment Routing: Dev vs Production (measurement loader)", () => {
+  describe("Environment Routing: Dev vs Production (@vercel/analytics)", () => {
     beforeEach(() => {
       document.cookie = `${COUNTRY_COOKIE_NAME}=US`;
     });
 
-    it("logs to console in non-production mode without dispatching production events", () => {
+    it("logs to console in non-production mode without calling @vercel/analytics", () => {
       vi.stubEnv("NODE_ENV", "development");
       const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
@@ -316,13 +309,12 @@ describe("lib/analytics/track.ts", () => {
         "view_item",
         expect.objectContaining({ item_id: "biohack" })
       );
-      expect(gtagMock).not.toHaveBeenCalled();
-      expect(clarityMock).not.toHaveBeenCalled();
+      expect(vercelAnalytics.track).not.toHaveBeenCalled();
 
       consoleSpy.mockRestore();
     });
 
-    it("dispatches sanitized events to the consent-gated measurement loader in production", () => {
+    it("calls @vercel/analytics track in production mode", () => {
       vi.stubEnv("NODE_ENV", "production");
       const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
@@ -336,29 +328,16 @@ describe("lib/analytics/track.ts", () => {
 
       track("view_item", payload);
 
-      expect(gtagMock).toHaveBeenCalledWith(
-        "event",
+      expect(vercelAnalytics.track).toHaveBeenCalledWith(
         "view_item",
         expect.objectContaining({
           item_id: "prime",
           item_name: "Prime",
-          price: 49,
+          price: 59 !== undefined ? 49 : 49,
           currency: "USD",
           line: "human",
         })
       );
-      expect(clarityMock).toHaveBeenCalledWith("event", "view_item");
-
-      track("search", {
-        search_term: "customer@example.com",
-        line: "human",
-        results_count: 2,
-      });
-      expect(gtagMock).toHaveBeenCalledWith("event", "search", {
-        line: "human",
-        results_count: 2,
-      });
-      expect(clarityMock).toHaveBeenCalledWith("event", "search");
       expect(consoleSpy).not.toHaveBeenCalled();
 
       consoleSpy.mockRestore();

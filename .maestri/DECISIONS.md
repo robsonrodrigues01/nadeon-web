@@ -10,15 +10,15 @@
 - **Contexto:** Convenção de roteamento intermediário no Next.js 16.3.
 - **Decisão:** O middleware foi substituído pelo proxy em proxy.ts (ou proxy.js), com função proxy executada no runtime nodejs.
 
-## ADR-003: Integração e Deploy na Netlify
+## ADR-003: Integração e Deploy na Vercel
 - **Status:** Aceito
-- **Contexto:** Conexão contínua entre GitHub e Netlify para prévias automáticas.
-- **Decisão:** Repositório nadeon-web conectado ao GitHub e ao projeto Netlify, com commits vinculados ao autor configurado.
+- **Contexto:** Conexão contínua entre GitHub e Vercel para prévias automáticas.
+- **Decisão:** Repositório nadeon-web conectado ao GitHub e ao projeto Vercel, com commits vinculados ao autor configurado.
 
 ## ADR-004: Abertura e Domínio
 - **Status:** Aceito
 - **Contexto:** Condição de entrada no ar do site de produção.
-- **Decisão:** O domínio nadeonlabs.com só entra no ar com a Shopify integrada e apta para vendas. Até o lançamento, todo o trabalho é validado nas prévias da Netlify.
+- **Decisão:** O domínio nadeonlabs.com só entra no ar com a Shopify integrada e apta para vendas. Até o lançamento, todo o trabalho é validado nas prévias da Vercel.
 
 ## ADR-005: Cronograma e Ritmo das Ondas
 - **Status:** Aceito
@@ -123,7 +123,7 @@
 ## ADR-025: Gestão de DNS
 - **Status:** Aceito
 - **Contexto:** Virada de tráfego do domínio nadeonlabs.com.
-- **Decisão:** Página provisória atual mantida até o corte final. No dia da abertura, apontamento do DNS no Cloudflare em modo DNS-only direto para a Netlify.
+- **Decisão:** Página provisória atual mantida até o corte final. No dia da abertura, apontamento do DNS no Cloudflare em modo DNS-only direto para a Vercel.
 
 ## Decisões do Maestro na onda 2 (14/11/2026)
 - Rewards fica fora do lançamento (onda D do plano); rotas mostram só o que o contrato tem.

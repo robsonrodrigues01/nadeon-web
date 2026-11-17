@@ -89,8 +89,7 @@ function ConsentGateDemo() {
             }
           >
             <div className="p-3 rounded-field bg-product-mint/10 text-product-mint text-xs font-mono border border-product-mint/20">
-              GA4, Clarity and Meta Pixel load through consent-aware
-              measurement.
+              Vercel Speed Insights &amp; metrics recording.
             </div>
           </ConsentGate>
         </div>
