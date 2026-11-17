@@ -3513,9 +3513,9 @@
     "depende_de": [
       "W4-08a"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T05:37:54.701Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3595,9 +3595,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Teste instável W2-22 account-settings Delete account: falha cerca de 1 em 3 mesmo isolado (TypeError textContent de undefined; jsdom Not implemented navigation); já existia antes da W4-08a",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T05:16:41.869Z",
+    "lease_ate": null,
     "branch": "agy/W4-15",
     "pr": "local",
     "criterios": [

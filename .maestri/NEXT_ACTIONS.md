@@ -8,6 +8,6 @@
 - Autorizar a correção do Auditor (trocar para Codex/Luna e criar a rotina de 60 s).
 
 ## Maestro
-- W4-00 entregue 17/11 00:20 (gate 1320 testes + build). W4-00b liberada para Prisma5.
+- Onda 4 sem pré-requisitos entregue em 17/11 02:45. Próximo: aguardar Mailyte (site oficial), IDs de medição, materiais W3-79, decisão do detalhe de kit e push ao GitHub.
 - Manter vigia de 5 min; rodar gate com rede para tarefas feitas por agentes Codex.
 - Atualizar este arquivo, PROJECT_STATE.md e memory/SHORT_TERM.md a cada fechamento de tarefa relevante.

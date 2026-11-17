@@ -32,3 +32,10 @@ Atualizado: 16/11/2026 01:45 BRT (Maestro).
 - Agentes: Prisma5 (Gemini, com rede), Trilho e Crivo5 (Codex sem bypass: sem rede e sem portal confiável, o Maestro roda o gate com rede), revisores Lente e Lupa (Codex). Vigia3 (Antigravity sem bypass) ocioso, trava em permissão. Crivo4 Gemini esgotou cota (reset ~99h), virou Crivo5.
 - Auditor de Operações: aparece como terminal "Terminal", roda Claude Code e não tem rotina de 60 s. Correção proposta ao Robson, aguardando.
 - Memória do Mac oscila em amarelo (kern.memorystatus_vm_pressure_level = 2); dev server do main rodando para tarefas de portal.
+
+## 17/11/2026 02:45 BRT (Maestro)
+
+- Onda 4, parte sem pré-requisitos ENTREGUE: W4-00/00b (contrato e rotas de pedido), W4-03a (script de catálogo Shopify), W4-06a (webhooks HMAC + Mailyte mock), W4-08a (medição só com consentimento), W4-09a (Customer Privacy API no banner), W4-12 (painel antigo removido), W4-13/14/15 (três testes instáveis corrigidos).
+- Gate do main: 1358 testes + build verdes. Main local, sem push.
+- Bloqueadas: W4-01 a W4-11 (Shopify real por último, por decisão do Robson; Mailyte aguardando o site oficial; IDs de medição; materiais W3-79; decisão do detalhe de kit).
+- Skills em uso: ponytail full + tdd + diagnosing-bugs (construtores), ponytail-review (revisores). Auditor em Codex/Luna com rotina de 1 min.
