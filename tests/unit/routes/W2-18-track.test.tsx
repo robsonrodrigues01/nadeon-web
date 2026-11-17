@@ -170,11 +170,11 @@ describe("W2-18: /track route", () => {
   });
 
   describe("guest order lookup via server action (state B)", () => {
-    it("looks up the order by number and email and renders the returned order", async () => {
+    it("returns only tracking fields and renders the summarized order", async () => {
       const lookup = vi
         .spyOn(accountProvider, "lookupGuestOrder")
-        .mockResolvedValue(
-          OrderSchema.parse({
+        .mockResolvedValue({
+          ...OrderSchema.parse({
             id: "order-guest",
             orderNumber: "NL-100234",
             createdAt: "2026-11-06T14:14:00.000Z",
@@ -190,8 +190,21 @@ describe("W2-18: /track route", () => {
             total: { amount: 118, currencyCode: "USD" },
             trackingNumber: "1Z100234",
             trackingUrl: "https://ups.com/track/1Z100234",
-          })
-        );
+            shippingAddress: {
+              id: "address-1",
+              firstName: "Guest",
+              lastName: "Customer",
+              address1: "123 Private Street",
+              city: "Private City",
+              zip: "12345",
+              email: "guest@example.com",
+            },
+            email: "guest@example.com",
+            url: "https://shop.example/orders/internal",
+            copyLink: "https://shop.example/orders/internal",
+            statusUrl: "https://shop.example/orders/status",
+          }),
+        } as Awaited<ReturnType<typeof accountProvider.lookupGuestOrder>>);
 
       const formData = new FormData();
       formData.set("orderNumber", " nl-100234 ");
@@ -202,11 +215,23 @@ describe("W2-18: /track route", () => {
       expect(lookup).toHaveBeenCalledWith("NL-100234", "guest@example.com");
 
       if (result.status === "found") {
+        expect(result.order).toEqual({
+          orderNumber: "NL-100234",
+          createdAt: "2026-11-06T14:14:00.000Z",
+          fulfillmentStatus: "in_transit",
+          items: [{ title: "BioHack - 1 Jar", quantity: 2 }],
+          trackingNumber: "1Z100234",
+          trackingUrl: "https://ups.com/track/1Z100234",
+        });
+        expect(JSON.stringify(result)).not.toMatch(
+          /Private Street|Private City|guest@example\.com|shop\.example|"total"|"price"|"financialStatus"/
+        );
         render(<TrackResult order={result.order} market={DEFAULT_MARKET} />);
         expect(
           screen.getByRole("heading", { name: "Order #NL-100234" })
         ).toBeTruthy();
         expect(screen.getByText("Tracking 1Z100234")).toBeTruthy();
+        expect(screen.queryByText("$118.00")).toBeNull();
       }
       lookup.mockRestore();
     });

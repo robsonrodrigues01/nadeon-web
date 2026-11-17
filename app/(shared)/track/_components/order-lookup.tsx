@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { TrackOrderSchema } from "./schema";
 import { lookupOrderAction } from "./actions";
-import type { Order } from "@/lib/contracts/account";
+import type { GuestOrderTracking } from "@/lib/contracts/account";
 
 interface OrderLookupProps {
   signInHref: string;
@@ -14,7 +14,7 @@ interface OrderLookupProps {
     orderNumber?: string;
     email?: string;
   };
-  onOrderFound?: (order: Order) => void;
+  onOrderFound?: (order: GuestOrderTracking) => void;
 }
 
 // Estado A do design: formulário de busca de pedido de visitante via POST (Server Action).

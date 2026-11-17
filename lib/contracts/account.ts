@@ -124,6 +124,23 @@ export const OrderSchema = z.object({
 });
 export type Order = z.infer<typeof OrderSchema>;
 
+export const GuestOrderTrackingSchema = z.object({
+  orderNumber: z.string(),
+  createdAt: z.string(),
+  fulfillmentStatus: FulfillmentStatusSchema,
+  items: z.array(
+    z.object({
+      title: z.string(),
+      quantity: z.number().int().positive(),
+      image: z.string().optional(),
+      variantTitle: z.string().optional(),
+    })
+  ),
+  trackingNumber: z.string().optional(),
+  trackingUrl: z.string().optional(),
+});
+export type GuestOrderTracking = z.infer<typeof GuestOrderTrackingSchema>;
+
 export const GuestOrderLookupInputSchema = z.object({
   orderNumber: z.string().min(1, "Order number is required"),
   email: z.string().email("Valid email is required"),
@@ -147,7 +164,7 @@ export interface AccountProvider {
   lookupGuestOrder(
     orderNumberOrInput: string | GuestOrderLookupInput,
     email?: string
-  ): Promise<Order | null>;
+  ): Promise<GuestOrderTracking | null>;
   reorder(orderId: string): Promise<OrderLine[]>;
   getAddresses(): Promise<Address[]>;
   updateProfile(input: ProfileInput): Promise<CustomerProfile>;

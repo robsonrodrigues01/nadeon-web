@@ -46,15 +46,21 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
       ).toThrow();
     });
 
-    it("lookupGuestOrder accepts orderNumber and email as arguments and returns order", async () => {
+    it("lookupGuestOrder accepts orderNumber and email and returns only tracking fields", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
         "TEST-NL-0001",
         "test@example.com"
       );
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0001");
-      expect(order?.email).toBe("test@example.com");
-      expect(OrderSchema.parse(order)).toBeDefined();
+      expect(order).toEqual({
+        orderNumber: "TEST-NL-0001",
+        createdAt: expect.any(String),
+        fulfillmentStatus: "delivered",
+        items: expect.any(Array),
+        trackingNumber: "1Z9999999999999999",
+        trackingUrl: expect.any(String),
+      });
     });
 
     it("lookupGuestOrder accepts GuestOrderLookupInput object and returns order", async () => {
@@ -64,8 +70,9 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
       });
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0001");
-      expect(order?.financialStatus).toBe("paid");
       expect(order?.fulfillmentStatus).toBe("delivered");
+      expect(order).not.toHaveProperty("email");
+      expect(order).not.toHaveProperty("total");
     });
 
     it("is case-insensitive and trims whitespace on both order number and email", async () => {
@@ -266,7 +273,7 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
       );
       expect(deliveredOrder).not.toBeNull();
       expect(deliveredOrder?.fulfillmentStatus).toBe("delivered");
-      expect(deliveredOrder?.financialStatus).toBe("paid");
+      expect(deliveredOrder).not.toHaveProperty("financialStatus");
       expect(deliveredOrder?.trackingNumber).toBe("1Z9999999999999999");
       expect(deliveredOrder?.trackingUrl).toContain("ups.com");
       expect(deliveredOrder?.items.length).toBe(1);

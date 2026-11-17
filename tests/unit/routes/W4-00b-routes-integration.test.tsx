@@ -110,7 +110,7 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       canReorder: true,
     });
 
-    it("renderiza o Estado B com detalhes do pedido, miniatura e link de cópia via consulta por POST Server Action", async () => {
+    it("renderiza o Estado B com detalhes resumidos e rastreio via consulta por POST Server Action", async () => {
       mockLookupGuestOrder.mockResolvedValue(sampleGuestOrder);
 
       const formData = new FormData();
@@ -139,8 +139,11 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
         expect(thumbnail).toBeDefined();
         expect(thumbnail.getAttribute("src")).toContain("biohack.png");
 
-        // Confere botão de cópia do link do pedido
-        expect(screen.getByRole("button", { name: "Copy link" })).toBeDefined();
+        expect(
+          screen.getByRole("button", { name: "Copy number" })
+        ).toBeDefined();
+        expect(screen.queryByText("Shipping address")).toBeNull();
+        expect(screen.queryByRole("button", { name: "Copy link" })).toBeNull();
       }
     });
 

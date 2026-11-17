@@ -2,10 +2,13 @@
 
 import { accountProvider } from "@/lib/providers";
 import { TrackOrderSchema } from "./schema";
-import type { Order } from "@/lib/contracts/account";
+import {
+  GuestOrderTrackingSchema,
+  type GuestOrderTracking,
+} from "@/lib/contracts/account";
 
 export type TrackActionResult =
-  | { status: "found"; order: Order }
+  | { status: "found"; order: GuestOrderTracking }
   | { status: "not_found"; errorMessage: string }
   | { status: "invalid"; errorMessage: string; field?: "orderNumber" | "email" }
   | { status: "error"; errorMessage: string };
@@ -14,7 +17,9 @@ export type TrackActionResult =
  * Consulta de pedido de visitante via lookupGuestOrder (estado B do design).
  * Mantido para compatibilidade com testes unitários existentes de W2-18.
  */
-export async function lookupOrder(formData: FormData): Promise<Order | null> {
+export async function lookupOrder(
+  formData: FormData
+): Promise<GuestOrderTracking | null> {
   const parsed = TrackOrderSchema.safeParse({
     orderNumber: String(formData.get("orderNumber") ?? "").trim(),
     email: String(formData.get("email") ?? "").trim(),
@@ -68,10 +73,7 @@ export async function lookupOrderAction(
           "No order found with that number and email. Please check your confirmation email.",
       };
     }
-    return {
-      status: "found",
-      order,
-    };
+    return { status: "found", order: GuestOrderTrackingSchema.parse(order) };
   } catch {
     return {
       status: "error",

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import type { Order } from "@/lib/contracts/account";
+import type { GuestOrderTracking } from "@/lib/contracts/account";
 import type { Market } from "@/lib/market";
 import { OrderLookup } from "./order-lookup";
 import { TrackResult } from "./track-result";
@@ -17,7 +17,7 @@ export function TrackView({
   market,
   initialOrderNumber,
 }: TrackViewProps) {
-  const [order, setOrder] = useState<Order | null>(null);
+  const [order, setOrder] = useState<GuestOrderTracking | null>(null);
 
   if (order) {
     return <TrackResult order={order} market={market} />;

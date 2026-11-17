@@ -20,6 +20,7 @@ import type {
   CustomerProfile,
   GuestOrderLookupInput,
   Order,
+  GuestOrderTracking,
   OrderLine,
   Pet,
   PetInput,
@@ -142,7 +143,7 @@ export class LiveAccountProvider implements AccountProvider {
   async lookupGuestOrder(
     _orderNumberOrInput: string | GuestOrderLookupInput,
     _email?: string
-  ): Promise<Order | null> {
+  ): Promise<GuestOrderTracking | null> {
     // TODO: Shopify Storefront / Orders API guest lookup in Onda 4
     throw new Error(NOT_IMPLEMENTED_MSG);
   }

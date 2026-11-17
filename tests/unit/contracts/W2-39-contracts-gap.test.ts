@@ -60,7 +60,7 @@ describe("W2-39: Contracts Gaps", () => {
       );
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0001");
-      expect(order?.email).toBe("test@example.com");
+      expect(order).not.toHaveProperty("email");
     });
 
     it("is case-insensitive and trims whitespace on orderNumber and email", async () => {
@@ -78,7 +78,7 @@ describe("W2-39: Contracts Gaps", () => {
         "test@example.com"
       );
       expect(order).not.toBeNull();
-      expect(order?.id).toBe("ord_TEST_0001");
+      expect(order?.orderNumber).toBe("TEST-NL-0001");
     });
 
     it("returns null if order number exists but email does not match", async () => {
