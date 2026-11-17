@@ -144,3 +144,4 @@
 - 2026-11-16: fila esgotada; itens 1 e 4 voltam (W3-86, W3-87) porque o main mudou desde W3-15/W3-67 (W3-68/70/72/84).
 - 2026-11-16: onda 4 lançada no pipeline: W4-00/W4-00b (contrato, elegíveis com mock) e W4-01..W4-11 bloqueadas com o motivo (dependências do Robson e da Shopify real).
 - 2026-11-17: onda 4 adiantada sem pré-requisitos: W4-03a, W4-06a, W4-08a (em andamento), W4-09a (depende de W4-08a). Painel do pipeline agora é estático em maestri/pipeline.html, gerado pela vigia (check-ativos.sh), independente do dev server.
+- 2026-11-17: Auditor trocado de Claude para Codex/Luna (recruit --replace "Terminal" -> "Auditor"); rotina própria "Auditor vigia nadeon" [25d880] a cada 1 min com pre-run check-ativos.sh. A vigia do Maestro [cbe11e] segue apontando para Claude Code.
