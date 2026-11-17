@@ -66,8 +66,8 @@ export function AgeBands() {
                     <Image
                       src={band.image}
                       alt={`${band.product} - ${band.formula}`}
-                      width={128}
-                      height={128}
+                      fill
+                      sizes="128px"
                       className="object-contain"
                     />
                   </div>

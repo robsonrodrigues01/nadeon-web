@@ -140,15 +140,14 @@ export function PetGallery({ product, className = "" }: PetGalleryProps) {
         </div>
 
         {/* Active Item Visual Container */}
-        <div className="relative flex flex-col items-center justify-center max-w-full max-h-full">
+        <div className="relative aspect-4/3 w-full max-w-[520px]">
           {activeItem.imageSrc ? (
             <Image
               src={activeItem.imageSrc}
               alt={`${product.name} - ${activeItem.label}`}
-              width={340}
-              height={340}
-              sizes="(min-width: 640px) 340px, 300px"
-              className="max-h-[300px] sm:max-h-[400px] w-auto object-contain drop-shadow-xl transition-all duration-200"
+              fill
+              sizes="(min-width: 1312px) 520px, (min-width: 1024px) min(520px, calc((100vw - 152px) / 2)), (min-width: 640px) min(520px, calc(100vw - 64px)), calc(100vw - 32px)"
+              className="object-contain drop-shadow-xl transition-all duration-200"
               loading={activeIndex === 0 ? "eager" : "lazy"}
             />
           ) : (

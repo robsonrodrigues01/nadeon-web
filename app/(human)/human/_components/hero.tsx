@@ -123,11 +123,10 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                   <Image
                     src="/renders/biohack.png"
                     alt="BioHack NMN 500 mg"
-                    width={128}
-                    height={128}
                     sizes="(max-width: 639px) 96px, 128px"
                     preload
-                    className="h-auto w-auto object-contain"
+                    fill
+                    className="object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -142,10 +141,9 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                   <Image
                     src="/renders/full-charge.png"
                     alt="Full Charge NMN 4-in-1"
-                    width={128}
-                    height={128}
                     sizes="(max-width: 639px) 96px, 128px"
-                    className="h-auto w-auto object-contain"
+                    fill
+                    className="object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -160,10 +158,9 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                   <Image
                     src="/renders/renew.png"
                     alt="Renew NAD+ and Resveratrol"
-                    width={128}
-                    height={128}
                     sizes="(max-width: 639px) 96px, 128px"
-                    className="h-auto w-auto object-contain"
+                    fill
+                    className="object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -227,9 +224,9 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                   <Image
                     src="/renders/biohack.png"
                     alt="BioHack NMN 500 mg"
-                    width={144}
-                    height={144}
-                    className="h-auto w-auto object-contain"
+                    sizes="144px"
+                    fill
+                    className="object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
@@ -245,9 +242,9 @@ export function Hero({ energyDuoKit, kitLines = [] }: HeroProps) {
                   <Image
                     src="/renders/renew.png"
                     alt="Renew NAD+ and Resveratrol"
-                    width={144}
-                    height={144}
-                    className="h-auto w-auto object-contain"
+                    sizes="144px"
+                    fill
+                    className="object-contain"
                   />
                 </div>
                 <span className="mt-3 font-archivo text-lg font-bold text-fg">
