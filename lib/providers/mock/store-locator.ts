@@ -19,3 +19,5 @@ export class MockStoreLocatorProvider implements StoreLocatorProvider {
     );
   }
 }
+
+export const mockStoreLocatorProvider = new MockStoreLocatorProvider();
