@@ -21,16 +21,54 @@ function readString(formData: FormData, name: string): string | undefined {
   return typeof value === "string" ? value : undefined;
 }
 
+async function getAuthenticatedCustomer() {
+  const session =
+    typeof accountProvider.getSession === "function"
+      ? await accountProvider.getSession()
+      : null;
+  const customer =
+    session && typeof accountProvider.getCustomer === "function"
+      ? await accountProvider.getCustomer()
+      : null;
+  return customer;
+}
+
+async function verifySubscriptionOwnership(
+  subscriptionId: string
+): Promise<boolean> {
+  if (typeof subscriptionProvider.list !== "function") {
+    return false;
+  }
+  const subscriptions = await subscriptionProvider.list();
+  return subscriptions.some((s) => s.id === subscriptionId);
+}
+
 /** Runs one subscription change, then returns to the list with fresh data. */
 async function changeAndReturn(
   formData: FormData,
   change: (id: string) => Promise<unknown>
 ): Promise<void> {
-  const id = IdSchema.safeParse(readString(formData, "id"));
-  if (id.success) {
-    await change(id.data);
-    revalidatePath(LIST_PATH);
+  const customer = await getAuthenticatedCustomer();
+  if (!customer) {
+    const loginUrl =
+      typeof accountProvider.signInUrl === "function"
+        ? await accountProvider.signInUrl(LIST_PATH)
+        : `/account/login?returnTo=${encodeURIComponent(LIST_PATH)}`;
+    redirect(loginUrl);
   }
+
+  const id = IdSchema.safeParse(readString(formData, "id"));
+  if (!id.success) {
+    redirect(LIST_PATH);
+  }
+
+  const isOwner = await verifySubscriptionOwnership(id.data);
+  if (!isOwner) {
+    redirect(LIST_PATH);
+  }
+
+  await change(id.data);
+  revalidatePath(LIST_PATH);
   redirect(LIST_PATH);
 }
 
@@ -64,6 +102,15 @@ const CancelInputSchema = z.object({
 });
 
 export async function cancelSubscription(formData: FormData): Promise<void> {
+  const customer = await getAuthenticatedCustomer();
+  if (!customer) {
+    const loginUrl =
+      typeof accountProvider.signInUrl === "function"
+        ? await accountProvider.signInUrl(LIST_PATH)
+        : `/account/login?returnTo=${encodeURIComponent(LIST_PATH)}`;
+    redirect(loginUrl);
+  }
+
   const id = readString(formData, "id") ?? "";
   const parsed = CancelInputSchema.safeParse({
     id,
@@ -73,6 +120,11 @@ export async function cancelSubscription(formData: FormData): Promise<void> {
   if (!parsed.success) {
     // Missing or unknown reason: send the customer back to step 1.
     redirect(id ? `${LIST_PATH}/${encodeURIComponent(id)}/cancel` : LIST_PATH);
+  }
+
+  const isOwner = await verifySubscriptionOwnership(parsed.data.id);
+  if (!isOwner) {
+    redirect(LIST_PATH);
   }
 
   await subscriptionProvider.cancel(
@@ -94,8 +146,24 @@ async function updateWithFeedback(
   update: (id: string) => Promise<Subscription>,
   message: string
 ): Promise<SubscriptionActionState> {
+  const customer = await getAuthenticatedCustomer();
+  if (!customer) {
+    return {
+      status: "error",
+      message: "You must be signed in to manage subscriptions.",
+    };
+  }
+
   const id = IdSchema.safeParse(readString(formData, "id"));
   if (!id.success) {
+    return {
+      status: "error",
+      message: "We couldn't update your subscription. Please try again.",
+    };
+  }
+
+  const isOwner = await verifySubscriptionOwnership(id.data);
+  if (!isOwner) {
     return {
       status: "error",
       message: "We couldn't update your subscription. Please try again.",
@@ -140,6 +208,14 @@ export async function cancelSubscriptionWithFeedback(
   _previousState: SubscriptionActionState,
   formData: FormData
 ): Promise<SubscriptionActionState> {
+  const customer = await getAuthenticatedCustomer();
+  if (!customer) {
+    return {
+      status: "error",
+      message: "You must be signed in to manage subscriptions.",
+    };
+  }
+
   const parsed = CancelInputSchema.safeParse({
     id: readString(formData, "id"),
     reason: readString(formData, "reason"),
@@ -149,6 +225,14 @@ export async function cancelSubscriptionWithFeedback(
     return {
       status: "error",
       message: "Choose a cancellation reason before continuing.",
+    };
+  }
+
+  const isOwner = await verifySubscriptionOwnership(parsed.data.id);
+  if (!isOwner) {
+    return {
+      status: "error",
+      message: "We couldn't update your subscription. Please try again.",
     };
   }
 
