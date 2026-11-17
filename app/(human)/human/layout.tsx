@@ -9,6 +9,7 @@ import { DeferredCartDrawer } from "@/components/commerce/cart-drawer/deferred-c
 import { CookieBanner } from "@/components/layout/cookie-banner";
 import { DeferredFirstVisitPopup } from "@/components/layout/popup/deferred-first-visit-popup";
 import { ConsentProvider } from "@/lib/consent";
+import { MeasurementScripts } from "@/components/layout/measurement-scripts";
 
 export default async function HumanLayout({
   children,
@@ -19,6 +20,7 @@ export default async function HumanLayout({
 
   return (
     <ConsentProvider>
+      <MeasurementScripts />
       <div
         data-theme="human"
         className="min-h-full flex-1 flex flex-col bg-bg text-fg"
