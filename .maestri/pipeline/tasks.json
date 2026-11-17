@@ -3194,9 +3194,9 @@
   {
     "onda": 4,
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-16T23:16:51.208Z",
+    "lease_ate": null,
     "pr": "local",
     "id": "W4-00",
     "papel": "Backend/API",
@@ -3209,7 +3209,8 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "DECISIONS onda 2 (W2-27, Copy link/Reorder). Só lib/contracts, lib/providers/mock e testes."
+    "nota": "DECISIONS onda 2 (W2-27, Copy link/Reorder). Só lib/contracts, lib/providers/mock e testes.",
+    "revisor": "Lupa"
   },
   {
     "onda": 4,
