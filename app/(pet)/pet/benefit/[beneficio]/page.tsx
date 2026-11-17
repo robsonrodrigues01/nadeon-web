@@ -289,6 +289,12 @@ export default async function BenefitCollectionPage({ params }: PageProps) {
           >
             Read up on {label}
           </h2>
+          <Link
+            href="/pet/journal"
+            className="mt-5 inline-flex min-h-11 items-center rounded-pill border border-border px-5 font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            Visit the journal
+          </Link>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((article) => (
               <li
