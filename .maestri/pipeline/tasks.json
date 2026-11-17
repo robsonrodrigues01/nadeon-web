@@ -3217,9 +3217,9 @@
     "depende_de": [
       "W4-00"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T05:27:39.556Z",
+    "lease_ate": null,
     "pr": "local",
     "id": "W4-00b",
     "papel": "Frontend",
@@ -3513,9 +3513,9 @@
     "depende_de": [
       "W4-08a"
     ],
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T05:24:37.492Z",
+    "lease_ate": "2026-11-17T05:37:54.701Z",
     "pr": "local",
     "criterios": [
       "testes com fixture",
