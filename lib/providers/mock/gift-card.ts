@@ -1,4 +1,5 @@
 import {
+  isGiftCardAmountWithinApprovedRange,
   GiftCardPurchaseInputSchema,
   type GiftCardDesign,
   type GiftCardProvider,
@@ -17,7 +18,13 @@ export class MockGiftCardProvider implements GiftCardProvider {
   }
 
   async preparePurchase(input: unknown) {
-    GiftCardPurchaseInputSchema.parse(input);
+    const parsed = GiftCardPurchaseInputSchema.parse(input);
+    const approvedAmounts = await this.getAvailableAmounts(
+      parsed.amount.currencyCode
+    );
+    if (!isGiftCardAmountWithinApprovedRange(parsed.amount, approvedAmounts)) {
+      throw new Error("Gift card amount is outside the approved range.");
+    }
     return { id: `gift_TEST_${Math.random().toString(36).slice(2, 9)}` };
   }
 }

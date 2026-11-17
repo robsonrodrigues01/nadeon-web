@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { MockEmailPreferencesProvider } from "@/lib/providers/mock/email-preferences";
 import { MockGiftCardProvider } from "@/lib/providers/mock/gift-card";
 import { MockStoreLocatorProvider } from "@/lib/providers/mock/store-locator";
@@ -42,6 +42,21 @@ describe("Wave 5 contracts and mocks", () => {
       "cream",
     ]);
 
+    await expect(
+      provider.preparePurchase({
+        amount: { amount: 50, currencyCode: "USD" },
+        design: "sunset",
+        recipientName: "TEST Recipient",
+        recipientEmail: "gift-recipient@example.com",
+        senderName: "TEST Sender",
+        deliveryDate: "2026-12-01",
+      })
+    ).rejects.toThrow(/approved range/i);
+
+    vi.spyOn(provider, "getAvailableAmounts").mockResolvedValue([
+      { amount: 50, currencyCode: "USD" },
+      { amount: 100, currencyCode: "USD" },
+    ]);
     const result = await provider.preparePurchase({
       amount: { amount: 50, currencyCode: "USD" },
       design: "sunset",
@@ -55,6 +70,16 @@ describe("Wave 5 contracts and mocks", () => {
     expect(result.id).toMatch(/^gift_TEST_/);
     expect(JSON.stringify(result)).not.toContain("gift-recipient@example.com");
     expect(JSON.stringify(result)).not.toContain("TEST gift message");
+    await expect(
+      provider.preparePurchase({
+        amount: { amount: 125, currencyCode: "USD" },
+        design: "sunset",
+        recipientName: "TEST Recipient",
+        recipientEmail: "gift-recipient@example.com",
+        senderName: "TEST Sender",
+        deliveryDate: "2026-12-01",
+      })
+    ).rejects.toThrow(/approved range/i);
     await expect(
       provider.preparePurchase({
         amount: { amount: 50, currencyCode: "USD" },
