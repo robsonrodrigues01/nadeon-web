@@ -3985,7 +3985,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T22:29:04.567Z",
+    "lease_ate": "2026-11-17T22:35:37.573Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4315,9 +4315,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T22:35:09.266Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4422,7 +4422,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Registrar no lib/providers/index.ts os providers da onda 5 (content, email-preferences, gift-card, offers, store-locator, wholesale), com mock e live stub de erro claro, no mesmo padrão dos existentes",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
     "lease_ate": "2026-11-17T22:32:49.623Z",
     "branch": "agy/W5-00c",
@@ -4433,6 +4433,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "rotas da onda 5 devem importar só do registry, nunca do mock"
+    "nota": "rotas da onda 5 devem importar só do registry, nunca do mock",
+    "revisor": "Lupa"
   }
 ]
