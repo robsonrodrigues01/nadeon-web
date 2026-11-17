@@ -48,6 +48,13 @@ import type {
 } from "@/lib/contracts/forms";
 import type { LabLot, LabsFilter, LabsProvider } from "@/lib/contracts/labs";
 import type { Campaign, CampaignConfig } from "@/lib/contracts/campaign";
+import type {
+  MailyteCheckoutStartedInput,
+  MailyteEvent,
+  MailyteOrderCompletedInput,
+  MailyteProvider,
+  MailyteTrackingResult,
+} from "@/lib/contracts/mailyte";
 
 const NOT_IMPLEMENTED_MSG = "not implemented: onda 4";
 
@@ -271,6 +278,22 @@ export class LiveCampaignConfig implements CampaignConfig {
   }
 }
 
+export class LiveMailyteProvider implements MailyteProvider {
+  async trackEvent(_event: MailyteEvent): Promise<MailyteTrackingResult> {
+    throw new Error(NOT_IMPLEMENTED_MSG);
+  }
+  async sendCheckoutStarted(
+    _input: MailyteCheckoutStartedInput
+  ): Promise<MailyteTrackingResult> {
+    throw new Error(NOT_IMPLEMENTED_MSG);
+  }
+  async sendOrderCompleted(
+    _input: MailyteOrderCompletedInput
+  ): Promise<MailyteTrackingResult> {
+    throw new Error(NOT_IMPLEMENTED_MSG);
+  }
+}
+
 export const liveCatalogProvider = new LiveCatalogProvider();
 export const liveCartProvider = new LiveCartProvider();
 export const liveAccountProvider = new LiveAccountProvider();
@@ -279,3 +302,4 @@ export const liveReviewsProvider = new LiveReviewsProvider();
 export const liveFormsProvider = new LiveFormsProvider();
 export const liveLabsProvider = new LiveLabsProvider();
 export const liveCampaignConfig = new LiveCampaignConfig();
+export const liveMailyteProvider = new LiveMailyteProvider();
