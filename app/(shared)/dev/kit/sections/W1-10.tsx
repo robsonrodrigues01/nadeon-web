@@ -439,8 +439,8 @@ export default function W1_10Section() {
           Unified tracking interface adhering to Section 6.5 of Plan v3.
           Dispatches typed events with Zod schema validation, enforced by strict
           consent checks against the analytics category. In development, events
-          are logged to the console; in production, events route to Vercel
-          Analytics.
+          are logged to the console; in production, analytics events are sent to
+          GA4 and Clarity through the consent-aware measurement loader.
         </p>
       </header>
 

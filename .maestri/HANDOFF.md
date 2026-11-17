@@ -4,7 +4,7 @@ Handoff do Claude Code para o Maestro. Data: 13/11/2026. Fonte da verdade do pla
 
 ## 1. Objetivo
 
-Construir o site headless da Nadeon Labs (linhas Human e Pet) em Next.js 16.3 na Vercel, com a Shopify como motor de catálogo, carrinho, assinatura, conta e checkout. O site só abre no nadeonlabs.com já vendendo, o mais rápido possível (meta: meados de dezembro de 2026).
+Construir o site headless da Nadeon Labs (linhas Human e Pet) em Next.js 16.3 na Netlify, com a Shopify como motor de catálogo, carrinho, assinatura, conta e checkout. O site só abre no nadeonlabs.com já vendendo, o mais rápido possível (meta: meados de dezembro de 2026).
 
 ## 2. Requisitos aprovados (não rediscutir)
 
@@ -27,7 +27,7 @@ Todos estão na seção 0 do plano v3. Os que mais afetam a execução:
 ## 4. Restrições
 
 - Nenhum app pago além do plano da Shopify. Mailyte no plano gratuito.
-- Nenhum segredo no código. Variáveis só na Vercel e em `.env.local` fora do Git.
+- Nenhum segredo no código. Variáveis de build no ambiente da Netlify e em `.env.local` fora do Git.
 - Dados de exemplo (`[X]`, `$XX`, `(example)`) nunca viram texto fixo em componente.
 - Lab Results só com lotes reais.
 - Não tocar no DNS do nadeonlabs.com (Cloudflare) antes da aprovação de lançamento.
