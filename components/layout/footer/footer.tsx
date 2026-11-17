@@ -3,6 +3,7 @@ import Link from "next/link";
 import { NewsletterForm } from "./newsletter-form";
 import { CrossLineCard } from "./cross-line-card";
 import { FooterNav } from "./footer-nav";
+import { CookieSettingsButton } from "./cookie-settings-button";
 import {
   COMPANY_IDENTITY,
   LEGAL_LINKS,
@@ -101,6 +102,8 @@ export function Footer({ line = "human", className = "" }: FooterProps) {
                   </Link>
                 </React.Fragment>
               ))}
+              <span aria-hidden="true">·</span>
+              <CookieSettingsButton />
             </p>
           </div>
 
