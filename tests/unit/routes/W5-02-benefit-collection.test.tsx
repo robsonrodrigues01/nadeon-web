@@ -30,8 +30,10 @@ describe("W5-02 /pet/benefit/[beneficio]", () => {
         .every((link) => link.getAttribute("href") === "/pet/quiz")
     ).toBe(true);
     expect(
-      screen.queryByRole("link", { name: "Visit the journal" })
-    ).toBeNull();
+      screen
+        .getByRole("link", { name: "Visit the journal" })
+        .getAttribute("href")
+    ).toBe("/pet/journal");
     expect(
       screen.getByRole("group", { name: "Hero formula purchase options" })
     ).toBeTruthy();
