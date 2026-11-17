@@ -171,9 +171,17 @@ describe("W5-08 /pet/breeds/[raca] Route & Semantic Controls", () => {
     // Unconfirmed dosage statements
     expect(bodyText).not.toMatch(/dose is from the label/i);
     expect(bodyText).not.toMatch(/dose by weight/i);
+    expect(bodyText).not.toMatch(/dose for your lab/i);
 
-    // Unconfirmed health claims
+    // Unconfirmed health claims & kit formulation claims
     expect(bodyText).not.toMatch(/supports healthy aging and joint function/i);
+    expect(bodyText).not.toMatch(/joint recovery oil/i);
+    expect(bodyText).not.toMatch(/active large dogs/i);
+
+    // Unconfirmed life stage defined ranges
+    expect(bodyText).not.toMatch(/0 to 1 year/i);
+    expect(bodyText).not.toMatch(/1 to 7 years/i);
+    expect(bodyText).not.toMatch(/7\+\s*years/i);
 
     // Unconfirmed exercise numbers
     expect(bodyText).not.toMatch(/60 to 90 min/i);
@@ -182,5 +190,19 @@ describe("W5-08 /pet/breeds/[raca] Route & Semantic Controls", () => {
     expect(bodyText).not.toMatch(/hip and elbow screening/i);
     expect(bodyText).not.toMatch(/twice-yearly vet visits/i);
     expect(bodyText).not.toMatch(/limping or stiffness that lasts/i);
+  });
+
+  it("exports sanitized metadata without unconfirmed dose or vet claims", async () => {
+    const params = Promise.resolve({ raca: "labrador-retriever" });
+    const meta = await generateMetadata({ params });
+
+    const title =
+      typeof meta.title === "string" ? meta.title : JSON.stringify(meta.title);
+    const desc = meta.description ?? "";
+
+    expect(title).not.toMatch(/supplement dose/i);
+    expect(desc).not.toMatch(/vet-reviewed/i);
+    expect(desc).not.toMatch(/health topics/i);
+    expect(desc).toBe("To be confirmed.");
   });
 });

@@ -10,7 +10,7 @@ interface GuideFaqProps {
 const FAQ_ITEMS = [
   {
     q: "How many chews should a 70 lb Labrador take?",
-    a: "Dose: To be confirmed. Label dose and veterinary recommendation are To be confirmed. Check with your veterinarian.*",
+    a: "To be confirmed. Check with your veterinarian.*",
   },
   {
     q: "Can I give chews and oil together?",
@@ -18,7 +18,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "At what age is a Labrador a senior?",
-    a: "To be confirmed. Consult your veterinarian for tailored life-stage evaluation.",
+    a: "To be confirmed.",
   },
   {
     q: "My Lab is a picky eater. Is there another format?",

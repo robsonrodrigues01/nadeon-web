@@ -34,8 +34,8 @@ export async function generateMetadata({
   }
 
   return buildMetadata({
-    title: `${breed.title} Care Guide & Supplement Dose - Nadeon Pet`,
-    description: `A care guide for ${breed.title}s at every age: health topics by life stage, weight, exercise, food and vet-reviewed supplement guidance.`,
+    title: `${breed.title} Care Guide - Nadeon Pet`,
+    description: "To be confirmed.",
     pathname: `/pet/breeds/${breed.slug}`,
   });
 }
@@ -123,9 +123,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                 NL
               </div>
               <div>
-                <div className="font-bold text-fg">
-                  Nadeon Pet Health Editorial
-                </div>
+                <div className="font-bold text-fg">Nadeon Pet Editorial</div>
                 <div className="text-xs opacity-75">To be confirmed</div>
               </div>
             </div>
@@ -279,7 +277,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
             {/* Quiz Callout Box */}
             <div className="mt-4 pt-4 border-t border-border/50 flex flex-col gap-2">
               <div className="font-extrabold text-sm text-fg">
-                Dose for your Lab
+                Care routine for your Lab
               </div>
               <div className="text-xs text-fg-muted">
                 Take the 60-second quiz.
@@ -298,12 +296,9 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
         <div className="lg:col-span-8 flex flex-col gap-14">
           {/* Sample Copy Notice */}
           <div className="p-4 rounded-2xl border border-border/80 bg-bg-elevated/40 text-xs text-fg-muted leading-relaxed">
-            <span className="font-bold text-fg uppercase mr-1">
-              SAMPLE COPY:
-            </span>
+            <span className="font-bold text-fg uppercase mr-1">NOTICE:</span>
             Body text below is placeholder content for layout only. Final copy
-            will be written and reviewed by a veterinarian, using structure and
-            function language only.
+            is To be confirmed.
           </div>
 
           {/* Section 01: About the breed */}
@@ -340,7 +335,9 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                 <div className="font-archivo font-extrabold text-lg text-fg">
                   Puppy
                 </div>
-                <div className="text-xs font-bold text-accent">0 to 1 year</div>
+                <div className="text-xs font-bold text-accent">
+                  To be confirmed
+                </div>
                 <p className="text-xs text-fg-muted mt-2">To be confirmed.</p>
               </div>
 
@@ -349,7 +346,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                   Adult
                 </div>
                 <div className="text-xs font-bold text-accent">
-                  1 to 7 years
+                  To be confirmed
                 </div>
                 <p className="text-xs text-fg-muted mt-2">To be confirmed.</p>
               </div>
@@ -358,7 +355,9 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                 <div className="font-archivo font-extrabold text-lg text-fg">
                   Senior
                 </div>
-                <div className="text-xs font-bold text-accent">7+ years</div>
+                <div className="text-xs font-bold text-accent">
+                  To be confirmed
+                </div>
                 <p className="text-xs text-fg-muted mt-2">To be confirmed.</p>
               </div>
             </div>
@@ -458,13 +457,13 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
 
             <div className="p-5 rounded-2xl border border-accent/40 bg-accent/10 flex flex-col gap-2">
               <span className="text-xs font-bold tracking-wider uppercase text-accent">
-                DOSE GUIDELINES
+                ROUTINE GUIDELINES
               </span>
               <div className="font-archivo font-extrabold text-xl text-fg">
-                Dose: To be confirmed
+                To be confirmed
               </div>
               <p className="text-xs text-fg-muted">
-                Product names, formats and dosages are To be confirmed. Check
+                Product names, formats and routines are To be confirmed. Check
                 with your veterinarian.*
               </p>
             </div>
@@ -586,8 +585,7 @@ export default async function BreedGuidePage({ params }: BreedGuidePageProps) {
                   {breed.title} Starter Kit
                 </h3>
                 <p className="text-xs sm:text-sm text-fg-muted">
-                  Daily NAD+ chew + joint recovery oil. Formulated for active
-                  large dogs.
+                  To be confirmed.
                 </p>
               </div>
 
