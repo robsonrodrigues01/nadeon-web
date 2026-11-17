@@ -21,3 +21,5 @@ export class MockGiftCardProvider implements GiftCardProvider {
     return { id: `gift_TEST_${Math.random().toString(36).slice(2, 9)}` };
   }
 }
+
+export const mockGiftCardProvider = new MockGiftCardProvider();

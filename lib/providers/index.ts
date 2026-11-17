@@ -7,6 +7,12 @@ import type { FormsProvider } from "@/lib/contracts/forms";
 import type { LabsProvider } from "@/lib/contracts/labs";
 import type { CampaignConfig } from "@/lib/contracts/campaign";
 import type { MailyteProvider } from "@/lib/contracts/mailyte";
+import type { ContentProvider } from "@/lib/contracts/content";
+import type { EmailPreferencesProvider } from "@/lib/contracts/email-preferences";
+import type { GiftCardProvider } from "@/lib/contracts/gift-card";
+import type { OffersProvider } from "@/lib/contracts/offers";
+import type { StoreLocatorProvider } from "@/lib/contracts/store-locator";
+import type { WholesaleProvider } from "@/lib/contracts/wholesale";
 
 import { mockCatalogProvider } from "./mock/catalog";
 import { mockCartProvider } from "./mock/cart";
@@ -17,6 +23,12 @@ import { mockFormsProvider } from "./mock/forms";
 import { mockLabsProvider } from "./mock/labs";
 import { mockCampaignConfig } from "./mock/campaign";
 import { mockMailyteProvider } from "./mock/mailyte";
+import { mockContentProvider } from "./mock/content";
+import { mockEmailPreferencesProvider } from "./mock/email-preferences";
+import { mockGiftCardProvider } from "./mock/gift-card";
+import { mockOffersProvider } from "./mock/offers";
+import { mockStoreLocatorProvider } from "./mock/store-locator";
+import { mockWholesaleProvider } from "./mock/wholesale";
 
 import {
   liveCatalogProvider,
@@ -28,12 +40,24 @@ import {
   liveLabsProvider,
   liveCampaignConfig,
   liveMailyteProvider,
+  liveContentProvider,
+  liveEmailPreferencesProvider,
+  liveGiftCardProvider,
+  liveOffersProvider,
+  liveStoreLocatorProvider,
+  liveWholesaleProvider,
 } from "./live";
 
 export type ProvidersMode = "mock" | "live";
 
 export function getProvidersMode(): ProvidersMode {
   return process.env.PROVIDERS === "live" ? "live" : "mock";
+}
+
+function getMailyteProvider(mode: ProvidersMode): MailyteProvider {
+  return mode === "live" || process.env.MAILYTE_MODE === "live"
+    ? liveMailyteProvider
+    : mockMailyteProvider;
 }
 
 export function getProviders(mode: ProvidersMode = getProvidersMode()) {
@@ -47,7 +71,13 @@ export function getProviders(mode: ProvidersMode = getProvidersMode()) {
       formsProvider: liveFormsProvider,
       labsProvider: liveLabsProvider,
       campaignConfig: liveCampaignConfig,
-      mailyteProvider: liveMailyteProvider,
+      mailyteProvider: getMailyteProvider(mode),
+      contentProvider: liveContentProvider,
+      emailPreferencesProvider: liveEmailPreferencesProvider,
+      giftCardProvider: liveGiftCardProvider,
+      offersProvider: liveOffersProvider,
+      storeLocatorProvider: liveStoreLocatorProvider,
+      wholesaleProvider: liveWholesaleProvider,
     };
   }
 
@@ -60,7 +90,13 @@ export function getProviders(mode: ProvidersMode = getProvidersMode()) {
     formsProvider: mockFormsProvider,
     labsProvider: mockLabsProvider,
     campaignConfig: mockCampaignConfig,
-    mailyteProvider: mockMailyteProvider,
+    mailyteProvider: getMailyteProvider(mode),
+    contentProvider: mockContentProvider,
+    emailPreferencesProvider: mockEmailPreferencesProvider,
+    giftCardProvider: mockGiftCardProvider,
+    offersProvider: mockOffersProvider,
+    storeLocatorProvider: mockStoreLocatorProvider,
+    wholesaleProvider: mockWholesaleProvider,
   };
 }
 
@@ -99,8 +135,32 @@ export const campaignConfig: CampaignConfig = isLive
   : mockCampaignConfig;
 
 export const mailyteProvider: MailyteProvider = isLive
-  ? liveMailyteProvider
-  : mockMailyteProvider;
+  ? getMailyteProvider("live")
+  : getMailyteProvider("mock");
+
+export const contentProvider: ContentProvider = isLive
+  ? liveContentProvider
+  : mockContentProvider;
+
+export const emailPreferencesProvider: EmailPreferencesProvider = isLive
+  ? liveEmailPreferencesProvider
+  : mockEmailPreferencesProvider;
+
+export const giftCardProvider: GiftCardProvider = isLive
+  ? liveGiftCardProvider
+  : mockGiftCardProvider;
+
+export const offersProvider: OffersProvider = isLive
+  ? liveOffersProvider
+  : mockOffersProvider;
+
+export const storeLocatorProvider: StoreLocatorProvider = isLive
+  ? liveStoreLocatorProvider
+  : mockStoreLocatorProvider;
+
+export const wholesaleProvider: WholesaleProvider = isLive
+  ? liveWholesaleProvider
+  : mockWholesaleProvider;
 
 export {
   mockCatalogProvider,
@@ -112,6 +172,12 @@ export {
   mockLabsProvider,
   mockCampaignConfig,
   mockMailyteProvider,
+  mockContentProvider,
+  mockEmailPreferencesProvider,
+  mockGiftCardProvider,
+  mockOffersProvider,
+  mockStoreLocatorProvider,
+  mockWholesaleProvider,
   liveCatalogProvider,
   liveCartProvider,
   liveAccountProvider,
@@ -121,4 +187,10 @@ export {
   liveLabsProvider,
   liveCampaignConfig,
   liveMailyteProvider,
+  liveContentProvider,
+  liveEmailPreferencesProvider,
+  liveGiftCardProvider,
+  liveOffersProvider,
+  liveStoreLocatorProvider,
+  liveWholesaleProvider,
 };

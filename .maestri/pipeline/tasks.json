@@ -3829,9 +3829,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T21:36:18.441Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "contratos e mock com testes",
@@ -3870,8 +3870,8 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Prisma5",
     "lease_ate": null,
     "pr": "local",
     "criterios": [
@@ -3887,13 +3887,15 @@
     "titulo": "Rota /human/compare com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00b"
-    ]
+    ],
+    "revisor": "Lupa",
+    "nota": "MUDANÇAS (Lente): ver REVIEW.md; volta ao Crivo6 depois da W5-03"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T22:41:47.689Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3908,12 +3910,14 @@
     "titulo": "Rota /pet/benefit/[beneficio] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00b"
-    ]
+    ],
+    "revisor": "Lupa",
+    "nota": "Gate falhou: tests/unit/routes/W5-02-benefit-collection.test.tsx ainda espera o link Visit the journal removido. Ajustar o teste (link volta na W5-12). Volta ao Trilho após W5-05."
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Crivo6",
     "lease_ate": null,
     "pr": "local",
     "criterios": [
@@ -3929,7 +3933,8 @@
     "titulo": "Rota /pet/concern/[problema] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00b"
-    ]
+    ],
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
@@ -3949,14 +3954,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /offers/[oferta] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T22:38:51.993Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3970,14 +3976,17 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /ingredients com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
-    ]
+      "W5-00a",
+      "W5-00c"
+    ],
+    "nota": "importa mockContentProvider direto; trocar pelo registry depois da W5-00c",
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T22:37:59.427Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3992,13 +4001,15 @@
     "titulo": "Rota /gift-card com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00b"
-    ]
+    ],
+    "revisor": "Lente",
+    "nota": "MUDANÇAS (Lente); volta à Prisma5 depois da W5-01"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T22:50:01.922Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4012,7 +4023,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /pet/breeds com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4033,7 +4045,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /pet/breeds/[raca] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4054,7 +4067,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /account/pets com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
@@ -4075,14 +4089,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /account/email-preferences com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T22:42:45.074Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4096,14 +4111,16 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /experts com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
-    ]
+      "W5-00a",
+      "W5-00c"
+    ],
+    "revisor": "Lente"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T22:50:24.369Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4117,8 +4134,10 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /journal e /pet/journal com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
-    ]
+      "W5-00a",
+      "W5-00c"
+    ],
+    "nota": " Ao criar /pet/journal, religar o link Visit the journal da página de benefício (W5-02)."
   },
   {
     "onda": 5,
@@ -4138,7 +4157,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /journal/[categoria] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4159,7 +4179,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /journal/[slug] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4180,7 +4201,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /wholesale com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
@@ -4201,7 +4223,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /where-to-buy com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
@@ -4222,7 +4245,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /lp/[campanha] (listicle, product advertorial, seasonal) com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4243,7 +4267,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /professionals com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4264,7 +4289,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /affiliates com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4285,14 +4311,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /courses/[curso] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T22:51:03.836Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4359,15 +4386,75 @@
     "depende_de": [
       "W4-27"
     ],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T21:44:54.697Z",
+    "lease_ate": null,
     "branch": "agy/W4-28",
     "pr": "local",
     "criterios": [
       "teste: MAILYTE_MODE=live usa live só no Mailyte; PROVIDERS=live continua ligando todos",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lupa"
+  },
+  {
+    "id": "W4-29",
+    "onda": 4,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Migração Vercel → Netlify no código: remover @vercel/analytics e @vercel/speed-insights (e usos em lib/analytics/track.ts, /dev/kit e testes), referências a VERCEL_* e vercel.app; netlify.toml mínimo só se necessário (build next build); documentar variáveis de ambiente para a Netlify",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Trilho",
+    "lease_ate": null,
+    "branch": "agy/W4-29",
+    "pr": "local",
+    "criterios": [
+      "nenhuma dependência ou referência à Vercel",
+      "build e testes verdes",
+      "revisão APROVADO"
+    ],
+    "revisor": "Lente"
+  },
+  {
+    "id": "W5-00c",
+    "onda": 5,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Registrar no lib/providers/index.ts os providers da onda 5 (content, email-preferences, gift-card, offers, store-locator, wholesale), com mock e live stub de erro claro, no mesmo padrão dos existentes",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Crivo6",
+    "lease_ate": null,
+    "branch": "agy/W5-00c",
+    "pr": "local",
+    "criterios": [
+      "providers expostos pelo registry com testes",
+      "nenhuma rota alterada",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "rotas da onda 5 devem importar só do registry, nunca do mock",
+    "revisor": "Lupa"
+  },
+  {
+    "id": "W4-30",
+    "onda": 4,
+    "papel": "DevOps",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Portar o CI de .github/workflows/ci.yml para bitbucket-pipelines.yml (format, lint, typecheck, test, data:check, build; e2e Playwright, axe, Lighthouse em etapa separada), com cache do pnpm, versões fixas das imagens e nenhum segredo no arquivo",
+    "depende_de": [],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W4-30",
+    "pr": "local",
+    "criterios": [
+      "pipeline equivalente ao ci.yml",
+      "validado com schema do Bitbucket ou leitura",
+      "revisão APROVADO"
+    ],
+    "nota": "roda de verdade só depois do push ao Bitbucket"
   }
 ]

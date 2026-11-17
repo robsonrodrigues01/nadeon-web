@@ -142,13 +142,13 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
 
-      - name: Wait for Vercel preview deployment
+      - name: Wait for deploy preview
         id: wait_preview
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           COMMIT_SHA="${{ github.event.pull_request.head.sha }}"
-          echo "Aguardando URL de previa da Vercel para o commit $COMMIT_SHA..."
+          echo "Aguardando URL de previa do deploy para o commit $COMMIT_SHA..."
           PREVIEW_URL=""
           for i in $(seq 1 30); do
             PREVIEW_URL=$(gh api "repos/${{ github.repository }}/deployments?sha=${COMMIT_SHA}" --jq '.[0].environment_url // empty' 2>/dev/null || true)
@@ -157,9 +157,6 @@ jobs:
               if [ -n "$DEP_ID" ]; then
                 PREVIEW_URL=$(gh api "repos/${{ github.repository }}/deployments/${DEP_ID}/statuses" --jq '.[] | select(.state=="success") | .environment_url // .target_url' 2>/dev/null | head -n1 || true)
               fi
-            fi
-            if [ -z "$PREVIEW_URL" ]; then
-              PREVIEW_URL=$(gh api "repos/${{ github.repository }}/statuses/${COMMIT_SHA}" --jq '.[] | select(.context | test("(?i)vercel")) | select(.state=="success") | .target_url' 2>/dev/null | head -n1 || true)
             fi
             if [ -n "$PREVIEW_URL" ]; then
               echo "URL da previa localizada: $PREVIEW_URL"
@@ -170,7 +167,7 @@ jobs:
             sleep 10
           done
           if [ -z "$PREVIEW_URL" ]; then
-            echo "::warning::URL de previa da Vercel nao foi disponibilizada a tempo. Pulando auditoria do Lighthouse CI."
+            echo "::warning::URL de previa nao foi disponibilizada a tempo. Pulando auditoria do Lighthouse CI."
           fi
 
       - name: Run Lighthouse CI
