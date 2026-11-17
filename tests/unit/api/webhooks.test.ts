@@ -166,6 +166,46 @@ describe("POST /api/webhooks", () => {
     expect(await productRes.text()).toContain("missing product id or handle");
   });
 
+  it("returns 400 for invalid checkout and order emails without logging them", async () => {
+    for (const [topic, payload] of [
+      [
+        "checkouts/create",
+        {
+          id: "TEST-invalid-email-checkout",
+          email: "private.person@example.com ",
+        },
+      ],
+      [
+        "orders/create",
+        {
+          id: "TEST-invalid-email-order",
+          email: "private.person@example.com ",
+        },
+      ],
+    ] as const) {
+      const body = JSON.stringify(payload);
+      const request = new Request("http://localhost:3000/api/webhooks", {
+        method: "POST",
+        headers: {
+          "x-shopify-hmac-sha256": signPayload(body, TEST_SECRET),
+          "x-shopify-topic": topic,
+        },
+        body,
+      });
+
+      const response = await POST(request);
+      expect(response.status).toBe(400);
+      expect((await response.text()).toLowerCase()).not.toContain(
+        "private.person"
+      );
+    }
+
+    const allLogs = consoleInfoSpy.mock.calls
+      .map((call: unknown[]) => call.join(" "))
+      .join(" ");
+    expect(allLogs).not.toContain("private.person@example.com");
+  });
+
   it("processes checkouts/create and triggers Mailyte checkout_started without logging PII", async () => {
     const payload = {
       id: "TEST-checkout-9901",

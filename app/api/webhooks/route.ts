@@ -2,6 +2,10 @@ import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { mailyteProvider } from "@/lib/providers";
+import {
+  MailyteCheckoutStartedInputSchema,
+  MailyteOrderCompletedInputSchema,
+} from "@/lib/contracts/mailyte";
 
 function verifyShopifyHmac(
   rawBody: string,
@@ -80,7 +84,7 @@ export async function POST(request: Request): Promise<Response> {
           ? payload.abandoned_checkout_url
           : undefined;
 
-      await mailyteProvider.sendCheckoutStarted({
+      const checkoutEvent = MailyteCheckoutStartedInputSchema.safeParse({
         checkoutId,
         email,
         totalPrice,
@@ -88,6 +92,12 @@ export async function POST(request: Request): Promise<Response> {
         lineItemsCount,
         abandonedCheckoutUrl,
       });
+      if (!checkoutEvent.success) {
+        return new Response("Bad Request: invalid checkout payload", {
+          status: 400,
+        });
+      }
+      await mailyteProvider.sendCheckoutStarted(checkoutEvent.data);
 
       console.info(
         `[webhook] topic=checkouts/create status=processed id=${checkoutId}`
@@ -120,7 +130,7 @@ export async function POST(request: Request): Promise<Response> {
         ? payload.line_items.length
         : undefined;
 
-      await mailyteProvider.sendOrderCompleted({
+      const orderEvent = MailyteOrderCompletedInputSchema.safeParse({
         orderId,
         orderNumber,
         email,
@@ -128,6 +138,12 @@ export async function POST(request: Request): Promise<Response> {
         currency,
         lineItemsCount,
       });
+      if (!orderEvent.success) {
+        return new Response("Bad Request: invalid order payload", {
+          status: 400,
+        });
+      }
+      await mailyteProvider.sendOrderCompleted(orderEvent.data);
 
       console.info(
         `[webhook] topic=orders/create status=processed id=${orderId}`
