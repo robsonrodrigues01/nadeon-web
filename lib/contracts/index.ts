@@ -7,3 +7,4 @@ export * from "./forms";
 export * from "./labs";
 export * from "./campaign";
 export * from "./mailyte";
+export * from "./content";

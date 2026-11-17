@@ -1,0 +1,275 @@
+{
+  "journalPages": [
+    {
+      "audience": "human",
+      "eyebrow": "THE NADEON JOURNAL",
+      "title": "Read before you buy",
+      "description": "Plain-English guides on NMN, NAD+, daily routines and healthy aging for you and your pets.",
+      "categories": [
+        "All",
+        "Science",
+        "NAD+ 101",
+        "Routines",
+        "Lab notes",
+        "Pet aging",
+        "Ingredients"
+      ],
+      "species": []
+    },
+    {
+      "audience": "pet",
+      "eyebrow": "THE PET JOURNAL",
+      "title": "For pet parents",
+      "description": "Vet-reviewed guides on health, food, breeds and behavior for dogs, cats and horses, at every age.",
+      "categories": [
+        "All",
+        "Health",
+        "Nutrition",
+        "Breeds",
+        "Behavior",
+        "Products"
+      ],
+      "species": ["All pets", "Dogs", "Cats", "Horses"]
+    }
+  ],
+  "journalArticles": [
+    {
+      "slug": "nmn-vs-nad-what-is-the-difference",
+      "audience": "human",
+      "title": "NMN vs NAD+: what is the difference?",
+      "category": "Science",
+      "excerpt": "One is the building block, the other is the molecule your cells use every day. A plain-English guide to both.",
+      "readingMinutes": 6,
+      "species": [],
+      "reviewer": "To be confirmed",
+      "publishedAt": "To be confirmed",
+      "updatedAt": "To be confirmed",
+      "sections": [
+        { "title": "What NMN is", "body": "To be confirmed" },
+        { "title": "What NAD+ is", "body": "To be confirmed" },
+        { "title": "How they connect", "body": "To be confirmed" },
+        { "title": "Side by side", "body": "To be confirmed" },
+        { "title": "Which one fits your routine", "body": "To be confirmed" }
+      ]
+    },
+    {
+      "slug": "why-nad-declines-in-senior-dogs-and-what-you-can-do",
+      "audience": "pet",
+      "title": "Why NAD+ declines in senior dogs, and what you can do",
+      "category": "Health",
+      "categorySlug": "dog-health",
+      "excerpt": "What changes inside an older dog, the daily habits that help, and how to talk to your vet about support.*",
+      "readingMinutes": 7,
+      "species": ["dog"],
+      "reviewer": "To be confirmed",
+      "publishedAt": "To be confirmed",
+      "updatedAt": "To be confirmed",
+      "sections": [
+        {
+          "title": "What NAD+ does in a dog's body",
+          "body": "To be confirmed"
+        },
+        { "title": "Why levels drop with age", "body": "To be confirmed" },
+        { "title": "Signs you may notice", "body": "To be confirmed" },
+        { "title": "What you can do every day", "body": "To be confirmed" },
+        { "title": "Where NMN fits in", "body": "To be confirmed" }
+      ]
+    }
+  ],
+  "journalCategories": [
+    {
+      "slug": "dog-health",
+      "audience": "pet",
+      "title": "Dog health",
+      "description": "Everyday guides to joints, senior care, skin and coat, and digestion. Written in plain English and reviewed by a veterinarian before we publish.",
+      "reviewer": "To be confirmed",
+      "subcategories": [
+        "All",
+        "Joints",
+        "Senior care",
+        "Skin & coat",
+        "Digestion"
+      ]
+    }
+  ],
+  "breedIndex": {
+    "title": "Care guides by breed",
+    "description": "To be confirmed",
+    "sizes": ["All sizes", "Small", "Medium", "Large", "Giant"],
+    "species": ["Dogs", "Cats"],
+    "sizeKey": "To be confirmed"
+  },
+  "breedGuides": [
+    {
+      "slug": "labrador-retriever",
+      "title": "Labrador Retriever",
+      "description": "A care guide for Labs at every age: common health topics by life stage, weight and exercise, food, and a supplement dose for 51 to 90 lb dogs.",
+      "readingMinutes": 9,
+      "facts": {
+        "size": "To be confirmed",
+        "weightRange": "To be confirmed",
+        "lifeExpectancy": "To be confirmed",
+        "energyLevel": "To be confirmed",
+        "group": "To be confirmed",
+        "coat": "To be confirmed"
+      },
+      "sections": [
+        { "title": "About the breed", "body": "To be confirmed" },
+        { "title": "Health by life stage", "body": "To be confirmed" },
+        { "title": "Weight & exercise", "body": "To be confirmed" },
+        { "title": "Nutrition notes", "body": "To be confirmed" },
+        { "title": "Supplement guide", "body": "To be confirmed" },
+        { "title": "When to see your vet", "body": "To be confirmed" }
+      ],
+      "reviewer": "To be confirmed"
+    }
+  ],
+  "ingredientGlossary": {
+    "title": "What goes in",
+    "eyebrow": "INGREDIENT GLOSSARY",
+    "description": "To be confirmed",
+    "searchLabel": "Search an ingredient",
+    "categories": []
+  },
+  "ingredients": [],
+  "experts": [],
+  "expertsPage": {
+    "eyebrow": "SCIENTIFIC ADVISORY BOARD",
+    "title": "The people behind the formulas",
+    "description": "Physicians, scientists and veterinarians review what goes into every Nadeon formula, for people and for pets. Their names and photos appear here once each advisor approves.",
+    "humanSection": "Human advisory board",
+    "humanDescription": "Medical doctors and scientists who review our human formulas, doses and label wording.",
+    "petSection": "Pet advisory board",
+    "petDescription": "Licensed veterinarians who review every chew, oil and drop for dogs, cats and horses.",
+    "clinicSection": "Partner veterinarians",
+    "clinicDescription": "Practicing vets who share feedback from real exam rooms, so our pet formulas fit everyday care."
+  },
+  "expertReviewProcess": [
+    {
+      "step": 1,
+      "title": "Review the dose",
+      "description": "Every serving size is checked against published research before it goes on a label."
+    },
+    {
+      "step": 2,
+      "title": "Review the ingredients",
+      "description": "Each ingredient, form and source is approved, with no proprietary blends."
+    },
+    {
+      "step": 3,
+      "title": "Review label claims",
+      "description": "Every claim stays within structure/function wording, backed by the evidence.*"
+    },
+    {
+      "step": 4,
+      "title": "Review lab results",
+      "description": "Experts can see the third-party lab report for each finished lot."
+    }
+  ],
+  "courses": [
+    {
+      "slug": "30-day-longevity",
+      "title": "The 30-Day Longevity Routine",
+      "audience": "human",
+      "description": "One short email every 4 days with one habit to build. Sleep, movement, food, stress and the basics of NAD+, in plain English.",
+      "cadenceDays": 4,
+      "instructor": { "name": "To be confirmed", "bio": "To be confirmed" },
+      "lessons": [
+        {
+          "day": 1,
+          "title": "Sleep",
+          "summary": "A wind-down routine and a steady wake time.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 5,
+          "title": "Movement",
+          "summary": "Daily steps, strength twice a week, and how to start.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 9,
+          "title": "Nutrition",
+          "summary": "Protein, plants and a simple plate.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 13,
+          "title": "Stress",
+          "summary": "Two-minute resets you can do at your desk.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 17,
+          "title": "NAD+ basics",
+          "summary": "What it is, why it declines, where NMN fits.*",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 21,
+          "title": "Tracking",
+          "summary": "What to note each week, without an app.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 25,
+          "title": "Building the habit",
+          "summary": "Stacking it all into one morning routine.",
+          "body": "To be confirmed"
+        }
+      ]
+    },
+    {
+      "slug": "senior-dog-care",
+      "title": "Senior Dog Care in 14 Days",
+      "audience": "pet",
+      "description": "Seven short emails, one every 2 days, with simple things you can do at home to help your older dog feel their best.",
+      "cadenceDays": 2,
+      "instructor": { "name": "To be confirmed", "bio": "To be confirmed" },
+      "lessons": [
+        {
+          "day": 1,
+          "title": "Mobility",
+          "summary": "Ramps, rugs and gentle stretches at home.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 3,
+          "title": "Nutrition",
+          "summary": "Food changes for older dogs, and how to make them slowly.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 5,
+          "title": "Weight",
+          "summary": "The rib check and how to adjust portions.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 7,
+          "title": "Brain games",
+          "summary": "Sniff walks and puzzle games that keep them sharp.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 9,
+          "title": "Sleep",
+          "summary": "A comfy bed, a calm evening and fewer night wake-ups.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 11,
+          "title": "Vet checkups",
+          "summary": "What to ask at a senior visit, with a checklist.",
+          "body": "To be confirmed"
+        },
+        {
+          "day": 13,
+          "title": "Supplements",
+          "summary": "How to read a label and dose by weight.*",
+          "body": "To be confirmed"
+        }
+      ]
+    }
+  ]
+}
