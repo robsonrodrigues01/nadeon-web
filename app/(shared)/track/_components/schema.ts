@@ -6,7 +6,7 @@ export const TrackOrderSchema = z.object({
     .string()
     .trim()
     .toUpperCase()
-    .regex(/^NL-\d{6}$/),
+    .regex(/^(NL-\d{6}|TEST-NL-\d+)$/i),
   email: z.email().trim(),
 });
 

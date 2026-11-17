@@ -86,15 +86,21 @@ export function OrderLookup({
           <input
             id="order-number"
             ref={orderNumberRef}
-            aria-invalid={invalidField === "orderNumber"}
+            aria-invalid={
+              invalidField === "orderNumber" || Boolean(errorMessage)
+            }
             name="orderNumber"
             type="text"
             required
             autoComplete="off"
             autoCapitalize="characters"
-            pattern="[Nn][Ll]-[0-9]{6}"
+            pattern="([Nn][Ll]-[0-9]{6}|[Tt][Ee][Ss][Tt]-[Nn][Ll]-[0-9]+)"
             defaultValue={initialValues?.orderNumber ?? ""}
-            aria-describedby="order-number-hint"
+            aria-describedby={
+              clientError || errorMessage
+                ? "order-lookup-error order-number-hint"
+                : "order-number-hint"
+            }
             className="min-h-11 w-full rounded-field border border-border bg-bg px-4 py-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           />
           <p id="order-number-hint" className="text-sm text-fg-muted">
@@ -109,13 +115,17 @@ export function OrderLookup({
           <input
             id="order-email"
             ref={emailRef}
-            aria-invalid={invalidField === "email"}
+            aria-invalid={invalidField === "email" || Boolean(errorMessage)}
             name="email"
             type="email"
             required
             autoComplete="email"
             defaultValue={initialValues?.email ?? ""}
-            aria-describedby="order-email-hint"
+            aria-describedby={
+              clientError || errorMessage
+                ? "order-lookup-error order-email-hint"
+                : "order-email-hint"
+            }
             className="min-h-11 w-full rounded-field border border-border bg-bg px-4 py-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           />
           <p id="order-email-hint" className="text-sm text-fg-muted">
@@ -127,15 +137,18 @@ export function OrderLookup({
           {isPending ? "Tracking..." : "Track order"}
         </Button>
 
-        <p
-          ref={errorRef}
-          tabIndex={-1}
-          role="status"
-          aria-live="polite"
-          className="text-sm text-accent"
-        >
-          {clientError || errorMessage}
-        </p>
+        {(clientError || errorMessage) && (
+          <p
+            id="order-lookup-error"
+            ref={errorRef}
+            tabIndex={-1}
+            role="status"
+            aria-live="polite"
+            className="text-sm font-semibold text-accent"
+          >
+            {clientError || errorMessage}
+          </p>
+        )}
       </form>
 
       <p className="mt-6 text-sm text-fg-muted">

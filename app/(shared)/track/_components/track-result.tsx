@@ -52,6 +52,13 @@ export function TrackResult({ order, market }: TrackResultProps) {
             <span className="size-2 rounded-full bg-accent" />
             {statusLabel}
           </span>
+          {(order.copyLink || order.url) && (
+            <CopyButton
+              text={order.copyLink || order.url || ""}
+              label="Copy link"
+              copiedLabel="Link copied!"
+            />
+          )}
         </div>
         <p className="mt-2 text-sm text-fg-muted">
           Placed {placedDate} · {totalItemCount}{" "}
