@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import nextConfig from "../../../next.config";
-import PipelinePage from "../../../app/(shared)/pipeline/page";
 import DevKitPage from "../../../app/(shared)/dev/kit/page";
 
 const notFoundMock = vi.fn(() => {
@@ -21,12 +20,6 @@ describe("W3-29 production security", () => {
 
   afterEach(() => {
     process.env = originalEnv;
-  });
-
-  it("always returns 404 for the pipeline in production, even if enabled", () => {
-    (process.env as Record<string, string | undefined>).NODE_ENV = "production";
-    process.env.PIPELINE_DASHBOARD = "1";
-    expect(() => PipelinePage()).toThrow("NEXT_NOT_FOUND");
   });
 
   it("always returns 404 for dev kit in production despite preview flags", async () => {

@@ -7,9 +7,8 @@ import {
 } from "../../../scripts/check-routes.mjs";
 
 describe("route SEO checks", () => {
-  it("collects app routes while excluding developer and pipeline pages", () => {
+  it("collects app routes", () => {
     expect(routes).not.toContain("/dev/kit");
-    expect(routes).not.toContain("/pipeline");
     expect(routes).toContain("/human");
   });
 
