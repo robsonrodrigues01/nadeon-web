@@ -26,7 +26,7 @@ export class MockMailyteProvider implements MailyteProvider {
       throw new Error("Invalid Mailyte event payload");
     }
 
-    // shortcut: dedupe lasts only for this mock instance; use persistent provider idempotency for production retries.
+    // shortcut: só dentro do processo; trocar por KV ou idempotência do provider na onda 4 real
     const duplicate = this.recordedEvents.find(
       (recorded) =>
         recorded.eventName === parsed.data.eventName &&
