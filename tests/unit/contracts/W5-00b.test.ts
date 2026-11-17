@@ -109,7 +109,7 @@ describe("Wave 5 contracts and mocks", () => {
       contactName: "TEST Contact",
       email: "wholesale@example.com",
       phone: "TEST-000-0000",
-      businessType: "TEST retailer",
+      businessType: "Pharmacies & health stores",
       state: "TEST",
       locationCount: "1",
       resellerPermitOrEin: "TEST-ID",

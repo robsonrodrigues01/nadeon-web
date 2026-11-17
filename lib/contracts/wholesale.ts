@@ -1,13 +1,26 @@
 import { z } from "zod";
 import { ProductLineSchema } from "./catalog";
 
+export const WholesaleBusinessTypeSchema = z.enum([
+  "Pharmacies & health stores",
+  "Gyms & wellness clinics",
+  "Practitioners",
+  "Veterinary clinics",
+  "Pet stores & groomers",
+  "Equine & tack shops",
+]);
+
 export const WholesaleApplicationInputSchema = z.object({
   businessName: z.string().min(1),
   contactName: z.string().min(1),
   email: z.string().email(),
   phone: z.string().min(1),
-  website: z.string().optional(),
-  businessType: z.string().min(1),
+  website: z
+    .string()
+    .url()
+    .refine((value) => /^https?:\/\//i.test(value))
+    .optional(),
+  businessType: WholesaleBusinessTypeSchema,
   state: z.string().min(1),
   locationCount: z.string().min(1),
   resellerPermitOrEin: z.string().min(1),
