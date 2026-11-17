@@ -10,7 +10,8 @@ import {
 } from "@testing-library/react";
 import { Footer } from "@/components/layout/footer";
 import { CookieBanner } from "@/components/layout/cookie-banner";
-import { ConsentProvider } from "@/lib/consent";
+import SharedLayout from "@/app/(shared)/layout";
+import { ConsentProvider, writeCookie } from "@/lib/consent";
 import { OrderLookup } from "@/app/(shared)/track/_components/order-lookup";
 import { TrackResult } from "@/app/(shared)/track/_components/track-result";
 import { DEFAULT_MARKET } from "@/lib/market";
@@ -27,20 +28,20 @@ describe("W4-26 accessible cookie controls and order lookup states", () => {
   });
 
   it("revokes optional consent from an accessible footer button", async () => {
+    writeCookie(
+      "nadeon_consent",
+      JSON.stringify({
+        version: "1.0",
+        timestamp: "2026-11-17T12:00:00.000Z",
+        country: "DE",
+        explicit: true,
+        preferences: { necessary: true, analytics: true, marketing: true },
+      })
+    );
     render(
-      <ConsentProvider
-        initialRecord={{
-          version: "1.0",
-          timestamp: "2026-11-17T12:00:00.000Z",
-          country: "DE",
-          explicit: true,
-          preferences: { necessary: true, analytics: true, marketing: true },
-        }}
-        initialCountry="DE"
-      >
+      <SharedLayout>
         <Footer />
-        <CookieBanner />
-      </ConsentProvider>
+      </SharedLayout>
     );
 
     const button = screen.getByRole("button", { name: "Cookie settings" });
