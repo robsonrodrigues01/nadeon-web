@@ -3606,5 +3606,144 @@
       "revisão APROVADO"
     ],
     "revisor": "Lente"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Lupa",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "id": "W4-16",
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Revisão de segurança da onda 4 (fila permanente item 12): webhooks/HMAC, server actions novas, consentimento e medição, PII em logs; relatório sem editar código",
+    "criterios": [
+      "SEGURANCA.md com arquivo:linha",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Prisma5",
+    "lease_ate": null,
+    "branch": null,
+    "pr": "local",
+    "id": "W4-17",
+    "papel": "QA",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "Console por rota após a onda 4 (fila permanente item 4): scripts de medição, banner, /track e /help",
+    "criterios": [
+      "CONSOLE.md por rota",
+      "nenhuma alteração de código"
+    ]
+  },
+  {
+    "id": "W4-18",
+    "onda": 4,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Aviso Next Image de proporção ainda presente (W4-17): /renders/full-charge.png no hero Human e /renders/more-good-years.png na página de produto Pet; corrigir na origem comum e testar",
+    "depende_de": [
+      "W4-17"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T06:18:44.308Z",
+    "branch": "agy/W4-18",
+    "pr": "local",
+    "criterios": [
+      "aviso some nas duas rotas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "W3-88 corrigiu parte; o aviso persiste",
+    "revisor": "Lente"
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-16"
+    ],
+    "status": "entregue",
+    "responsavel": "Crivo6",
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "achado W4-16 resolvido com teste",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W4-19",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "P1 W4-16: consentimento malformado não pode habilitar rastreamento (lib/consent/cookies.ts:60-68) e falha de sincronização Shopify não pode recarregar como sucesso (shopify-privacy.ts:234-250, measurement-scripts.tsx:69-80)",
+    "branch": "agy/W4-19",
+    "revisor": "Lupa"
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-16"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T06:22:21.210Z",
+    "pr": "local",
+    "criterios": [
+      "achado W4-16 resolvido com teste",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W4-20",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "P2 W4-16: mutações de assinatura e conta conferem sessão e propriedade do ID antes de agir (subscription-actions.ts, account actions)",
+    "branch": "agy/W4-20",
+    "revisor": "Lupa"
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-16"
+    ],
+    "status": "para_revisao",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T06:28:54.222Z",
+    "pr": "local",
+    "criterios": [
+      "achado W4-16 resolvido com teste",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W4-21",
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "P2 W4-16: webhook idempotente (X-Shopify-Webhook-Id como chave de idempotência nos eventos do Mailyte; reprocessar não duplica efeito)",
+    "branch": "agy/W4-21",
+    "revisor": "Lupa"
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-16"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T06:30:35.000Z",
+    "pr": "local",
+    "criterios": [
+      "achado W4-16 resolvido com teste",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W4-22",
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "P2 W4-16: consulta pública de /track devolve só os campos necessários (status, itens resumidos), não o pedido inteiro",
+    "branch": "agy/W4-22"
   }
 ]
