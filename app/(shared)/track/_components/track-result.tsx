@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { Order } from "@/lib/contracts/account";
-import { formatMoneyWithMarket, type Market } from "@/lib/market";
+import type { GuestOrderTracking } from "@/lib/contracts/account";
+import type { Market } from "@/lib/market";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "./copy-button";
 
 interface TrackResultProps {
-  order: Order;
+  order: GuestOrderTracking;
   market: Market;
 }
 
@@ -52,13 +52,6 @@ export function TrackResult({ order, market }: TrackResultProps) {
             <span className="size-2 rounded-full bg-accent" />
             {statusLabel}
           </span>
-          {(order.copyLink || order.url) && (
-            <CopyButton
-              text={order.copyLink || order.url || ""}
-              label="Copy link"
-              copiedLabel="Link copied!"
-            />
-          )}
         </div>
         <p className="mt-2 text-sm text-fg-muted">
           Placed {placedDate} · {totalItemCount}{" "}
@@ -216,54 +209,12 @@ export function TrackResult({ order, market }: TrackResultProps) {
                     </p>
                   </div>
                 </div>
-                <p className="font-bold text-fg text-sm">
-                  {formatMoneyWithMarket(item.price, market)}
-                </p>
               </li>
             ))}
           </ul>
-
-          <div className="mt-6 border-t border-border pt-4 flex items-center justify-between">
-            <span className="font-bold text-fg">Total</span>
-            <span className="font-bold text-fg">
-              {formatMoneyWithMarket(order.total, market)}
-            </span>
-          </div>
         </section>
 
         <div className="flex flex-col gap-6">
-          {order.shippingAddress && (
-            <section
-              aria-labelledby="shipping-address-heading"
-              className="rounded-card border border-border bg-bg-elevated p-6 shadow-card"
-            >
-              <h3
-                id="shipping-address-heading"
-                className="text-xs font-bold uppercase tracking-wider text-accent"
-              >
-                Shipping address
-              </h3>
-              <address className="mt-3 text-sm not-italic text-fg flex flex-col gap-1">
-                <span>
-                  {order.shippingAddress.firstName}{" "}
-                  {order.shippingAddress.lastName}
-                </span>
-                <span>{order.shippingAddress.address1}</span>
-                {order.shippingAddress.address2 && (
-                  <span>{order.shippingAddress.address2}</span>
-                )}
-                <span>
-                  {order.shippingAddress.city}
-                  {order.shippingAddress.province
-                    ? `, ${order.shippingAddress.province}`
-                    : ""}{" "}
-                  {order.shippingAddress.zip}
-                </span>
-                <span>{order.shippingAddress.country}</span>
-              </address>
-            </section>
-          )}
-
           <section
             aria-labelledby="need-help-heading"
             className="rounded-card border border-border bg-bg-elevated p-6 shadow-card"

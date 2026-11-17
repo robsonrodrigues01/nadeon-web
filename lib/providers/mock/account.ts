@@ -3,6 +3,7 @@ import {
   type Address,
   type CustomerProfile,
   type GuestOrderLookupInput,
+  type GuestOrderTracking,
   type Order,
   type OrderLine,
   type Pet,
@@ -12,6 +13,7 @@ import {
   CustomerProfileSchema,
   PetSchema,
   OrderSchema,
+  GuestOrderTrackingSchema,
   AddressSchema,
   SessionSchema,
 } from "@/lib/contracts/account";
@@ -166,7 +168,7 @@ export class MockAccountProvider implements AccountProvider {
   async lookupGuestOrder(
     orderNumberOrInput: string | GuestOrderLookupInput,
     emailArg?: string
-  ): Promise<Order | null> {
+  ): Promise<GuestOrderTracking | null> {
     let orderNumber: string;
     let email: string;
 
@@ -192,7 +194,7 @@ export class MockAccountProvider implements AccountProvider {
         : false;
       return matchNumber && matchEmail;
     });
-    return found ? { ...found } : null;
+    return found ? GuestOrderTrackingSchema.parse(found) : null;
   }
 
   async reorder(orderId: string): Promise<OrderLine[]> {
