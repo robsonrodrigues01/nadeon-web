@@ -61,7 +61,7 @@ describe("/dev/kit Page", () => {
 
   it("throws notFound() in production mode when not in preview", async () => {
     (process.env as Record<string, string | undefined>).NODE_ENV = "production";
-    delete process.env.VERCEL_ENV;
+    delete process.env.CONTEXT;
     delete process.env.DEV_KIT;
 
     await expect(DevKitPage()).rejects.toThrow("NEXT_NOT_FOUND");
@@ -70,17 +70,27 @@ describe("/dev/kit Page", () => {
 
   it("returns 404 in production even with preview and DEV_KIT flags", async () => {
     (process.env as Record<string, string | undefined>).NODE_ENV = "production";
-    process.env.VERCEL_ENV = "preview";
+    process.env.CONTEXT = "deploy-preview";
     process.env.DEV_KIT = "1";
 
     await expect(DevKitPage()).rejects.toThrow("NEXT_NOT_FOUND");
     expect(mockNotFound).toHaveBeenCalledTimes(1);
   });
 
+  it("allows the dev kit in a Netlify deploy preview", async () => {
+    (process.env as Record<string, string | undefined>).NODE_ENV = "test";
+    process.env.CONTEXT = "deploy-preview";
+    delete process.env.DEV_KIT;
+
+    const jsx = await DevKitPage();
+    expect(jsx).toBeDefined();
+    expect(mockNotFound).not.toHaveBeenCalled();
+  });
+
   it("renders successfully in development mode with both themes, typography scale, tokens, and components", async () => {
     (process.env as Record<string, string | undefined>).NODE_ENV =
       "development";
-    delete process.env.VERCEL_ENV;
+    delete process.env.CONTEXT;
 
     const jsx = await DevKitPage();
     expect(jsx).toBeDefined();
