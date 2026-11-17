@@ -157,23 +157,24 @@ export function initShopifyCustomerPrivacy(
         ],
         (error?: Error) => {
           if (error) {
-            console.error("Failed to load Shopify Customer Privacy API", error);
+            console.error("Failed to load Shopify Customer Privacy API");
             onError?.(error);
             return;
           }
           if (shopifyWindow.Shopify?.customerPrivacy) {
             onReady?.(shopifyWindow.Shopify.customerPrivacy);
           } else {
-            onError?.(
-              new Error("Shopify customerPrivacy not found after loadFeatures")
-            );
+            console.error("Shopify Customer Privacy API was not available");
+            onError?.();
           }
         }
       );
     } catch (err) {
+      console.error("Failed to load Shopify Customer Privacy API");
       onError?.(err instanceof Error ? err : new Error(String(err)));
     }
   } else {
+    console.error("Shopify.loadFeatures is not available");
     onError?.(new Error("Shopify.loadFeatures is not available"));
   }
 }
@@ -187,10 +188,10 @@ export function syncShopifyCustomerPrivacy(
     analytics: boolean;
     marketing: boolean;
   },
-  callback?: () => void
+  callback?: (success: boolean) => void
 ): void {
   if (!isShopifyCustomerPrivacyEnabled() || typeof window === "undefined") {
-    callback?.();
+    callback?.(true);
     return;
   }
 
@@ -229,10 +230,11 @@ export function syncShopifyCustomerPrivacy(
       }
 
       cp.setTrackingConsent(payload, () => {
-        callback?.();
+        callback?.(true);
       });
     } catch {
-      callback?.();
+      console.error("Failed to update Shopify tracking consent");
+      callback?.(false);
     }
   };
 
@@ -247,7 +249,7 @@ export function syncShopifyCustomerPrivacy(
       dispatch(cp);
     },
     () => {
-      callback?.();
+      callback?.(false);
     }
   );
 }

@@ -69,6 +69,31 @@ describe("lib/analytics/track.ts", () => {
       expect(hasAnalyticsConsent()).toBe(true);
     });
 
+    it("fails closed for malformed consent cookie even under US opt-out default", () => {
+      document.cookie = `${COUNTRY_COOKIE_NAME}=US`;
+      document.cookie = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(
+        JSON.stringify({
+          version: "1.0",
+          explicit: "false",
+          preferences: {
+            necessary: true,
+            analytics: "false",
+            marketing: false,
+          },
+        })
+      )}`;
+
+      expect(hasAnalyticsConsent()).toBe(false);
+    });
+
+    it("fails closed for an empty consent cookie even under US opt-out default", () => {
+      expect(
+        hasAnalyticsConsent(
+          `${COUNTRY_COOKIE_NAME}=US; ${CONSENT_COOKIE_NAME}=`
+        )
+      ).toBe(false);
+    });
+
     it("does not fire track event when analytics consent is denied", () => {
       document.cookie = `${COUNTRY_COOKIE_NAME}=CA`;
       const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});

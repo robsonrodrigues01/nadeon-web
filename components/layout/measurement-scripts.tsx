@@ -53,13 +53,6 @@ export function MeasurementScripts() {
       (previouslyAllowed.current.analytics && !analyticsAllowed) ||
       (previouslyAllowed.current.marketing && !marketingAllowed);
 
-    let reloadTriggered = false;
-    const triggerReload = () => {
-      if (reloadTriggered) return;
-      reloadTriggered = true;
-      window.location.reload();
-    };
-
     if (
       analyticsChanged ||
       marketingChanged ||
@@ -67,15 +60,23 @@ export function MeasurementScripts() {
         (record !== null || previousRecord.current !== undefined))
     ) {
       if (isRevocation && isShopifyCustomerPrivacyEnabled()) {
-        const timer = setTimeout(triggerReload, 1500);
+        let syncCompleted = false;
+        const timeout = setTimeout(() => {
+          if (!syncCompleted) {
+            syncCompleted = true;
+            console.error("Shopify tracking consent update timed out");
+          }
+        }, 1500);
         syncShopifyCustomerPrivacy(
           {
             analytics: analyticsAllowed,
             marketing: marketingAllowed,
           },
-          () => {
-            clearTimeout(timer);
-            triggerReload();
+          (success) => {
+            if (syncCompleted) return;
+            syncCompleted = true;
+            clearTimeout(timeout);
+            if (success) window.location.reload();
           }
         );
       } else {
@@ -87,7 +88,7 @@ export function MeasurementScripts() {
     }
 
     if (isRevocation && !isShopifyCustomerPrivacyEnabled()) {
-      triggerReload();
+      window.location.reload();
     }
     previouslyAllowed.current = {
       analytics: analyticsAllowed,
