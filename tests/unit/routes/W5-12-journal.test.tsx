@@ -7,6 +7,7 @@ import {
   within,
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import contentData from "@/data/content.json";
 import HumanJournalPage from "@/app/(shared)/journal/page";
 import PetJournalPage from "@/app/(pet)/pet/journal/page";
 
@@ -48,6 +49,24 @@ beforeEach(() => {
 });
 
 describe("W5-12 journal routes", () => {
+  it("renders the Human featured excerpt exactly as approved on the board", async () => {
+    const featuredArticle = contentData.journalArticles.find(
+      (article) => article.audience === "human"
+    );
+    if (!featuredArticle) throw new Error("Missing Human journal fixture");
+    contentProviderMock.listJournalArticles.mockResolvedValue([
+      featuredArticle,
+    ]);
+
+    render(await HumanJournalPage());
+
+    expect(
+      screen.getByText(
+        "One is the building block, the other is the molecule your cells use. Here is how they connect, and how to pick a formula."
+      )
+    ).toBeTruthy();
+  });
+
   it("loads Human articles from the registry and filters search and categories without broken links", async () => {
     render(await HumanJournalPage());
 
