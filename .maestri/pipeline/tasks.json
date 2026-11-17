@@ -3710,9 +3710,9 @@
     "depende_de": [
       "W4-16"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T06:34:24.423Z",
+    "lease_ate": "2026-11-17T06:36:01.446Z",
     "pr": "local",
     "criterios": [
       "achado W4-16 resolvido com teste",
@@ -3731,9 +3731,9 @@
     "depende_de": [
       "W4-16"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T06:33:39.376Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "achado W4-16 resolvido com teste",
@@ -3746,5 +3746,27 @@
     "titulo": "P2 W4-16: consulta pública de /track devolve só os campos necessários (status, itens resumidos), não o pedido inteiro",
     "branch": "agy/W4-22",
     "revisor": "Lente"
+  },
+  {
+    "id": "W4-23",
+    "onda": 4,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Deduplicação de webhooks entre processos: escolher armazenamento compartilhado (Vercel KV, banco) ou idempotência do provider de e-mail",
+    "depende_de": [
+      "W4-21"
+    ],
+    "status": "bloqueada",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W4-23",
+    "pr": "local",
+    "criterios": [
+      "decisão registrada em DECISIONS.md",
+      "implementação com teste",
+      "revisão APROVADO"
+    ],
+    "bloqueio": "decisão de arquitetura do Robson sobre armazenamento (custo) e documentação real do provider de e-mail",
+    "nota": "achado P2 da W4-16 mantido além da W4-21"
   }
 ]
