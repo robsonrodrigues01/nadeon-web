@@ -100,6 +100,72 @@ describe("POST /api/webhooks", () => {
     expect(await response.text()).toContain("invalid JSON payload");
   });
 
+  it("returns 400 when body is null or non-object JSON", async () => {
+    for (const invalidPayload of ["null", "123", '"plain string"', "[]"]) {
+      const signature = signPayload(invalidPayload, TEST_SECRET);
+
+      const request = new Request("http://localhost:3000/api/webhooks", {
+        method: "POST",
+        headers: {
+          "x-shopify-hmac-sha256": signature,
+          "x-shopify-topic": "checkouts/create",
+        },
+        body: invalidPayload,
+      });
+
+      const response = await POST(request);
+      expect(response.status).toBe(400);
+      expect(await response.text()).toContain("invalid JSON payload");
+    }
+  });
+
+  it("returns 400 when expected fields are missing for a topic", async () => {
+    // Missing checkout id / token
+    const emptyCheckoutBody = JSON.stringify({ email: "test@example.com" });
+    const checkoutSig = signPayload(emptyCheckoutBody, TEST_SECRET);
+    const checkoutReq = new Request("http://localhost:3000/api/webhooks", {
+      method: "POST",
+      headers: {
+        "x-shopify-hmac-sha256": checkoutSig,
+        "x-shopify-topic": "checkouts/create",
+      },
+      body: emptyCheckoutBody,
+    });
+    const checkoutRes = await POST(checkoutReq);
+    expect(checkoutRes.status).toBe(400);
+    expect(await checkoutRes.text()).toContain("missing checkout id");
+
+    // Missing order id
+    const emptyOrderBody = JSON.stringify({ email: "test@example.com" });
+    const orderSig = signPayload(emptyOrderBody, TEST_SECRET);
+    const orderReq = new Request("http://localhost:3000/api/webhooks", {
+      method: "POST",
+      headers: {
+        "x-shopify-hmac-sha256": orderSig,
+        "x-shopify-topic": "orders/create",
+      },
+      body: emptyOrderBody,
+    });
+    const orderRes = await POST(orderReq);
+    expect(orderRes.status).toBe(400);
+    expect(await orderRes.text()).toContain("missing order id");
+
+    // Missing product id and handle
+    const emptyProductBody = JSON.stringify({ title: "TEST" });
+    const productSig = signPayload(emptyProductBody, TEST_SECRET);
+    const productReq = new Request("http://localhost:3000/api/webhooks", {
+      method: "POST",
+      headers: {
+        "x-shopify-hmac-sha256": productSig,
+        "x-shopify-topic": "products/update",
+      },
+      body: emptyProductBody,
+    });
+    const productRes = await POST(productReq);
+    expect(productRes.status).toBe(400);
+    expect(await productRes.text()).toContain("missing product id or handle");
+  });
+
   it("processes checkouts/create and triggers Mailyte checkout_started without logging PII", async () => {
     const payload = {
       id: "TEST-checkout-9901",

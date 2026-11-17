@@ -47,7 +47,11 @@ export async function POST(request: Request): Promise<Response> {
 
   let payload: Record<string, unknown>;
   try {
-    payload = JSON.parse(rawBody) as Record<string, unknown>;
+    const parsed = JSON.parse(rawBody);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return new Response("Bad Request: invalid JSON payload", { status: 400 });
+    }
+    payload = parsed as Record<string, unknown>;
   } catch {
     return new Response("Bad Request: invalid JSON payload", { status: 400 });
   }
@@ -56,7 +60,13 @@ export async function POST(request: Request): Promise<Response> {
 
   switch (topic) {
     case "checkouts/create": {
-      const checkoutId = String(payload.id ?? payload.token ?? "");
+      const rawId = payload.id ?? payload.token;
+      if (rawId == null || rawId === "") {
+        return new Response("Bad Request: missing checkout id", {
+          status: 400,
+        });
+      }
+      const checkoutId = String(rawId);
       const email = typeof payload.email === "string" ? payload.email : null;
       const totalPrice =
         payload.total_price != null ? String(payload.total_price) : undefined;
@@ -86,7 +96,10 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     case "orders/create": {
-      const orderId = String(payload.id ?? "");
+      if (payload.id == null || payload.id === "") {
+        return new Response("Bad Request: missing order id", { status: 400 });
+      }
+      const orderId = String(payload.id);
       const orderNumber =
         payload.order_number != null
           ? String(payload.order_number)
@@ -123,6 +136,11 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     case "products/update": {
+      if (payload.id == null && payload.handle == null) {
+        return new Response("Bad Request: missing product id or handle", {
+          status: 400,
+        });
+      }
       const productId = String(payload.id ?? "");
       const handle =
         typeof payload.handle === "string" ? payload.handle : undefined;
