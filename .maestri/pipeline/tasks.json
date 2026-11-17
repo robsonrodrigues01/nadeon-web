@@ -3870,9 +3870,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
-    "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T21:55:42.253Z",
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T22:20:03.012Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3888,13 +3888,14 @@
     "depende_de": [
       "W5-00b"
     ],
-    "revisor": "Lente"
+    "revisor": "Lente",
+    "nota": "MUDANÇAS (Lente): ver REVIEW.md; volta ao Crivo6 depois da W5-03"
   },
   {
     "onda": 5,
-    "status": "em_andamento",
-    "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T21:53:20.096Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3909,13 +3910,15 @@
     "titulo": "Rota /pet/benefit/[beneficio] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00b"
-    ]
+    ],
+    "revisor": "Lupa",
+    "nota": "Gate falhou: link para /pet/journal, rota que ainda não existe (W5-12). Tirar o link por enquanto; W5-12 religa o Visit the journal."
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T21:57:18.490Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3930,7 +3933,8 @@
     "titulo": "Rota /pet/concern/[problema] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00b"
-    ]
+    ],
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
@@ -3955,9 +3959,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T22:16:13.564Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3976,9 +3980,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T21:55:45.694Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3993,7 +3997,9 @@
     "titulo": "Rota /gift-card com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00b"
-    ]
+    ],
+    "revisor": "Lente",
+    "nota": "MUDANÇAS (Lente); volta à Prisma5 depois da W5-01"
   },
   {
     "onda": 5,
@@ -4119,7 +4125,8 @@
     "titulo": "Rota /journal e /pet/journal com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
       "W5-00a"
-    ]
+    ],
+    "nota": " Ao criar /pet/journal, religar o link Visit the journal da página de benefício (W5-02)."
   },
   {
     "onda": 5,
@@ -4371,5 +4378,23 @@
       "revisão APROVADO"
     ],
     "revisor": "Lupa"
+  },
+  {
+    "id": "W4-29",
+    "onda": 4,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Migração Vercel → Netlify no código: remover @vercel/analytics e @vercel/speed-insights (e usos em lib/analytics/track.ts, /dev/kit e testes), referências a VERCEL_* e vercel.app; netlify.toml mínimo só se necessário (build next build); documentar variáveis de ambiente para a Netlify",
+    "depende_de": [],
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T22:18:50.568Z",
+    "branch": "agy/W4-29",
+    "pr": "local",
+    "criterios": [
+      "nenhuma dependência ou referência à Vercel",
+      "build e testes verdes",
+      "revisão APROVADO"
+    ]
   }
 ]

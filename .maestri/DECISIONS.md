@@ -151,3 +151,4 @@
 - 2026-11-17: itens 2 e 5 da fila voltam (W4-25) para as telas novas da onda 4.
 - 2026-11-17: Robson pediu adiantar a onda 5 (Crescimento) com mocks antes do lançamento. W5-00a/W5-00b (contratos) primeiro, depois uma rota por tarefa (W5-01 a W5-22). Texto só do board; o resto To be confirmed com proposta em docs/.
 - 2026-11-17: Mailyte real (Robson já tem chave e DNS). Deduplicação entre processos de webhooks (W4-23) resolvida pelo unique_id do Mailyte, sem armazenamento próprio.
+- 2026-11-17: Robson decidiu trocar a Vercel pela Netlify para hospedagem (substitui ADR de deploy e a virada de DNS para a Vercel; DNS do lançamento passa a apontar para a Netlify). Netlify suporta Next >= 13.5 pelo adaptador OpenNext (App Router, Server Actions, ISR, middleware). Pendências: confirmar proxy do Next 16 e next/font/google na Netlify; remover @vercel/analytics e @vercel/speed-insights. Agent Runners da Netlify não substituem os agentes do Maestri.
