@@ -39,9 +39,17 @@ export interface OrderRowView {
   placedLabel: string;
   totalLabel: string;
   itemTitles: string[];
+  items?: Array<{
+    title: string;
+    image?: string;
+    quantity?: number;
+    variantTitle?: string;
+  }>;
   trackingUrl?: string;
   lines?: OrderLine[];
   url?: string;
+  copyLink?: string;
+  canReorder?: boolean;
   searchText: string;
 }
 
@@ -50,6 +58,7 @@ export interface OrderItemView {
   variantTitle?: string;
   quantity: number;
   priceLabel: string;
+  image?: string;
 }
 
 export interface OrderDetailView {
@@ -64,11 +73,19 @@ export interface OrderDetailView {
   trackingUrl?: string;
   lines?: OrderLine[];
   url?: string;
+  copyLink?: string;
+  canReorder?: boolean;
   addressLines?: string[];
 }
 
 export function toOrderRowView(order: Order, f: OrderFormatters): OrderRowView {
   const itemTitles = order.items.map((item) => item.title);
+  const items = order.items.map((item) => ({
+    title: item.title,
+    image: item.image,
+    quantity: item.quantity,
+    variantTitle: item.variantTitle,
+  }));
   return {
     id: order.id,
     orderNumber: order.orderNumber,
@@ -77,9 +94,13 @@ export function toOrderRowView(order: Order, f: OrderFormatters): OrderRowView {
     placedLabel: f.date(order.createdAt),
     totalLabel: f.money(order.total),
     itemTitles,
+    items,
     trackingUrl: order.trackingUrl,
     lines: order.lines,
     url: order.url,
+    copyLink: order.copyLink ?? order.url,
+    canReorder:
+      order.canReorder ?? (order.lines ? order.lines.length > 0 : true),
     searchText: [order.orderNumber, ...itemTitles].join(" ").toLowerCase(),
   };
 }
@@ -100,11 +121,15 @@ export function toOrderDetailView(
       variantTitle: item.variantTitle,
       quantity: item.quantity,
       priceLabel: f.money(item.price),
+      image: item.image,
     })),
     trackingNumber: order.trackingNumber,
     trackingUrl: order.trackingUrl,
     lines: order.lines,
     url: order.url,
+    copyLink: order.copyLink ?? order.url,
+    canReorder:
+      order.canReorder ?? (order.lines ? order.lines.length > 0 : true),
     addressLines: order.shippingAddress
       ? formatAddressLines(
           order.shippingAddress,

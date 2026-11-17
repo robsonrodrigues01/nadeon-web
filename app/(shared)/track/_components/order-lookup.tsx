@@ -4,6 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { TrackOrderSchema } from "./schema";
+import { lookupOrderAction } from "./actions";
+import type { Order } from "@/lib/contracts/account";
+
 interface OrderLookupProps {
   signInHref: string;
   errorMessage?: string;
@@ -11,24 +14,31 @@ interface OrderLookupProps {
     orderNumber?: string;
     email?: string;
   };
+  onOrderFound?: (order: Order) => void;
 }
 
-// Estado A do design: formulário de busca de pedido de visitante.
+// Estado A do design: formulário de busca de pedido de visitante via POST (Server Action).
 export function OrderLookup({
   signInHref,
   errorMessage,
   initialValues,
+  onOrderFound,
 }: OrderLookupProps) {
   const [isPending, setIsPending] = useState(false);
   const [clientError, setClientError] = useState("");
+  const [serverError, setServerError] = useState("");
   const [invalidField, setInvalidField] = useState("");
   const errorRef = useRef<HTMLParagraphElement>(null);
   const orderNumberRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
 
+  const activeError = clientError || serverError || errorMessage;
+
   useEffect(() => {
-    if (errorMessage) errorRef.current?.focus();
-  }, [errorMessage]);
+    if (serverError || errorMessage) {
+      errorRef.current?.focus();
+    }
+  }, [serverError, errorMessage]);
 
   function validate(event: React.FormEvent<HTMLFormElement>) {
     const form = event.currentTarget;
@@ -51,6 +61,28 @@ export function OrderLookup({
     (field === "email" ? emailRef : orderNumberRef).current?.focus();
   }
 
+  async function handleAction(formData: FormData) {
+    setServerError("");
+    setClientError("");
+    setIsPending(true);
+
+    try {
+      const result = await lookupOrderAction(formData);
+      if (result.status === "found" && result.order) {
+        onOrderFound?.(result.order);
+        return;
+      }
+      setServerError(
+        (result.status !== "found" && result.errorMessage) ||
+          "No order found with that number and email. Please check your confirmation email."
+      );
+    } catch {
+      setServerError("Unable to look up your order. Please try again.");
+    } finally {
+      setIsPending(false);
+    }
+  }
+
   return (
     <section
       aria-labelledby="order-lookup-heading"
@@ -67,12 +99,12 @@ export function OrderLookup({
       </h2>
 
       <form
-        method="GET"
-        action="/track"
+        action={handleAction}
         onSubmit={validate}
         onChange={() => {
-          if (clientError) {
+          if (clientError || serverError) {
             setClientError("");
+            setServerError("");
             setInvalidField("");
           }
         }}
@@ -86,15 +118,21 @@ export function OrderLookup({
           <input
             id="order-number"
             ref={orderNumberRef}
-            aria-invalid={invalidField === "orderNumber"}
+            aria-invalid={
+              invalidField === "orderNumber" || Boolean(activeError)
+            }
             name="orderNumber"
             type="text"
             required
             autoComplete="off"
             autoCapitalize="characters"
-            pattern="[Nn][Ll]-[0-9]{6}"
+            pattern="([Nn][Ll]-[0-9]{6}|[Tt][Ee][Ss][Tt]-[Nn][Ll]-[0-9]+)"
             defaultValue={initialValues?.orderNumber ?? ""}
-            aria-describedby="order-number-hint"
+            aria-describedby={
+              activeError
+                ? "order-lookup-error order-number-hint"
+                : "order-number-hint"
+            }
             className="min-h-11 w-full rounded-field border border-border bg-bg px-4 py-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           />
           <p id="order-number-hint" className="text-sm text-fg-muted">
@@ -109,13 +147,17 @@ export function OrderLookup({
           <input
             id="order-email"
             ref={emailRef}
-            aria-invalid={invalidField === "email"}
+            aria-invalid={invalidField === "email" || Boolean(activeError)}
             name="email"
             type="email"
             required
             autoComplete="email"
             defaultValue={initialValues?.email ?? ""}
-            aria-describedby="order-email-hint"
+            aria-describedby={
+              activeError
+                ? "order-lookup-error order-email-hint"
+                : "order-email-hint"
+            }
             className="min-h-11 w-full rounded-field border border-border bg-bg px-4 py-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           />
           <p id="order-email-hint" className="text-sm text-fg-muted">
@@ -127,15 +169,18 @@ export function OrderLookup({
           {isPending ? "Tracking..." : "Track order"}
         </Button>
 
-        <p
-          ref={errorRef}
-          tabIndex={-1}
-          role="status"
-          aria-live="polite"
-          className="text-sm text-accent"
-        >
-          {clientError || errorMessage}
-        </p>
+        {activeError && (
+          <p
+            id="order-lookup-error"
+            ref={errorRef}
+            tabIndex={-1}
+            role="status"
+            aria-live="polite"
+            className="text-sm font-semibold text-accent"
+          >
+            {activeError}
+          </p>
+        )}
       </form>
 
       <p className="mt-6 text-sm text-fg-muted">

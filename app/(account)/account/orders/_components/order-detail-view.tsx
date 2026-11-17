@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import type { OrderDetailView } from "./order-view";
 import { OrderStatusBadge } from "./order-status-badge";
@@ -54,7 +55,13 @@ export function OrderDetailView({ order }: OrderDetailViewProps) {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          <OrderActions lines={order.lines} orderUrl={order.url} showBuyAgain />
+          <OrderActions
+            lines={order.lines}
+            orderUrl={order.url}
+            copyLink={order.copyLink}
+            canReorder={order.canReorder}
+            showBuyAgain={order.canReorder ?? true}
+          />
           <Button variant="secondary" size="sm" href="/help">
             Get help
           </Button>
@@ -97,12 +104,28 @@ export function OrderDetailView({ order }: OrderDetailViewProps) {
               key={`${order.id}-item-${index}`}
               className="flex flex-wrap items-center justify-between gap-3 py-4 first:pt-0 last:pb-0"
             >
-              <div className="flex min-w-0 flex-col gap-1">
-                <p className="font-bold text-fg">{item.title}</p>
-                <p className="text-sm text-fg-muted">
-                  {item.variantTitle ? `${item.variantTitle} · ` : ""}Qty{" "}
-                  {item.quantity}
-                </p>
+              <div className="flex items-center gap-3">
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={48}
+                    height={48}
+                    className="size-12 shrink-0 rounded-field object-cover bg-bg"
+                  />
+                ) : (
+                  <span
+                    aria-hidden="true"
+                    className="size-12 shrink-0 rounded-field bg-bg border border-border"
+                  />
+                )}
+                <div className="flex min-w-0 flex-col gap-1">
+                  <p className="font-bold text-fg">{item.title}</p>
+                  <p className="text-sm text-fg-muted">
+                    {item.variantTitle ? `${item.variantTitle} · ` : ""}Qty{" "}
+                    {item.quantity}
+                  </p>
+                </div>
               </div>
               <p className="font-bold text-fg">{item.priceLabel}</p>
             </li>
