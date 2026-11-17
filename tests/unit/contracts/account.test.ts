@@ -56,7 +56,7 @@ describe("AccountProvider Contract", () => {
 
     for (const order of orders) {
       expect(() => OrderSchema.parse(order)).not.toThrow();
-      expect(order.orderNumber).toMatch(/^NL-\d+$/);
+      expect(order.orderNumber).toMatch(/^(TEST-)?NL-\d+$/);
       expect(order.items.length).toBeGreaterThan(0);
       expect(order.total).toHaveProperty("amount");
       expect(order.total).toHaveProperty("currencyCode");
@@ -64,12 +64,12 @@ describe("AccountProvider Contract", () => {
   });
 
   it("getOrder returns order by id or orderNumber", async () => {
-    const order = await mockAccountProvider.getOrder("NL-100234");
+    const order = await mockAccountProvider.getOrder("TEST-NL-0001");
     expect(order).not.toBeNull();
-    expect(order?.orderNumber).toBe("NL-100234");
+    expect(order?.orderNumber).toBe("TEST-NL-0001");
     expect(order?.trackingUrl).toContain("ups.com");
 
-    const nonExistent = await mockAccountProvider.getOrder("NL-000000");
+    const nonExistent = await mockAccountProvider.getOrder("TEST-NL-0000");
     expect(nonExistent).toBeNull();
   });
 

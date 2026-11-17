@@ -55,35 +55,35 @@ describe("W2-39: Contracts Gaps", () => {
   describe("(2) account.ts: AccountProvider.lookupGuestOrder", () => {
     it("returns order for valid orderNumber and matching email", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
-        "NL-100234",
-        "alex.morgan@example.com"
+        "TEST-NL-0001",
+        "test@example.com"
       );
       expect(order).not.toBeNull();
-      expect(order?.orderNumber).toBe("NL-100234");
-      expect(order?.email).toBe("alex.morgan@example.com");
+      expect(order?.orderNumber).toBe("TEST-NL-0001");
+      expect(order?.email).toBe("test@example.com");
     });
 
     it("is case-insensitive and trims whitespace on orderNumber and email", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
-        " nl-100234 ",
-        " ALEX.MORGAN@EXAMPLE.COM "
+        " test-nl-0001 ",
+        " TEST@EXAMPLE.COM "
       );
       expect(order).not.toBeNull();
-      expect(order?.orderNumber).toBe("NL-100234");
+      expect(order?.orderNumber).toBe("TEST-NL-0001");
     });
 
     it("also looks up by order id", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
-        "ord_100234",
-        "alex.morgan@example.com"
+        "ord_TEST_0001",
+        "test@example.com"
       );
       expect(order).not.toBeNull();
-      expect(order?.id).toBe("ord_100234");
+      expect(order?.id).toBe("ord_TEST_0001");
     });
 
     it("returns null if order number exists but email does not match", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
-        "NL-100234",
+        "TEST-NL-0001",
         "wrong.email@example.com"
       );
       expect(order).toBeNull();
@@ -92,7 +92,7 @@ describe("W2-39: Contracts Gaps", () => {
     it("returns null if order number does not exist", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
         "NL-999999",
-        "alex.morgan@example.com"
+        "test@example.com"
       );
       expect(order).toBeNull();
     });
@@ -102,14 +102,14 @@ describe("W2-39: Contracts Gaps", () => {
         await mockAccountProvider.lookupGuestOrder("", "test@test.com")
       ).toBeNull();
       expect(
-        await mockAccountProvider.lookupGuestOrder("NL-100234", "")
+        await mockAccountProvider.lookupGuestOrder("TEST-NL-0001", "")
       ).toBeNull();
     });
 
     it("throws not implemented in LiveAccountProvider", async () => {
       const live = new LiveAccountProvider();
       await expect(
-        live.lookupGuestOrder("NL-100234", "test@test.com")
+        live.lookupGuestOrder("TEST-NL-0001", "test@test.com")
       ).rejects.toThrow(/not implemented: onda 4/);
     });
   });
@@ -217,7 +217,7 @@ describe("W2-39: Contracts Gaps", () => {
         }
         expect(order.url).toBeTruthy();
         expect(order.statusUrl).toBeTruthy();
-        expect(order.email).toBe("alex.morgan@example.com");
+        expect(order.email).toBe("test@example.com");
       }
     });
   });

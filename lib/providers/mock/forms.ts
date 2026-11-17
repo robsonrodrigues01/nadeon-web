@@ -96,10 +96,16 @@ export const ALLOWED_NEWSLETTER_LISTS = [
 ] as const;
 export type AllowedNewsletterList = (typeof ALLOWED_NEWSLETTER_LISTS)[number];
 
-export class MockFormsProvider implements FormsProvider {
-  private lastContactSubmission?: ContactInput;
+export interface MockContactSubmissionMeta {
+  type: "contact";
+  id: string;
+  copy?: boolean;
+}
 
-  getLastContactSubmission(): ContactInput | undefined {
+export class MockFormsProvider implements FormsProvider {
+  private lastContactSubmission?: MockContactSubmissionMeta;
+
+  getLastContactSubmission(): MockContactSubmissionMeta | undefined {
     return this.lastContactSubmission
       ? { ...this.lastContactSubmission }
       : undefined;
@@ -139,8 +145,12 @@ export class MockFormsProvider implements FormsProvider {
     if (!parsed.success) {
       throw new Error("Invalid contact form data");
     }
-    this.lastContactSubmission = parsed.data;
     const id = `contact_${Math.random().toString(36).substring(2, 9)}`;
+    this.lastContactSubmission = {
+      type: "contact",
+      id,
+      copy: parsed.data.copy,
+    };
     await logMockSubmission("contact", id);
 
     return FormSubmissionResultSchema.parse({

@@ -24,23 +24,23 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
   describe("(1) Consulta de pedido de visitante por número + e-mail (/track estado B)", () => {
     it("validates GuestOrderLookupInputSchema with required order number and valid email", () => {
       const valid: GuestOrderLookupInput = {
-        orderNumber: "NL-100234",
-        email: "alex.morgan@example.com",
+        orderNumber: "TEST-NL-0001",
+        email: "test@example.com",
       };
       const parsed = GuestOrderLookupInputSchema.parse(valid);
-      expect(parsed.orderNumber).toBe("NL-100234");
-      expect(parsed.email).toBe("alex.morgan@example.com");
+      expect(parsed.orderNumber).toBe("TEST-NL-0001");
+      expect(parsed.email).toBe("test@example.com");
 
       expect(() =>
         GuestOrderLookupInputSchema.parse({
           orderNumber: "",
-          email: "alex.morgan@example.com",
+          email: "test@example.com",
         })
       ).toThrow();
 
       expect(() =>
         GuestOrderLookupInputSchema.parse({
-          orderNumber: "NL-100234",
+          orderNumber: "TEST-NL-0001",
           email: "invalid-email",
         })
       ).toThrow();
@@ -48,45 +48,45 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
 
     it("lookupGuestOrder accepts orderNumber and email as arguments and returns order", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
-        "NL-100234",
-        "alex.morgan@example.com"
+        "TEST-NL-0001",
+        "test@example.com"
       );
       expect(order).not.toBeNull();
-      expect(order?.orderNumber).toBe("NL-100234");
-      expect(order?.email).toBe("alex.morgan@example.com");
+      expect(order?.orderNumber).toBe("TEST-NL-0001");
+      expect(order?.email).toBe("test@example.com");
       expect(OrderSchema.parse(order)).toBeDefined();
     });
 
     it("lookupGuestOrder accepts GuestOrderLookupInput object and returns order", async () => {
       const order = await mockAccountProvider.lookupGuestOrder({
-        orderNumber: "NL-100234",
-        email: "alex.morgan@example.com",
+        orderNumber: "TEST-NL-0001",
+        email: "test@example.com",
       });
       expect(order).not.toBeNull();
-      expect(order?.orderNumber).toBe("NL-100234");
+      expect(order?.orderNumber).toBe("TEST-NL-0001");
       expect(order?.financialStatus).toBe("paid");
       expect(order?.fulfillmentStatus).toBe("delivered");
     });
 
     it("is case-insensitive and trims whitespace on both order number and email", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
-        "  nl-100189  ",
-        "  ALEX.MORGAN@EXAMPLE.COM  "
+        "  test-nl-0002  ",
+        "  TEST@EXAMPLE.COM  "
       );
       expect(order).not.toBeNull();
-      expect(order?.orderNumber).toBe("NL-100189");
+      expect(order?.orderNumber).toBe("TEST-NL-0002");
     });
 
     it("returns null when order number does not match email or does not exist", async () => {
       const notFoundWrongEmail = await mockAccountProvider.lookupGuestOrder(
-        "NL-100234",
+        "TEST-NL-0001",
         "intruder@example.invalid"
       );
       expect(notFoundWrongEmail).toBeNull();
 
       const notFoundOrder = await mockAccountProvider.lookupGuestOrder(
-        "NL-000000",
-        "alex.morgan@example.com"
+        "TEST-NL-0000",
+        "test@example.com"
       );
       expect(notFoundOrder).toBeNull();
     });
@@ -94,7 +94,7 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
     it("throws not implemented in LiveAccountProvider with TODO comment", async () => {
       const live = new LiveAccountProvider();
       await expect(
-        live.lookupGuestOrder("NL-100234", "alex.morgan@example.com")
+        live.lookupGuestOrder("TEST-NL-0001", "test@example.com")
       ).rejects.toThrow(/not implemented: onda 4/);
     });
   });
@@ -121,14 +121,14 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
     });
 
     it("mockAccountProvider.reorder returns order lines for a valid order", async () => {
-      const lines = await mockAccountProvider.reorder("NL-100234");
+      const lines = await mockAccountProvider.reorder("TEST-NL-0001");
       expect(lines.length).toBeGreaterThan(0);
       expect(lines[0].variantId).toBe("var_biohack_1");
       expect(lines[0].quantity).toBe(1);
     });
 
     it("mockAccountProvider.reorder also looks up by order id", async () => {
-      const lines = await mockAccountProvider.reorder("ord_100189");
+      const lines = await mockAccountProvider.reorder("ord_TEST_0002");
       expect(lines.length).toBeGreaterThan(0);
       expect(lines[0].variantId).toBe("var_mgy_2");
       expect(lines[0].quantity).toBe(1);
@@ -142,7 +142,7 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
 
     it("LiveAccountProvider.reorder throws not implemented error", async () => {
       const live = new LiveAccountProvider();
-      await expect(live.reorder("ord_100234")).rejects.toThrow(
+      await expect(live.reorder("ord_TEST_0001")).rejects.toThrow(
         /not implemented: onda 4/
       );
     });
@@ -228,11 +228,11 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
 
     it("mockFormsProvider.sendContact records copy flag and responds successfully", async () => {
       const payload: ContactInput = {
-        name: "Alex Morgan",
-        email: "alex.morgan@example.com",
+        name: "Test User",
+        email: "test@example.com",
         topic: "order_help",
         message: "Please send me a copy of this correspondence.",
-        orderNumber: "NL-100234",
+        orderNumber: "TEST-NL-0001",
         copy: true,
       };
 
@@ -242,16 +242,27 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
 
       const lastSubmission = mockFormsProvider.getLastContactSubmission();
       expect(lastSubmission).toBeDefined();
+      expect(lastSubmission?.type).toBe("contact");
+      expect(lastSubmission?.id).toMatch(/^contact_/);
       expect(lastSubmission?.copy).toBe(true);
-      expect(lastSubmission?.orderNumber).toBe("NL-100234");
+
+      // Garante que nenhum dado pessoal (nome, email, mensagem, pedido) é retido em memória
+      const submissionRecord = lastSubmission as unknown as Record<
+        string,
+        unknown
+      >;
+      expect(submissionRecord.name).toBeUndefined();
+      expect(submissionRecord.email).toBeUndefined();
+      expect(submissionRecord.message).toBeUndefined();
+      expect(submissionRecord.orderNumber).toBeUndefined();
     });
   });
 
   describe("(5) Consulta real de status no Track order de /help", () => {
     it("returns real fulfillment status (delivered, in_transit) instead of generic pending", async () => {
       const deliveredOrder = await mockAccountProvider.lookupGuestOrder(
-        "NL-100234",
-        "alex.morgan@example.com"
+        "TEST-NL-0001",
+        "test@example.com"
       );
       expect(deliveredOrder).not.toBeNull();
       expect(deliveredOrder?.fulfillmentStatus).toBe("delivered");
@@ -261,8 +272,8 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
       expect(deliveredOrder?.items.length).toBe(1);
 
       const inTransitOrder = await mockAccountProvider.lookupGuestOrder(
-        "NL-100189",
-        "alex.morgan@example.com"
+        "TEST-NL-0002",
+        "test@example.com"
       );
       expect(inTransitOrder).not.toBeNull();
       expect(inTransitOrder?.fulfillmentStatus).toBe("in_transit");

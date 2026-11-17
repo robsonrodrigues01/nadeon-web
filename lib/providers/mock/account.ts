@@ -52,12 +52,12 @@ const mockAddresses: Address[] = [
 
 const mockOrders: Order[] = [
   OrderSchema.parse({
-    id: "ord_100234",
-    orderNumber: "NL-100234",
+    id: "ord_TEST_0001",
+    orderNumber: "TEST-NL-0001",
     createdAt: new Date(Date.now() - 86400 * 1000 * 5).toISOString(),
     financialStatus: "paid",
     fulfillmentStatus: "delivered",
-    email: "alex.morgan@example.com",
+    email: "test@example.com",
     items: [
       {
         title: "BioHack - 2 Jars (60 days)",
@@ -81,18 +81,18 @@ const mockOrders: Order[] = [
     shippingAddress: mockAddresses[0],
     trackingNumber: "1Z9999999999999999",
     trackingUrl: "https://www.ups.com/track?tracknum=1Z9999999999999999",
-    url: "/account/orders/ord_100234",
-    copyLink: "/account/orders/ord_100234",
-    statusUrl: "https://track.nadeonlabs.com/orders/NL-100234",
+    url: "/account/orders/ord_TEST_0001",
+    copyLink: "/account/orders/ord_TEST_0001",
+    statusUrl: "https://track.nadeonlabs.com/orders/TEST-NL-0001",
     canReorder: true,
   }),
   OrderSchema.parse({
-    id: "ord_100189",
-    orderNumber: "NL-100189",
+    id: "ord_TEST_0002",
+    orderNumber: "TEST-NL-0002",
     createdAt: new Date(Date.now() - 86400 * 1000 * 20).toISOString(),
     financialStatus: "paid",
     fulfillmentStatus: "in_transit",
-    email: "alex.morgan@example.com",
+    email: "test@example.com",
     items: [
       {
         title: "More Good Years Soft Chews - 1 Jar",
@@ -116,9 +116,9 @@ const mockOrders: Order[] = [
     shippingAddress: mockAddresses[0],
     trackingNumber: "1Z8888888888888888",
     trackingUrl: "https://www.ups.com/track?tracknum=1Z8888888888888888",
-    url: "/account/orders/ord_100189",
-    copyLink: "/account/orders/ord_100189",
-    statusUrl: "https://track.nadeonlabs.com/orders/NL-100189",
+    url: "/account/orders/ord_TEST_0002",
+    copyLink: "/account/orders/ord_TEST_0002",
+    statusUrl: "https://track.nadeonlabs.com/orders/TEST-NL-0002",
     canReorder: true,
   }),
 ];
