@@ -7,6 +7,7 @@ import {
   fireEvent,
   cleanup,
   waitFor,
+  within,
 } from "@testing-library/react";
 import {
   CartDrawer,
@@ -172,10 +173,21 @@ describe("CartDrawer Component (W1-14)", () => {
     });
 
     // Renew is one-time purchase
-    expect(screen.getByText(/one-time purchase/i)).toBeDefined();
-    const switchToSubBtn = screen.getByRole("button", {
-      name: /switch renew to subscription and save 15%/i,
-    });
+    const cartItems = within(
+      screen.getByRole("region", { name: /cart items/i })
+    );
+    const renewHeading = cartItems.getByRole("heading", { name: "Renew" });
+    const renewItem = renewHeading.parentElement?.parentElement?.parentElement;
+    expect(renewItem).not.toBeNull();
+    expect(
+      within(renewItem as HTMLElement).getByText(/one-time purchase/i)
+    ).toBeDefined();
+    const switchToSubBtn = within(renewItem as HTMLElement).getByRole(
+      "button",
+      {
+        name: /switch renew to subscription and save 15%/i,
+      }
+    );
     expect(switchToSubBtn).toBeDefined();
 
     fireEvent.click(switchToSubBtn);
