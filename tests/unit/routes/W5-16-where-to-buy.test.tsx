@@ -1,6 +1,12 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import WhereToBuyPage from "@/app/(shared)/where-to-buy/page";
 import { DEFAULT_MARKET } from "@/lib/market";
 import * as visitorMarket from "@/lib/market/visitor";
@@ -88,5 +94,74 @@ describe("W5-16 /where-to-buy", () => {
       "href",
       expect.stringContaining("google.com/maps/dir")
     );
+  });
+
+  it("keeps the selected Pet line when the ZIP is changed and searched again", async () => {
+    vi.spyOn(visitorMarket, "getVisitorMarket").mockResolvedValue(
+      DEFAULT_MARKET
+    );
+    const search = vi
+      .spyOn(storeLocatorProvider, "search")
+      .mockResolvedValue([]);
+    render(
+      await WhereToBuyPage({
+        searchParams: Promise.resolve({
+          zip: "00000",
+          radius: "10",
+        }),
+      })
+    );
+
+    const filterButton = screen.getByRole("button", { name: "Pet line" });
+    const filterForm = filterButton.closest("form");
+    if (!filterForm) throw new Error("Pet line filter form is missing.");
+    const filterParams = new FormData(filterForm);
+    filterParams.set(
+      (filterButton as HTMLButtonElement).name,
+      (filterButton as HTMLButtonElement).value
+    );
+    expect(filterParams.get("line")).toBe("pet");
+    cleanup();
+
+    render(
+      await WhereToBuyPage({
+        searchParams: Promise.resolve({
+          zip: String(filterParams.get("zip")),
+          radius: String(filterParams.get("radius")),
+          line: String(filterParams.get("line")),
+        }),
+      })
+    );
+    expect(
+      screen
+        .getByRole("button", { name: "Pet line" })
+        .getAttribute("aria-pressed")
+    ).toBe("true");
+    expect(search).toHaveBeenLastCalledWith({
+      zip: "00000",
+      radiusMiles: 10,
+      line: "pet",
+    });
+
+    const zipInput = screen.getByLabelText("ZIP code") as HTMLInputElement;
+    fireEvent.change(zipInput, { target: { value: "00001" } });
+    const form = zipInput.closest("form");
+    if (!form) throw new Error("ZIP search form is missing.");
+    const submitted = new FormData(form);
+
+    expect(submitted.get("line")).toBe("pet");
+
+    await WhereToBuyPage({
+      searchParams: Promise.resolve({
+        zip: String(submitted.get("zip")),
+        radius: String(submitted.get("radius")),
+        line: String(submitted.get("line")),
+      }),
+    });
+    expect(search).toHaveBeenLastCalledWith({
+      zip: "00001",
+      radiusMiles: 10,
+      line: "pet",
+    });
   });
 });

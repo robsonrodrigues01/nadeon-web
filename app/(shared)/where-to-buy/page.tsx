@@ -201,6 +201,7 @@ export default async function WhereToBuyPage({
                 placeholder="Enter ZIP code"
                 className="min-h-12 rounded-pill border border-border bg-bg-elevated px-5 text-fg placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               />
+              <input type="hidden" name="line" value={line} />
               <label className="sr-only" htmlFor="store-radius">
                 Within miles
               </label>
