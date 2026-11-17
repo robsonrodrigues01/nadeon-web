@@ -32,6 +32,28 @@ export async function skipNextDeliveryAction(
   if (!parsed.success) {
     throw new Error("subscriptionId is required");
   }
+
+  const session =
+    typeof accountProvider.getSession === "function"
+      ? await accountProvider.getSession()
+      : null;
+  const customer =
+    session && typeof accountProvider.getCustomer === "function"
+      ? await accountProvider.getCustomer()
+      : null;
+  if (!customer) {
+    throw new Error("Authentication required");
+  }
+
+  const subscriptions =
+    typeof subscriptionProvider.list === "function"
+      ? await subscriptionProvider.list()
+      : [];
+  const ownsSubscription = subscriptions.some((s) => s.id === parsed.data);
+  if (!ownsSubscription) {
+    throw new Error("Subscription not found");
+  }
+
   await subscriptionProvider.skip(parsed.data);
   revalidatePath("/account");
 }

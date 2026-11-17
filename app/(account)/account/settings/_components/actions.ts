@@ -51,6 +51,21 @@ export async function saveProfileWithFeedback(
   _previousState: ProfileFormState,
   formData: FormData
 ): Promise<ProfileFormState> {
+  const session =
+    typeof accountProvider.getSession === "function"
+      ? await accountProvider.getSession()
+      : null;
+  const customer =
+    session && typeof accountProvider.getCustomer === "function"
+      ? await accountProvider.getCustomer()
+      : null;
+  if (!customer) {
+    return {
+      status: "error",
+      message: "You must be signed in to update your profile.",
+    };
+  }
+
   const parsed = parseProfile(formData);
   if (!parsed) {
     return {
@@ -91,6 +106,18 @@ export async function signOutAction(): Promise<void> {
 
 // Devolve o pet quando salvou, para atualizar a árvore cliente e fechar o formulário.
 export async function savePetAction(formData: FormData): Promise<Pet | null> {
+  const session =
+    typeof accountProvider.getSession === "function"
+      ? await accountProvider.getSession()
+      : null;
+  const customer =
+    session && typeof accountProvider.getCustomer === "function"
+      ? await accountProvider.getCustomer()
+      : null;
+  if (!customer) {
+    return null;
+  }
+
   const weight = text(formData, "weightLbs");
   const birthDate = text(formData, "birthDate");
   const parsed = PetInputSchema.safeParse({
@@ -105,6 +132,17 @@ export async function savePetAction(formData: FormData): Promise<Pet | null> {
     photoUrl: text(formData, "photoUrl") || undefined,
   });
   if (!parsed.success) return null;
+
+  if (parsed.data.id) {
+    const pets =
+      typeof accountProvider.getPets === "function"
+        ? await accountProvider.getPets()
+        : [];
+    const ownsPet = pets.some((p) => p.id === parsed.data.id);
+    if (!ownsPet) {
+      return null;
+    }
+  }
 
   const saved = await accountProvider.savePet(parsed.data);
   revalidatePath("/account/settings");
