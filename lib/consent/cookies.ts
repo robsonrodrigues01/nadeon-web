@@ -22,7 +22,12 @@ export function readCookie(
     new RegExp(`(?:^|;\\s*)${encodeURIComponent(name)}=([^;]*)`)
   );
 
-  return match ? decodeURIComponent(match[1]) : null;
+  if (!match) return null;
+  try {
+    return decodeURIComponent(match[1]);
+  } catch {
+    return match[1];
+  }
 }
 
 /**
@@ -50,25 +55,46 @@ export function parseConsentCookie(
 
   try {
     const parsed = JSON.parse(rawCookie);
-    if (
-      parsed &&
-      typeof parsed === "object" &&
-      typeof parsed.version === "string" &&
-      parsed.preferences &&
-      typeof parsed.preferences === "object"
-    ) {
-      return {
-        version: parsed.version || CONSENT_VERSION,
-        timestamp: parsed.timestamp || new Date().toISOString(),
-        country: typeof parsed.country === "string" ? parsed.country : "",
-        explicit: Boolean(parsed.explicit),
-        preferences: {
-          necessary: true,
-          analytics: Boolean(parsed.preferences.analytics),
-          marketing: Boolean(parsed.preferences.marketing),
-        },
-      };
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return null;
     }
+
+    const preferences = parsed.preferences;
+    const hasTimestamp = Object.prototype.hasOwnProperty.call(
+      parsed,
+      "timestamp"
+    );
+    const hasCountry = Object.prototype.hasOwnProperty.call(parsed, "country");
+    if (
+      parsed.version !== CONSENT_VERSION ||
+      typeof parsed.explicit !== "boolean" ||
+      (hasTimestamp &&
+        (typeof parsed.timestamp !== "string" ||
+          !Number.isFinite(Date.parse(parsed.timestamp)))) ||
+      (hasCountry && typeof parsed.country !== "string") ||
+      !preferences ||
+      typeof preferences !== "object" ||
+      Array.isArray(preferences) ||
+      preferences.necessary !== true ||
+      typeof preferences.analytics !== "boolean" ||
+      typeof preferences.marketing !== "boolean" ||
+      (parsed.explicit === false &&
+        (preferences.analytics || preferences.marketing))
+    ) {
+      return null;
+    }
+
+    return {
+      version: CONSENT_VERSION,
+      timestamp: hasTimestamp ? parsed.timestamp : new Date().toISOString(),
+      country: typeof parsed.country === "string" ? parsed.country : "",
+      explicit: parsed.explicit,
+      preferences: {
+        necessary: true,
+        analytics: preferences.analytics,
+        marketing: preferences.marketing,
+      },
+    };
   } catch {
     // Malformed JSON fallback
   }

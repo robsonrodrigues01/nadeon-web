@@ -30,11 +30,9 @@ export function hasAnalyticsConsent(
 
   // 1. Check existing consent record from cookie
   const rawCookie = readCookie(CONSENT_COOKIE_NAME, customCookieSource);
-  if (rawCookie) {
+  if (rawCookie !== null) {
     const record = parseConsentCookie(rawCookie);
-    if (record && record.preferences) {
-      return Boolean(record.preferences.analytics);
-    }
+    return record ? record.preferences.analytics : false;
   }
 
   // 2. Default consent by jurisdiction

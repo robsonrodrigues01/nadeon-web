@@ -96,13 +96,20 @@ export function ConsentProvider({
   const isUs = useMemo(() => isUsCountry(country), [country]);
 
   // Derive record: user override > prop > cookie
+  const rawConsentCookie = readCookie("nadeon_consent");
+  const cookieRecord = useMemo(
+    () => parseConsentCookie(rawConsentCookie),
+    [rawConsentCookie]
+  );
+  const invalidConsentCookie =
+    rawConsentCookie !== null && cookieRecord === null;
   const record = useMemo(() => {
     if (userRecord) return userRecord;
     if (initialRecord !== undefined && initialRecord !== null) {
       return initialRecord;
     }
-    return parseConsentCookie(readCookie("nadeon_consent"));
-  }, [userRecord, initialRecord]);
+    return cookieRecord;
+  }, [userRecord, initialRecord, cookieRecord]);
 
   // Derive banner open state
   const isBannerOpen = useMemo(() => {
@@ -128,9 +135,12 @@ export function ConsentProvider({
     if (record?.preferences) {
       return record.preferences;
     }
+    if (invalidConsentCookie) {
+      return { necessary: true, analytics: false, marketing: false };
+    }
     const gpc = isGpcEnabled();
     return getDefaultConsent(country, gpc);
-  }, [record, country]);
+  }, [record, country, invalidConsentCookie]);
 
   const hasConsent = useCallback(
     (category: ConsentCategory): boolean => {

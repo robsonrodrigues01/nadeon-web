@@ -93,6 +93,84 @@ describe("W1-08 Cookie Banner & Consent System", () => {
       expect(parsed?.preferences.marketing).toBe(false);
       expect(parsed?.explicit).toBe(true);
     });
+
+    it("rejects malformed types, arrays, and unknown consent versions", () => {
+      const malformedRecords = [
+        JSON.stringify({
+          version: "1.0",
+          timestamp: new Date().toISOString(),
+          country: "GB",
+          explicit: "false",
+          preferences: {
+            necessary: true,
+            analytics: "false",
+            marketing: "false",
+          },
+        }),
+        JSON.stringify({
+          version: "2.0",
+          timestamp: new Date().toISOString(),
+          country: "GB",
+          explicit: true,
+          preferences: {
+            necessary: true,
+            analytics: true,
+            marketing: true,
+          },
+        }),
+        JSON.stringify({
+          version: "1.0",
+          timestamp: new Date().toISOString(),
+          country: "GB",
+          explicit: true,
+          preferences: [],
+        }),
+        JSON.stringify({
+          version: "1.0",
+          timestamp: 123,
+          country: "GB",
+          explicit: true,
+          preferences: {
+            necessary: true,
+            analytics: true,
+            marketing: true,
+          },
+        }),
+        "{malformed",
+      ];
+
+      malformedRecords.forEach((cookie) => {
+        expect(parseConsentCookie(cookie)).toBeNull();
+      });
+    });
+
+    it("does not let an invalid cookie enable default US measurement", () => {
+      document.cookie = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(
+        JSON.stringify({
+          version: "1.0",
+          explicit: "false",
+          preferences: {
+            necessary: true,
+            analytics: "false",
+            marketing: "false",
+          },
+        })
+      )}`;
+
+      render(
+        <ConsentProvider initialCountry="US">
+          <ConsentGate category="analytics">
+            <span>Analytics enabled</span>
+          </ConsentGate>
+          <ConsentGate category="marketing">
+            <span>Marketing enabled</span>
+          </ConsentGate>
+        </ConsentProvider>
+      );
+
+      expect(screen.queryByText("Analytics enabled")).toBeNull();
+      expect(screen.queryByText("Marketing enabled")).toBeNull();
+    });
   });
 
   describe("CookieBanner Component & Semantic Elements", () => {

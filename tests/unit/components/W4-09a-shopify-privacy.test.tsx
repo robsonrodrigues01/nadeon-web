@@ -58,6 +58,7 @@ describe("W4-09a Shopify Customer Privacy bridge", () => {
 
   afterEach(() => {
     cleanup();
+    vi.restoreAllMocks();
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
     delete (window as Window & { Shopify?: unknown }).Shopify;
@@ -307,16 +308,21 @@ describe("W4-09a Shopify Customer Privacy bridge", () => {
     expect(reload).toHaveBeenCalledTimes(1);
   });
 
-  it("reloads after timeout fallback if Shopify confirmation hangs on revocation", () => {
+  it("does not reload when Shopify confirmation hangs on revocation", () => {
     vi.useFakeTimers();
     vi.stubEnv("NEXT_PUBLIC_SHOPIFY_CUSTOMER_PRIVACY", "true");
     const reload = vi.fn();
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     vi.stubGlobal("location", { reload });
 
-    // Mock where setTrackingConsent never calls its callback (hanging)
+    let lateConfirmation: (() => void) | undefined;
     const hangingPrivacyMock = {
       ...createShopifyCustomerPrivacyMock(),
-      setTrackingConsent: vi.fn(),
+      setTrackingConsent: vi.fn((_consent, callback) => {
+        lateConfirmation = callback;
+      }),
     };
 
     (window as Window & { Shopify?: unknown }).Shopify = {
@@ -345,9 +351,106 @@ describe("W4-09a Shopify Customer Privacy bridge", () => {
 
     // Advance timers by 1500ms
     vi.advanceTimersByTime(1600);
-    expect(reload).toHaveBeenCalledTimes(1);
+    expect(reload).not.toHaveBeenCalled();
+    expect(screen.queryAllByTestId("script")).toHaveLength(0);
+    expect(consoleError).toHaveBeenCalledWith(
+      "Shopify tracking consent update timed out"
+    );
+    lateConfirmation?.();
+    expect(reload).not.toHaveBeenCalled();
 
     vi.useRealTimers();
+  });
+
+  it("keeps measurement disabled and does not reload when Shopify rejects revocation", () => {
+    vi.stubEnv("NEXT_PUBLIC_SHOPIFY_CUSTOMER_PRIVACY", "true");
+    vi.stubEnv("NEXT_PUBLIC_GA4_ID", "G-123");
+    vi.stubEnv("NEXT_PUBLIC_CLARITY_ID", "clarity-123");
+    vi.stubEnv("NEXT_PUBLIC_META_PIXEL_ID", "meta-123");
+    const reload = vi.fn();
+    vi.stubGlobal("location", { reload });
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    const privacyMock = {
+      ...createShopifyCustomerPrivacyMock(),
+      setTrackingConsent: vi.fn(() => {
+        throw new Error(
+          "failure detail must not be logged: private@example.com"
+        );
+      }),
+    };
+    (window as Window & { Shopify?: unknown }).Shopify = {
+      customerPrivacy: privacyMock,
+      loadFeatures: vi.fn((_, callback) => callback()),
+    };
+
+    render(
+      <ConsentProvider
+        initialCountry="GB"
+        initialRecord={{
+          version: "1.0",
+          timestamp: "2026-11-17T00:00:00.000Z",
+          country: "GB",
+          explicit: true,
+          preferences: { necessary: true, analytics: true, marketing: true },
+        }}
+      >
+        <MeasurementScripts />
+        <ConsentTestControls />
+      </ConsentProvider>
+    );
+
+    expect(screen.getAllByTestId("script")).toHaveLength(4);
+    fireEvent.click(screen.getByText("Trigger Revoke Both"));
+
+    expect(screen.queryAllByTestId("script")).toHaveLength(0);
+    expect(reload).not.toHaveBeenCalled();
+    expect(consoleError.mock.calls.flat().join(" ")).not.toContain(
+      "private@example.com"
+    );
+  });
+
+  it("does not reload when Shopify fails to load its privacy feature", () => {
+    vi.stubEnv("NEXT_PUBLIC_SHOPIFY_CUSTOMER_PRIVACY", "true");
+    vi.stubEnv("NEXT_PUBLIC_GA4_ID", "G-123");
+    vi.stubEnv("NEXT_PUBLIC_CLARITY_ID", "clarity-123");
+    vi.stubEnv("NEXT_PUBLIC_META_PIXEL_ID", "meta-123");
+    const reload = vi.fn();
+    vi.stubGlobal("location", { reload });
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    (window as Window & { Shopify?: unknown }).Shopify = {
+      loadFeatures: vi.fn((_, callback) =>
+        callback(new Error("private@example.com failure detail"))
+      ),
+    };
+
+    render(
+      <ConsentProvider
+        initialCountry="GB"
+        initialRecord={{
+          version: "1.0",
+          timestamp: "2026-11-17T00:00:00.000Z",
+          country: "GB",
+          explicit: true,
+          preferences: { necessary: true, analytics: true, marketing: true },
+        }}
+      >
+        <MeasurementScripts />
+        <ConsentTestControls />
+      </ConsentProvider>
+    );
+
+    expect(screen.getAllByTestId("script")).toHaveLength(4);
+    fireEvent.click(screen.getByText("Trigger Revoke Both"));
+
+    expect(screen.queryAllByTestId("script")).toHaveLength(0);
+    expect(reload).not.toHaveBeenCalled();
+    expect(consoleError.mock.calls.flat().join(" ")).not.toContain(
+      "private@example.com"
+    );
   });
 
   it("synchronizes directly without calling loadFeatures again when customerPrivacy is already pre-loaded", () => {
