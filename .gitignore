@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# local hosting CLI state
+.vercel
+.netlify
 
 # typescript
 *.tsbuildinfo
