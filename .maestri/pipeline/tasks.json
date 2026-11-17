@@ -3984,9 +3984,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T22:52:02.051Z",
+    "lease_ate": "2026-11-17T23:03:18.959Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4025,13 +4025,14 @@
     "depende_de": [
       "W5-00a",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T23:02:25.071Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4095,9 +4096,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T22:42:45.074Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4208,9 +4209,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T23:04:46.157Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4318,9 +4319,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T22:51:03.836Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
