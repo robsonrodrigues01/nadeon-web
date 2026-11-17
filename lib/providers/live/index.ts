@@ -49,6 +49,12 @@ import type {
 } from "@/lib/contracts/forms";
 import type { LabLot, LabsFilter, LabsProvider } from "@/lib/contracts/labs";
 import type { Campaign, CampaignConfig } from "@/lib/contracts/campaign";
+import type { ContentProvider } from "@/lib/contracts/content";
+import type { EmailPreferencesProvider } from "@/lib/contracts/email-preferences";
+import type { GiftCardProvider } from "@/lib/contracts/gift-card";
+import type { OffersProvider } from "@/lib/contracts/offers";
+import type { StoreLocatorProvider } from "@/lib/contracts/store-locator";
+import type { WholesaleProvider } from "@/lib/contracts/wholesale";
 import type {
   MailyteCheckoutStartedInput,
   MailyteEvent,
@@ -64,6 +70,14 @@ import {
 import { z } from "zod";
 
 const NOT_IMPLEMENTED_MSG = "not implemented: onda 4";
+
+function liveStub<T extends object>(provider: string): T {
+  return new Proxy({} as T, {
+    get: () => async () => {
+      throw new Error(`not implemented: onda 5 (${provider})`);
+    },
+  });
+}
 
 export class LiveCatalogProvider implements CatalogProvider {
   async getProducts(_filter?: CatalogFilter): Promise<Product[]> {
@@ -420,3 +434,15 @@ export const liveFormsProvider = new LiveFormsProvider();
 export const liveLabsProvider = new LiveLabsProvider();
 export const liveCampaignConfig = new LiveCampaignConfig();
 export const liveMailyteProvider = new LiveMailyteProvider();
+export const liveContentProvider = liveStub<ContentProvider>("contentProvider");
+export const liveEmailPreferencesProvider = liveStub<EmailPreferencesProvider>(
+  "emailPreferencesProvider"
+);
+export const liveGiftCardProvider =
+  liveStub<GiftCardProvider>("giftCardProvider");
+export const liveOffersProvider = liveStub<OffersProvider>("offersProvider");
+export const liveStoreLocatorProvider = liveStub<StoreLocatorProvider>(
+  "storeLocatorProvider"
+);
+export const liveWholesaleProvider =
+  liveStub<WholesaleProvider>("wholesaleProvider");

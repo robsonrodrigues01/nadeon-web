@@ -9,3 +9,5 @@ export class MockWholesaleProvider implements WholesaleProvider {
     return { id: `wholesale_TEST_${Math.random().toString(36).slice(2, 9)}` };
   }
 }
+
+export const mockWholesaleProvider = new MockWholesaleProvider();

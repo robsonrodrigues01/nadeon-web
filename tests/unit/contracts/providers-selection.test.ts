@@ -71,6 +71,12 @@ describe("Providers Selection & Stubs", () => {
         "formsProvider",
         "labsProvider",
         "campaignConfig",
+        "contentProvider",
+        "emailPreferencesProvider",
+        "giftCardProvider",
+        "offersProvider",
+        "storeLocatorProvider",
+        "wholesaleProvider",
       ] as const;
       for (const key of otherProviderKeys) {
         const expectedProvider = othersLive ? globalLive[key] : globalMock[key];
@@ -116,6 +122,53 @@ describe("Providers Selection & Stubs", () => {
     );
     await expect(live.campaignConfig.getActiveCampaign()).rejects.toThrow(
       "not implemented: onda 4"
+    );
+  });
+
+  it("selects all onda 5 providers from the registry and exposes their live stubs", async () => {
+    vi.resetModules();
+    const providersModule = await import("@/lib/providers");
+    const mock = providersModule.getProviders("mock");
+    const live = providersModule.getProviders("live");
+    const providerExports = [
+      ["contentProvider", "mockContentProvider", "liveContentProvider"],
+      [
+        "emailPreferencesProvider",
+        "mockEmailPreferencesProvider",
+        "liveEmailPreferencesProvider",
+      ],
+      ["giftCardProvider", "mockGiftCardProvider", "liveGiftCardProvider"],
+      ["offersProvider", "mockOffersProvider", "liveOffersProvider"],
+      [
+        "storeLocatorProvider",
+        "mockStoreLocatorProvider",
+        "liveStoreLocatorProvider",
+      ],
+      ["wholesaleProvider", "mockWholesaleProvider", "liveWholesaleProvider"],
+    ] as const;
+
+    for (const [key, mockExport, liveExport] of providerExports) {
+      expect(mock[key]).toBe(providersModule[mockExport]);
+      expect(live[key]).toBe(providersModule[liveExport]);
+    }
+
+    await expect(live.contentProvider.listIngredients()).rejects.toThrow(
+      "not implemented: onda 5 (contentProvider)"
+    );
+    await expect(
+      live.emailPreferencesProvider.getPreferences()
+    ).rejects.toThrow("not implemented: onda 5 (emailPreferencesProvider)");
+    await expect(live.giftCardProvider.getDesigns()).rejects.toThrow(
+      "not implemented: onda 5 (giftCardProvider)"
+    );
+    await expect(live.offersProvider.list()).rejects.toThrow(
+      "not implemented: onda 5 (offersProvider)"
+    );
+    await expect(
+      live.storeLocatorProvider.search({ zip: "10001", radiusMiles: 50 })
+    ).rejects.toThrow("not implemented: onda 5 (storeLocatorProvider)");
+    await expect(live.wholesaleProvider.submit({} as never)).rejects.toThrow(
+      "not implemented: onda 5 (wholesaleProvider)"
     );
   });
 });

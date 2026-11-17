@@ -10,3 +10,5 @@ export class MockOffersProvider implements OffersProvider {
     return null;
   }
 }
+
+export const mockOffersProvider = new MockOffersProvider();
