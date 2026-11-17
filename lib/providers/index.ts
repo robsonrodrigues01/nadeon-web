@@ -1,6 +1,9 @@
 import type { CatalogProvider } from "@/lib/contracts/catalog";
 import type { CartProvider } from "@/lib/contracts/cart";
-import type { AccountProvider } from "@/lib/contracts/account";
+import type {
+  AccountProvider,
+  PetProfileProvider,
+} from "@/lib/contracts/account";
 import type { SubscriptionProvider } from "@/lib/contracts/subscription";
 import type { ReviewsProvider } from "@/lib/contracts/reviews";
 import type { FormsProvider } from "@/lib/contracts/forms";
@@ -66,6 +69,7 @@ export function getProviders(mode: ProvidersMode = getProvidersMode()) {
       catalogProvider: liveCatalogProvider,
       cartProvider: liveCartProvider,
       accountProvider: liveAccountProvider,
+      petProfileProvider: liveAccountProvider,
       subscriptionProvider: liveSubscriptionProvider,
       reviewsProvider: liveReviewsProvider,
       formsProvider: liveFormsProvider,
@@ -85,6 +89,7 @@ export function getProviders(mode: ProvidersMode = getProvidersMode()) {
     catalogProvider: mockCatalogProvider,
     cartProvider: mockCartProvider,
     accountProvider: mockAccountProvider,
+    petProfileProvider: mockAccountProvider,
     subscriptionProvider: mockSubscriptionProvider,
     reviewsProvider: mockReviewsProvider,
     formsProvider: mockFormsProvider,
@@ -111,6 +116,10 @@ export const cartProvider: CartProvider = isLive
   : mockCartProvider;
 
 export const accountProvider: AccountProvider = isLive
+  ? liveAccountProvider
+  : mockAccountProvider;
+
+export const petProfileProvider: PetProfileProvider = isLive
   ? liveAccountProvider
   : mockAccountProvider;
 
