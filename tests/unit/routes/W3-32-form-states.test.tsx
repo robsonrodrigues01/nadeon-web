@@ -199,9 +199,8 @@ describe("W3-32 form states", () => {
   it("announces and focuses the first invalid /track field", () => {
     render(<OrderLookup signInHref="/account" />);
     fireEvent.click(screen.getByRole("button", { name: "Track order" }));
-    const status = screen.getByRole("status");
-    expect(status.getAttribute("aria-live")).toBe("polite");
-    expect(status.textContent).toContain("Check the order number and email.");
+    const alert = screen.getByRole("alert");
+    expect(alert.textContent).toContain("Check the order number and email.");
     expect(document.activeElement).toBe(screen.getByLabelText("Order number"));
   });
 
@@ -401,7 +400,7 @@ describe("W3-32 form states", () => {
     expect(screen.getByRole("status").getAttribute("aria-live")).toBe("polite");
   });
 
-  it("shows pending and a polite focused error for /track lookup", async () => {
+  it("shows pending and a focused alert for /track lookup", async () => {
     render(
       <OrderLookup
         signInHref="/account"
@@ -424,8 +423,7 @@ describe("W3-32 form states", () => {
     render(
       <OrderLookup signInHref="/account" errorMessage="No order found." />
     );
-    expect(screen.getByRole("status").textContent).toContain("No order found.");
-    expect(screen.getByRole("status").getAttribute("aria-live")).toBe("polite");
+    expect(screen.getByRole("alert").textContent).toContain("No order found.");
   });
 
   it("shows the invalid pet field in the live status", async () => {

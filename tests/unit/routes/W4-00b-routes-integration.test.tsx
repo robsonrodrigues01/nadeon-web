@@ -147,7 +147,7 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       }
     });
 
-    it("exibe mensagem de erro acessível com aria-describedby e role status", () => {
+    it("exibe mensagem de erro acessível com aria-describedby e role alert", () => {
       render(
         <OrderLookup
           signInHref="/account/login"
@@ -159,7 +159,7 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
         />
       );
 
-      const errorEl = screen.getByRole("status");
+      const errorEl = screen.getByRole("alert");
       expect(errorEl.textContent).toContain("No order found");
       expect(errorEl.getAttribute("id")).toBe("order-lookup-error");
 
