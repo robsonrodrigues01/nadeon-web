@@ -3703,16 +3703,16 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "titulo": "P2 W4-16: mutações de assinatura e conta conferem sessão e propriedade do ID antes de agir (subscription-actions.ts, account actions)",
     "branch": "agy/W4-20",
-    "revisor": "Lupa"
+    "revisor": "Lente"
   },
   {
     "onda": 4,
     "depende_de": [
       "W4-16"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T06:36:01.446Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "achado W4-16 resolvido com teste",
