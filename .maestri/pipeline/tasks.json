@@ -4007,9 +4007,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T23:36:02.874Z",
+    "lease_ate": "2026-11-17T23:48:45.675Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4027,11 +4027,11 @@
       "W5-00c"
     ],
     "revisor": "Lupa",
-    "nota": "MUDANÇAS; volta a Prisma5 quando liberar"
+    "nota": "2a MUDANÇAS (Lupa); volta à Prisma5 após W5-08"
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
     "lease_ate": "2026-11-17T23:43:31.602Z",
     "pr": "local",
@@ -4055,9 +4055,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T23:44:01.051Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4151,7 +4151,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T23:44:51.782Z",
+    "lease_ate": "2026-11-17T23:48:33.707Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4193,7 +4193,7 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
     "lease_ate": "2026-11-17T23:45:53.810Z",
     "pr": "local",
