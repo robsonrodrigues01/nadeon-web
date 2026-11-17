@@ -3768,5 +3768,24 @@
     ],
     "bloqueio": "decisão de arquitetura do Robson sobre armazenamento (custo) e documentação real do provider de e-mail",
     "nota": "achado P2 da W4-16 mantido além da W4-21"
+  },
+  {
+    "id": "W4-24",
+    "onda": 4,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Specs Playwright dos fluxos da onda 4 (fila permanente item 13): /track estado B, Send me a copy em /help, banner aceitar/recusar/revogar sem medição antes do consentimento, Copy link e Reorder nos pedidos (escritas, rodam só no CI)",
+    "depende_de": [],
+    "status": "entregue",
+    "responsavel": "Trilho",
+    "lease_ate": null,
+    "branch": "agy/W4-24",
+    "pr": "local",
+    "criterios": [
+      "specs com typecheck e lint verdes",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "revisor": "Lupa"
   }
 ]

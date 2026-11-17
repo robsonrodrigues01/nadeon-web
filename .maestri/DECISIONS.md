@@ -146,3 +146,5 @@
 - 2026-11-17: onda 4 adiantada sem pré-requisitos: W4-03a, W4-06a, W4-08a (em andamento), W4-09a (depende de W4-08a). Painel do pipeline agora é estático em maestri/pipeline.html, gerado pela vigia (check-ativos.sh), independente do dev server.
 - 2026-11-17: Auditor trocado de Claude para Codex/Luna (recruit --replace "Terminal" -> "Auditor"); rotina própria "Auditor vigia nadeon" [25d880] a cada 1 min com pre-run check-ativos.sh. A vigia do Maestro [cbe11e] segue apontando para Claude Code.
 - 2026-11-17: skills verificadas (codex plugin list, agy plugin list): ponytail 5.3.3 e mattpocock-skills 1.3.2 ativos no Codex e no Antigravity. Construtores: ponytail full + tdd + diagnosing-bugs; revisores: ponytail-review. Seções Skills nos briefings; DONE e REVIEW registram "Skills usadas:".
+- 2026-11-17: itens 12 e 4 da fila voltam (W4-16, W4-17) porque a onda 4 mudou webhooks, actions, consentimento, medição, /track e /help.
+- 2026-11-17: item 13 da fila volta (W4-24): fluxos novos da onda 4 sem spec Playwright.
