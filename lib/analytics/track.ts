@@ -1,4 +1,3 @@
-import * as vercelAnalytics from "@vercel/analytics";
 import {
   type AnalyticsEventName,
   type AnalyticsEventMap,
@@ -115,8 +114,7 @@ export function sanitizeForAnalyticsLog(
 }
 
 /**
- * Sanitizes and flattens properties for @vercel/analytics custom events.
- * Vercel Analytics accepts Record<string, string | number | boolean | null | undefined>.
+ * Sanitizes and flattens event properties for the GA4 gtag API.
  * Nested objects or arrays are serialized to JSON strings.
  */
 function flattenProperties(
@@ -150,7 +148,7 @@ function flattenProperties(
  * Behavior:
  * - Only fires if consent for analytics is granted (via lib/consent or options).
  * - In non-production environments (development/test): logs to `console.log` with `[Analytics]`.
- * - In production: transmits the event via `@vercel/analytics`.
+ * - In production: dispatches consented events to the GA4 and Clarity globals loaded by MeasurementScripts.
  */
 export function track<E extends AnalyticsEventName>(
   event: E,
@@ -177,10 +175,24 @@ export function track<E extends AnalyticsEventName>(
   const isProduction = process.env.NODE_ENV === "production";
 
   if (isProduction) {
-    const flattened = flattenProperties(
-      validatedPayload as Record<string, unknown>
-    );
-    vercelAnalytics.track(event, flattened);
+    if (typeof window !== "undefined") {
+      const trackers = window as typeof window & {
+        gtag?: (
+          command: "event",
+          eventName: AnalyticsEventName,
+          properties: Record<
+            string,
+            string | number | boolean | null | undefined
+          >
+        ) => void;
+        clarity?: (command: "event", eventName: string) => void;
+      };
+      const sanitizedPayload = sanitizeForAnalyticsLog(
+        validatedPayload as Record<string, unknown>
+      );
+      trackers.gtag?.("event", event, flattenProperties(sanitizedPayload));
+      trackers.clarity?.("event", event);
+    }
   } else {
     // Development / test: console logging only (redacted: no PII or free text)
     const sanitizedLogPayload = sanitizeForAnalyticsLog(

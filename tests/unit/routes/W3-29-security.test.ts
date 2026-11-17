@@ -24,7 +24,7 @@ describe("W3-29 production security", () => {
 
   it("always returns 404 for dev kit in production despite preview flags", async () => {
     (process.env as Record<string, string | undefined>).NODE_ENV = "production";
-    process.env.VERCEL_ENV = "preview";
+    process.env.CONTEXT = "deploy-preview";
     process.env.DEV_KIT = "1";
     await expect(DevKitPage()).rejects.toThrow("NEXT_NOT_FOUND");
   });
