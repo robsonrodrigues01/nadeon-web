@@ -107,50 +107,6 @@ export function saveConsentRecord(record: ConsentRecord): void {
     CONSENT_COOKIE_MAX_AGE_DAYS
   );
 
-  // Notify Shopify Customer Privacy API if loaded on page
-  if (
-    typeof window !== "undefined" &&
-    (
-      window as unknown as {
-        Shopify?: {
-          customerPrivacy?: {
-            setTrackingConsent?: (
-              consent: Record<string, boolean>,
-              callback: () => void
-            ) => void;
-          };
-        };
-      }
-    ).Shopify?.customerPrivacy?.setTrackingConsent
-  ) {
-    try {
-      const sp = (
-        window as unknown as {
-          Shopify: {
-            customerPrivacy: {
-              setTrackingConsent: (
-                consent: Record<string, boolean>,
-                callback: () => void
-              ) => void;
-            };
-          };
-        }
-      ).Shopify.customerPrivacy;
-
-      sp.setTrackingConsent(
-        {
-          analytics: record.preferences.analytics,
-          marketing: record.preferences.marketing,
-          preferences: true,
-          sale_of_data: record.preferences.marketing,
-        },
-        () => {}
-      );
-    } catch {
-      // Defensive fallback
-    }
-  }
-
   // Dispatch custom event for custom listeners
   if (typeof window !== "undefined") {
     window.dispatchEvent(
