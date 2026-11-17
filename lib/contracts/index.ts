@@ -7,8 +7,3 @@ export * from "./forms";
 export * from "./labs";
 export * from "./campaign";
 export * from "./mailyte";
-export * from "./email-preferences";
-export * from "./gift-card";
-export * from "./store-locator";
-export * from "./wholesale";
-export * from "./offers";

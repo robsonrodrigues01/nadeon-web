@@ -46,7 +46,7 @@ describe("5.4 Semantic Elements: Conta", () => {
         screen.getByRole("heading", { level: 1, name: "My account" })
       ).toBeDefined();
       expect(
-        screen.getByRole("heading", { level: 2, name: /hi, test alex/i })
+        screen.getByRole("heading", { level: 2, name: /hi, alex/i })
       ).toBeDefined();
 
       // Delivery actions
