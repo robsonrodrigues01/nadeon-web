@@ -2,16 +2,17 @@
 
 import { useEffect, useRef } from "react";
 import Script from "next/script";
-import { useConsent } from "@/lib/consent";
+import { useConsent, syncShopifyCustomerPrivacy } from "@/lib/consent";
 
 export function MeasurementScripts() {
-  const { hasConsent } = useConsent();
+  const { hasConsent, record } = useConsent();
   const gaId = process.env.NEXT_PUBLIC_GA4_ID;
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const analyticsAllowed = hasConsent("analytics");
   const marketingAllowed = hasConsent("marketing");
   const previouslyAllowed = useRef({ analytics: false, marketing: false });
+  const previousRecord = useRef<typeof record | undefined>(undefined);
 
   useEffect(() => {
     const trackers = window as typeof window & {
@@ -21,15 +22,34 @@ export function MeasurementScripts() {
       fbq?: (...args: unknown[]) => void;
       _fbq?: (...args: unknown[]) => void;
     };
-    if (previouslyAllowed.current.analytics !== analyticsAllowed) {
+    const analyticsChanged =
+      previouslyAllowed.current.analytics !== analyticsAllowed;
+    const marketingChanged =
+      previouslyAllowed.current.marketing !== marketingAllowed;
+    const recordChanged = previousRecord.current !== record;
+
+    if (analyticsChanged) {
       trackers.gtag?.("consent", "update", {
         analytics_storage: analyticsAllowed ? "granted" : "denied",
       });
       trackers.clarity?.("consent", analyticsAllowed);
     }
-    if (previouslyAllowed.current.marketing !== marketingAllowed) {
+    if (marketingChanged) {
       trackers.fbq?.("consent", marketingAllowed ? "grant" : "revoke");
     }
+
+    if (
+      analyticsChanged ||
+      marketingChanged ||
+      (recordChanged &&
+        (record !== null || previousRecord.current !== undefined))
+    ) {
+      syncShopifyCustomerPrivacy({
+        analytics: analyticsAllowed,
+        marketing: marketingAllowed,
+      });
+    }
+
     if (
       (previouslyAllowed.current.analytics && !analyticsAllowed) ||
       (previouslyAllowed.current.marketing && !marketingAllowed)
@@ -40,7 +60,8 @@ export function MeasurementScripts() {
       analytics: analyticsAllowed,
       marketing: marketingAllowed,
     };
-  }, [analyticsAllowed, marketingAllowed]);
+    previousRecord.current = record;
+  }, [analyticsAllowed, marketingAllowed, record]);
 
   return (
     <>
