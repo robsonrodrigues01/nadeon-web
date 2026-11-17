@@ -3218,8 +3218,8 @@
       "W4-00"
     ],
     "status": "para_revisao",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T04:42:30.990Z",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T05:27:39.556Z",
     "pr": "local",
     "id": "W4-00b",
     "papel": "Frontend",
@@ -3471,9 +3471,9 @@
   {
     "onda": 4,
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T04:41:58.319Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3513,9 +3513,9 @@
     "depende_de": [
       "W4-08a"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T05:23:10.776Z",
+    "lease_ate": "2026-11-17T05:24:37.492Z",
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3527,7 +3527,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Ponte do banner de cookies com a Customer Privacy API da Shopify atrás de variável de ambiente, com mock e testes",
     "nota": "parte de código da W4-09; mexe no banner depois da W4-08a",
-    "branch": "agy/W4-09a"
+    "branch": "agy/W4-09a",
+    "revisor": "Lupa"
   },
   {
     "id": "W4-12",
@@ -3536,9 +3537,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Remover o painel antigo app/(shared)/pipeline (591 linhas, dev-only), substituído por maestri/pipeline.html",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T04:33:55.336Z",
+    "lease_ate": null,
     "branch": "agy/W4-12",
     "pr": "local",
     "criterios": [
@@ -3575,9 +3576,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Teste instável W3-42 deferred newsletter: falha só na suíte completa (Unable to find heading /Join the Nadeon list/), passa isolado; provável espera curta para o carregamento adiado",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T04:49:17.986Z",
+    "lease_ate": null,
     "branch": "agy/W4-14",
     "pr": "local",
     "criterios": [
@@ -3603,6 +3604,7 @@
       "arquivo passa 10 vezes seguidas",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lente"
   }
 ]
