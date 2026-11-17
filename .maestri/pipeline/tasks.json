@@ -4007,9 +4007,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T23:49:07.845Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4027,13 +4027,13 @@
       "W5-00c"
     ],
     "revisor": "Lupa",
-    "nota": "2a MUDANÇAS (Lupa); volta à Prisma5 após W5-08"
+    "nota": "3a MUDANÇAS (Lupa): reatribuir a um agente Codex (Trilho ou Crivo6), não à Prisma5"
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T23:43:31.602Z",
+    "lease_ate": "2026-11-17T23:59:04.736Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4051,7 +4051,7 @@
       "W5-00c"
     ],
     "revisor": "Lupa",
-    "nota": "MUDANÇAS (Lupa); volta a Prisma5 quando liberar"
+    "nota": "2a MUDANÇAS (Lupa); volta à Prisma5 após W5-07"
   },
   {
     "onda": 5,
@@ -4149,9 +4149,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
-    "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T23:48:33.707Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4167,13 +4167,15 @@
     "depende_de": [
       "W5-00a",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lente",
+    "nota": "MUDANÇAS (Lente); volta ao Trilho após W5-14"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T00:00:39.815Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4195,7 +4197,7 @@
     "onda": 5,
     "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T23:45:53.810Z",
+    "lease_ate": "2026-11-17T23:58:34.585Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4263,9 +4265,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T23:58:56.412Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
