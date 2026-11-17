@@ -1,6 +1,6 @@
 # Pipeline de CI e Gates de Merge
 
-Este documento descreve a arquitetura de integracao continua (CI), os gates de merge locais e remotos, os comandos para execucao e o procedimento de reversao (rollback) em producao na Vercel.
+Este documento descreve a arquitetura de integracao continua (CI), os gates de merge locais e remotos, os comandos para execucao e o procedimento de reversao (rollback) do deploy hospedado na Netlify.
 
 ## 1. Visao Geral dos Gates
 
@@ -13,7 +13,7 @@ A suite remota do GitHub Actions permanece pronta e versionada no repositorio pa
 1. **ci**: executa format:check, lint, typecheck, testes unitarios, data:check e build.
 2. **e2e**: executa build, sobe servidor local e roda testes Playwright com axe core.
 3. **security**: executa Gitleaks e auditoria de vulnerabilidades de dependencias.
-4. **lighthouse**: roda em modo aviso no PR contra a previa de deploy da Vercel.
+4. **lighthouse**: roda em modo aviso no PR contra uma URL de deploy preview publicada no GitHub Deployments.
 
 ### Gate Real Local (Fluxo Atual da Onda 0)
 
@@ -92,39 +92,8 @@ As etapas originais de ativacao de Branch Protection via API do GitHub e de aber
 
 A seguranca do projeto permanece preservada pelo gate local mandatorio (`pnpm gate`) e pela aprovacao humana centralizada pelo Maestro antes de qualquer merge no `main`.
 
-## 5. Procedimento de Reversao (Rollback da Vercel)
+## 5. Deploy e rollback na Netlify
 
-Se uma versao integrada ao `main` apresentar instabilidade ou incidente critico em producao, utilize um dos metodos abaixo:
+O projeto usa a deteccao nativa de Next.js da Netlify; nao ha `netlify.toml` dedicado. IDs publicos dos carregadores de medicao estao documentados em `.env.example` e devem ser definidos no ambiente de build da Netlify. As instrucoes operacionais de rollback ficam pendentes da primeira validacao do deploy Netlify.
 
-### Metodo 1: Rollback Instantaneo pelo Dashboard da Vercel
-
-1. Acesse o projeto no painel: `https://vercel.com/robsoncoffys-projects/nadeon-web`.
-2. Navegue ate a aba **Deployments**.
-3. Localize o ultimo deploy saudavel e estavel anterior ao incidente.
-4. Clique no menu de opcoes (tres pontos) desse deploy e selecione **Instant Rollback**.
-5. Confirme a operacao. O trafego de producao sera imediatamente redirecionado para a versao estavel selecionada, sem necessidade de novo build.
-
-### Metodo 2: Rollback via Vercel CLI
-
-Caso possua autorizacao e acesso CLI configurado:
-
-```bash
-# Listar os ultimos deployments
-vercel list
-
-# Promover o deployment estavel para producao
-vercel alias set <DEPLOYMENT_ID_OU_URL> nadeon.com
-```
-
-### Metodo 3: Reversao no Git (Manter historico limpo)
-
-Para alinhar o repositorio com a producao restaurada:
-
-```bash
-git checkout main
-git pull origin main
-git revert <COMMIT_HASH_DO_PROBLEMA> -m 1
-git push origin main
-```
-
-Quando o pipeline de CI estiver ativo, a Vercel executara o deploy da versao revertida automaticamente.
+Para alinhar o codigo com uma versao estavel, reverta o commit no branch local conforme o fluxo da secao 3 e execute o gate antes do merge.
