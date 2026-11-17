@@ -75,12 +75,12 @@ if (!process.env.VITEST) {
       ).toBeVisible();
 
       // Verify order cards are rendered
-      await expect(page.getByText(/Order #NL-100234/i)).toBeVisible();
-      await expect(page.getByText(/Order #NL-100189/i)).toBeVisible();
+      await expect(page.getByText(/Order #TEST-NL-0001/i)).toBeVisible();
+      await expect(page.getByText(/Order #TEST-NL-0002/i)).toBeVisible();
 
       // Click "Details" on an order to navigate to order details page
       const detailsLink = page.getByRole("link", { name: /details/i }).filter({
-        has: page.getByText(/NL-100234/),
+        has: page.getByText(/TEST-NL-0001/),
       });
       await expect(detailsLink).toBeVisible();
       await detailsLink.click();

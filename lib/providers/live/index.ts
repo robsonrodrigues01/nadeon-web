@@ -18,7 +18,9 @@ import type {
   AccountProvider,
   Address,
   CustomerProfile,
+  GuestOrderLookupInput,
   Order,
+  OrderLine,
   Pet,
   PetInput,
   ProfileInput,
@@ -131,9 +133,14 @@ export class LiveAccountProvider implements AccountProvider {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
   async lookupGuestOrder(
-    _orderNumber: string,
-    _email: string
+    _orderNumberOrInput: string | GuestOrderLookupInput,
+    _email?: string
   ): Promise<Order | null> {
+    // TODO: Shopify Storefront / Orders API guest lookup in Onda 4
+    throw new Error(NOT_IMPLEMENTED_MSG);
+  }
+  async reorder(_orderId: string): Promise<OrderLine[]> {
+    // TODO: Shopify Storefront order reorder in Onda 4
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
   async getAddresses(): Promise<Address[]> {

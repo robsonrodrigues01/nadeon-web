@@ -78,6 +78,9 @@ export type ProfileInput = z.infer<typeof ProfileInputSchema>;
 export const OrderLineSchema = z.object({
   variantId: z.string(),
   quantity: z.number().int().positive(),
+  image: z.string().optional(),
+  title: z.string().optional(),
+  price: MoneySchema.optional(),
 });
 export type OrderLine = z.infer<typeof OrderLineSchema>;
 
@@ -115,9 +118,17 @@ export const OrderSchema = z.object({
   email: z.string().optional(),
   lines: z.array(OrderLineSchema).optional(),
   url: z.string().optional(),
+  copyLink: z.string().optional(),
   statusUrl: z.string().optional(),
+  canReorder: z.boolean().optional(),
 });
 export type Order = z.infer<typeof OrderSchema>;
+
+export const GuestOrderLookupInputSchema = z.object({
+  orderNumber: z.string().min(1, "Order number is required"),
+  email: z.string().email("Valid email is required"),
+});
+export type GuestOrderLookupInput = z.infer<typeof GuestOrderLookupInputSchema>;
 
 export const SessionSchema = z.object({
   accessToken: z.string(),
@@ -133,7 +144,11 @@ export interface AccountProvider {
   getCustomer(): Promise<CustomerProfile | null>;
   getOrders(): Promise<Order[]>;
   getOrder(id: string): Promise<Order | null>;
-  lookupGuestOrder(orderNumber: string, email: string): Promise<Order | null>;
+  lookupGuestOrder(
+    orderNumberOrInput: string | GuestOrderLookupInput,
+    email?: string
+  ): Promise<Order | null>;
+  reorder(orderId: string): Promise<OrderLine[]>;
   getAddresses(): Promise<Address[]>;
   updateProfile(input: ProfileInput): Promise<CustomerProfile>;
   getPets(): Promise<Pet[]>;
