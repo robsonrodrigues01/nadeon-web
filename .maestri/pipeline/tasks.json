@@ -3217,9 +3217,9 @@
     "depende_de": [
       "W4-00"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T03:44:24.508Z",
     "pr": "local",
     "id": "W4-00b",
     "papel": "Frontend",
@@ -3230,7 +3230,8 @@
       "fluxos com testes de comportamento",
       "pnpm gate verde",
       "revisão APROVADO"
-    ]
+    ],
+    "revisor": "Lupa"
   },
   {
     "onda": 4,
@@ -3446,5 +3447,83 @@
     ],
     "bloqueio": "decisão do Robson (W3-83)",
     "nota": "aguardando Robson: decisão do Robson (W3-83)"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T03:55:02.103Z",
+    "pr": "local",
+    "criterios": [
+      "testes com fixture",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W4-03a",
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Script que compara data/products/*.json com a Shopify (handles, preços, variantes, selling plans) e falha na diferença; testado com resposta gravada (fixture), roda de verdade quando houver credenciais",
+    "nota": "parte de código da W4-03; verificação real continua bloqueada",
+    "branch": "agy/W4-03a"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T03:53:45.124Z",
+    "pr": "local",
+    "criterios": [
+      "testes com fixture",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W4-06a",
+    "papel": "Backend/API",
+    "preset": "Gemini 3.8 Flash (AGY)",
+    "titulo": "/api/webhooks: verificação HMAC da Shopify, checkouts/create e orders/create enviam eventos pelo contrato do Mailyte (mock), products/update revalida páginas; testes com payloads de fixture",
+    "nota": "parte de código da W4-06",
+    "branch": "agy/W4-06a"
+  },
+  {
+    "onda": 4,
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T03:55:09.872Z",
+    "pr": "local",
+    "criterios": [
+      "testes com fixture",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W4-08a",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Carregador de medição (GA4, Clarity, Meta Pixel) ligado ao consentimento do banner, IDs por variável de ambiente (ausente = desligado), sem carregar nada antes do consentimento",
+    "nota": "parte de código da W4-08",
+    "branch": "agy/W4-08a"
+  },
+  {
+    "onda": 4,
+    "depende_de": [
+      "W4-08a"
+    ],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "criterios": [
+      "testes com fixture",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "id": "W4-09a",
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Ponte do banner de cookies com a Customer Privacy API da Shopify atrás de variável de ambiente, com mock e testes",
+    "nota": "parte de código da W4-09; mexe no banner depois da W4-08a",
+    "branch": "agy/W4-09a"
   }
 ]
