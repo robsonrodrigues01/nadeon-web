@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import contentData from "@/data/content.json";
 
 const { contentProviderMock, notFoundMock } = vi.hoisted(() => ({
   contentProviderMock: {
@@ -106,6 +107,22 @@ describe("W5-13 /journal/[categoria]", () => {
     ).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Joints" }));
     expect(screen.getAllByText("To be confirmed").length).toBeGreaterThan(0);
+  });
+
+  it("renders one All filter for the actual dog-health provider category", async () => {
+    const dogHealthCategory = contentData.journalCategories.find(
+      (entry) => entry.slug === "dog-health"
+    );
+    if (!dogHealthCategory) throw new Error("Missing dog-health fixture");
+    contentProviderMock.getJournalCategory.mockResolvedValue(dogHealthCategory);
+
+    render(
+      await JournalCategoryPage({
+        params: Promise.resolve({ categoria: "dog-health" }),
+      })
+    );
+
+    expect(screen.getAllByRole("button", { name: "All" })).toHaveLength(1);
   });
 
   it("shows the existing Pet quiz and not-found for unknown provider categories", async () => {

@@ -22,6 +22,11 @@ export function JournalBrowser({
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [species, setSpecies] = useState("all");
   const [visibleCount, setVisibleCount] = useState(6);
+  const categoryFilters = categoryPage
+    ? categoryPage.subcategories.includes("All")
+      ? categoryPage.subcategories
+      : ["All", ...categoryPage.subcategories]
+    : page.categories;
   const visibleArticles = articles.filter((article) => {
     const matchesQuery =
       `${article.title} ${article.excerpt} ${article.category}`
@@ -119,10 +124,7 @@ export function JournalBrowser({
                 : "Journal categories"
             }
           >
-            {(categoryPage
-              ? ["All", ...categoryPage.subcategories]
-              : page.categories
-            ).map((item) => (
+            {categoryFilters.map((item) => (
               <button
                 key={item}
                 type="button"
