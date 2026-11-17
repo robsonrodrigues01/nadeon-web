@@ -117,7 +117,7 @@ describe("W2-22 /account/settings", () => {
 
     it("mostra o nome do cliente vindo do provider, sem texto de exemplo", async () => {
       await renderPage();
-      screen.getByText("Alex Morgan", { selector: "p" });
+      screen.getByText("TEST Alex TEST Morgan", { selector: "p" });
     });
 
     it("tem os links da conta e o botão Sign out", async () => {
@@ -146,11 +146,11 @@ describe("W2-22 /account/settings", () => {
     it("tem os campos do catálogo preenchidos com o cliente do provider", async () => {
       await renderPage();
 
-      expect(input("First name").value).toBe("Alex");
-      expect(input("Last name").value).toBe("Morgan");
-      expect(input("Email").value).toBe("alex.morgan@example.com");
-      expect(input("Phone").value).toBe("+1 (555) 234-5678");
-      expect(input("Birthday (optional)").value).toBe("05 / 14");
+      expect(input("First name").value).toBe("TEST Alex");
+      expect(input("Last name").value).toBe("TEST Morgan");
+      expect(input("Email").value).toBe("test.alex.morgan@example.com");
+      expect(input("Phone").value).toBe("TEST-000-000-0000");
+      expect(input("Birthday (optional)").value).toBe("");
       const shoppingFor = screen.getByRole("combobox", {
         name: "Shopping for",
       }) as HTMLSelectElement;
@@ -181,9 +181,9 @@ describe("W2-22 /account/settings", () => {
       const section = screen.getByRole("region", { name: "Addresses" });
 
       within(section).getByText("DEFAULT");
-      within(section).getByText("742 Evergreen Terrace");
-      within(section).getByText("Apt 4B");
-      within(section).getByText("Austin, TX 78701, United States");
+      within(section).getByText("TEST 742 Evergreen Terrace");
+      within(section).getByText("TEST Apt 4B");
+      within(section).getByText("TEST Austin, TX TEST-78701, United States");
     });
 
     it("botões de endereço: + Add address, Edit, Remove e Set as default", async () => {
@@ -286,9 +286,9 @@ describe("W2-22 /account/settings", () => {
 
       await waitFor(() =>
         expect(sendPrivacyRequest).toHaveBeenCalledWith({
-          email: "alex.morgan@example.com",
-          firstName: "Alex",
-          lastName: "Morgan",
+          email: "test.alex.morgan@example.com",
+          firstName: "TEST Alex",
+          lastName: "TEST Morgan",
           requestType: "delete",
         })
       );
