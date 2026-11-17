@@ -220,12 +220,29 @@ describe("W5-07 /pet/breeds Route & Semantic Controls", () => {
     expect(screen.queryByText(/request a breed: to be confirmed/i)).toBeNull();
   });
 
-  it("toggles species between Dogs and Cats", async () => {
+  it("toggles species between Dogs and Cats and actually filters the breed list", async () => {
+    const mockWithCat: BreedGuide[] = [
+      ...mockBreedGuides,
+      {
+        slug: "siamese-cat",
+        title: "Siamese Cat",
+        description: "To be confirmed",
+        readingMinutes: 6,
+        facts: {
+          size: "Small",
+          weightRange: "To be confirmed",
+          lifeExpectancy: "To be confirmed",
+          energyLevel: "To be confirmed",
+          group: "To be confirmed",
+          coat: "To be confirmed",
+        },
+        sections: [{ title: "About the breed", body: "To be confirmed" }],
+        reviewer: "To be confirmed",
+      },
+    ];
+
     render(
-      <BreedBrowser
-        initialBreeds={mockBreedGuides}
-        breedIndex={mockBreedIndex}
-      />
+      <BreedBrowser initialBreeds={mockWithCat} breedIndex={mockBreedIndex} />
     );
 
     const dogsBtn = screen.getByRole("button", { name: /^dogs$/i });
@@ -234,9 +251,54 @@ describe("W5-07 /pet/breeds Route & Semantic Controls", () => {
     expect(dogsBtn.getAttribute("aria-pressed")).toBe("true");
     expect(catsBtn.getAttribute("aria-pressed")).toBe("false");
 
+    // Initially with Dogs selected: dogs are shown, cats are hidden
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Labrador Retriever" })
+    ).toBeDefined();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "French Bulldog" })
+    ).toBeDefined();
+    expect(
+      screen.queryByRole("heading", { level: 2, name: "Siamese Cat" })
+    ).toBeNull();
+
+    // Click Cats: cats are shown, dogs are hidden
     fireEvent.click(catsBtn);
     expect(dogsBtn.getAttribute("aria-pressed")).toBe("false");
     expect(catsBtn.getAttribute("aria-pressed")).toBe("true");
+
+    expect(
+      screen.queryByRole("heading", { level: 2, name: "Labrador Retriever" })
+    ).toBeNull();
+    expect(
+      screen.queryByRole("heading", { level: 2, name: "French Bulldog" })
+    ).toBeNull();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Siamese Cat" })
+    ).toBeDefined();
+  });
+
+  it("ensures A-Z letter buttons meet minimum 44x44px accessible target size", async () => {
+    render(
+      <BreedBrowser
+        initialBreeds={mockBreedGuides}
+        breedIndex={mockBreedIndex}
+      />
+    );
+
+    const letterBtn = screen.getByRole("button", { name: /^A$/i });
+    expect(letterBtn.className).toMatch(/min-w-11/);
+    expect(letterBtn.className).toMatch(/min-h-11/);
+  });
+
+  it("does not render unconfirmed dosage or vet claims in page copy", async () => {
+    const page = await BreedIndexPage();
+    render(page);
+
+    const pageText = document.body.textContent || "";
+    expect(pageText).not.toMatch(/dose by weight/i);
+    expect(pageText).not.toMatch(/reviewed by a vet/i);
+    expect(pageText).not.toMatch(/veterinary-reviewed/i);
   });
 
   it("shows empty state and allows clearing all filters when no breeds match", async () => {

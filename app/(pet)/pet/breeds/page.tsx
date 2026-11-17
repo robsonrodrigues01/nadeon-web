@@ -9,8 +9,7 @@ import { BreedBrowser } from "./_components/breed-browser";
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     title: "Care guides by breed - Nadeon Pet",
-    description:
-      "To be confirmed. Health topics by life stage, weight and exercise, food notes and a dose by weight for each breed, reviewed by a vet.",
+    description: "To be confirmed.",
     pathname: "/pet/breeds",
   });
 }
@@ -70,8 +69,7 @@ export default async function BreedIndexPage() {
           </h1>
 
           <p className="mt-4 text-base sm:text-lg text-fg-muted max-w-2xl leading-relaxed">
-            To be confirmed. Health topics by life stage, weight and exercise,
-            food notes and a dose by weight for each breed, reviewed by a vet.
+            To be confirmed.
           </p>
         </div>
       </section>

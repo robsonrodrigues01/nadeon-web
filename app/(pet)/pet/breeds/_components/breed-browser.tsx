@@ -11,6 +11,29 @@ interface BreedBrowserProps {
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
+function getBreedSpecies(breed: BreedGuide): "Dogs" | "Cats" {
+  const explicitSpecies = (breed as { species?: string }).species;
+  if (explicitSpecies) {
+    if (explicitSpecies.toLowerCase().includes("cat")) return "Cats";
+    if (explicitSpecies.toLowerCase().includes("dog")) return "Dogs";
+  }
+
+  const titleLower = breed.title.toLowerCase();
+  const slugLower = breed.slug.toLowerCase();
+  const groupLower = breed.facts.group.toLowerCase();
+
+  const isCat =
+    titleLower.includes("cat") ||
+    slugLower.includes("cat") ||
+    groupLower.includes("cat") ||
+    groupLower.includes("feline") ||
+    /^(siamese|persian|maine[- ]coon|bengal|sphynx|ragdoll|abyssinian|birman|russian[- ]blue|burmese|scottish[- ]fold)/i.test(
+      breed.title
+    );
+
+  return isCat ? "Cats" : "Dogs";
+}
+
 export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null);
@@ -22,6 +45,14 @@ export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
   // Filtered breeds calculation
   const filteredBreeds = useMemo(() => {
     return initialBreeds.filter((breed) => {
+      // Species filter
+      if (selectedSpecies) {
+        const breedSpecies = getBreedSpecies(breed);
+        if (breedSpecies !== selectedSpecies) {
+          return false;
+        }
+      }
+
       // Search query
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase().trim();
@@ -48,7 +79,13 @@ export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
 
       return true;
     });
-  }, [initialBreeds, searchQuery, selectedLetter, selectedSize]);
+  }, [
+    initialBreeds,
+    searchQuery,
+    selectedLetter,
+    selectedSize,
+    selectedSpecies,
+  ]);
 
   const displayedBreeds = filteredBreeds.slice(0, visibleCount);
 
@@ -142,7 +179,7 @@ export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
                     setVisibleCount(12);
                   }}
                   aria-pressed={isSelected}
-                  className={`min-w-8 h-8 sm:min-w-9 sm:h-9 rounded-lg font-bold text-xs sm:text-sm flex items-center justify-center border transition-all cursor-pointer ${
+                  className={`min-w-11 min-h-11 rounded-lg font-bold text-xs sm:text-sm flex items-center justify-center border transition-all cursor-pointer ${
                     isSelected
                       ? "bg-fg text-bg border-fg"
                       : "border-border/70 text-fg hover:border-fg bg-bg-elevated"
@@ -275,7 +312,7 @@ export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
                 <div className="pt-2 border-t border-border/40">
                   <Link
                     href="/pet/quiz"
-                    aria-label={`Breed guide for ${breed.title} (Take quiz while guide publishes)`}
+                    aria-label={`Breed guide for ${breed.title}: take pet quiz`}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-accent hover:underline group-hover:gap-2 transition-all"
                   >
                     Breed guide <span aria-hidden="true">→</span>
@@ -327,8 +364,7 @@ export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
             Don&apos;t see your breed?
           </h2>
           <p className="text-sm sm:text-base text-fg-muted mt-2.5 leading-relaxed">
-            Mixed breed or a breed we have not covered yet? Take the quiz for a
-            routine and dose by your dog&apos;s size and age.
+            To be confirmed.
           </p>
         </div>
 
@@ -355,10 +391,7 @@ export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
           role="status"
           className="p-4 rounded-2xl border border-accent/40 bg-accent/10 flex justify-between items-center text-sm font-bold text-fg"
         >
-          <span>
-            Request a breed: To be confirmed. We are prioritizing our next batch
-            of veterinary-reviewed breed guides.
-          </span>
+          <span>Request a breed: To be confirmed.</span>
           <button
             type="button"
             onClick={() => setShowRequestNotice(false)}

@@ -2,24 +2,27 @@
 
 Documento de conformidade com a Regra 8 do projeto Nadeon (`BRIEFING-CONSTRUTOR-W2.md` e `AGENTS.md`).
 Na implementacao da rota `/pet/breeds`, todo texto mantido no codigo segue estritamente os boards de design.
-Os placeholders nao aprovados estao exibidos como "To be confirmed" no site. As propostas abaixo aguardam revisao e aprovacao do Robson para entrada em producao.
+Alegações de dose e de revisão veterinária sem comprovação foram completamente substituídas por "To be confirmed" no código e documentadas neste arquivo para aprovação antes de qualquer publicação clínica.
 
 ---
 
 ## 1. Tabela de Placeholders e Propostas
 
-| Elemento / Secao    | Texto Atual no Board                                                                                  | Exibicao em Codigo (Regra 8)                                                                 | Proposta para Aprovacao                                                                                                               |
-| :------------------ | :---------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| **Hero Subtitle**   | `Intro placeholder. Health topics by life stage, weight and exercise...`                              | `To be confirmed. Health topics by life stage, weight and exercise...`                       | "Find veterinary-reviewed care guides tailored to your pet's life stage, weight and exercise, food notes and precise dose by weight." |
-| **Popular Breeds**  | `POPULAR: [Breed], [Breed], [Breed]...`                                                               | Labrador Retriever, French Bulldog, Golden Retriever, German Shepherd, Poodle                | Manter as 5 racas mais populares registradas no AKC/FCI.                                                                              |
-| **Size Key**        | `Size key: Small up to [XX] lb · Medium [XX] to [XX] lb · Large [XX] to [XX] lb · Giant over [XX] lb` | `Size key: Small up to To be confirmed lb · Medium To be confirmed to To be confirmed lb...` | `Size key: Small up to 25 lb · Medium 26 to 50 lb · Large 51 to 90 lb · Giant over 90 lb`                                             |
-| **Card Subtitle**   | `[Breed] - Care guide & health topics`                                                                | `Care guide & health topics`                                                                 | Exibir o grupo oficial (ex: `Sporting group`, `Non-sporting group`) quando disponivel no catalogo de conteudo.                        |
-| **Request a breed** | `Request a breed` (acao)                                                                              | Exibe aviso informativo interativo "Request a breed: To be confirmed"                        | Modal com campo de e-mail e nome da raca para notificacao automatica quando o guia correspondente for publicado.                      |
+| Elemento / Secao           | Texto Original no Board / Rascunho                                                                                 | Exibicao em Codigo (Regra 8)                                                                 | Proposta para Aprovacao                                                                                                               |
+| :------------------------- | :----------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| **Hero Subtitle**          | `Intro placeholder. Health topics by life stage, weight and exercise...`                                           | `To be confirmed.`                                                                           | "Care guides tailored to your pet's life stage, activity, nutrition notes and support routine."                                       |
+| **Popular Breeds**         | `POPULAR: [Breed], [Breed], [Breed]...`                                                                            | `To be confirmed`                                                                            | Cães: Labrador Retriever, French Bulldog, German Shepherd, Golden Retriever. Gatos: Maine Coon, Siamese, Ragdoll, Persian.            |
+| **Size Key**               | `Size key: Small up to [XX] lb · Medium [XX] to [XX] lb · Large [XX] to [XX] lb · Giant over [XX] lb`              | `Size key: Small up to To be confirmed lb · Medium To be confirmed to To be confirmed lb...` | `Size key: Small up to 25 lb · Medium 26 to 50 lb · Large 51 to 90 lb · Giant over 90 lb`                                             |
+| **Card Subtitle**          | `[Breed] - Care guide & health topics`                                                                             | `Care guide & health topics`                                                                 | Exibir o grupo oficial (ex: `Sporting group`, `Companion`) quando disponivel no catalogo de conteudo.                                 |
+| **Missing breed copy**     | `Mixed breed or a breed we have not covered yet? Take the quiz for a routine and dose by your dog's size and age.` | `To be confirmed.`                                                                           | "Mixed breed or a breed we haven't covered yet? Take the pet quiz to find the ideal formula based on your pet's life stage and size." |
+| **Request a breed notice** | `Request a breed: To be confirmed. We are prioritizing our next batch of veterinary-reviewed breed guides.`        | `Request a breed: To be confirmed.`                                                          | "Request a breed: We are collecting requests for our upcoming series of breed care guides."                                           |
 
 ---
 
-## 2. Decisoes de Conformidade Regulamentar (Regra 8)
+## 2. Decisoes de Conformidade Regulamentar (Regra 8 e Revisão)
 
 1. **Avisos Pet Obrigatórios**: A rota inclui `<PetRegulatoryNotice />`, garantindo que "For animal use only" e o disclaimer da FDA para produtos animais sejam exibidos.
-2. **Alegações de Saúde**: Nenhuma alegação terapêutica ou veterinária não comprovada foi inserida. Os textos limitam-se à navegação e tópicos de cuidados gerais.
-3. **Links para Guias**: Conforme diretriz do usuário, os links dos cartões não apontam para a rota inexistente `/pet/breeds/[raca]` (que será implementada na W5-08), direcionando com segurança para `/pet/quiz`.
+2. **Alegações de Saúde e Doses Removidas**: Nenhuma alegação terapêutica, dose por peso ou menção a revisão veterinária não comprovada existe no código de produção. Todos os trechos usam `To be confirmed.` no site.
+3. **Filtro de Espécie Ativo**: O seletor Dogs / Cats filtra ativamente as raças exibidas.
+4. **Alvos Táteis Acessíveis**: Botões do índice A-Z possuem dimensão mínima de 44 × 44 px (`min-w-11 min-h-11`), satisfazendo a Regra 9 do AGENTS.md.
+5. **Links Seguros**: Links dos cartões direcionam para o quiz com rótulo acessível explícito (`Take the pet quiz`), não quebrando navegação antes da publicação dos guias individuais.
