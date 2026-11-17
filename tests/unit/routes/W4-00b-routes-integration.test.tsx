@@ -44,6 +44,9 @@ vi.mock("next/headers", () => ({
 
 import TrackOrderPage from "@/app/(shared)/track/page";
 import { OrderLookup } from "@/app/(shared)/track/_components/order-lookup";
+import { TrackView } from "@/app/(shared)/track/_components/track-view";
+import { lookupOrderAction } from "@/app/(shared)/track/_components/actions";
+import { DEFAULT_MARKET } from "@/lib/market";
 import {
   lookupOrder as helpLookupOrder,
   sendContactMessage,
@@ -164,6 +167,73 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       expect(emailInput.getAttribute("aria-describedby")).toContain(
         "order-lookup-error"
       );
+    });
+
+    it("executa lookupOrderAction via Server Action POST sem colocar email na URL nem logar PII", async () => {
+      mockLookupGuestOrder.mockResolvedValue(sampleGuestOrder);
+      const consoleLogSpy = vi
+        .spyOn(console, "log")
+        .mockImplementation(() => {});
+      const consoleInfoSpy = vi
+        .spyOn(console, "info")
+        .mockImplementation(() => {});
+
+      const formData = new FormData();
+      formData.set("orderNumber", "TEST-NL-0001");
+      formData.set("email", "test@example.com");
+
+      const result = await lookupOrderAction(formData);
+      expect(result.status).toBe("found");
+      if (result.status === "found") {
+        expect(result.order.orderNumber).toBe("TEST-NL-0001");
+      }
+
+      // Garante que o provider foi chamado corretamente
+      expect(mockLookupGuestOrder).toHaveBeenCalledWith(
+        "TEST-NL-0001",
+        "test@example.com"
+      );
+
+      // Garante zero logs de dados pessoais
+      const logs = [...consoleLogSpy.mock.calls, ...consoleInfoSpy.mock.calls]
+        .flat()
+        .join(" ");
+      expect(logs).not.toContain("test@example.com");
+
+      consoleLogSpy.mockRestore();
+      consoleInfoSpy.mockRestore();
+    });
+
+    it("TrackView transiciona de Estado A para Estado B ao receber pedido encontrado via ação", async () => {
+      const { rerender } = render(
+        <TrackView
+          signInHref="/account/login"
+          market={DEFAULT_MARKET}
+          initialOrder={null}
+        />
+      );
+
+      // Inicialmente em Estado A (formulário de busca)
+      expect(
+        screen.getByRole("heading", { name: "Find your order" })
+      ).toBeDefined();
+      expect(
+        screen.queryByRole("heading", { name: /Order #TEST-NL-0001/ })
+      ).toBeNull();
+
+      // Transiciona para Estado B com o pedido encontrado
+      rerender(
+        <TrackView
+          signInHref="/account/login"
+          market={DEFAULT_MARKET}
+          initialOrder={sampleGuestOrder}
+        />
+      );
+
+      expect(
+        screen.getByRole("heading", { name: "Order #TEST-NL-0001" })
+      ).toBeDefined();
+      expect(screen.getAllByText("Delivered").length).toBeGreaterThan(0);
     });
   });
 
