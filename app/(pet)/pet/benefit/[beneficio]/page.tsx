@@ -301,12 +301,6 @@ export default async function BenefitCollectionPage({ params }: PageProps) {
               </li>
             ))}
           </ul>
-          <Link
-            href="/pet/journal"
-            className="mt-5 inline-flex min-h-11 items-center rounded-pill border border-border px-5 font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-          >
-            Visit the journal
-          </Link>
         </section>
 
         <section
