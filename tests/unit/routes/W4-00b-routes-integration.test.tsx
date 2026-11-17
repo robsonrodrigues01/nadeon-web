@@ -208,7 +208,8 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       consoleInfoSpy.mockRestore();
     });
 
-    it("TrackView transiciona de Estado A para Estado B ao receber pedido encontrado via ação", async () => {
+    it("TrackView transiciona do formulário para o pedido ao submeter uma busca encontrada", async () => {
+      mockLookupGuestOrder.mockResolvedValue(sampleGuestOrder);
       render(<TrackView signInHref="/account/login" market={DEFAULT_MARKET} />);
 
       // Inicialmente em Estado A (formulário de busca)
@@ -218,6 +219,25 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       expect(
         screen.queryByRole("heading", { name: /Order #TEST-NL-0001/ })
       ).toBeNull();
+
+      fireEvent.change(screen.getByLabelText("Order number"), {
+        target: { value: "TEST-NL-0001" },
+      });
+      fireEvent.change(screen.getByLabelText("Email"), {
+        target: { value: "test@example.com" },
+      });
+      fireEvent.submit(screen.getByLabelText("Order number").closest("form")!);
+
+      expect(
+        await screen.findByRole("heading", { name: "Order #TEST-NL-0001" })
+      ).toBeDefined();
+      expect(
+        screen.queryByRole("heading", { name: "Find your order" })
+      ).toBeNull();
+      expect(mockLookupGuestOrder).toHaveBeenCalledWith(
+        "TEST-NL-0001",
+        "test@example.com"
+      );
     });
 
     it("TrackOrderPage não consulta pedido via searchParams nem lê e-mail da URL", async () => {
@@ -226,6 +246,7 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       const jsx = await TrackOrderPage({
         searchParams: Promise.resolve({
           orderNumber: "TEST-NL-0001",
+          email: "url@example.com",
         }),
       });
       render(jsx);
@@ -236,6 +257,9 @@ describe("W4-00b: Routes Integration & Contract Bindings", () => {
       expect(
         screen.getByRole("heading", { name: "Find your order" })
       ).toBeDefined();
+      expect((screen.getByLabelText("Email") as HTMLInputElement).value).toBe(
+        ""
+      );
     });
   });
 
