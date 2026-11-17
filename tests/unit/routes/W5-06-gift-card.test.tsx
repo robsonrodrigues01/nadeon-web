@@ -11,6 +11,8 @@ import {
 import GiftCardPage, { generateMetadata } from "@/app/(shared)/gift-card/page";
 import { GiftCardPurchaseForm } from "@/app/(shared)/gift-card/_components/gift-card-purchase-form";
 import { MockGiftCardProvider } from "@/lib/providers/client";
+import { giftCardProvider as serverGiftCardProvider } from "@/lib/providers";
+import { prepareGiftCardPurchase } from "@/app/(shared)/gift-card/actions";
 import { DEFAULT_MARKET } from "@/lib/market";
 
 describe("W5-06 /gift-card Route & Semantic Controls", () => {
@@ -20,6 +22,9 @@ describe("W5-06 /gift-card Route & Semantic Controls", () => {
 
   afterEach(() => {
     cleanup();
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
+    vi.resetModules();
   });
 
   it("exports valid metadata for /gift-card", async () => {
@@ -218,14 +223,90 @@ describe("W5-06 /gift-card Route & Semantic Controls", () => {
     ).toBe(true);
   });
 
+  it("blocks a positive custom amount when the provider has no approved range", async () => {
+    const provider = new MockGiftCardProvider();
+    const prepareSpy = vi.spyOn(serverGiftCardProvider, "preparePurchase");
+    render(
+      <GiftCardPurchaseForm provider={provider} market={DEFAULT_MARKET} />
+    );
+
+    fireEvent.change(screen.getByLabelText(/recipient name/i), {
+      target: { value: "TEST Recipient" },
+    });
+    fireEvent.change(screen.getByLabelText(/recipient email/i), {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText(/your name/i), {
+      target: { value: "TEST Sender" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /custom amount/i }));
+    fireEvent.change(screen.getByLabelText(/enter custom amount/i), {
+      target: { value: "75" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /add to cart/i }));
+
+    expect((await screen.findByRole("alert")).textContent).toMatch(
+      /to be confirmed|approved/i
+    );
+    expect(prepareSpy).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    { approved: [], amount: 75 },
+    {
+      approved: [
+        { amount: 50, currencyCode: "USD" },
+        { amount: 100, currencyCode: "USD" },
+      ],
+      amount: 125,
+    },
+  ])(
+    "rejects a server purchase outside its approved range ($amount)",
+    async ({ approved, amount }) => {
+      vi.spyOn(serverGiftCardProvider, "getAvailableAmounts").mockResolvedValue(
+        approved
+      );
+
+      await expect(
+        prepareGiftCardPurchase({
+          amount: { amount, currencyCode: "USD" },
+          design: "espresso",
+          recipientName: "TEST Recipient",
+          recipientEmail: "test@example.com",
+          senderName: "TEST Sender",
+          deliveryDate: "2026-12-01",
+        })
+      ).rejects.toThrow(/approved range/i);
+    }
+  );
+
+  it.each(["mock", "live"] as const)(
+    "selects the %s gift card provider in the client registry",
+    async (mode) => {
+      vi.stubEnv("PROVIDERS", mode);
+      vi.resetModules();
+      const providers = await import("@/lib/providers/client");
+
+      expect(providers.giftCardProvider).toBe(
+        mode === "live"
+          ? providers.liveGiftCardProvider
+          : providers.mockGiftCardProvider
+      );
+    }
+  );
+
   it("submits valid purchase through provider.preparePurchase and adds gift card to real cart provider without error", async () => {
     const providerWithAmounts: MockGiftCardProvider =
       new MockGiftCardProvider();
+    vi.spyOn(serverGiftCardProvider, "getAvailableAmounts").mockResolvedValue([
+      { amount: 50, currencyCode: "USD" },
+      { amount: 100, currencyCode: "USD" },
+    ]);
     vi.spyOn(providerWithAmounts, "getAvailableAmounts").mockResolvedValue([
       { amount: 50, currencyCode: "USD" },
       { amount: 100, currencyCode: "USD" },
     ]);
-    const prepareSpy = vi.spyOn(providerWithAmounts, "preparePurchase");
+    const prepareSpy = vi.spyOn(serverGiftCardProvider, "preparePurchase");
 
     render(
       <GiftCardPurchaseForm

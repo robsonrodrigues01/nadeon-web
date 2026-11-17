@@ -5,10 +5,13 @@ import {
   type GiftCardDesign,
   type GiftCardProvider,
   GiftCardPurchaseInputSchema,
+  isGiftCardAmountWithinApprovedRange,
 } from "@/lib/contracts/gift-card";
+import type { Money } from "@/lib/contracts/catalog";
 import type { Market } from "@/lib/market/types";
 import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { cartProvider, giftCardProvider } from "@/lib/providers/client";
+import { prepareGiftCardPurchase } from "../actions";
 import { GiftCardPreview } from "./gift-card-preview";
 
 interface GiftCardPurchaseFormProps {
@@ -47,15 +50,21 @@ export function GiftCardPurchaseForm({
   const [isPending, startTransition] = useTransition();
 
   // Load available amounts if provider returns any
-  const [availablePresets, setAvailablePresets] = useState<number[]>([]);
+  const [availablePresets, setAvailablePresets] = useState<Money[]>([]);
 
   useEffect(() => {
-    activeProvider.getAvailableAmounts(market.currency.code).then((amounts) => {
-      if (amounts && amounts.length > 0) {
-        setAvailablePresets(amounts.map((m) => m.amount));
-        setPresetAmount(amounts[0].amount);
-      }
-    });
+    activeProvider
+      .getAvailableAmounts(market.currency.code)
+      .then((amounts) => {
+        const matchingCurrency = amounts.filter(
+          (amount) => amount.currencyCode === market.currency.code
+        );
+        setAvailablePresets(matchingCurrency);
+        if (matchingCurrency.length > 0) {
+          setPresetAmount(matchingCurrency[0].amount);
+        }
+      })
+      .catch(() => setAvailablePresets([]));
   }, [activeProvider, market.currency.code]);
 
   // Compute effective amount
@@ -72,6 +81,16 @@ export function GiftCardPurchaseForm({
           market
         )
       : "To be confirmed";
+  const approvedMinimum = availablePresets.length
+    ? Math.min(...availablePresets.map((amount) => amount.amount))
+    : undefined;
+  const approvedMaximum = availablePresets.length
+    ? Math.max(...availablePresets.map((amount) => amount.amount))
+    : undefined;
+  const formattedLimits =
+    approvedMinimum !== undefined && approvedMaximum !== undefined
+      ? `${formatMoneyWithMarket({ amount: approvedMinimum, currencyCode: market.currency.code }, market)} – ${formatMoneyWithMarket({ amount: approvedMaximum, currencyCode: market.currency.code }, market)}`
+      : "To be confirmed";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,8 +102,18 @@ export function GiftCardPurchaseForm({
       return;
     }
 
-    if (availablePresets.length === 0 && !isCustomAmount) {
+    if (availablePresets.length === 0) {
       setErrorMessage("Gift card amounts are To be confirmed.");
+      return;
+    }
+
+    if (
+      !isGiftCardAmountWithinApprovedRange(
+        { amount: numericAmount, currencyCode: market.currency.code },
+        availablePresets
+      )
+    ) {
+      setErrorMessage("Gift card amount is outside the approved range.");
       return;
     }
 
@@ -114,7 +143,7 @@ export function GiftCardPurchaseForm({
 
     startTransition(async () => {
       try {
-        const result = await activeProvider.preparePurchase(parsed.data);
+        const result = await prepareGiftCardPurchase(parsed.data);
 
         // Add to cart using the ID returned by preparePurchase
         if (typeof cartProvider.addLines === "function") {
@@ -177,18 +206,16 @@ export function GiftCardPurchaseForm({
               className="grid grid-cols-2 sm:grid-cols-4 gap-2.5"
             >
               {availablePresets.map((val) => {
-                const isSelected = !isCustomAmount && presetAmount === val;
-                const label = formatMoneyWithMarket(
-                  { amount: val, currencyCode: market.currency.code },
-                  market
-                );
+                const isSelected =
+                  !isCustomAmount && presetAmount === val.amount;
+                const label = formatMoneyWithMarket(val, market);
                 return (
                   <button
-                    key={val}
+                    key={`${val.currencyCode}-${val.amount}`}
                     type="button"
                     onClick={() => {
                       setIsCustomAmount(false);
-                      setPresetAmount(val);
+                      setPresetAmount(val.amount);
                     }}
                     aria-pressed={isSelected}
                     className={`min-h-12 py-3 px-2 rounded-xl font-bold text-sm sm:text-base border transition-all cursor-pointer text-center ${
@@ -221,7 +248,7 @@ export function GiftCardPurchaseForm({
             >
               <span>Custom amount</span>
               <span className="text-xs text-fg-muted">
-                Limits: To be confirmed
+                Limits: {formattedLimits}
               </span>
             </button>
 
@@ -240,7 +267,8 @@ export function GiftCardPurchaseForm({
                   <input
                     id="custom-gift-amount"
                     type="number"
-                    min={1}
+                    min={approvedMinimum ?? 1}
+                    max={approvedMaximum}
                     step={1}
                     value={customAmount}
                     onChange={(e) => setCustomAmount(e.target.value)}

@@ -1,8 +1,8 @@
 import type { CartProvider } from "@/lib/contracts/cart";
 import type { GiftCardProvider } from "@/lib/contracts/gift-card";
 import { mockCartProvider, useCartStore } from "./mock/cart";
-import { MockGiftCardProvider } from "./mock/gift-card";
-import { liveCartProvider } from "./live";
+import { MockGiftCardProvider, mockGiftCardProvider } from "./mock/gift-card";
+import { liveCartProvider, liveGiftCardProvider } from "./live";
 
 const isLive = process.env.PROVIDERS === "live";
 
@@ -10,13 +10,16 @@ export const cartProvider: CartProvider = isLive
   ? liveCartProvider
   : mockCartProvider;
 
-// Temporário até o registry expor giftCardProvider na W5-00c
-export const giftCardProvider: GiftCardProvider = new MockGiftCardProvider();
+export const giftCardProvider: GiftCardProvider = isLive
+  ? liveGiftCardProvider
+  : mockGiftCardProvider;
 
 export {
   useCartStore,
   mockCartProvider,
+  mockGiftCardProvider,
   liveCartProvider,
+  liveGiftCardProvider,
   MockGiftCardProvider,
 };
 export type {
