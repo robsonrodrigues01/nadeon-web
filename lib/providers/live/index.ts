@@ -56,6 +56,12 @@ import type {
   MailyteProvider,
   MailyteTrackingResult,
 } from "@/lib/contracts/mailyte";
+import {
+  MailyteCheckoutStartedInputSchema,
+  MailyteEventSchema,
+  MailyteOrderCompletedInputSchema,
+} from "@/lib/contracts/mailyte";
+import { z } from "zod";
 
 const NOT_IMPLEMENTED_MSG = "not implemented: onda 4";
 
@@ -280,18 +286,128 @@ export class LiveCampaignConfig implements CampaignConfig {
 }
 
 export class LiveMailyteProvider implements MailyteProvider {
-  async trackEvent(_event: MailyteEvent): Promise<MailyteTrackingResult> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
+  private async postContactEvent(
+    event: MailyteEvent
+  ): Promise<MailyteTrackingResult> {
+    const parsedEvent = MailyteEventSchema.safeParse(event);
+    if (
+      !parsedEvent.success ||
+      !/^[a-z][a-z0-9_]{0,63}$/.test(parsedEvent.data?.eventName ?? "")
+    ) {
+      throw new Error("Invalid Mailyte event payload");
+    }
+    if (!parsedEvent.data.email) {
+      throw new Error("Mailyte contact events require an email address");
+    }
+
+    const apiKey = process.env.MAILYTE_API_KEY;
+    if (!apiKey) {
+      throw new Error("MAILYTE_API_KEY is required for the live provider");
+    }
+
+    const response = await fetch(
+      "https://app.mailyte.com/api/v1/contact-events",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          event: parsedEvent.data.eventName,
+          email: parsedEvent.data.email,
+          unique_id: parsedEvent.data.uniqueId,
+          occurred_at: parsedEvent.data.timestamp,
+          properties: parsedEvent.data.properties,
+        }),
+      }
+    );
+
+    if (response.status === 403) {
+      const errorBody = await response.text().catch(() => "");
+      const requiredScope = errorBody.match(
+        /\b(contact_events:write|contacts:write|messages:send)\b/
+      )?.[0];
+      throw new Error(
+        `Mailyte request forbidden (403); missing scope${requiredScope ? `: ${requiredScope}` : ""}`
+      );
+    }
+    if (response.status === 429) {
+      const retryAfter = response.headers.get("Retry-After");
+      const seconds =
+        retryAfter && /^\d+$/.test(retryAfter)
+          ? `${retryAfter} seconds`
+          : "unspecified";
+      throw new Error(`Mailyte rate limited (429); Retry-After: ${seconds}`);
+    }
+    if (response.status !== 202) {
+      throw new Error(`Mailyte request failed (${response.status})`);
+    }
+
+    const resultSchema = z.object({
+      data: z.object({ rejected: z.array(z.unknown()) }),
+    });
+    const result = resultSchema.safeParse(
+      await response.json().catch(() => null)
+    );
+    if (!result.success) {
+      throw new Error("Mailyte returned an invalid contact event response");
+    }
+    if (result.data.data.rejected.length > 0) {
+      throw new Error(
+        `Mailyte rejected ${result.data.data.rejected.length} contact event(s)`
+      );
+    }
+
+    // The API has no event ID; use uniqueId as the correlation ID.
+    return {
+      success: true,
+      eventId: parsedEvent.data.uniqueId,
+      uniqueId: parsedEvent.data.uniqueId,
+    };
+  }
+
+  async trackEvent(event: MailyteEvent): Promise<MailyteTrackingResult> {
+    return this.postContactEvent(event);
   }
   async sendCheckoutStarted(
-    _input: MailyteCheckoutStartedInput
+    input: MailyteCheckoutStartedInput
   ): Promise<MailyteTrackingResult> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
+    const parsed = MailyteCheckoutStartedInputSchema.safeParse(input);
+    if (!parsed.success) {
+      throw new Error("Invalid checkout_started payload");
+    }
+    return this.postContactEvent({
+      eventName: "checkout_started",
+      email: parsed.data.email,
+      uniqueId: parsed.data.idempotencyKey ?? parsed.data.checkoutId,
+      properties: {
+        totalPrice: parsed.data.totalPrice,
+        currency: parsed.data.currency,
+        lineItemsCount: parsed.data.lineItemsCount,
+        ...parsed.data.properties,
+      },
+    });
   }
   async sendOrderCompleted(
-    _input: MailyteOrderCompletedInput
+    input: MailyteOrderCompletedInput
   ): Promise<MailyteTrackingResult> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
+    const parsed = MailyteOrderCompletedInputSchema.safeParse(input);
+    if (!parsed.success) {
+      throw new Error("Invalid order_completed payload");
+    }
+    return this.postContactEvent({
+      eventName: "order_completed",
+      email: parsed.data.email,
+      uniqueId: parsed.data.idempotencyKey ?? parsed.data.orderId,
+      properties: {
+        orderNumber: parsed.data.orderNumber,
+        totalPrice: parsed.data.totalPrice,
+        currency: parsed.data.currency,
+        lineItemsCount: parsed.data.lineItemsCount,
+        ...parsed.data.properties,
+      },
+    });
   }
 }
 
