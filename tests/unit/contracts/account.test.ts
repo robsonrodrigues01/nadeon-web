@@ -112,4 +112,19 @@ describe("AccountProvider Contract", () => {
     const petsAfterAdd = await mockAccountProvider.getPets();
     expect(petsAfterAdd.some((p) => p.name === "Luna")).toBe(true);
   });
+
+  it("removes a pet profile by id", async () => {
+    const pet = await mockAccountProvider.savePet({
+      id: "pet_TEST_remove",
+      name: "TEST Pet",
+      species: "dog",
+      breed: "Mixed",
+    });
+
+    await mockAccountProvider.removePet(pet.id);
+
+    expect(
+      (await mockAccountProvider.getPets()).some((item) => item.id === pet.id)
+    ).toBe(false);
+  });
 });

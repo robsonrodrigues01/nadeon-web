@@ -8,6 +8,7 @@ import {
   type OrderLine,
   type Pet,
   type PetInput,
+  type PetProfileProvider,
   type ProfileInput,
   type Session,
   CustomerProfileSchema,
@@ -63,6 +64,7 @@ const mockOrders: Order[] = [
     items: [
       {
         title: "BioHack - 2 Jars (60 days)",
+        productSlug: "biohack",
         quantity: 1,
         price: { amount: 118, currencyCode: "USD" },
         image: "/renders/biohack.png",
@@ -98,6 +100,7 @@ const mockOrders: Order[] = [
     items: [
       {
         title: "More Good Years Soft Chews - 1 Jar",
+        productSlug: "more-good-years",
         quantity: 1,
         price: { amount: 44, currencyCode: "USD" },
         image: "/renders/more-good-years.png",
@@ -139,7 +142,9 @@ const mockPets: Pet[] = [
   }),
 ];
 
-export class MockAccountProvider implements AccountProvider {
+export class MockAccountProvider
+  implements AccountProvider, PetProfileProvider
+{
   async getSession(): Promise<Session | null> {
     return mockSession ? { ...mockSession } : null;
   }
@@ -255,6 +260,12 @@ export class MockAccountProvider implements AccountProvider {
     }
 
     return { ...newPet };
+  }
+
+  async removePet(id: string): Promise<void> {
+    const petIndex = mockPets.findIndex((pet) => pet.id === id);
+    if (petIndex < 0) throw new Error(`Pet not found: ${id}`);
+    mockPets.splice(petIndex, 1);
   }
 }
 

@@ -8,6 +8,7 @@ import {
   ReviewSummarySchema,
   SubmitReviewInputSchema,
 } from "@/lib/contracts/reviews";
+import { mockAccountProvider } from "@/lib/providers/mock/account";
 
 const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
   ReviewSchema.parse({
@@ -17,7 +18,6 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
     title: "Remarkable sustained energy and clarity",
     body: "After three weeks on BioHack, my afternoon brain fog is completely gone. Laboratory purity is evident.",
     authorName: "Sarah M.",
-    authorEmail: "sarah.m@example.com",
     verifiedBuyer: true,
     helpfulVotes: 14,
     createdAt: "2026-10-15T14:30:00.000Z",
@@ -30,7 +30,6 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
     title: "Best NAD+ formula on the market",
     body: "Clean formulation, no flush, and easy on the stomach. The 60-day subscription is great value.",
     authorName: "David K.",
-    authorEmail: "david.k@example.com",
     verifiedBuyer: true,
     helpfulVotes: 8,
     createdAt: "2026-10-22T09:15:00.000Z",
@@ -43,7 +42,7 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
     title: "My 11-year-old lab is acting like a puppy again",
     body: "Within two weeks Cooper was climbing stairs with ease and eager for our morning walks.",
     authorName: "Alex M.",
-    authorEmail: "alex.morgan@example.com",
+    petSpecies: "dog",
     verifiedBuyer: true,
     helpfulVotes: 23,
     createdAt: "2026-10-28T16:45:00.000Z",
@@ -69,9 +68,14 @@ export class MockReviewsProvider implements ReviewsProvider {
     if (filter?.rating) {
       pool = pool.filter((r) => r.rating === filter.rating);
     }
+    if (filter?.petSpecies) {
+      pool = pool.filter((r) => r.petSpecies === filter.petSpecies);
+    }
     if (filter?.hasImages) {
       pool = pool.filter((r) => r.images && r.images.length > 0);
     }
+
+    pool.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
     const total = pool.length;
     const offset = filter?.offset ?? 0;
@@ -122,6 +126,16 @@ export class MockReviewsProvider implements ReviewsProvider {
 
   async submit(payload: SubmitReviewInput): Promise<Review> {
     const validatedInput = SubmitReviewInputSchema.parse(payload);
+    const order = await mockAccountProvider.getOrder(validatedInput.orderId);
+    if (
+      !order ||
+      order.email?.toLowerCase() !== validatedInput.authorEmail.toLowerCase() ||
+      !order.items.some(
+        (item) => item.productSlug === validatedInput.productSlug
+      )
+    ) {
+      throw new Error("Review must be linked to a matching purchased order");
+    }
 
     const newReview = ReviewSchema.parse({
       id: `rev_${Math.random().toString(36).substring(2, 9)}`,
@@ -130,8 +144,8 @@ export class MockReviewsProvider implements ReviewsProvider {
       title: validatedInput.title,
       body: validatedInput.body,
       authorName: validatedInput.authorName,
-      authorEmail: validatedInput.authorEmail,
-      verifiedBuyer: false,
+      petSpecies: validatedInput.petSpecies,
+      verifiedBuyer: true,
       helpfulVotes: 0,
       createdAt: new Date().toISOString(),
       images: validatedInput.images || [],
