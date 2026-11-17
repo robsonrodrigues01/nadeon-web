@@ -2,7 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import Script from "next/script";
-import { useConsent, syncShopifyCustomerPrivacy } from "@/lib/consent";
+import {
+  useConsent,
+  syncShopifyCustomerPrivacy,
+  initShopifyCustomerPrivacy,
+  isShopifyCustomerPrivacyEnabled,
+} from "@/lib/consent";
 
 export function MeasurementScripts() {
   const { hasConsent, record } = useConsent();
@@ -13,6 +18,12 @@ export function MeasurementScripts() {
   const marketingAllowed = hasConsent("marketing");
   const previouslyAllowed = useRef({ analytics: false, marketing: false });
   const previousRecord = useRef<typeof record | undefined>(undefined);
+
+  useEffect(() => {
+    if (isShopifyCustomerPrivacyEnabled()) {
+      initShopifyCustomerPrivacy();
+    }
+  }, []);
 
   useEffect(() => {
     const trackers = window as typeof window & {

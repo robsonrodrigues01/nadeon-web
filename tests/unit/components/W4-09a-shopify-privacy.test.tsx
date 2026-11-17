@@ -6,7 +6,8 @@ import { MeasurementScripts } from "@/components/layout/measurement-scripts";
 import { CookieBanner } from "@/components/layout/cookie-banner";
 import {
   createShopifyCustomerPrivacyMock,
-  type ShopifyCustomerPrivacyMock,
+  createShopifyMock,
+  type ShopifyMock,
 } from "@/lib/consent/shopify-privacy";
 
 vi.mock("next/script", () => ({
@@ -43,13 +44,11 @@ function ConsentTestControls() {
 }
 
 describe("W4-09a Shopify Customer Privacy bridge", () => {
-  let shopifyMock: ShopifyCustomerPrivacyMock;
+  let shopifyGlobalMock: ShopifyMock;
 
   beforeEach(() => {
-    shopifyMock = createShopifyCustomerPrivacyMock();
-    (window as Window & { Shopify?: unknown }).Shopify = {
-      customerPrivacy: shopifyMock,
-    };
+    shopifyGlobalMock = createShopifyMock();
+    (window as Window & { Shopify?: unknown }).Shopify = shopifyGlobalMock;
     Object.defineProperty(document, "cookie", {
       writable: true,
       value: "",
@@ -67,7 +66,7 @@ describe("W4-09a Shopify Customer Privacy bridge", () => {
     delete (window as Window & { fbq?: unknown }).fbq;
   });
 
-  it("does not call Shopify Customer Privacy API when environment variable is unset", () => {
+  it("does not call Shopify Customer Privacy API or loadFeatures when environment variable is unset", () => {
     render(
       <ConsentProvider initialCountry="GB">
         <MeasurementScripts />
@@ -78,18 +77,21 @@ describe("W4-09a Shopify Customer Privacy bridge", () => {
 
     // Click Accept All
     fireEvent.click(screen.getByRole("button", { name: /^accept all$/i }));
-    expect(shopifyMock.history).toHaveLength(0);
+    expect(shopifyGlobalMock.loadCalls).toHaveLength(0);
+    expect(shopifyGlobalMock.customerPrivacy).toBeUndefined();
 
     // Click Reject
     fireEvent.click(screen.getByText("Trigger Reject"));
-    expect(shopifyMock.history).toHaveLength(0);
+    expect(shopifyGlobalMock.loadCalls).toHaveLength(0);
+    expect(shopifyGlobalMock.customerPrivacy).toBeUndefined();
 
     // Click Revoke
     fireEvent.click(screen.getByText("Trigger Revoke Both"));
-    expect(shopifyMock.history).toHaveLength(0);
+    expect(shopifyGlobalMock.loadCalls).toHaveLength(0);
+    expect(shopifyGlobalMock.customerPrivacy).toBeUndefined();
   });
 
-  it("calls setTrackingConsent with granted consent when user accepts cookies", () => {
+  it("calls loadFeatures and sets tracking consent with granted consent when user accepts cookies", () => {
     vi.stubEnv("NEXT_PUBLIC_SHOPIFY_CUSTOMER_PRIVACY", "true");
 
     render(
@@ -98,24 +100,29 @@ describe("W4-09a Shopify Customer Privacy bridge", () => {
         <CookieBanner forceVisible={true} />
       </ConsentProvider>
     );
-
-    expect(shopifyMock.history).toHaveLength(0);
 
     // Accept via cookie banner
     fireEvent.click(screen.getByRole("button", { name: /accept all/i }));
 
-    expect(shopifyMock.history).toHaveLength(1);
-    expect(shopifyMock.currentConsent).toEqual({
+    expect(shopifyGlobalMock.loadCalls).toEqual([
+      [{ name: "consent-tracking-api", version: "0.2" }],
+    ]);
+    expect(shopifyGlobalMock.customerPrivacy?.history).toHaveLength(1);
+    expect(shopifyGlobalMock.customerPrivacy?.currentConsent).toEqual({
       analytics: true,
       marketing: true,
       preferences: true,
       sale_of_data: true,
+      headlessStorefront: true,
+      storefrontRootDomain: expect.any(String),
     });
-    expect(shopifyMock.getTrackingConsent?.()).toBe("yes");
-    expect(shopifyMock.userCanBeTracked?.()).toBe(true);
+    expect(shopifyGlobalMock.customerPrivacy?.getTrackingConsent?.()).toBe(
+      "yes"
+    );
+    expect(shopifyGlobalMock.customerPrivacy?.userCanBeTracked?.()).toBe(true);
   });
 
-  it("calls setTrackingConsent with denied consent when user rejects cookies", () => {
+  it("calls loadFeatures and sets tracking consent with denied consent when user rejects cookies", () => {
     vi.stubEnv("NEXT_PUBLIC_SHOPIFY_CUSTOMER_PRIVACY", "true");
 
     render(
@@ -124,23 +131,28 @@ describe("W4-09a Shopify Customer Privacy bridge", () => {
         <CookieBanner forceVisible={true} />
       </ConsentProvider>
     );
-
-    expect(shopifyMock.history).toHaveLength(0);
 
     // Reject non-essential via cookie banner
     fireEvent.click(
       screen.getByRole("button", { name: /reject non-essential/i })
     );
 
-    expect(shopifyMock.history).toHaveLength(1);
-    expect(shopifyMock.currentConsent).toEqual({
+    expect(shopifyGlobalMock.loadCalls).toEqual([
+      [{ name: "consent-tracking-api", version: "0.2" }],
+    ]);
+    expect(shopifyGlobalMock.customerPrivacy?.history).toHaveLength(1);
+    expect(shopifyGlobalMock.customerPrivacy?.currentConsent).toEqual({
       analytics: false,
       marketing: false,
       preferences: true,
       sale_of_data: false,
+      headlessStorefront: true,
+      storefrontRootDomain: expect.any(String),
     });
-    expect(shopifyMock.getTrackingConsent?.()).toBe("no");
-    expect(shopifyMock.userCanBeTracked?.()).toBe(false);
+    expect(shopifyGlobalMock.customerPrivacy?.getTrackingConsent?.()).toBe(
+      "no"
+    );
+    expect(shopifyGlobalMock.customerPrivacy?.userCanBeTracked?.()).toBe(false);
   });
 
   it("calls setTrackingConsent when consent is revoked", () => {
@@ -164,40 +176,89 @@ describe("W4-09a Shopify Customer Privacy bridge", () => {
       </ConsentProvider>
     );
 
-    // Initial mount with explicit consent syncs to Shopify
-    expect(shopifyMock.history).toHaveLength(1);
-    expect(shopifyMock.getTrackingConsent?.()).toBe("yes");
+    // Initial mount with explicit consent triggers loadFeatures and syncs to Shopify
+    expect(shopifyGlobalMock.customerPrivacy?.history).toHaveLength(1);
+    expect(shopifyGlobalMock.customerPrivacy?.getTrackingConsent?.()).toBe(
+      "yes"
+    );
 
     // Revoke consent
     fireEvent.click(screen.getByText("Trigger Revoke Both"));
 
-    expect(shopifyMock.history.length).toBeGreaterThanOrEqual(2);
-    expect(shopifyMock.currentConsent).toEqual({
+    expect(
+      shopifyGlobalMock.customerPrivacy?.history.length
+    ).toBeGreaterThanOrEqual(2);
+    expect(shopifyGlobalMock.customerPrivacy?.currentConsent).toEqual({
       analytics: false,
       marketing: false,
       preferences: true,
       sale_of_data: false,
+      headlessStorefront: true,
+      storefrontRootDomain: expect.any(String),
     });
-    expect(shopifyMock.getTrackingConsent?.()).toBe("no");
+    expect(shopifyGlobalMock.customerPrivacy?.getTrackingConsent?.()).toBe(
+      "no"
+    );
   });
 
-  it("createShopifyCustomerPrivacyMock properly handles status checks and resets", () => {
-    const mock = createShopifyCustomerPrivacyMock();
-    expect(mock.getTrackingConsent?.()).toBe("pending");
-    expect(mock.userCanBeTracked?.()).toBe(false);
+  it("synchronizes directly without calling loadFeatures again when customerPrivacy is already pre-loaded", () => {
+    vi.stubEnv("NEXT_PUBLIC_SHOPIFY_CUSTOMER_PRIVACY", "true");
+    const directPrivacyMock = createShopifyCustomerPrivacyMock();
+    const loadFeaturesSpy = vi.fn();
 
-    mock.setTrackingConsent({
+    (window as Window & { Shopify?: unknown }).Shopify = {
+      loadFeatures: loadFeaturesSpy,
+      customerPrivacy: directPrivacyMock,
+    };
+
+    render(
+      <ConsentProvider initialCountry="GB">
+        <MeasurementScripts />
+        <CookieBanner forceVisible={true} />
+      </ConsentProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /accept all/i }));
+
+    // loadFeatures is not needed because customerPrivacy is already available
+    expect(loadFeaturesSpy).toHaveLength(0);
+    expect(directPrivacyMock.history).toHaveLength(1);
+    expect(directPrivacyMock.currentConsent).toEqual({
+      analytics: true,
+      marketing: true,
+      preferences: true,
+      sale_of_data: true,
+      headlessStorefront: true,
+      storefrontRootDomain: expect.any(String),
+    });
+  });
+
+  it("createShopifyMock and createShopifyCustomerPrivacyMock properly handle statuses and resets", () => {
+    const mock = createShopifyMock();
+    expect(mock.loadCalls).toHaveLength(0);
+    expect(mock.customerPrivacy).toBeUndefined();
+
+    mock.loadFeatures(
+      [{ name: "consent-tracking-api", version: "0.2" }],
+      () => {}
+    );
+    expect(mock.loadCalls).toHaveLength(1);
+    expect(mock.customerPrivacy).toBeDefined();
+
+    expect(mock.customerPrivacy?.getTrackingConsent?.()).toBe("pending");
+    expect(mock.customerPrivacy?.userCanBeTracked?.()).toBe(false);
+
+    mock.customerPrivacy?.setTrackingConsent({
       analytics: true,
       marketing: false,
       preferences: true,
       sale_of_data: false,
     });
-    expect(mock.getTrackingConsent?.()).toBe("partial");
-    expect(mock.userCanBeTracked?.()).toBe(true);
+    expect(mock.customerPrivacy?.getTrackingConsent?.()).toBe("partial");
+    expect(mock.customerPrivacy?.userCanBeTracked?.()).toBe(true);
 
     mock.reset();
-    expect(mock.currentConsent).toBeNull();
-    expect(mock.history).toHaveLength(0);
-    expect(mock.getTrackingConsent?.()).toBe("pending");
+    expect(mock.customerPrivacy).toBeUndefined();
+    expect(mock.loadCalls).toHaveLength(0);
   });
 });
