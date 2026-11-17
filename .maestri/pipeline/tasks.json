@@ -3486,14 +3486,14 @@
     "titulo": "/api/webhooks: verificação HMAC da Shopify, checkouts/create e orders/create enviam eventos pelo contrato do Mailyte (mock), products/update revalida páginas; testes com payloads de fixture",
     "nota": "parte de código da W4-06",
     "branch": "agy/W4-06a",
-    "revisor": "Lente"
+    "revisor": "Lupa"
   },
   {
     "onda": 4,
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T04:42:18.605Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3513,9 +3513,9 @@
     "depende_de": [
       "W4-08a"
     ],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T05:23:10.776Z",
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3556,9 +3556,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Teste instável W1-14 cart-drawer: falha só na suíte completa (Found multiple elements /one-time purchase/), passa isolado; corrigir isolamento (cleanup/escopo com within)",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T04:20:15.836Z",
+    "lease_ate": null,
     "branch": "agy/W4-13",
     "pr": "local",
     "criterios": [
@@ -3577,7 +3577,7 @@
     "depende_de": [],
     "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T04:44:26.637Z",
+    "lease_ate": "2026-11-17T04:49:17.986Z",
     "branch": "agy/W4-14",
     "pr": "local",
     "criterios": [
@@ -3586,5 +3586,23 @@
       "revisão APROVADO"
     ],
     "revisor": "Lente"
+  },
+  {
+    "id": "W4-15",
+    "onda": 4,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Teste instável W2-22 account-settings Delete account: falha cerca de 1 em 3 mesmo isolado (TypeError textContent de undefined; jsdom Not implemented navigation); já existia antes da W4-08a",
+    "depende_de": [],
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T05:16:41.869Z",
+    "branch": "agy/W4-15",
+    "pr": "local",
+    "criterios": [
+      "arquivo passa 10 vezes seguidas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
