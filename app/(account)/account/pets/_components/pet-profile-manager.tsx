@@ -240,7 +240,7 @@ export function PetProfileManager({ pets }: { pets: Pet[] }) {
         ))}
         <li>
           <Link
-            href="#add-pet"
+            href="#new-pet"
             className="flex min-h-32 flex-col items-center justify-center rounded-card border-2 border-dashed border-border p-5 text-center font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <span aria-hidden="true" className="text-3xl">
@@ -254,12 +254,12 @@ export function PetProfileManager({ pets }: { pets: Pet[] }) {
         </li>
       </ul>
       <section
-        id="add-pet"
-        aria-labelledby="add-pet-title"
+        id="new-pet"
+        aria-labelledby="new-pet-title"
         className="rounded-card border border-border bg-bg-elevated p-5 sm:p-8"
       >
         <h2
-          id="add-pet-title"
+          id="new-pet-title"
           className="mb-5 font-archivo text-xl font-extrabold uppercase"
         >
           Add a pet
