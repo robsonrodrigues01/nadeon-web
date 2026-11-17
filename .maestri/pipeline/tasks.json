@@ -3217,9 +3217,9 @@
     "depende_de": [
       "W4-00"
     ],
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T03:44:24.508Z",
+    "lease_ate": "2026-11-17T04:09:21.484Z",
     "pr": "local",
     "id": "W4-00b",
     "papel": "Frontend",
@@ -3451,9 +3451,9 @@
   {
     "onda": 4,
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T03:55:02.103Z",
+    "lease_ate": "2026-11-17T04:02:00.213Z",
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3470,9 +3470,9 @@
   {
     "onda": 4,
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T03:53:45.124Z",
+    "lease_ate": "2026-11-17T04:01:28.362Z",
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3484,12 +3484,13 @@
     "preset": "Gemini 3.8 Flash (AGY)",
     "titulo": "/api/webhooks: verificação HMAC da Shopify, checkouts/create e orders/create enviam eventos pelo contrato do Mailyte (mock), products/update revalida páginas; testes com payloads de fixture",
     "nota": "parte de código da W4-06",
-    "branch": "agy/W4-06a"
+    "branch": "agy/W4-06a",
+    "revisor": "Lente"
   },
   {
     "onda": 4,
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
     "lease_ate": "2026-11-17T03:55:09.872Z",
     "pr": "local",
@@ -3525,5 +3526,24 @@
     "titulo": "Ponte do banner de cookies com a Customer Privacy API da Shopify atrás de variável de ambiente, com mock e testes",
     "nota": "parte de código da W4-09; mexe no banner depois da W4-08a",
     "branch": "agy/W4-09a"
+  },
+  {
+    "id": "W4-12",
+    "onda": 4,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Remover o painel antigo app/(shared)/pipeline (591 linhas, dev-only), substituído por maestri/pipeline.html",
+    "depende_de": [],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W4-12",
+    "pr": "local",
+    "criterios": [
+      "rota removida sem import órfão",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "achado 3 da revisão ponytail do painel"
   }
 ]
