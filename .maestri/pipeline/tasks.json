@@ -3217,9 +3217,9 @@
     "depende_de": [
       "W4-00"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T04:09:21.484Z",
+    "lease_ate": "2026-11-17T04:42:30.990Z",
     "pr": "local",
     "id": "W4-00b",
     "papel": "Frontend",
@@ -3231,7 +3231,7 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "revisor": "Lupa"
+    "revisor": "Lente"
   },
   {
     "onda": 4,
@@ -3451,9 +3451,9 @@
   {
     "onda": 4,
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T04:02:00.213Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3465,14 +3465,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Script que compara data/products/*.json com a Shopify (handles, preços, variantes, selling plans) e falha na diferença; testado com resposta gravada (fixture), roda de verdade quando houver credenciais",
     "nota": "parte de código da W4-03; verificação real continua bloqueada",
-    "branch": "agy/W4-03a"
+    "branch": "agy/W4-03a",
+    "revisor": "Lente"
   },
   {
     "onda": 4,
     "depende_de": [],
     "status": "para_revisao",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T04:01:28.362Z",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T04:41:58.319Z",
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3492,7 +3493,7 @@
     "depende_de": [],
     "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T03:55:09.872Z",
+    "lease_ate": "2026-11-17T04:42:18.605Z",
     "pr": "local",
     "criterios": [
       "testes com fixture",
@@ -3504,7 +3505,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Carregador de medição (GA4, Clarity, Meta Pixel) ligado ao consentimento do banner, IDs por variável de ambiente (ausente = desligado), sem carregar nada antes do consentimento",
     "nota": "parte de código da W4-08",
-    "branch": "agy/W4-08a"
+    "branch": "agy/W4-08a",
+    "revisor": "Lupa"
   },
   {
     "onda": 4,
@@ -3534,9 +3536,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Remover o painel antigo app/(shared)/pipeline (591 linhas, dev-only), substituído por maestri/pipeline.html",
     "depende_de": [],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T04:33:55.336Z",
     "branch": "agy/W4-12",
     "pr": "local",
     "criterios": [
@@ -3544,6 +3546,45 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "achado 3 da revisão ponytail do painel"
+    "nota": "achado 3 da revisão ponytail do painel",
+    "revisor": "Lupa"
+  },
+  {
+    "id": "W4-13",
+    "onda": 4,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Teste instável W1-14 cart-drawer: falha só na suíte completa (Found multiple elements /one-time purchase/), passa isolado; corrigir isolamento (cleanup/escopo com within)",
+    "depende_de": [],
+    "status": "para_revisao",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T04:20:15.836Z",
+    "branch": "agy/W4-13",
+    "pr": "local",
+    "criterios": [
+      "passa na suíte completa 3 vezes seguidas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "revisor": "Lupa"
+  },
+  {
+    "id": "W4-14",
+    "onda": 4,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Teste instável W3-42 deferred newsletter: falha só na suíte completa (Unable to find heading /Join the Nadeon list/), passa isolado; provável espera curta para o carregamento adiado",
+    "depende_de": [],
+    "status": "para_revisao",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T04:44:26.637Z",
+    "branch": "agy/W4-14",
+    "pr": "local",
+    "criterios": [
+      "passa na suíte completa 3 vezes seguidas",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "revisor": "Lente"
   }
 ]
