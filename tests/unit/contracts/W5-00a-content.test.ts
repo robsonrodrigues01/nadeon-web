@@ -68,6 +68,8 @@ describe("W5-00a content contracts and mock", () => {
       "Giant",
     ]);
     expect(breeds.map((breed) => breed.title)).toContain("Labrador Retriever");
+    expect(labrador?.description).toBe("To be confirmed");
+    expect(labrador?.description).not.toMatch(/\b\d+\s*to\s*\d+\s*lb\b/i);
     expect(labrador?.facts.size).toBe("To be confirmed");
     expect(labrador?.sections[0].title).toBe("About the breed");
     expect(labrador?.sections[0].body).toBe("To be confirmed");
