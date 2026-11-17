@@ -24,6 +24,7 @@ import type {
   OrderLine,
   Pet,
   PetInput,
+  PetProfileProvider,
   ProfileInput,
   Session,
 } from "@/lib/contracts/account";
@@ -143,7 +144,9 @@ export class LiveCartProvider implements CartProvider {
   }
 }
 
-export class LiveAccountProvider implements AccountProvider {
+export class LiveAccountProvider
+  implements AccountProvider, PetProfileProvider
+{
   async getSession(): Promise<Session | null> {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
@@ -183,6 +186,9 @@ export class LiveAccountProvider implements AccountProvider {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
   async savePet(_pet: PetInput): Promise<Pet> {
+    throw new Error(NOT_IMPLEMENTED_MSG);
+  }
+  async removePet(_id: string): Promise<void> {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
 }
