@@ -92,9 +92,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
           <div className="min-w-0 space-y-10">
             <p className="border-l-2 border-accent pl-5 text-sm text-fg-muted">
-              {article.audience === "pet"
-                ? "Final copy will be written and reviewed by a veterinarian."
-                : "Final article copy will be written and reviewed."}
+              {PENDING}
             </p>
             {article.sections.map((section, index) => (
               <section
@@ -113,7 +111,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
                   {section.title}
                 </h2>
                 <p className="mt-5 max-w-3xl text-base leading-relaxed">
-                  {section.body === PENDING ? PENDING : section.body}
+                  {PENDING}
                 </p>
               </section>
             ))}
