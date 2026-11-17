@@ -4,7 +4,11 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import BreedIndexPage, { generateMetadata } from "@/app/(pet)/pet/breeds/page";
 import { BreedBrowser } from "@/app/(pet)/pet/breeds/_components/breed-browser";
-import type { BreedGuide, BreedIndex } from "@/lib/contracts/content";
+import {
+  BreedGuideSchema,
+  type BreedGuide,
+  type BreedIndex,
+} from "@/lib/contracts/content";
 
 const mockBreedIndex: BreedIndex = {
   title: "Care guides by breed",
@@ -18,6 +22,7 @@ const mockBreedGuides: BreedGuide[] = [
   {
     slug: "labrador-retriever",
     title: "Labrador Retriever",
+    species: "Dogs",
     description: "To be confirmed",
     readingMinutes: 9,
     facts: {
@@ -39,6 +44,7 @@ const mockBreedGuides: BreedGuide[] = [
   {
     slug: "french-bulldog",
     title: "French Bulldog",
+    species: "Dogs",
     description: "To be confirmed",
     readingMinutes: 7,
     facts: {
@@ -285,6 +291,42 @@ describe("W5-07 /pet/breeds Route & Semantic Controls", () => {
     expect(
       screen.getByRole("heading", { level: 2, name: "Maine Coon" })
     ).toBeDefined();
+  });
+
+  it("rejects breed guides with missing or unsupported species", () => {
+    const missingSpecies = { ...mockBreedGuides[0] };
+    delete (missingSpecies as Partial<BreedGuide>).species;
+
+    expect(BreedGuideSchema.safeParse(missingSpecies).success).toBe(false);
+    expect(
+      BreedGuideSchema.safeParse({
+        ...mockBreedGuides[0],
+        species: "catfish",
+      }).success
+    ).toBe(false);
+  });
+
+  it("does not display an unknown species in either Dogs or Cats filter", () => {
+    const unknownSpecies = {
+      ...mockBreedGuides[0],
+      slug: "unknown-species",
+      title: "Unknown Species Breed",
+      species: "Birds",
+    } as unknown as BreedGuide;
+    render(
+      <BreedBrowser
+        initialBreeds={[unknownSpecies]}
+        breedIndex={mockBreedIndex}
+      />
+    );
+
+    expect(
+      screen.queryByRole("heading", { level: 2, name: "Unknown Species Breed" })
+    ).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: /^cats$/i }));
+    expect(
+      screen.queryByRole("heading", { level: 2, name: "Unknown Species Breed" })
+    ).toBeNull();
   });
 
   it("ensures card link label and destination match (shows quiz label, not misleading breed guide)", async () => {

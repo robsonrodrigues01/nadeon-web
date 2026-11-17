@@ -11,14 +11,6 @@ interface BreedBrowserProps {
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-function getBreedSpecies(breed: BreedGuide): "Dogs" | "Cats" {
-  if (breed.species) {
-    if (breed.species.toLowerCase().includes("cat")) return "Cats";
-    if (breed.species.toLowerCase().includes("dog")) return "Dogs";
-  }
-  return "Dogs";
-}
-
 export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null);
@@ -32,8 +24,7 @@ export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
     return initialBreeds.filter((breed) => {
       // Species filter
       if (selectedSpecies) {
-        const breedSpecies = getBreedSpecies(breed);
-        if (breedSpecies !== selectedSpecies) {
+        if (breed.species !== selectedSpecies) {
           return false;
         }
       }
