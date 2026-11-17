@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PetSpeciesSchema } from "./account";
 
 export const ReviewSchema = z.object({
   id: z.string(),
@@ -7,7 +8,7 @@ export const ReviewSchema = z.object({
   title: z.string(),
   body: z.string(),
   authorName: z.string(),
-  authorEmail: z.string().email().optional(),
+  petSpecies: PetSpeciesSchema.optional(),
   verifiedBuyer: z.boolean().default(false),
   helpfulVotes: z.number().int().nonnegative().default(0),
   createdAt: z.string(),
@@ -15,10 +16,17 @@ export const ReviewSchema = z.object({
 });
 export type Review = z.infer<typeof ReviewSchema>;
 
+export const StoredReviewSchema = ReviewSchema.extend({
+  orderId: z.string().min(1),
+});
+export type StoredReview = z.infer<typeof StoredReviewSchema>;
+
 export const ReviewsFilterSchema = z.object({
   productSlug: z.string().optional(),
   rating: z.number().int().min(1).max(5).optional(),
+  petSpecies: PetSpeciesSchema.optional(),
   hasImages: z.boolean().optional(),
+  sort: z.enum(["most_recent"]).optional(),
   limit: z.number().int().positive().optional(),
   offset: z.number().int().nonnegative().optional(),
   includeDevSamples: z.boolean().optional(),
@@ -34,12 +42,14 @@ export const ReviewSummarySchema = z.object({
 export type ReviewSummary = z.infer<typeof ReviewSummarySchema>;
 
 export const SubmitReviewInputSchema = z.object({
+  orderId: z.string().min(1),
   productSlug: z.string(),
   rating: z.number().int().min(1).max(5),
   title: z.string().min(1),
   body: z.string().min(1),
   authorName: z.string().min(1),
   authorEmail: z.string().email(),
+  petSpecies: PetSpeciesSchema.optional(),
   images: z.array(z.string()).optional(),
   termsAccepted: z.boolean().refine((val) => val === true, {
     message: "Terms must be accepted",

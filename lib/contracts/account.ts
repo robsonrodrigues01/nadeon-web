@@ -86,6 +86,7 @@ export type OrderLine = z.infer<typeof OrderLineSchema>;
 
 export const OrderItemSchema = z.object({
   title: z.string(),
+  productSlug: z.string().optional(),
   quantity: z.number().int().positive(),
   price: MoneySchema,
   image: z.string().optional(),
@@ -170,4 +171,10 @@ export interface AccountProvider {
   updateProfile(input: ProfileInput): Promise<CustomerProfile>;
   getPets(): Promise<Pet[]>;
   savePet(pet: PetInput): Promise<Pet>;
+}
+
+export interface PetProfileProvider {
+  getPets(): Promise<Pet[]>;
+  savePet(pet: PetInput): Promise<Pet>;
+  removePet(id: string): Promise<void>;
 }

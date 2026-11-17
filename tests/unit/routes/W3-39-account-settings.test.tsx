@@ -145,9 +145,9 @@ describe("W3-39 /account/settings mounted behavior", () => {
 
     await waitFor(() =>
       expect(sendPrivacyRequest).toHaveBeenCalledWith({
-        email: "alex.morgan@example.com",
-        firstName: "Alex",
-        lastName: "Morgan",
+        email: "test.alex.morgan@example.com",
+        firstName: "TEST Alex",
+        lastName: "TEST Morgan",
         requestType: "delete",
       })
     );

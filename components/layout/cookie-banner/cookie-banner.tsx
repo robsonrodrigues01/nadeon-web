@@ -50,6 +50,14 @@ export function CookieBanner({
     closeSettings,
   } = useConsent();
   const isVisible = forceVisible || (isOpen ?? isBannerOpen);
+  const wasVisibleRef = useRef(isVisible);
+
+  useEffect(() => {
+    if (wasVisibleRef.current && !isVisible && !inline) {
+      document.getElementById("main-content")?.focus();
+    }
+    wasVisibleRef.current = isVisible;
+  }, [inline, isVisible]);
 
   // Banner fixo: enquanto aberto, reserva o espaço dele no fim da página para não cobrir CTAs.
   useEffect(() => {

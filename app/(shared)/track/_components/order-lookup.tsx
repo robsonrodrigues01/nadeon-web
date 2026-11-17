@@ -174,8 +174,7 @@ export function OrderLookup({
             id="order-lookup-error"
             ref={errorRef}
             tabIndex={-1}
-            role="status"
-            aria-live="polite"
+            role="alert"
             className="text-sm font-semibold text-accent"
           >
             {activeError}

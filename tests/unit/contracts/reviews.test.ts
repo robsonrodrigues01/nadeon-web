@@ -1,6 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { mockReviewsProvider } from "@/lib/providers/mock/reviews";
-import { ReviewSchema, ReviewSummarySchema } from "@/lib/contracts/reviews";
+import {
+  ReviewSchema,
+  ReviewSummarySchema,
+  StoredReviewSchema,
+} from "@/lib/contracts/reviews";
 
 describe("ReviewsProvider Contract", () => {
   it("list returns empty array by default for launch state", async () => {
@@ -20,7 +24,20 @@ describe("ReviewsProvider Contract", () => {
       expect(rev.productSlug).toBe("biohack");
       expect(rev.rating).toBeGreaterThanOrEqual(1);
       expect(rev.rating).toBeLessThanOrEqual(5);
+      expect(rev.verifiedBuyer).toBe(false);
     }
+  });
+
+  it("filters pet reviews and orders results by most recent", async () => {
+    const result = await mockReviewsProvider.list({
+      includeDevSamples: true,
+      petSpecies: "dog",
+      sort: "most_recent",
+    });
+
+    expect(result.reviews).toHaveLength(1);
+    expect(result.reviews[0].productSlug).toBe("more-good-years");
+    expect(result.reviews[0].petSpecies).toBe("dog");
   });
 
   it("summary returns valid ReviewSummary schema even with zero reviews", async () => {
@@ -31,33 +48,62 @@ describe("ReviewsProvider Contract", () => {
     expect(summary.ratingBreakdown[5]).toBe(0);
   });
 
-  it("submit creates and validates review", async () => {
+  it("accepts reviews only for products on a matching order without retaining email", async () => {
     const review = await mockReviewsProvider.submit({
-      productSlug: "glow",
+      orderId: "ord_TEST_0001",
+      productSlug: "biohack",
       rating: 5,
-      title: "Noticeable improvement in skin hydration",
-      body: "Love the subtle citrus flavor and how quickly it dissolves.",
-      authorName: "Jessica T.",
-      authorEmail: "jessica@example.com",
+      title: "TEST review title",
+      body: "TEST review body",
+      authorName: "TEST Reviewer",
+      authorEmail: "test@example.com",
       termsAccepted: true,
     });
 
     expect(() => ReviewSchema.parse(review)).not.toThrow();
-    expect(review.productSlug).toBe("glow");
+    expect(review.productSlug).toBe("biohack");
     expect(review.rating).toBe(5);
-    expect(review.authorName).toBe("Jessica T.");
+    expect(review.authorName).toBe("TEST Reviewer");
+    expect(review.verifiedBuyer).toBe(true);
+    expect(review).not.toHaveProperty("authorEmail");
+    expect(review).not.toHaveProperty("orderId");
+    expect(() =>
+      StoredReviewSchema.parse({ ...review, orderId: "ord_TEST_0001" })
+    ).not.toThrow();
+    const [listedReview] = (
+      await mockReviewsProvider.list({
+        productSlug: "biohack",
+      })
+    ).reviews;
+    expect(listedReview.verifiedBuyer).toBe(true);
+    expect(listedReview).not.toHaveProperty("orderId");
 
-    // Verify summary is updated
-    const summaryAfter = await mockReviewsProvider.summary("glow");
+    const summaryAfter = await mockReviewsProvider.summary("biohack");
     expect(summaryAfter.totalReviews).toBe(1);
     expect(summaryAfter.averageRating).toBe(5);
     expect(summaryAfter.ratingBreakdown[5]).toBe(1);
   });
 
+  it("rejects reviews that are not linked to the product in the order", async () => {
+    await expect(
+      mockReviewsProvider.submit({
+        orderId: "ord_TEST_0001",
+        productSlug: "more-good-years",
+        rating: 4,
+        title: "TEST review title",
+        body: "TEST review body",
+        authorName: "TEST Reviewer",
+        authorEmail: "test@example.com",
+        termsAccepted: true,
+      })
+    ).rejects.toThrow(/order/i);
+  });
+
   it("submit rejects when terms are not accepted", async () => {
     await expect(
       mockReviewsProvider.submit({
-        productSlug: "glow",
+        orderId: "ord_TEST_0001",
+        productSlug: "biohack",
         rating: 4,
         title: "Good product",
         body: "Works nicely.",
