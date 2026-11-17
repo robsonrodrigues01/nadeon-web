@@ -4403,9 +4403,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Migração Vercel → Netlify no código: remover @vercel/analytics e @vercel/speed-insights (e usos em lib/analytics/track.ts, /dev/kit e testes), referências a VERCEL_* e vercel.app; netlify.toml mínimo só se necessário (build next build); documentar variáveis de ambiente para a Netlify",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T22:29:10.081Z",
+    "lease_ate": null,
     "branch": "agy/W4-29",
     "pr": "local",
     "criterios": [
@@ -4424,7 +4424,7 @@
     "depende_de": [],
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T22:30:36.867Z",
+    "lease_ate": "2026-11-17T22:32:49.623Z",
     "branch": "agy/W5-00c",
     "pr": "local",
     "criterios": [
