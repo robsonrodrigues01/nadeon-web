@@ -4009,7 +4009,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T22:45:16.546Z",
+    "lease_ate": "2026-11-17T22:50:01.922Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4095,7 +4095,7 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
     "lease_ate": "2026-11-17T22:42:45.074Z",
     "pr": "local",
@@ -4113,13 +4113,14 @@
     "depende_de": [
       "W5-00a",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lente"
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T22:50:24.369Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4318,7 +4319,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T22:40:51.149Z",
+    "lease_ate": "2026-11-17T22:51:03.836Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
