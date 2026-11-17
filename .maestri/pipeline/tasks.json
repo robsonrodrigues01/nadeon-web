@@ -3829,9 +3829,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T21:20:38.062Z",
+    "lease_ate": "2026-11-17T21:36:18.441Z",
     "pr": "local",
     "criterios": [
       "contratos e mock com testes",
@@ -3849,9 +3849,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T21:20:38.000Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "contratos e mock com testes",
@@ -3865,7 +3865,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Contrato e mock de comércio e conta: reviews (listar e escrever), perfil de pet, preferências de e-mail, gift card, lojas físicas (where to buy), pedido de atacado, ofertas",
     "depende_de": [],
-    "revisor": "Lente"
+    "revisor": "Lente",
+    "nota": "Merge revertido (revert de e9c29f7): com W4-27 no main, o build falha com Invariant: Expected workStore to be initialized em /human/subscribe, /account/orders, /pet/products/[slug]. Sozinha passava. No re-merge, reverter o revert."
   },
   {
     "onda": 5,
@@ -4336,9 +4337,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Provider real do Mailyte (live) atrás do contrato existente: contact-events com unique_id = X-Shopify-Webhook-Id, upsert de contato, consentimento da newsletter; chave só por variável de ambiente",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T21:19:18.887Z",
+    "lease_ate": null,
     "branch": "agy/W4-27",
     "pr": "local",
     "criterios": [
@@ -4346,6 +4347,27 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "nota": "referência em .maestri/status/W4-27/MAILYTE-API.md"
+    "nota": "referência em .maestri/status/W4-27/MAILYTE-API.md",
+    "revisor": "Lupa"
+  },
+  {
+    "id": "W4-28",
+    "onda": 4,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Ligar só o Mailyte em live sem ligar os outros providers: variável MAILYTE_MODE=live (ou PROVIDERS=live) escolhe liveMailyteProvider; demais seguem mock",
+    "depende_de": [
+      "W4-27"
+    ],
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T21:44:54.697Z",
+    "branch": "agy/W4-28",
+    "pr": "local",
+    "criterios": [
+      "teste: MAILYTE_MODE=live usa live só no Mailyte; PROVIDERS=live continua ligando todos",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
