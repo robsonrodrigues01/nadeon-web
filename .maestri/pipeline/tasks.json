@@ -4033,7 +4033,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T23:38:03.871Z",
+    "lease_ate": "2026-11-17T23:43:31.602Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4055,9 +4055,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T23:29:54.480Z",
+    "lease_ate": "2026-11-17T23:44:01.051Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4073,7 +4073,9 @@
     "depende_de": [
       "W5-00b",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lente",
+    "nota": "Gate falhou: check-tokens acusa #add em href=\"#add-pet\" (falso positivo). Renomear âncora; W5-23 corrige o verificador."
   },
   {
     "onda": 5,
@@ -4147,9 +4149,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T23:44:51.782Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4191,9 +4193,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T23:38:42.259Z",
+    "lease_ate": "2026-11-17T23:45:53.810Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4210,13 +4212,14 @@
       "W5-00b",
       "W5-00c"
     ],
-    "revisor": "Lupa"
+    "revisor": "Lupa",
+    "nota": "MUDANÇAS (Lupa); volta ao Crivo6 após W5-16"
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T23:39:54.132Z",
+    "lease_ate": "2026-11-17T23:44:38.645Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4466,5 +4469,23 @@
       "revisão APROVADO"
     ],
     "nota": "roda de verdade só depois do push ao Bitbucket"
+  },
+  {
+    "id": "W5-23",
+    "onda": 5,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "scripts/check-tokens.mjs: falso positivo em âncoras e ids que parecem hex (ex.: href=\"#add-pet\"); só tratar como cor hex quando seguido de fim de palavra e em contexto de cor, com teste",
+    "depende_de": [],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W5-23",
+    "pr": "local",
+    "criterios": [
+      "teste com #add-pet aceito e #fff recusado",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
   }
 ]
