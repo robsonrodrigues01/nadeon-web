@@ -97,6 +97,25 @@ describe("W5-15 /wholesale", () => {
     expect(submit).not.toHaveBeenCalled();
   });
 
+  it.each([
+    ["website", "not-a-url", "Pet stores & groomers"],
+    ["website", "javascript:alert(1)", "Pet stores & groomers"],
+    ["businessType", "unknown", "unknown"],
+  ])(
+    "rejects invalid %s values before calling the provider",
+    async (field, value, businessType) => {
+      const submit = vi.spyOn(wholesaleProvider, "submit");
+      const form = validApplicationForm();
+      form.set(field, value);
+      if (field === "website") form.set("businessType", businessType);
+
+      await expect(
+        submitWholesaleApplication({ status: "idle" }, form)
+      ).resolves.toEqual({ status: "invalid" });
+      expect(submit).not.toHaveBeenCalled();
+    }
+  );
+
   it("submits valid application through the registry without logging or returning PII", async () => {
     const submit = vi
       .spyOn(wholesaleProvider, "submit")

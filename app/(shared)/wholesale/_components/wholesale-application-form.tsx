@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
+import { WholesaleBusinessTypeSchema } from "@/lib/contracts/wholesale";
 import {
   submitWholesaleApplication,
   type WholesaleApplicationState,
@@ -11,15 +12,6 @@ const initialState: WholesaleApplicationState = { status: "idle" };
 
 const inputClass =
   "min-h-11 w-full rounded-field border border-border bg-bg-elevated px-4 py-3 text-fg placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
-
-const businessTypes = [
-  "Pharmacies & health stores",
-  "Gyms & wellness clinics",
-  "Practitioners",
-  "Veterinary clinics",
-  "Pet stores & groomers",
-  "Equine & tack shops",
-];
 
 export function WholesaleApplicationForm() {
   const [state, formAction, isPending] = useActionState(
@@ -111,7 +103,7 @@ export function WholesaleApplicationForm() {
           <option value="" disabled>
             Select one
           </option>
-          {businessTypes.map((type) => (
+          {WholesaleBusinessTypeSchema.options.map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
