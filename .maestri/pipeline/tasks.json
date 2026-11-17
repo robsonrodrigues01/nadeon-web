@@ -3754,7 +3754,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Deduplicação de webhooks entre processos: escolher armazenamento compartilhado (Vercel KV, banco) ou idempotência do provider de e-mail",
     "depende_de": [
-      "W4-21"
+      "W4-27"
     ],
     "status": "bloqueada",
     "responsavel": null,
@@ -3766,7 +3766,7 @@
       "implementação com teste",
       "revisão APROVADO"
     ],
-    "bloqueio": "decisão de arquitetura do Robson sobre armazenamento (custo) e documentação real do provider de e-mail",
+    "bloqueio": "resolvível pelo unique_id do Mailyte (dedupe 90 dias): entra na W4-27",
     "nota": "achado P2 da W4-16 mantido além da W4-21"
   },
   {
@@ -3814,9 +3814,9 @@
     "depende_de": [
       "W4-25"
     ],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T20:48:39.543Z",
+    "lease_ate": null,
     "branch": "agy/W4-26",
     "pr": "local",
     "criterios": [
@@ -3824,13 +3824,14 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ],
-    "revisor": "Lupa"
+    "revisor": "Lupa",
+    "nota": "MUDANÇAS (Lupa): ver REVIEW.md; volta ao Crivo6 depois da W5-00b"
   },
   {
     "onda": 5,
     "status": "em_andamento",
-    "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T20:53:08.154Z",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-17T21:20:38.062Z",
     "pr": "local",
     "criterios": [
       "contratos e mock com testes",
@@ -3843,13 +3844,14 @@
     "papel": "Backend/API",
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Contrato e mock de conteúdo: artigos do journal (Human, Pet, categorias), guias de raça, glossário de ingredientes, especialistas e cursos; textos só do board, o resto To be confirmed",
-    "depende_de": []
+    "depende_de": [],
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T20:53:14.741Z",
+    "lease_ate": "2026-11-17T21:20:38.000Z",
     "pr": "local",
     "criterios": [
       "contratos e mock com testes",
@@ -3862,7 +3864,8 @@
     "papel": "Backend/API",
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Contrato e mock de comércio e conta: reviews (listar e escrever), perfil de pet, preferências de e-mail, gift card, lojas físicas (where to buy), pedido de atacado, ofertas",
-    "depende_de": []
+    "depende_de": [],
+    "revisor": "Lente"
   },
   {
     "onda": 5,
@@ -4325,5 +4328,24 @@
     "depende_de": [
       "W5-00b"
     ]
+  },
+  {
+    "id": "W4-27",
+    "onda": 4,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Provider real do Mailyte (live) atrás do contrato existente: contact-events com unique_id = X-Shopify-Webhook-Id, upsert de contato, consentimento da newsletter; chave só por variável de ambiente",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T21:19:18.887Z",
+    "branch": "agy/W4-27",
+    "pr": "local",
+    "criterios": [
+      "testes com fetch mockado (202, rejected, 403, 429, sem chave)",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "referência em .maestri/status/W4-27/MAILYTE-API.md"
   }
 ]
