@@ -3984,9 +3984,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T23:03:18.959Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4007,9 +4007,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T22:50:01.922Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4026,7 +4026,8 @@
       "W5-00a",
       "W5-00c"
     ],
-    "revisor": "Lupa"
+    "revisor": "Lupa",
+    "nota": "MUDANÇAS; volta a Prisma5 quando liberar"
   },
   {
     "onda": 5,
@@ -4119,9 +4120,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
-    "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T22:56:35.485Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4138,7 +4139,7 @@
       "W5-00a",
       "W5-00c"
     ],
-    "nota": " Ao criar /pet/journal, religar o link Visit the journal da página de benefício (W5-02).",
+    "nota": "MUDANÇAS; volta a Trilho quando liberar",
     "revisor": "Lente"
   },
   {
