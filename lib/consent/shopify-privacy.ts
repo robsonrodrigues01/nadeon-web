@@ -124,7 +124,8 @@ export function isShopifyCustomerPrivacyEnabled(): boolean {
  * When the feature finishes loading, executes the onReady callback.
  */
 export function initShopifyCustomerPrivacy(
-  onReady?: (customerPrivacy: ShopifyCustomerPrivacy) => void
+  onReady?: (customerPrivacy: ShopifyCustomerPrivacy) => void,
+  onError?: (error?: Error) => void
 ): void {
   if (!isShopifyCustomerPrivacyEnabled() || typeof window === "undefined") {
     return;
@@ -157,16 +158,23 @@ export function initShopifyCustomerPrivacy(
         (error?: Error) => {
           if (error) {
             console.error("Failed to load Shopify Customer Privacy API", error);
+            onError?.(error);
             return;
           }
           if (shopifyWindow.Shopify?.customerPrivacy) {
             onReady?.(shopifyWindow.Shopify.customerPrivacy);
+          } else {
+            onError?.(
+              new Error("Shopify customerPrivacy not found after loadFeatures")
+            );
           }
         }
       );
-    } catch {
-      // Defensive fallback
+    } catch (err) {
+      onError?.(err instanceof Error ? err : new Error(String(err)));
     }
+  } else {
+    onError?.(new Error("Shopify.loadFeatures is not available"));
   }
 }
 
@@ -182,6 +190,7 @@ export function syncShopifyCustomerPrivacy(
   callback?: () => void
 ): void {
   if (!isShopifyCustomerPrivacyEnabled() || typeof window === "undefined") {
+    callback?.();
     return;
   }
 
@@ -223,7 +232,7 @@ export function syncShopifyCustomerPrivacy(
         callback?.();
       });
     } catch {
-      // Defensive fallback
+      callback?.();
     }
   };
 
@@ -233,7 +242,12 @@ export function syncShopifyCustomerPrivacy(
     return;
   }
 
-  initShopifyCustomerPrivacy((cp) => {
-    dispatch(cp);
-  });
+  initShopifyCustomerPrivacy(
+    (cp) => {
+      dispatch(cp);
+    },
+    () => {
+      callback?.();
+    }
+  );
 }

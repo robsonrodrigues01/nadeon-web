@@ -49,23 +49,45 @@ export function MeasurementScripts() {
       trackers.fbq?.("consent", marketingAllowed ? "grant" : "revoke");
     }
 
+    const isRevocation =
+      (previouslyAllowed.current.analytics && !analyticsAllowed) ||
+      (previouslyAllowed.current.marketing && !marketingAllowed);
+
+    let reloadTriggered = false;
+    const triggerReload = () => {
+      if (reloadTriggered) return;
+      reloadTriggered = true;
+      window.location.reload();
+    };
+
     if (
       analyticsChanged ||
       marketingChanged ||
       (recordChanged &&
         (record !== null || previousRecord.current !== undefined))
     ) {
-      syncShopifyCustomerPrivacy({
-        analytics: analyticsAllowed,
-        marketing: marketingAllowed,
-      });
+      if (isRevocation && isShopifyCustomerPrivacyEnabled()) {
+        const timer = setTimeout(triggerReload, 1500);
+        syncShopifyCustomerPrivacy(
+          {
+            analytics: analyticsAllowed,
+            marketing: marketingAllowed,
+          },
+          () => {
+            clearTimeout(timer);
+            triggerReload();
+          }
+        );
+      } else {
+        syncShopifyCustomerPrivacy({
+          analytics: analyticsAllowed,
+          marketing: marketingAllowed,
+        });
+      }
     }
 
-    if (
-      (previouslyAllowed.current.analytics && !analyticsAllowed) ||
-      (previouslyAllowed.current.marketing && !marketingAllowed)
-    ) {
-      window.location.reload();
+    if (isRevocation && !isShopifyCustomerPrivacyEnabled()) {
+      triggerReload();
     }
     previouslyAllowed.current = {
       analytics: analyticsAllowed,
