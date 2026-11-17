@@ -3960,9 +3960,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-17T22:38:51.993Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3985,7 +3985,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T22:35:37.573Z",
+    "lease_ate": "2026-11-17T22:37:59.427Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4435,5 +4435,24 @@
     ],
     "nota": "rotas da onda 5 devem importar só do registry, nunca do mock",
     "revisor": "Lupa"
+  },
+  {
+    "id": "W4-30",
+    "onda": 4,
+    "papel": "DevOps",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Portar o CI de .github/workflows/ci.yml para bitbucket-pipelines.yml (format, lint, typecheck, test, data:check, build; e2e Playwright, axe, Lighthouse em etapa separada), com cache do pnpm, versões fixas das imagens e nenhum segredo no arquivo",
+    "depende_de": [],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W4-30",
+    "pr": "local",
+    "criterios": [
+      "pipeline equivalente ao ci.yml",
+      "validado com schema do Bitbucket ou leitura",
+      "revisão APROVADO"
+    ],
+    "nota": "roda de verdade só depois do push ao Bitbucket"
   }
 ]
