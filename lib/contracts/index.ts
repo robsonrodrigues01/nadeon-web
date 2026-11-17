@@ -6,3 +6,4 @@ export * from "./reviews";
 export * from "./forms";
 export * from "./labs";
 export * from "./campaign";
+export * from "./mailyte";
