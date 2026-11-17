@@ -3954,14 +3954,15 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /offers/[oferta] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
     "onda": 5,
-    "status": "em_andamento",
-    "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T22:26:07.901Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3975,14 +3976,16 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /ingredients com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
-    ]
+      "W5-00a",
+      "W5-00c"
+    ],
+    "nota": "importa mockContentProvider direto; trocar pelo registry depois da W5-00c"
   },
   {
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-17T22:25:35.059Z",
+    "lease_ate": "2026-11-17T22:29:04.567Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4019,7 +4022,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /pet/breeds com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4040,7 +4044,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /pet/breeds/[raca] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4061,7 +4066,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /account/pets com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
@@ -4082,7 +4088,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /account/email-preferences com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
@@ -4103,7 +4110,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /experts com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4124,7 +4132,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /journal e /pet/journal com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ],
     "nota": " Ao criar /pet/journal, religar o link Visit the journal da página de benefício (W5-02)."
   },
@@ -4146,7 +4155,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /journal/[categoria] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4167,7 +4177,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /journal/[slug] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4188,7 +4199,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /wholesale com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
@@ -4209,7 +4221,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /where-to-buy com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00b"
+      "W5-00b",
+      "W5-00c"
     ]
   },
   {
@@ -4230,7 +4243,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /lp/[campanha] (listicle, product advertorial, seasonal) com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4251,7 +4265,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /professionals com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4272,7 +4287,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /affiliates com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4293,7 +4309,8 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rota /courses/[curso] com mocks, pelo board e pelo catálogo seção 5",
     "depende_de": [
-      "W5-00a"
+      "W5-00a",
+      "W5-00c"
     ]
   },
   {
@@ -4388,7 +4405,7 @@
     "depende_de": [],
     "status": "para_revisao",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T22:18:50.568Z",
+    "lease_ate": "2026-11-17T22:29:10.081Z",
     "branch": "agy/W4-29",
     "pr": "local",
     "criterios": [
@@ -4397,5 +4414,25 @@
       "revisão APROVADO"
     ],
     "revisor": "Lente"
+  },
+  {
+    "id": "W5-00c",
+    "onda": 5,
+    "papel": "Backend/API",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Registrar no lib/providers/index.ts os providers da onda 5 (content, email-preferences, gift-card, offers, store-locator, wholesale), com mock e live stub de erro claro, no mesmo padrão dos existentes",
+    "depende_de": [],
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-17T22:30:36.867Z",
+    "branch": "agy/W5-00c",
+    "pr": "local",
+    "criterios": [
+      "providers expostos pelo registry com testes",
+      "nenhuma rota alterada",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ],
+    "nota": "rotas da onda 5 devem importar só do registry, nunca do mock"
   }
 ]
