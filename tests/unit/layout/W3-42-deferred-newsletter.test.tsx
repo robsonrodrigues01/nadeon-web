@@ -7,6 +7,7 @@ import { act, cleanup, render, screen } from "@testing-library/react";
 import { DeferredNewsletter } from "@/components/brand/newsletter/deferred-newsletter";
 
 const observers: MockIntersectionObserver[] = [];
+const newsletterModuleResolved = vi.hoisted(() => vi.fn());
 
 class MockIntersectionObserver {
   constructor(private readonly callback: IntersectionObserverCallback) {
@@ -56,6 +57,7 @@ vi.mock("next/dynamic", async () => {
 });
 
 vi.mock("@/components/brand/newsletter/newsletter", async () => {
+  newsletterModuleResolved();
   const ReactModule = await import("react");
   return {
     Newsletter: () =>
@@ -82,14 +84,17 @@ afterEach(() => {
 describe("W3-42 deferred newsletter", () => {
   it("loads the newsletter only when its below-fold placeholder approaches the viewport", async () => {
     vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    newsletterModuleResolved.mockClear();
     render(<DeferredNewsletter variant="human" />);
 
+    expect(newsletterModuleResolved).not.toHaveBeenCalled();
     expect(
       screen.queryByRole("heading", { name: /Join the Nadeon list/i })
     ).toBeNull();
     expect(screen.getByRole("status", { name: /newsletter/i })).toBeDefined();
 
     await act(async () => observers[0].trigger());
+    expect(newsletterModuleResolved).toHaveBeenCalledOnce();
 
     expect(
       await screen.findByRole("heading", { name: /Join the Nadeon list/i })
