@@ -55,6 +55,24 @@ vi.mock("next/dynamic", async () => {
   };
 });
 
+vi.mock("@/components/brand/newsletter/newsletter", async () => {
+  const ReactModule = await import("react");
+  return {
+    Newsletter: () =>
+      ReactModule.createElement(
+        ReactModule.Fragment,
+        null,
+        ReactModule.createElement("h2", null, "Join the Nadeon list"),
+        ReactModule.createElement(
+          "label",
+          null,
+          "Email address",
+          ReactModule.createElement("input", { type: "email" })
+        )
+      ),
+  };
+});
+
 afterEach(() => {
   cleanup();
   observers.length = 0;
