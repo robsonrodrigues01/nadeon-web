@@ -103,6 +103,7 @@
     {
       "slug": "labrador-retriever",
       "title": "Labrador Retriever",
+      "species": "Dogs",
       "description": "To be confirmed",
       "readingMinutes": 9,
       "facts": {

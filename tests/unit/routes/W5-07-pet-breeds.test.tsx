@@ -106,8 +106,10 @@ describe("W5-07 /pet/breeds Route & Semantic Controls", () => {
     // Breed card
     expect(screen.getByText("Labrador Retriever")).toBeDefined();
 
-    // Breed guide link must only link to existing routes (NOT /pet/breeds/[raca])
-    const guideLinks = screen.getAllByRole("link", { name: /breed guide/i });
+    // Quiz link must only link to existing routes (NOT /pet/breeds/[raca])
+    const guideLinks = screen.getAllByRole("link", {
+      name: /take.*quiz|pet quiz/i,
+    });
     expect(guideLinks.length).toBeGreaterThan(0);
     for (const link of guideLinks) {
       const href = link.getAttribute("href");
@@ -220,16 +222,33 @@ describe("W5-07 /pet/breeds Route & Semantic Controls", () => {
     expect(screen.queryByText(/request a breed: to be confirmed/i)).toBeNull();
   });
 
-  it("toggles species between Dogs and Cats and actually filters the breed list", async () => {
-    const mockWithCat: BreedGuide[] = [
-      ...mockBreedGuides,
+  it("filters species strictly by contract species field, not by breed name", async () => {
+    const trickyBreeds: BreedGuide[] = [
       {
-        slug: "siamese-cat",
-        title: "Siamese Cat",
+        slug: "catahoula-leopard-dog",
+        title: "Catahoula Leopard Dog",
+        species: "Dogs",
         description: "To be confirmed",
         readingMinutes: 6,
         facts: {
-          size: "Small",
+          size: "Large",
+          weightRange: "To be confirmed",
+          lifeExpectancy: "To be confirmed",
+          energyLevel: "To be confirmed",
+          group: "To be confirmed",
+          coat: "To be confirmed",
+        },
+        sections: [{ title: "About the breed", body: "To be confirmed" }],
+        reviewer: "To be confirmed",
+      },
+      {
+        slug: "maine-coon",
+        title: "Maine Coon",
+        species: "Cats",
+        description: "To be confirmed",
+        readingMinutes: 5,
+        facts: {
+          size: "Large",
           weightRange: "To be confirmed",
           lifeExpectancy: "To be confirmed",
           energyLevel: "To be confirmed",
@@ -242,40 +261,48 @@ describe("W5-07 /pet/breeds Route & Semantic Controls", () => {
     ];
 
     render(
-      <BreedBrowser initialBreeds={mockWithCat} breedIndex={mockBreedIndex} />
+      <BreedBrowser initialBreeds={trickyBreeds} breedIndex={mockBreedIndex} />
     );
 
     const dogsBtn = screen.getByRole("button", { name: /^dogs$/i });
     const catsBtn = screen.getByRole("button", { name: /^cats$/i });
 
     expect(dogsBtn.getAttribute("aria-pressed")).toBe("true");
-    expect(catsBtn.getAttribute("aria-pressed")).toBe("false");
 
-    // Initially with Dogs selected: dogs are shown, cats are hidden
+    // Under Dogs: Catahoula Leopard Dog MUST be visible, Maine Coon MUST NOT
     expect(
-      screen.getByRole("heading", { level: 2, name: "Labrador Retriever" })
+      screen.getByRole("heading", { level: 2, name: "Catahoula Leopard Dog" })
     ).toBeDefined();
     expect(
-      screen.getByRole("heading", { level: 2, name: "French Bulldog" })
-    ).toBeDefined();
-    expect(
-      screen.queryByRole("heading", { level: 2, name: "Siamese Cat" })
+      screen.queryByRole("heading", { level: 2, name: "Maine Coon" })
     ).toBeNull();
 
-    // Click Cats: cats are shown, dogs are hidden
+    // Under Cats: Maine Coon MUST be visible, Catahoula Leopard Dog MUST NOT
     fireEvent.click(catsBtn);
-    expect(dogsBtn.getAttribute("aria-pressed")).toBe("false");
-    expect(catsBtn.getAttribute("aria-pressed")).toBe("true");
-
     expect(
-      screen.queryByRole("heading", { level: 2, name: "Labrador Retriever" })
+      screen.queryByRole("heading", { level: 2, name: "Catahoula Leopard Dog" })
     ).toBeNull();
     expect(
-      screen.queryByRole("heading", { level: 2, name: "French Bulldog" })
-    ).toBeNull();
-    expect(
-      screen.getByRole("heading", { level: 2, name: "Siamese Cat" })
+      screen.getByRole("heading", { level: 2, name: "Maine Coon" })
     ).toBeDefined();
+  });
+
+  it("ensures card link label and destination match (shows quiz label, not misleading breed guide)", async () => {
+    render(
+      <BreedBrowser
+        initialBreeds={mockBreedGuides}
+        breedIndex={mockBreedIndex}
+      />
+    );
+
+    const quizLinks = screen.getAllByRole("link", {
+      name: /take.*quiz|pet quiz/i,
+    });
+    expect(quizLinks.length).toBeGreaterThan(0);
+    for (const link of quizLinks) {
+      expect(link.getAttribute("href")).toBe("/pet/quiz");
+      expect(link.textContent).toMatch(/quiz/i);
+    }
   });
 
   it("ensures A-Z letter buttons meet minimum 44x44px accessible target size", async () => {

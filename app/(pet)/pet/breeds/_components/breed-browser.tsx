@@ -12,26 +12,11 @@ interface BreedBrowserProps {
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 function getBreedSpecies(breed: BreedGuide): "Dogs" | "Cats" {
-  const explicitSpecies = (breed as { species?: string }).species;
-  if (explicitSpecies) {
-    if (explicitSpecies.toLowerCase().includes("cat")) return "Cats";
-    if (explicitSpecies.toLowerCase().includes("dog")) return "Dogs";
+  if (breed.species) {
+    if (breed.species.toLowerCase().includes("cat")) return "Cats";
+    if (breed.species.toLowerCase().includes("dog")) return "Dogs";
   }
-
-  const titleLower = breed.title.toLowerCase();
-  const slugLower = breed.slug.toLowerCase();
-  const groupLower = breed.facts.group.toLowerCase();
-
-  const isCat =
-    titleLower.includes("cat") ||
-    slugLower.includes("cat") ||
-    groupLower.includes("cat") ||
-    groupLower.includes("feline") ||
-    /^(siamese|persian|maine[- ]coon|bengal|sphynx|ragdoll|abyssinian|birman|russian[- ]blue|burmese|scottish[- ]fold)/i.test(
-      breed.title
-    );
-
-  return isCat ? "Cats" : "Dogs";
+  return "Dogs";
 }
 
 export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
@@ -308,14 +293,14 @@ export function BreedBrowser({ initialBreeds, breedIndex }: BreedBrowserProps) {
                   </p>
                 </div>
 
-                {/* Breed guide link pointing to existing route */}
+                {/* Quiz link pointing to existing route */}
                 <div className="pt-2 border-t border-border/40">
                   <Link
                     href="/pet/quiz"
-                    aria-label={`Breed guide for ${breed.title}: take pet quiz`}
+                    aria-label={`Take the pet quiz for ${breed.title}`}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-accent hover:underline group-hover:gap-2 transition-all"
                   >
-                    Breed guide <span aria-hidden="true">→</span>
+                    Take pet quiz <span aria-hidden="true">→</span>
                   </Link>
                 </div>
               </div>
