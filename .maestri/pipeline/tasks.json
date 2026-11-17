@@ -4422,9 +4422,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Registrar no lib/providers/index.ts os providers da onda 5 (content, email-preferences, gift-card, offers, store-locator, wholesale), com mock e live stub de erro claro, no mesmo padrão dos existentes",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T22:32:49.623Z",
+    "lease_ate": null,
     "branch": "agy/W5-00c",
     "pr": "local",
     "criterios": [
