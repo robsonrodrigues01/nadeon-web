@@ -3650,9 +3650,9 @@
     "depende_de": [
       "W4-17"
     ],
-    "status": "para_revisao",
-    "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T06:18:44.308Z",
+    "status": "entregue",
+    "responsavel": "Crivo6",
+    "lease_ate": null,
     "branch": "agy/W4-18",
     "pr": "local",
     "criterios": [
@@ -3710,9 +3710,9 @@
     "depende_de": [
       "W4-16"
     ],
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-17T06:28:54.222Z",
+    "lease_ate": "2026-11-17T06:34:24.423Z",
     "pr": "local",
     "criterios": [
       "achado W4-16 resolvido com teste",
@@ -3731,9 +3731,9 @@
     "depende_de": [
       "W4-16"
     ],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-17T06:30:35.000Z",
+    "lease_ate": "2026-11-17T06:33:39.376Z",
     "pr": "local",
     "criterios": [
       "achado W4-16 resolvido com teste",
@@ -3744,6 +3744,7 @@
     "papel": "Backend/API",
     "preset": "Luna 6 Low (GPT)",
     "titulo": "P2 W4-16: consulta pública de /track devolve só os campos necessários (status, itens resumidos), não o pedido inteiro",
-    "branch": "agy/W4-22"
+    "branch": "agy/W4-22",
+    "revisor": "Lente"
   }
 ]
