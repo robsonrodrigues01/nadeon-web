@@ -81,6 +81,7 @@ export type ExpertsPage = z.infer<typeof ExpertsPageSchema>;
 export const BreedGuideSchema = z.object({
   slug: z.string().min(1),
   title: z.string().min(1),
+  species: z.enum(["Dogs", "Cats"]),
   description: PendingTextSchema,
   readingMinutes: z.number().int().positive().optional(),
   facts: z.object({
