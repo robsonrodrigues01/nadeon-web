@@ -283,7 +283,7 @@ describe("W5-06 /gift-card Route & Semantic Controls", () => {
   it.each(["mock", "live"] as const)(
     "selects the %s gift card provider in the client registry",
     async (mode) => {
-      vi.stubEnv("PROVIDERS", mode);
+      vi.stubEnv("NEXT_PUBLIC_PROVIDERS", mode);
       vi.resetModules();
       const providers = await import("@/lib/providers/client");
 
