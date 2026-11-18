@@ -599,16 +599,18 @@ export function PrivacyRequestForm({
           className="text-sm"
         >
           {clientError && (
-            <span className="text-red-600 font-medium">{clientError}</span>
+            <span className="text-product-coral font-medium">
+              {clientError}
+            </span>
           )}
           {!clientError && state.status === "invalid" && (
-            <span className="text-red-600 font-medium">
+            <span className="text-product-coral font-medium">
               {state.error ||
                 "Please fill in all required fields and try again."}
             </span>
           )}
           {!clientError && state.status === "error" && (
-            <span className="text-red-600 font-medium">
+            <span className="text-product-coral font-medium">
               {state.error ||
                 "An error occurred while submitting your request. Please try again."}
             </span>

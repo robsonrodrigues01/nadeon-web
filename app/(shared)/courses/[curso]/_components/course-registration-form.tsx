@@ -54,11 +54,20 @@ export function CourseRegistrationForm({
       <button
         type="submit"
         disabled={pending}
-        className="min-h-12 w-full rounded-full bg-accent px-6 py-3 text-sm font-extrabold text-accent-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:opacity-60 sm:w-auto"
+        aria-busy={pending}
+        className="min-h-12 w-full rounded-full bg-accent px-6 py-3 text-sm font-extrabold text-accent-fg hover:brightness-105 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:opacity-60 sm:w-auto"
       >
-        Send me the free course
+        <span aria-hidden="true">
+          {pending ? "Sending…" : "Send me the free course"}
+        </span>
+        <span className="sr-only">Send me the free course</span>
       </button>
-      {state.message && (
+      {pending && (
+        <p aria-live="polite" className="text-sm text-fg-muted">
+          Sending…
+        </p>
+      )}
+      {!pending && state.message && (
         <p role={state.success ? "status" : "alert"} aria-live="polite">
           {state.message}
         </p>
