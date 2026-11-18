@@ -4638,8 +4638,17 @@
     "id": "W5-37",
     "onda": 5,
     "titulo": "Fila permanente #3: revisão visual em 1440 px e 320 px das rotas das ondas 4 e 5 (portal, BRIEFING-VISUAL); correções pequenas com teste",
+    "status": "para_revisao",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-18T06:12:08.980Z",
+    "pr": "agy/W5-37"
+  },
+  {
+    "id": "W5-38",
+    "onda": 5,
+    "titulo": "Alvos de toque de 44 px (regra do projeto): links do rodapé (py-1, ~28 px) e <summary> (~24 px) com min-h-11 sem mudar o visual; achado da W5-37",
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T05:52:12.300Z"
+    "lease_ate": "2026-11-18T06:23:11.625Z"
   }
 ]
