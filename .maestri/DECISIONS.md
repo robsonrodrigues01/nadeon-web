@@ -157,3 +157,6 @@
 - 2026-11-17: main enviado ao Bitbucket (git@ssh.bitbucket.org:nadeon/nadeonlabs.git) com force-with-lease sobre o Initial commit d3c8cf5, a pedido do Robson (opção 2). origin = Bitbucket; github mantido como remoto secundário.
 - 2026-11-17: nadeonlabs.com já aponta para a Netlify (feito pelo Robson). Site dava 404: build_settings vazios e sem adaptador Next. Corrigido pelo Maestro via API: cmd pnpm build, dir .next, plugin @netlify/plugin-nextjs; deploy 6afce14c ready (commit 3611a21). Site público com mocks antes do checklist de lançamento: decisão pendente do Robson (proteger, voltar DNS ou manter).
 - 2026-11-18: /journal/[categoria] (W5-13) e /journal/[slug] (W5-14) são ambíguas no Next (mesmo nível dinâmico); build do main falhou. Decisão do Maestro: artigos em /journal/[slug], categorias em /journal/category/[categoria]. Merge da W5-14 revertido (7ffeaa4); W5-24 move a categoria e reaplica a W5-14.
+
+## 2026-11-18 — nadeonlabs.com público antes da Shopify
+Robson decidiu manter o nadeonlabs.com público com dados de teste antes do lançamento ("não tem problema ficar público"). Substitui a regra do plano de só abrir com a Shopify vendendo. Não perguntar de novo.
