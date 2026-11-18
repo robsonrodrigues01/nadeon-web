@@ -4576,9 +4576,9 @@
     "onda": 5,
     "titulo": "Fila permanente #14: docs/pendencias-por-rota.md — por rota, o que é placeholder/To be confirmed e de onde vem a proposta (docs/*-proposta.md), para o Robson aprovar",
     "status": "para_revisao",
-    "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T03:53:46.755Z",
-    "pr": "local"
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T04:22:29.175Z",
+    "pr": "agy/W5-30"
   },
   {
     "id": "W5-31",
@@ -4613,22 +4613,24 @@
     "titulo": "Fila permanente #4: erros e avisos no console por rota (portal logs-start/logs), relatório e correções pequenas com teste",
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T03:52:11.048Z"
+    "lease_ate": "2026-11-18T04:11:46.533Z"
   },
   {
     "id": "W5-35",
     "onda": 5,
     "titulo": "Fila permanente #5 (parte testes): estados de loading, erro, vazio e sucesso dos formulários (contato, newsletter, settings, do-not-sell, track, reviews/write, cursos, profissionais, afiliados, atacado) cobertos por teste de comportamento",
     "status": "em_andamento",
-    "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T03:58:32.451Z"
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-18T04:27:18.221Z",
+    "pr": "agy/W5-35"
   },
   {
     "id": "W5-36",
     "onda": 5,
     "titulo": "Fila permanente #9: texto das rotas das ondas 4 e 5 vs boards HTML em Páginas/ (diferenças fora de To be confirmed); corrigir divergências com o texto do board",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T03:59:27.638Z"
+    "lease_ate": "2026-11-18T04:24:38.822Z",
+    "pr": "local"
   }
 ]
