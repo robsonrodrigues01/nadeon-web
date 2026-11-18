@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import OfferPage, {
   generateMetadata,
@@ -69,14 +69,29 @@ describe("W5-04 /offers/[oferta] (Promo collection model)", () => {
     expect(screen.getByText("HOW THE OFFER WORKS")).toBeTruthy();
     expect(screen.getByText("Three easy steps")).toBeTruthy();
 
-    // Kits section & Add kit to cart
-    const addKitBtns = screen.getAllByRole("button", {
-      name: "Add kit to cart",
+    // Kits on offer has one honest placeholder and no fabricated cards.
+    const kitsSection = screen.getByRole("region", {
+      name: "Kits in the Special Offer",
     });
-    expect(addKitBtns.length).toBeGreaterThan(0);
-    expect(addKitBtns.every((btn) => (btn as HTMLButtonElement).disabled)).toBe(
-      true
-    );
+    expect(
+      within(kitsSection).getByText("Kits on offer: To be confirmed.")
+    ).toBeTruthy();
+    expect(within(kitsSection).queryByRole("list")).toBeNull();
+    expect(
+      within(kitsSection).queryByRole("button", { name: "Add kit to cart" })
+    ).toBeNull();
+
+    // On offer has one honest placeholder and no fabricated product cards.
+    const offersSection = screen.getByRole("region", {
+      name: "Shop the Special Offer",
+    });
+    expect(
+      within(offersSection).getByText("Products on offer: To be confirmed.")
+    ).toBeTruthy();
+    expect(within(offersSection).queryByRole("list")).toBeNull();
+    expect(
+      within(offersSection).queryByRole("button", { name: "Add to cart" })
+    ).toBeNull();
 
     // Bundle builder & Add bundle to cart
     expect(screen.getByText("BUNDLE BUILDER")).toBeTruthy();

@@ -233,44 +233,9 @@ export default async function OfferPage({ params }: PageProps) {
               All kits
             </Link>
           </div>
-          <p className="mt-2 text-sm text-fg-muted">
-            Offer kits: buy or kit price placeholders. (To be confirmed)
+          <p className="mt-8 rounded-card border border-border bg-bg-elevated p-6 text-sm text-fg-muted">
+            Kits on offer: To be confirmed.
           </p>
-
-          <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((item) => (
-              <li
-                key={item}
-                className="flex flex-col justify-between rounded-card border border-border bg-bg-elevated p-6"
-              >
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-accent">
-                    Kit · Save To be confirmed
-                  </span>
-                  <h3 className="mt-2 font-archivo text-xl font-bold uppercase text-fg">
-                    To be confirmed
-                  </h3>
-                  <p className="mt-1 text-sm text-fg-muted">To be confirmed</p>
-                  <p className="mt-4 font-bold text-fg">To be confirmed</p>
-                </div>
-                <div className="mt-6 space-y-3">
-                  <button
-                    type="button"
-                    disabled
-                    className="inline-flex min-h-11 w-full items-center justify-center rounded-pill bg-fg px-4 font-bold text-bg opacity-50 cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                  >
-                    Add kit to cart
-                  </button>
-                  <details className="text-xs text-fg-muted">
-                    <summary className="cursor-pointer py-1 font-bold underline underline-offset-2">
-                      What is inside
-                    </summary>
-                    <p className="mt-2">To be confirmed</p>
-                  </details>
-                </div>
-              </li>
-            ))}
-          </ul>
         </section>
 
         {/* On offer section */}
@@ -324,45 +289,9 @@ export default async function OfferPage({ params }: PageProps) {
               </Link>
             </nav>
           </div>
-          <p className="mt-2 text-sm text-fg-muted">
-            To be confirmed products on offer
+          <p className="mt-8 rounded-card border border-border bg-bg-elevated p-6 text-sm text-fg-muted">
+            Products on offer: To be confirmed.
           </p>
-
-          <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((product) => (
-              <li
-                key={product}
-                className="flex flex-col justify-between rounded-card border border-border bg-bg-elevated p-6"
-              >
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-accent">
-                    To be confirmed off
-                  </span>
-                  <h3 className="mt-2 font-archivo text-xl font-bold uppercase text-fg">
-                    To be confirmed
-                  </h3>
-                  <p className="mt-1 text-sm text-fg-muted">To be confirmed</p>
-                  <p className="mt-4 font-bold text-fg">To be confirmed</p>
-                </div>
-                <div className="mt-6 space-y-2">
-                  <button
-                    type="button"
-                    disabled
-                    className="inline-flex min-h-11 w-full items-center justify-center rounded-pill bg-fg px-4 font-bold text-bg opacity-50 cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                  >
-                    Add to cart
-                  </button>
-                  <button
-                    type="button"
-                    disabled
-                    className="inline-flex min-h-11 w-full items-center justify-center rounded-pill border border-border px-4 text-xs font-bold text-fg opacity-50 cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                  >
-                    Subscribe &amp; save To be confirmed
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
         </section>
 
         {/* Bundle builder section */}
