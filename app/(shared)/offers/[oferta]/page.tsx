@@ -104,35 +104,35 @@ export default async function OfferPage({ params }: PageProps) {
                 Ends in · Countdown
               </p>
               <div
-                className="mt-2 grid grid-cols-4 gap-2 text-center"
+                className="mt-2 grid grid-cols-2 gap-2 text-center sm:grid-cols-4"
                 aria-label="Countdown timer"
               >
-                <div className="rounded-field border border-border p-2">
-                  <span className="block font-archivo text-xl font-bold text-fg">
+                <div className="min-w-0 rounded-field border border-border p-2">
+                  <span className="block font-archivo text-base font-bold text-fg sm:text-xl">
                     To be confirmed
                   </span>
                   <span className="text-[10px] font-bold uppercase text-fg-muted">
                     DAYS
                   </span>
                 </div>
-                <div className="rounded-field border border-border p-2">
-                  <span className="block font-archivo text-xl font-bold text-fg">
+                <div className="min-w-0 rounded-field border border-border p-2">
+                  <span className="block font-archivo text-base font-bold text-fg sm:text-xl">
                     To be confirmed
                   </span>
                   <span className="text-[10px] font-bold uppercase text-fg-muted">
                     HRS
                   </span>
                 </div>
-                <div className="rounded-field border border-border p-2">
-                  <span className="block font-archivo text-xl font-bold text-fg">
+                <div className="min-w-0 rounded-field border border-border p-2">
+                  <span className="block font-archivo text-base font-bold text-fg sm:text-xl">
                     To be confirmed
                   </span>
                   <span className="text-[10px] font-bold uppercase text-fg-muted">
                     MIN
                   </span>
                 </div>
-                <div className="rounded-field border border-border p-2">
-                  <span className="block font-archivo text-xl font-bold text-fg">
+                <div className="min-w-0 rounded-field border border-border p-2">
+                  <span className="block font-archivo text-base font-bold text-fg sm:text-xl">
                     To be confirmed
                   </span>
                   <span className="text-[10px] font-bold uppercase text-fg-muted">
