@@ -4577,7 +4577,7 @@
     "titulo": "Fila permanente #14: docs/pendencias-por-rota.md — por rota, o que é placeholder/To be confirmed e de onde vem a proposta (docs/*-proposta.md), para o Robson aprovar",
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T03:38:06.020Z",
+    "lease_ate": "2026-11-18T03:48:52.609Z",
     "pr": "agy/W5-30"
   },
   {
@@ -4613,7 +4613,7 @@
     "titulo": "Fila permanente #4: erros e avisos no console por rota (portal logs-start/logs), relatório e correções pequenas com teste",
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T03:45:18.564Z"
+    "lease_ate": "2026-11-18T03:50:04.584Z"
   },
   {
     "id": "W5-35",
