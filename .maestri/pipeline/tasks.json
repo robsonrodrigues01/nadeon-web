@@ -3938,9 +3938,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T02:00:59.637Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4316,9 +4316,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T00:33:32.666Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4487,9 +4487,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "scripts/check-tokens.mjs: falso positivo em âncoras e ids que parecem hex (ex.: href=\"#add-pet\"); só tratar como cor hex quando seguido de fim de palavra e em contexto de cor, com teste",
     "depende_de": [],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-18T02:01:19.985Z",
     "branch": "agy/W5-23",
     "pr": "local",
     "criterios": [
@@ -4524,9 +4524,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Teste instável W2-43 account: deixa trabalho do React pendente após o teardown (ReferenceError: window is not defined em react-dom scheduler), gera erro não tratado no vitest e derruba o gate",
     "depende_de": [],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-18T02:00:59.732Z",
     "branch": "agy/W5-25",
     "pr": "local",
     "criterios": [
