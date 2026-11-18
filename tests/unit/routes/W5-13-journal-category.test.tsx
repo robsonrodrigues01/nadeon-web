@@ -23,7 +23,7 @@ vi.mock("@/components/layout/announcement-bar", () => ({
 vi.mock("@/components/layout/footer", () => ({ Footer: () => null }));
 vi.mock("@/components/layout/header", () => ({ Header: () => null }));
 
-import JournalCategoryPage from "@/app/(shared)/journal/[categoria]/page";
+import JournalCategoryPage from "@/app/(shared)/journal/category/[categoria]/page";
 import type {
   JournalArticleSummary,
   JournalCategory,
@@ -65,7 +65,7 @@ beforeEach(() => {
   contentProviderMock.listArticlesByCategory.mockResolvedValue([article]);
 });
 
-describe("W5-13 /journal/[categoria]", () => {
+describe("W5-13 /journal/category/[categoria]", () => {
   it("renders provider category and articles without links to the future article route", async () => {
     render(
       await JournalCategoryPage({

@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { contentProvider } from "@/lib/providers";
 import { buildMetadata } from "@/lib/seo";
-import { JournalBrowser } from "../_components/journal-browser";
+import { JournalBrowser } from "@/app/(shared)/journal/_components/journal-browser";
 
 type JournalCategoryRouteProps = {
   params: Promise<{ categoria: string }>;
@@ -21,7 +21,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: category?.title ?? "Journal",
     description: category?.description ?? "To be confirmed",
-    pathname: `/journal/${categoria}`,
+    pathname: `/journal/category/${categoria}`,
   });
 }
 
