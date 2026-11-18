@@ -4669,5 +4669,29 @@
     "responsavel": "Prisma5",
     "lease_ate": null,
     "pr": "agy/W5-40"
+  },
+  {
+    "id": "W6-01",
+    "onda": 6,
+    "titulo": "Pentest etapa 1: reconhecimento passivo da prévia pentest e de produção (cabeçalhos, cookies, TLS, arquivos expostos, source maps, NEXT_PUBLIC no bundle)",
+    "status": "backlog"
+  },
+  {
+    "id": "W6-02",
+    "onda": 6,
+    "titulo": "Pentest etapa 2a: revisão de segurança das 16 server actions (Zod estrito, sessão, dono do ID, erros genéricos) e do webhook",
+    "status": "backlog"
+  },
+  {
+    "id": "W6-03",
+    "onda": 6,
+    "titulo": "Pentest etapa 2b: redirecionamentos, HTML com dados externos (XSS), pnpm audit, Gitleaks no histórico, avisos de segurança do Next 16.3.8 e React 19.2.8",
+    "status": "backlog"
+  },
+  {
+    "id": "W6-04",
+    "onda": 6,
+    "titulo": "Pentest etapa 3: testes ativos na prévia (IDOR com duas contas, server actions diretas, XSS, abuso de formulários, webhook, cache)",
+    "status": "backlog"
   }
 ]
