@@ -166,3 +166,6 @@ Reconectar o repositório na Netlify apagou o plugin @netlify/plugin-nextjs. Os 
 
 ## 2026-11-18 — Pentest autorizado
 Robson autorizou o pentest do nadeonlabs.com conforme docs/pentest-plano.md: escopo e regras do plano, branch pentest com deploy de prévia sem Mailyte (as variáveis MAILYTE_* só existem no contexto production), ZAP/nuclei/testssl fora do repositório e pentester humano depois, antes da Shopify. Janela: a partir de 18/11. Skills: reverse-engineer-anything (recon), maestri-portal (testes no navegador), mattpocock-skills:research (avisos Next/React), security-review e ponytail-review (código), tdd/diagnosing-bugs/ponytail (correções).
+
+## 2026-11-18 — Equipe de agentes encerrada pelo Robson
+Robson fechou de propósito os agentes do canvas (Prisma5, Trilho, Crivo6, Lupa, Lente, Auditor) e pausou a vigia. "A equipe sou eu": o Maestro segue sozinho, e o Robson aprova no lugar da revisão independente. W6-05 (next 16.4.6, react 19.2.9) publicada sem revisão de agente, por decisão do Robson, pela gravidade dos RCE.
