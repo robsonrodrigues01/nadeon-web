@@ -1,7 +1,9 @@
 // @vitest-environment jsdom
-import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
 import { AccountDashboard } from "@/app/(account)/account/_components/dashboard-view";
+
+afterEach(cleanup);
 
 const view = {
   firstName: "A",
