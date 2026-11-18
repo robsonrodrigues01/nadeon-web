@@ -4638,9 +4638,9 @@
     "id": "W5-37",
     "onda": 5,
     "titulo": "Fila permanente #3: revisão visual em 1440 px e 320 px das rotas das ondas 4 e 5 (portal, BRIEFING-VISUAL); correções pequenas com teste",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T06:12:08.980Z",
+    "lease_ate": null,
     "pr": "agy/W5-37"
   },
   {
