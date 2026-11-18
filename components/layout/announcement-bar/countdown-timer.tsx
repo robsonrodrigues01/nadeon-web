@@ -62,9 +62,11 @@ export function CountdownTimer({
       role="timer"
       aria-label={`Time remaining: ${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds`}
       className={`inline-flex items-center gap-1 text-[11px] md:text-xs font-bold ${className}`}
+      suppressHydrationWarning
     >
       <span
         className={`rounded px-1.5 py-0.5 tabular-nums leading-none ${chipStyle}`}
+        suppressHydrationWarning
       >
         {timeLeft.days}
       </span>
@@ -73,6 +75,7 @@ export function CountdownTimer({
       </span>
       <span
         className={`rounded px-1.5 py-0.5 tabular-nums leading-none ${chipStyle}`}
+        suppressHydrationWarning
       >
         {timeLeft.hours}
       </span>
@@ -81,6 +84,7 @@ export function CountdownTimer({
       </span>
       <span
         className={`rounded px-1.5 py-0.5 tabular-nums leading-none ${chipStyle}`}
+        suppressHydrationWarning
       >
         {timeLeft.minutes}
       </span>
@@ -89,6 +93,7 @@ export function CountdownTimer({
       </span>
       <span
         className={`rounded px-1.5 py-0.5 tabular-nums leading-none ${chipStyle}`}
+        suppressHydrationWarning
       >
         {timeLeft.seconds}
       </span>

@@ -184,6 +184,7 @@ export function CancelSteps({
                   value={String(longerInterval)}
                   variant="primary"
                   size="sm"
+                  suppressHydrationWarning
                 >
                   Switch to {longerInterval} days
                 </Button>
