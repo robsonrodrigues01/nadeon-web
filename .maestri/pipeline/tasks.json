@@ -4575,10 +4575,10 @@
     "id": "W5-30",
     "onda": 5,
     "titulo": "Fila permanente #14: docs/pendencias-por-rota.md — por rota, o que é placeholder/To be confirmed e de onde vem a proposta (docs/*-proposta.md), para o Robson aprovar",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T03:48:52.609Z",
-    "pr": "agy/W5-30"
+    "lease_ate": "2026-11-18T03:53:46.755Z",
+    "pr": "local"
   },
   {
     "id": "W5-31",
@@ -4593,9 +4593,9 @@
     "id": "W5-32",
     "onda": 5,
     "titulo": "Fila permanente #13: specs Playwright cobrindo rotas novas desde a W3-02 (onda 4 e 5): smoke por rota (status 200, h1, sem erro de console) e axe; escrever sem executar",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T03:50:23.754Z",
+    "lease_ate": "2026-11-18T03:51:11.994Z",
     "pr": "agy/W5-32"
   },
   {
@@ -4613,7 +4613,7 @@
     "titulo": "Fila permanente #4: erros e avisos no console por rota (portal logs-start/logs), relatório e correções pequenas com teste",
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T03:50:45.919Z"
+    "lease_ate": "2026-11-18T03:52:11.048Z"
   },
   {
     "id": "W5-35",
@@ -4621,6 +4621,14 @@
     "titulo": "Fila permanente #5 (parte testes): estados de loading, erro, vazio e sucesso dos formulários (contato, newsletter, settings, do-not-sell, track, reviews/write, cursos, profissionais, afiliados, atacado) cobertos por teste de comportamento",
     "status": "em_andamento",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T03:44:59.584Z"
+    "lease_ate": "2026-11-18T03:58:32.451Z"
+  },
+  {
+    "id": "W5-36",
+    "onda": 5,
+    "titulo": "Fila permanente #9: texto das rotas das ondas 4 e 5 vs boards HTML em Páginas/ (diferenças fora de To be confirmed); corrigir divergências com o texto do board",
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-18T03:59:27.638Z"
   }
 ]
