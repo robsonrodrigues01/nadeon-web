@@ -4468,9 +4468,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Portar o CI de .github/workflows/ci.yml para bitbucket-pipelines.yml (format, lint, typecheck, test, data:check, build; e2e Playwright, axe, Lighthouse em etapa separada), com cache do pnpm, versões fixas das imagens e nenhum segredo no arquivo",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T02:39:24.978Z",
+    "lease_ate": null,
     "branch": "agy/W4-30",
     "pr": "agy/W4-30",
     "criterios": [
@@ -4509,7 +4509,7 @@
     "responsavel": "Prisma5",
     "lease_ate": "2026-11-18T02:52:34.771Z",
     "branch": "agy/W5-24",
-    "pr": "local",
+    "pr": "agy/W5-24",
     "criterios": [
       "next build sem rota ambígua",
       "links antigos de categoria atualizados",
@@ -4557,17 +4557,34 @@
     "id": "W5-28",
     "onda": 5,
     "titulo": "Fila permanente #8: imagens — alt, width/height, priority só acima da dobra, sizes corretos em todas as rotas; corrigir com teste",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T02:52:41.957Z",
+    "lease_ate": null,
     "pr": "agy/W5-28"
   },
   {
     "id": "W5-29",
     "onda": 5,
     "titulo": "Fila permanente #6: contraste WCAG AA dos tokens Human e Pet (script Node sobre styles/tokens.css, sem dependência nova), relatório e teste",
+    "status": "para_revisao",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-18T03:02:53.709Z",
+    "pr": "agy/W5-29"
+  },
+  {
+    "id": "W5-30",
+    "onda": 5,
+    "titulo": "Fila permanente #14: docs/pendencias-por-rota.md — por rota, o que é placeholder/To be confirmed e de onde vem a proposta (docs/*-proposta.md), para o Robson aprovar",
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-18T03:03:31.949Z"
+  },
+  {
+    "id": "W5-31",
+    "onda": 5,
+    "titulo": "Fila permanente #10: cobertura de testes — rotas e componentes sem teste de comportamento; lista priorizada e testes para os 5 de maior risco",
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T03:02:53.709Z"
+    "lease_ate": "2026-11-18T03:03:56.223Z"
   }
 ]
