@@ -4361,9 +4361,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T00:51:42.439Z",
+    "lease_ate": null,
     "pr": "agy/W5-22",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4468,11 +4468,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Portar o CI de .github/workflows/ci.yml para bitbucket-pipelines.yml (format, lint, typecheck, test, data:check, build; e2e Playwright, axe, Lighthouse em etapa separada), com cache do pnpm, versões fixas das imagens e nenhum segredo no arquivo",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T02:23:40.940Z",
+    "lease_ate": "2026-11-18T02:25:14.499Z",
     "branch": "agy/W4-30",
-    "pr": "local",
+    "pr": "agy/W4-30",
     "criterios": [
       "pipeline equivalente ao ci.yml",
       "validado com schema do Bitbucket ou leitura",
@@ -4534,5 +4534,13 @@
       "pnpm gate verde",
       "revisão APROVADO"
     ]
+  },
+  {
+    "id": "W5-26",
+    "onda": 5,
+    "titulo": "Fila permanente #12: revisão de segurança local das rotas e server actions da onda 5 (segredos, validação zod, sessão e dono, PII em logs); relatório com achados e correções pequenas com teste",
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-18T02:26:37.947Z"
   }
 ]
