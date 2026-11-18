@@ -111,6 +111,7 @@ export function OrderDetailView({ order }: OrderDetailViewProps) {
                     alt={item.title}
                     width={48}
                     height={48}
+                    sizes="48px"
                     className="size-12 shrink-0 rounded-field object-cover bg-bg"
                   />
                 ) : (

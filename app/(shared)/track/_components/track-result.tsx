@@ -193,6 +193,7 @@ export function TrackResult({ order, market }: TrackResultProps) {
                       alt={item.title}
                       width={48}
                       height={48}
+                      sizes="48px"
                       className="size-12 rounded-field object-cover bg-bg"
                     />
                   ) : (

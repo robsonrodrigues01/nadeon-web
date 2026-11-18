@@ -116,7 +116,9 @@ describe("W5-21 reviews route", () => {
     expect(screen.getByText("TEST R.")).toBeTruthy();
     expect(screen.queryByText("TEST Reviewer")).toBeNull();
     expect(screen.queryByText("TEST unverified title")).toBeNull();
-    expect(screen.getByRole("img", { name: "Review photo" })).toBeTruthy();
+    expect(
+      screen.getByRole("img", { name: "Photo shared by TEST Reviewer" })
+    ).toBeTruthy();
     expect(screen.getByRole("link", { name: product.name })).toHaveProperty(
       "href",
       expect.stringContaining(`/pet/products/${product.slug}`)

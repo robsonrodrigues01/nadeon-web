@@ -113,6 +113,7 @@ export default async function CancelSubscriptionPage({
                       aria-hidden="true"
                       width={56}
                       height={56}
+                      sizes="56px"
                       className="h-full w-full object-cover"
                     />
                   ) : null}

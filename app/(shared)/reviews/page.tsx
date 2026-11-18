@@ -227,9 +227,10 @@ export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
                               <li key={src}>
                                 <Image
                                   src={src}
-                                  alt="Review photo"
+                                  alt={`Photo shared by ${review.authorName}`}
                                   width={74}
                                   height={74}
+                                  sizes="74px"
                                   unoptimized
                                   className="size-[74px] rounded-field object-cover"
                                 />
