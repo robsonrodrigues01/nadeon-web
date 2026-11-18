@@ -4548,9 +4548,9 @@
     "id": "W5-27",
     "onda": 5,
     "titulo": "Fila permanente #11: código morto — exports sem uso e componentes órfãos; remover o que é seguro, com typecheck e testes verdes",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T02:31:27.202Z",
+    "lease_ate": null,
     "pr": "agy/W5-27"
   },
   {
