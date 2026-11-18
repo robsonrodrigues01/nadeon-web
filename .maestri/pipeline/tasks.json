@@ -4698,9 +4698,9 @@
     "id": "W6-05",
     "onda": 6,
     "titulo": "URGENTE: atualizar next 16.3.8 -> 16.4.6 e react/react-dom 19.2.8 -> 19.2.9 (RCE use cache GHSA-673q-mjm6-r5xr, RCE Image Optimization GHSA-2464-fhr4-w9xw, DoS Server Actions GHSA-p3m5-59mp-jv5r, RCE RSC GHSA-xqc2-xf4c-x3h3, vazamentos use cache 16.4.5)",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Maestro",
-    "lease_ate": "2026-11-18T16:24:33.499Z",
+    "lease_ate": null,
     "pr": "agy/W6-05"
   }
 ]
