@@ -4656,9 +4656,9 @@
     "id": "W5-39",
     "onda": 5,
     "titulo": "Fila permanente #2: teclado e foco nas rotas das ondas 4 e 5 (portal, Tab/Shift+Tab/Escape/Enter): ordem, foco visível, armadilhas de foco, menus e diálogos; correções pequenas com teste",
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T07:06:02.902Z",
+    "lease_ate": null,
     "pr": "agy/W5-39"
   },
   {
