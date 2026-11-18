@@ -95,6 +95,12 @@ describe("W5-17 /lp/[campanha]", () => {
     await renderCampaign("product-test-article");
 
     expect(screen.getByText("Paid content from Nadeon Labs")).toBeTruthy();
+    const excerpt = screen.getByText("TEST editorial summary", {
+      selector: "p",
+    });
+    expect(excerpt.tagName).toBe("P");
+    expect(excerpt.querySelector(":scope > span")).toBeNull();
+    expect(excerpt.querySelector('[role="note"]')).toBeNull();
     expect(
       screen.getByRole("heading", { name: "From capsule to cell" })
     ).toBeTruthy();
