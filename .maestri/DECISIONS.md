@@ -160,3 +160,6 @@
 
 ## 2026-11-18 — nadeonlabs.com público antes da Shopify
 Robson decidiu manter o nadeonlabs.com público com dados de teste antes do lançamento ("não tem problema ficar público"). Substitui a regra do plano de só abrir com a Shopify vendendo. Não perguntar de novo.
+
+## 2026-11-18 — Plugin Next.js da Netlify some ao reconectar o repositório
+Reconectar o repositório na Netlify apagou o plugin @netlify/plugin-nextjs. Os deploys saíram sem função de servidor e o site inteiro deu 404 (deploys de f7abf5b 04:27Z, 905dc06, 2d0672e e fe24fe5). Plugin recolocado pela API. Toda vez que mexer na ligação do repositório, conferir que o deploy tem "1 function deployed". Correção definitiva: netlify.toml com [[plugins]], que pede @netlify/plugin-nextjs nas devDependencies e depende da aprovação do Robson.
