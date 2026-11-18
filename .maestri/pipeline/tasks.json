@@ -4611,9 +4611,9 @@
     "id": "W5-34",
     "onda": 5,
     "titulo": "Fila permanente #4: erros e avisos no console por rota (portal logs-start/logs), relatório e correções pequenas com teste",
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T04:39:28.368Z",
+    "lease_ate": "2026-11-18T04:55:14.985Z",
     "pr": "agy/W5-34"
   },
   {

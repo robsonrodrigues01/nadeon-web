@@ -1,13 +1,13 @@
-# Próximas ações (16/11/2026 20:05 BRT, Maestro)
+# Próximas ações (18/11/2026 01:35 BRT, Maestro)
 
 ## Robson
-- Push feito ao Bitbucket em 17/11 (nadeon/nadeonlabs). Próximo: ligar o repositório na Netlify e cadastrar MAILYTE_API_KEY e MAILYTE_MODE=live como segredo.
-- Entregar ou decidir os itens de .maestri/status/W3-79/PLACEHOLDERS.md (textos legais, frete e devolução, contatos, fotos de produto, FAQ, cancelamento, GPC, quiz Pet). Tarefa W4-10.
-- Decidir páginas de detalhe de kit: manter com design ou remover (W3-83). Tarefa W4-11.
-- Pré-requisitos da onda 4: 21 SKUs na Shopify, conta e chave do Mailyte, Shopify Subscriptions com 5 planos, IDs de medição. Destravam W4-01 a W4-09.
-- Autorizar a correção do Auditor (trocar para Codex/Luna e criar a rotina de 60 s).
+- Ler docs/pendencias-por-rota.md e mandar insumos na ordem da lista final: fotos e 3D, frete e devolução, dados jurídicos nos EUA, validação veterinária Pet, regras de afiliados, profissionais, atacado e vale-presente, especialistas e laudos, decisão das cores Pet.
+- Confirmar ou reverter: aviso FDA em todo artigo Pet; card da listagem do journal com excerpt marcado.
+- Shopify por último: destrava W4-01 a W4-09 e W4-23.
 
 ## Maestro
-- Onda 4 sem pré-requisitos entregue em 17/11 02:45. Próximo: aguardar Mailyte (site oficial), IDs de medição, materiais W3-79, decisão do detalhe de kit e push ao GitHub.
-- Manter vigia de 5 min; rodar gate com rede para tarefas feitas por agentes Codex.
-- Atualizar este arquivo, PROJECT_STATE.md e memory/SHORT_TERM.md a cada fechamento de tarefa relevante.
+- Fechar a W5-34 (revisão Lente, merge, gate, push e deploy automático).
+- Fila permanente: itens de navegador restantes (visual 1440/320, teclado e foco nas rotas das ondas 4 e 5, parte visual dos estados de formulário) com a Prisma5.
+- Cota do Codex em 6% até 18/11 08:26: só fechar revisões abertas até lá.
+- Não renovar heartbeat por agente sem avisá-lo; deixar o agente fazer o claim.
+- A cada checkpoint: node ../maestri/export-engram.mjs para atualizar .maestri/memory/ENGRAM-EXPORT.md.

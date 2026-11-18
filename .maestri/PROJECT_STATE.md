@@ -45,3 +45,11 @@ Atualizado: 16/11/2026 01:45 BRT (Maestro).
 - Segunda rodada da onda 4 entregue: revisão de segurança W4-16 gerou W4-19 (P1 consentimento), W4-20 (sessão e dono do ID nas actions), W4-21 (webhook idempotente), W4-22 (/track mínimo); W4-17 console limpo; W4-18 aviso de imagem.
 - Gate do main: 1379 testes + build verdes. Main local, sem push.
 - Bloqueadas: W4-01 a W4-11 (Shopify por último; Mailyte aguardando site; IDs de medição; materiais W3-79; detalhe de kit) e W4-23 (deduplicação entre processos: escolha de armazenamento compartilhado).
+
+## 18/11/2026 01:35 BRT (Maestro)
+
+- Onda 5 local quase fechada: W5-00 a W5-36 entregues, exceto a W5-34 (console por rota), em revisão. Pipeline: 230 entregues, 12 bloqueadas (onda 4, dependem da Shopify e do Robson).
+- Main em 3a8a11a; gate: 1595 testes + build verdes.
+- Bitbucket: origin/main em 2d0672e. Netlify: o push em main dispara o deploy (webhook do Bitbucket para o build hook "bitbucket-push-main" da Netlify). nadeonlabs.com público com dados de teste, por decisão do Robson (DECISIONS 18/11). Mailyte em produção (MAILYTE_MODE=live).
+- Banco de dados: nenhum próprio. A Shopify guarda os dados (Storefront, Cart, Customer Account, Subscriptions, Metaobjects) e o Mailyte guarda contatos. Tudo por providers em lib/providers (mock ou live).
+- Pendências do Robson: docs/pendencias-por-rota.md (lista priorizada); Shopify por último; IDs de medição; detalhe de kit; programas de afiliados e indicação (textos do board retidos na W5-36); cores Pet abaixo de WCAG (W5-29); confirmar o aviso FDA nos artigos Pet.
