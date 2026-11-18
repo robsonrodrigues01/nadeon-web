@@ -1,0 +1,106 @@
+# Relatório de Revisão de Segurança da Onda 5 (W5-26)
+
+Este documento apresenta o relatório detalhado da auditoria de segurança estática e comportamental realizada em todas as rotas e server actions adicionadas ou modificadas na Onda 5, tomando como base os merges realizados a partir do commit `d819a44`.
+
+## 1. Escopo e Metodologia
+
+Foram auditados os seguintes merges e rotas da Onda 5:
+
+- `6740c91 Merge W5-22 (aprovada)`: Rota `/reviews/write` e ação `submitReviewAction`
+- `9f65623 Merge W5-25 (aprovada)`: Rota `/account/orders` e visualização de pedidos
+- `ae0059d Merge W5-20 (aprovada)`: Rota `/courses/[curso]` e ação `registerForCourse`
+- `ee9f52f Merge W5-18 (aprovada)`: Rota `/professionals` e ação `submitProfessionalApplication`
+- `095ba0d Merge W5-14 (aprovada)`: Rota `/journal/[slug]`
+- `5160192 Merge W5-19 (aprovada)`: Rota `/affiliates` e ação `submitAffiliateApplication`
+
+Adicionalmente, foram inspecionadas as rotas e ações complementares entregues no ciclo da Onda 5:
+
+- `app/(shared)/wholesale/actions.ts`: Ação `submitWholesaleApplication` (W5-15)
+- `app/(shared)/gift-card/actions.ts`: Ação `prepareGiftCardPurchase` (W5-06)
+- `app/(shared)/where-to-buy/page.tsx`: Sanitização de parâmetros de busca (W5-16)
+- `app/(shared)/reviews/page.tsx`: Exibição e anonimização de avaliações (W5-21)
+- `app/(pet)/pet/breeds/page.tsx` e `[raca]/page.tsx`: Guias de raças (W5-07, W5-08)
+
+Os cinco eixos de auditoria analisados foram:
+
+1. Segredos no código (tokens, chaves de API, senhas).
+2. Validação de esquemas com Zod em Server Actions.
+3. Checagem de sessão e controle de acesso a recursos por ID (padrão W4-20 e prevenção a IDOR).
+4. Exposição de dados de clientes (PII) em logs.
+5. Imports diretos de `lib/providers/mock/` fora do registry.
+
+---
+
+## 2. Resultados por Vetor de Auditoria
+
+### 2.1. Segredos no Código
+
+- **Status:** Conforme (nenhum segredo identificado no código fonte).
+- **Verificação:** Busca textual e regex por termos sensíveis (`apiKey`, `api_key`, `secret`, `token`, `password`, `bearer`, `private_key`) em `app/` e `lib/`.
+- **Achados:**
+  - Todas as chaves e segredos em uso pelo sistema são recuperados estritamente via variáveis de ambiente (`process.env.MAILYTE_API_KEY` em `lib/providers/live/index.ts:317` e `process.env.SHOPIFY_WEBHOOK_SECRET` em `app/api/webhooks/route.ts:34`).
+  - As credenciais em mocks limitam-se a tokens estáticos de teste explícitos (`mock_tok_TEST_123456789` em `lib/providers/mock/account.ts:23`).
+  - Nenhum segredo ou token privado está versionado no repositório.
+
+### 2.2. Validação com Zod em Server Actions
+
+- **Status:** Conforme (todas as server actions da Onda 5 utilizam esquemas Zod estritos).
+- **Verificação:**
+  - `app/(shared)/affiliates/actions.ts:32`: Utiliza `AffiliateApplicationSchema.safeParse`. Possui proteção contra poluição de parâmetros HTTP na linha 25 verificando `formData.getAll(field).length > 1`.
+  - `app/(shared)/courses/[curso]/actions.ts:37`: Valida dados via `CourseRegistrationSchema.safeParse` com refinamento condicional `superRefine` para cursos com campos específicos.
+  - `app/(shared)/professionals/actions.ts:61`: Utiliza `ProfessionalApplicationSchema.safeParse`, com verificação prévia de parâmetros duplicados na linha 54.
+  - `app/(shared)/reviews/write/actions.ts:28`: Utiliza `ReviewFormSchema.safeParse` com `.strict()` para impedir campos não autorizados no payload.
+  - `app/(shared)/wholesale/actions.ts:20`: Utiliza `WholesaleApplicationInputSchema.safeParse`.
+  - `app/(shared)/gift-card/actions.ts:7`: Utiliza `GiftCardPurchaseInputSchema.parse(input)`.
+- **Observação de estilo:**
+  - Em `app/(shared)/gift-card/actions.ts:7`, o método `.parse()` é utilizado diretamente, gerando rejeição caso o payload seja inválido. O componente cliente correspondente captura a rejeição com bloco `try/catch`. Recomenda-se para padronização futura avaliar a adoção de `safeParse` retornando estado de erro tipado, conforme as demais ações.
+
+### 2.3. Checagem de Sessão e Prevenção de IDOR (Padrão W4-20)
+
+- **Status:** Conforme.
+- **Verificação detalhada por tipo de fluxo:**
+  - **Ações Públicas:** As ações em `affiliates`, `courses`, `professionals` e `wholesale` são formulários abertos de prospecção e cadastro externo, não operando sobre recursos pré-existentes de clientes.
+  - **Ações Autenticadas (Avaliações / Reviews):**
+    - `app/(shared)/reviews/write/page.tsx:26-47`: Antes de exibir o formulário de avaliação, a página valida a sessão ativa via `accountProvider.getSession()`. Em seguida, confere se `customer.id === session.customerId`. Localiza o pedido via `orderId` e garante que `order.email === customer.email`, o pedido está pago (`financialStatus === "paid"`), entregue (`fulfillmentStatus === "delivered"`) e contém o item avaliado (`productSlug`).
+    - `app/(shared)/reviews/write/actions.ts:38-57`: Ao submeter a avaliação no servidor, todas as verificações são integralmente repetidas. O servidor revalida a sessão, a identidade do cliente autenticado, o e-mail do pedido e a presença do produto no pedido entregue.
+    - Isso previne qualquer tentativa de spoofing ou IDOR na publicação de avaliações.
+
+### 2.4. Dados do Cliente em Logs (PII)
+
+- **Status:** Conforme (nenhum dado pessoal identificável é gravado em logs).
+- **Verificação:** Inspeção de todas as chamadas a `console.*` no projeto.
+- **Achados:**
+  - `lib/providers/mock/forms.ts:34`: Grava em desenvolvimento apenas `{ timestamp, formType, id }`, onde `id` é um identificador anônimo aleatório gerado no momento. Nenhum campo de formulário ou e-mail é impresso.
+  - `app/api/webhooks/route.ts:104,151,177`: Grava apenas tópicos de eventos e identificadores numéricos do pedido (`id=${orderId}`), preservando e-mails, endereços e nomes de clientes fora do log.
+  - `app/(pet)/pet/breeds/[raca]/_components/add-kit-button.tsx:25`: Grava apenas erro de interface no console local do navegador em caso de falha de adição ao carrinho.
+  - `app/(shared)/reviews/page.tsx:46-52`: O nome do autor é explicitamente sanitizado pela função `displayAuthorName` antes de ser renderizado, expondo apenas o primeiro nome e a inicial do sobrenome (exemplo: "Sarah M."), resguardando a privacidade do usuário.
+
+### 2.5. Imports de `lib/providers/mock/` Fora do Registry
+
+- **Status:** Conforme (zero imports diretos nas rotas e ações da Onda 5).
+- **Verificação:** Busca em toda a árvore de `app/`, `lib/` e `components/`.
+- **Achados:**
+  - Todas as rotas e server actions da Onda 5 consomem provedores exclusivamente a partir de `@/lib/providers` no servidor e `@/lib/providers/client` no cliente.
+  - O único arquivo fora de `lib/providers/` com importação de mock é `app/(shared)/dev/kit/sections/W1-13.tsx:2`, pertencente ao workbench interno de desenvolvimento implementado na Onda 1.
+
+---
+
+## 3. Testes Automatizados Adicionados
+
+Foi criada a suíte de testes de regressão de segurança em:
+
+- `tests/unit/security/W5-26-security.test.ts`
+
+Cobertura da suíte:
+
+1. Rejeição de submissão de avaliação não autenticada ou com ID de pedido divergente da sessão (padrão W4-20).
+2. Validação estrita de limites de notas e campos obrigatórios com Zod em avaliações.
+3. Validação de formato de e-mail e dados com Zod no cadastro de cursos.
+4. Prevenção de ataques de injeção de parâmetros HTTP duplicados na aplicação de afiliados.
+5. Validação de tipos e opções permitidas via enum Zod na aplicação de profissionais de saúde.
+
+---
+
+## 4. Conclusão
+
+A arquitetura e implementação das rotas e server actions da Onda 5 cumprem integralmente as diretrizes de segurança do projeto Nadeon. As proteções contra IDOR, a validação de dados por meio de esquemas Zod e as barreiras de isolamento de segredos e dados de clientes estão ativas e validadas por testes automatizados.
