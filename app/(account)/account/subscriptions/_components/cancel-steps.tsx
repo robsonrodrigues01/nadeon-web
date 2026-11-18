@@ -176,15 +176,17 @@ export function CancelSteps({
               </h3>
               <p className="text-sm text-fg-muted">Same formula, less often.</p>
               <div className="mt-auto pt-2">
+                <input
+                  type="hidden"
+                  name="intervalDays"
+                  value={String(longerInterval)}
+                />
                 <Button
                   type="submit"
                   formAction={changeSubscriptionFrequency}
                   formNoValidate
-                  name="intervalDays"
-                  value={String(longerInterval)}
                   variant="primary"
                   size="sm"
-                  suppressHydrationWarning
                 >
                   Switch to {longerInterval} days
                 </Button>

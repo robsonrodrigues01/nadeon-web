@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useSyncExternalStore } from "react";
 import type { CountdownTimerProps } from "./types";
 
 interface TimeValues {
@@ -31,26 +31,44 @@ function computeTimeLeft(targetDate: string | Date, nowMs: number): TimeValues {
   };
 }
 
+const STABLE_TIME_LEFT: TimeValues = {
+  days: "00",
+  hours: "00",
+  minutes: "00",
+  seconds: "00",
+  isExpired: false,
+};
+
+function subscribeToClock(callback: () => void): () => void {
+  const timer = setInterval(callback, 1000);
+  return () => clearInterval(timer);
+}
+
+function getClientClock(): number {
+  return Date.now();
+}
+
+function getServerClock(): number | null {
+  return null;
+}
+
 export function CountdownTimer({
   countdownEnd,
   line = "human",
   now,
   className = "",
 }: CountdownTimerProps) {
-  const [currentNow, setCurrentNow] = useState<number>(() =>
-    now ? new Date(now).getTime() : Date.now()
+  const clientNow = useSyncExternalStore(
+    subscribeToClock,
+    getClientClock,
+    getServerClock
   );
 
-  useEffect(() => {
-    // If now was provided statically and never changes, we still update if fake timers or clock advances
-    const timer = setInterval(() => {
-      setCurrentNow(Date.now());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const timeLeft = computeTimeLeft(countdownEnd, currentNow);
+  const currentNow = now ? new Date(now).getTime() : clientNow;
+  const timeLeft =
+    currentNow !== null
+      ? computeTimeLeft(countdownEnd, currentNow)
+      : STABLE_TIME_LEFT;
 
   const chipStyle =
     line === "human"
@@ -62,11 +80,9 @@ export function CountdownTimer({
       role="timer"
       aria-label={`Time remaining: ${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds`}
       className={`inline-flex items-center gap-1 text-[11px] md:text-xs font-bold ${className}`}
-      suppressHydrationWarning
     >
       <span
         className={`rounded px-1.5 py-0.5 tabular-nums leading-none ${chipStyle}`}
-        suppressHydrationWarning
       >
         {timeLeft.days}
       </span>
@@ -75,7 +91,6 @@ export function CountdownTimer({
       </span>
       <span
         className={`rounded px-1.5 py-0.5 tabular-nums leading-none ${chipStyle}`}
-        suppressHydrationWarning
       >
         {timeLeft.hours}
       </span>
@@ -84,7 +99,6 @@ export function CountdownTimer({
       </span>
       <span
         className={`rounded px-1.5 py-0.5 tabular-nums leading-none ${chipStyle}`}
-        suppressHydrationWarning
       >
         {timeLeft.minutes}
       </span>
@@ -93,7 +107,6 @@ export function CountdownTimer({
       </span>
       <span
         className={`rounded px-1.5 py-0.5 tabular-nums leading-none ${chipStyle}`}
-        suppressHydrationWarning
       >
         {timeLeft.seconds}
       </span>

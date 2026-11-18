@@ -236,7 +236,7 @@ describe("W2-21 /account/subscriptions/[id]/cancel", () => {
   });
 
   it("renders the offer and confirm buttons of the design as semantic elements", async () => {
-    await renderCancel("sub_biohack_001");
+    const { container } = await renderCancel("sub_biohack_001");
 
     expect(
       screen.getByRole("button", { name: "Skip next delivery" })
@@ -244,8 +244,9 @@ describe("W2-21 /account/subscriptions/[id]/cancel", () => {
     const switchButton = screen.getByRole("button", {
       name: "Switch to 60 days",
     });
-    expect(switchButton.getAttribute("name")).toBe("intervalDays");
-    expect(switchButton.getAttribute("value")).toBe("60");
+    expect(switchButton).toBeTruthy();
+    const intervalInput = container.querySelector('input[name="intervalDays"]');
+    expect(intervalInput?.getAttribute("value")).toBe("60");
     expect(
       screen
         .getByRole("link", { name: "Keep my subscription" })
