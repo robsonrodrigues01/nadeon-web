@@ -4575,9 +4575,10 @@
     "id": "W5-30",
     "onda": 5,
     "titulo": "Fila permanente #14: docs/pendencias-por-rota.md — por rota, o que é placeholder/To be confirmed e de onde vem a proposta (docs/*-proposta.md), para o Robson aprovar",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T03:07:54.139Z"
+    "lease_ate": "2026-11-18T03:07:54.139Z",
+    "pr": "local"
   },
   {
     "id": "W5-31",
@@ -4585,7 +4586,7 @@
     "titulo": "Fila permanente #10: cobertura de testes — rotas e componentes sem teste de comportamento; lista priorizada e testes para os 5 de maior risco",
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T03:07:51.188Z"
+    "lease_ate": "2026-11-18T03:13:23.691Z"
   },
   {
     "id": "W5-32",
@@ -4593,6 +4594,6 @@
     "titulo": "Fila permanente #13: specs Playwright cobrindo rotas novas desde a W3-02 (onda 4 e 5): smoke por rota (status 200, h1, sem erro de console) e axe; escrever sem executar",
     "status": "em_andamento",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T03:08:15.212Z"
+    "lease_ate": "2026-11-18T03:13:23.762Z"
   }
 ]
