@@ -44,12 +44,14 @@ export interface OrderRowView {
     image?: string;
     quantity?: number;
     variantTitle?: string;
+    productSlug?: string;
   }>;
   trackingUrl?: string;
   lines?: OrderLine[];
   url?: string;
   copyLink?: string;
   canReorder?: boolean;
+  canReview?: boolean;
   searchText: string;
 }
 
@@ -85,6 +87,7 @@ export function toOrderRowView(order: Order, f: OrderFormatters): OrderRowView {
     image: item.image,
     quantity: item.quantity,
     variantTitle: item.variantTitle,
+    productSlug: item.productSlug,
   }));
   return {
     id: order.id,
@@ -101,6 +104,9 @@ export function toOrderRowView(order: Order, f: OrderFormatters): OrderRowView {
     copyLink: order.copyLink ?? order.url,
     canReorder:
       order.canReorder ?? (order.lines ? order.lines.length > 0 : true),
+    canReview:
+      order.financialStatus === "paid" &&
+      order.fulfillmentStatus === "delivered",
     searchText: [order.orderNumber, ...itemTitles].join(" ").toLowerCase(),
   };
 }

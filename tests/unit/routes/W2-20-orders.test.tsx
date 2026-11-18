@@ -39,6 +39,7 @@ const processingOrder: Order = OrderSchema.parse({
   items: [
     {
       title: "Full Charge - 1 Jar",
+      productSlug: "full-charge",
       quantity: 1,
       price: { amount: 69, currencyCode: "USD" },
     },
@@ -55,6 +56,7 @@ const inTransitOrder: Order = OrderSchema.parse({
   items: [
     {
       title: "BioHack - 1 Jar",
+      productSlug: "biohack",
       quantity: 1,
       price: { amount: 59, currencyCode: "USD" },
     },
@@ -73,6 +75,7 @@ const deliveredOrder: Order = OrderSchema.parse({
   items: [
     {
       title: "Prime - Pure NAD+ powder",
+      productSlug: "prime",
       quantity: 2,
       price: { amount: 54, currencyCode: "USD" },
     },
@@ -189,6 +192,9 @@ describe("W2-20 /account/orders row actions by status", () => {
     expect(
       within(card).queryByRole("button", { name: "Track package" })
     ).toBeNull();
+    expect(
+      within(card).queryByRole("link", { name: /write a review/i })
+    ).toBeNull();
   });
 
   it("in-transit order offers Track package in a new tab and Details", () => {
@@ -203,6 +209,9 @@ describe("W2-20 /account/orders row actions by status", () => {
     expect(
       within(card).getByRole("link", { name: "Details" }).getAttribute("href")
     ).toBe("/account/orders/ord_200002");
+    expect(
+      within(card).queryByRole("link", { name: /write a review/i })
+    ).toBeNull();
   });
 
   it("delivered order offers Buy again (disabled until variants are exposed) and Details", () => {
@@ -218,6 +227,29 @@ describe("W2-20 /account/orders row actions by status", () => {
     expect(
       within(card).getByRole("link", { name: "Details" }).getAttribute("href")
     ).toBe("/account/orders/ord_200003");
+    expect(
+      within(card).getByRole("link", {
+        name: "Write a review for Prime - Pure NAD+ powder",
+      })
+    ).toHaveProperty(
+      "href",
+      expect.stringContaining(
+        "/reviews/write?orderId=ord_200003&productSlug=prime"
+      )
+    );
+  });
+
+  it("does not offer a review for a refunded order", () => {
+    const refunded = toOrderRowView(
+      OrderSchema.parse({ ...deliveredOrder, financialStatus: "refunded" }),
+      formatters
+    );
+    render(<OrdersBrowser rows={[refunded]} />);
+
+    const card = articleFor(deliveredOrder.orderNumber);
+    expect(
+      within(card).queryByRole("link", { name: /write a review/i })
+    ).toBeNull();
   });
 });
 

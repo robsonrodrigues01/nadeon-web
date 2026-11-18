@@ -86,6 +86,20 @@ export function OrderCard({ row }: OrderCardProps) {
               Track package
             </Button>
           ))}
+        {row.canReview &&
+          row.items
+            ?.filter((item) => item.productSlug)
+            .map((item) => (
+              <Button
+                key={`${row.id}-${item.productSlug}`}
+                variant="secondary"
+                size="sm"
+                href={`/reviews/write?orderId=${encodeURIComponent(row.id)}&productSlug=${encodeURIComponent(item.productSlug!)}`}
+                aria-label={`Write a review for ${item.title}`}
+              >
+                Write a review
+              </Button>
+            ))}
         <OrderActions
           lines={row.lines}
           orderUrl={row.url}
