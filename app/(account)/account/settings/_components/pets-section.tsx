@@ -89,6 +89,11 @@ export function PetsSection({
         </Button>
       </div>
 
+      {pets.length === 0 ? (
+        <p role="status" aria-live="polite" className="text-sm text-fg-muted">
+          No pets saved yet. Add a pet to get started.
+        </p>
+      ) : null}
       <ul className="grid gap-4 md:grid-cols-2">
         {pets.map((pet) => (
           <li
