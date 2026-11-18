@@ -56,7 +56,7 @@ describe("ReviewsProvider Contract", () => {
       title: "TEST review title",
       body: "TEST review body",
       authorName: "TEST Reviewer",
-      authorEmail: "test@example.com",
+      authorEmail: "test.alex.morgan@example.com",
       termsAccepted: true,
     });
 
@@ -92,7 +92,7 @@ describe("ReviewsProvider Contract", () => {
         title: "TEST review title",
         body: "TEST review body",
         authorName: "TEST Reviewer",
-        authorEmail: "test@example.com",
+        authorEmail: "test.alex.morgan@example.com",
         termsAccepted: true,
       })
     ).rejects.toThrow(/order/i);

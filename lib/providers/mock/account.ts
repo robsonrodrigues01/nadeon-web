@@ -59,7 +59,7 @@ const mockOrders: Order[] = [
     createdAt: new Date(Date.now() - 86400 * 1000 * 5).toISOString(),
     financialStatus: "paid",
     fulfillmentStatus: "delivered",
-    email: "test@example.com",
+    email: "test.alex.morgan@example.com",
     items: [
       {
         title: "BioHack - 2 Jars (60 days)",
@@ -95,7 +95,7 @@ const mockOrders: Order[] = [
     createdAt: new Date(Date.now() - 86400 * 1000 * 20).toISOString(),
     financialStatus: "paid",
     fulfillmentStatus: "in_transit",
-    email: "test@example.com",
+    email: "test.alex.morgan@example.com",
     items: [
       {
         title: "More Good Years Soft Chews - 1 Jar",
