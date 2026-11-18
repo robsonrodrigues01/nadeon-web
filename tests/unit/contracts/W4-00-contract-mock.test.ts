@@ -49,7 +49,7 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
     it("lookupGuestOrder accepts orderNumber and email and returns only tracking fields", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
         "TEST-NL-0001",
-        "test@example.com"
+        "test.alex.morgan@example.com"
       );
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0001");
@@ -66,7 +66,7 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
     it("lookupGuestOrder accepts GuestOrderLookupInput object and returns order", async () => {
       const order = await mockAccountProvider.lookupGuestOrder({
         orderNumber: "TEST-NL-0001",
-        email: "test@example.com",
+        email: "test.alex.morgan@example.com",
       });
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0001");
@@ -78,7 +78,7 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
     it("is case-insensitive and trims whitespace on both order number and email", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
         "  test-nl-0002  ",
-        "  TEST@EXAMPLE.COM  "
+        "  TEST.ALEX.MORGAN@EXAMPLE.COM  "
       );
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0002");
@@ -269,7 +269,7 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
     it("returns real fulfillment status (delivered, in_transit) instead of generic pending", async () => {
       const deliveredOrder = await mockAccountProvider.lookupGuestOrder(
         "TEST-NL-0001",
-        "test@example.com"
+        "test.alex.morgan@example.com"
       );
       expect(deliveredOrder).not.toBeNull();
       expect(deliveredOrder?.fulfillmentStatus).toBe("delivered");
@@ -280,7 +280,7 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
 
       const inTransitOrder = await mockAccountProvider.lookupGuestOrder(
         "TEST-NL-0002",
-        "test@example.com"
+        "test.alex.morgan@example.com"
       );
       expect(inTransitOrder).not.toBeNull();
       expect(inTransitOrder?.fulfillmentStatus).toBe("in_transit");

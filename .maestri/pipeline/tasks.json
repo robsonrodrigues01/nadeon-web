@@ -4656,8 +4656,18 @@
     "id": "W5-39",
     "onda": 5,
     "titulo": "Fila permanente #2: teclado e foco nas rotas das ondas 4 e 5 (portal, Tab/Shift+Tab/Escape/Enter): ordem, foco visível, armadilhas de foco, menus e diálogos; correções pequenas com teste",
-    "status": "em_andamento",
+    "status": "entregue",
+    "responsavel": "Trilho",
+    "lease_ate": null,
+    "pr": "agy/W5-39"
+  },
+  {
+    "id": "W5-40",
+    "onda": 5,
+    "titulo": "Fila permanente #1 e #5 (portal): revisão visual em 768 px das rotas das ondas 4 e 5 e estados visuais dos formulários (hover, foco, carregando, erro, sucesso); correções pequenas com teste",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T06:45:15.432Z"
+    "lease_ate": "2026-11-18T07:02:49.955Z",
+    "pr": "agy/W5-40"
   }
 ]
