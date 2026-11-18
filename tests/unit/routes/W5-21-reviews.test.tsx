@@ -54,6 +54,7 @@ describe("W5-21 reviews route", () => {
 
     const providerReview: Review = {
       id: "rev_TEST_01",
+      moderationStatus: "approved",
       productSlug: product.slug,
       rating: 4,
       title: "TEST review title",
@@ -68,6 +69,7 @@ describe("W5-21 reviews route", () => {
     const unverifiedReview: Review = {
       ...providerReview,
       id: "rev_TEST_unverified",
+      moderationStatus: "pending",
       title: "TEST unverified title",
       verifiedBuyer: false,
     };
@@ -127,6 +129,7 @@ describe("W5-21 reviews route", () => {
     vi.spyOn(reviewsProvider, "list").mockResolvedValue({
       reviews: Array.from({ length: 6 }, (_, index) => ({
         id: `rev_TEST_${index}`,
+        moderationStatus: "approved" as const,
         productSlug: product.slug,
         rating: 5,
         title: `TEST review ${index}`,

@@ -48,7 +48,7 @@ describe("ReviewsProvider Contract", () => {
     expect(summary.ratingBreakdown[5]).toBe(0);
   });
 
-  it("accepts reviews only for products on a matching order without retaining email", async () => {
+  it("stores new reviews as pending and excludes them from public lists and summaries", async () => {
     const review = await mockReviewsProvider.submit({
       orderId: "ord_TEST_0001",
       productSlug: "biohack",
@@ -65,23 +65,22 @@ describe("ReviewsProvider Contract", () => {
     expect(review.rating).toBe(5);
     expect(review.authorName).toBe("TEST Reviewer");
     expect(review.verifiedBuyer).toBe(true);
+    expect(review.moderationStatus).toBe("pending");
     expect(review).not.toHaveProperty("authorEmail");
     expect(review).not.toHaveProperty("orderId");
     expect(() =>
       StoredReviewSchema.parse({ ...review, orderId: "ord_TEST_0001" })
     ).not.toThrow();
-    const [listedReview] = (
-      await mockReviewsProvider.list({
-        productSlug: "biohack",
-      })
-    ).reviews;
-    expect(listedReview.verifiedBuyer).toBe(true);
-    expect(listedReview).not.toHaveProperty("orderId");
+    const publicList = await mockReviewsProvider.list({
+      productSlug: "biohack",
+    });
+    expect(publicList.reviews).toEqual([]);
+    expect(publicList.total).toBe(0);
 
     const summaryAfter = await mockReviewsProvider.summary("biohack");
-    expect(summaryAfter.totalReviews).toBe(1);
-    expect(summaryAfter.averageRating).toBe(5);
-    expect(summaryAfter.ratingBreakdown[5]).toBe(1);
+    expect(summaryAfter.totalReviews).toBe(0);
+    expect(summaryAfter.averageRating).toBe(0);
+    expect(summaryAfter.ratingBreakdown[5]).toBe(0);
   });
 
   it("rejects reviews that are not linked to the product in the order", async () => {

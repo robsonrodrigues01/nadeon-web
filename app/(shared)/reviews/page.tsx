@@ -107,7 +107,8 @@ export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
   );
   const hasMore = offset + result.reviews.length < result.total;
   const publishedReviews = result.reviews.filter(
-    (review) => review.verifiedBuyer
+    (review) =>
+      review.moderationStatus === "approved" && review.verifiedBuyer
   );
 
   return (
