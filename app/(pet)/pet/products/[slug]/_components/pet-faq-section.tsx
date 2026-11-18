@@ -46,7 +46,7 @@ export function PetFaqSection({ product, className = "" }: PetFaqSectionProps) {
               key={faq.question}
               className="group py-4 px-2 sm:px-4 cursor-pointer focus-within:outline-none"
             >
-              <summary className="flex items-center justify-between gap-4 text-sm sm:text-base font-extrabold text-fg list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-field py-1">
+              <summary className="flex min-h-11 items-center justify-between gap-4 text-sm sm:text-base font-extrabold text-fg list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-field py-1">
                 <span>{faq.question}</span>
                 <span
                   aria-hidden="true"

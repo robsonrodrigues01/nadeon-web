@@ -270,7 +270,7 @@ export default async function WholesalePage() {
             <div className="mt-7 divide-y divide-border rounded-card border border-border bg-bg-elevated px-5">
               {questions.map((question) => (
                 <details key={question} className="py-4">
-                  <summary className="min-h-11 cursor-pointer py-2 font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                  <summary className="flex min-h-11 cursor-pointer items-center py-2 font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                     {question}
                   </summary>
                   <p className="pb-2 text-sm text-fg-muted">To be confirmed.</p>

@@ -329,7 +329,7 @@ export default async function BenefitCollectionPage({ params }: PageProps) {
             ].map((question) => (
               <li key={question} className="py-4">
                 <details>
-                  <summary className="min-h-11 cursor-pointer py-2 font-bold text-fg">
+                  <summary className="flex min-h-11 cursor-pointer items-center py-2 font-bold text-fg">
                     {question}
                   </summary>
                   <p className="pt-2 text-fg-muted">To be confirmed</p>

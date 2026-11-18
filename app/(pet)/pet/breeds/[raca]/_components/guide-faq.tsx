@@ -53,7 +53,7 @@ export function GuideFaq({ breedTitle }: GuideFaqProps) {
       <div className="flex flex-col divide-y divide-border/60 border-y border-border/60">
         {FAQ_ITEMS.map((item, index) => (
           <details key={index} className="group py-4 sm:py-5 cursor-pointer">
-            <summary className="flex justify-between items-center font-bold text-base sm:text-lg text-fg list-none select-none">
+            <summary className="flex min-h-11 justify-between items-center font-bold text-base sm:text-lg text-fg list-none select-none">
               <span>{item.q}</span>
               <span
                 aria-hidden="true"
