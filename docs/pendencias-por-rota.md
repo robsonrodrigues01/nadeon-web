@@ -1,12 +1,12 @@
 # Pendências por Rota para o Robson
 
-Este documento consolida o mapeamento completo das pendências de conteúdo, dados, preços, imagens e aprovações em todas as 63 rotas ativas do site Nadeon (localizadas a partir de `find app -name page.tsx`).
+Este documento consolida o mapeamento das pendências de conteúdo, dados, preços, imagens e aprovações nas 63 rotas ativas do site Nadeon.
 
 Para cada rota, o relatório apresenta:
 
-- **(a) Dados pendentes:** Textos, preços, imagens ou atributos com marcação `To be confirmed` ou dependências de mock, indicando `arquivo:linha`.
-- **(b) Proposta de referência:** Documento em `docs/*-proposta.md` que detalha o formato, textos sugeridos e regras aprovadas pelo time técnico.
-- **(c) Insumos e decisões necessárias:** O que depende exclusivamente de definição do Robson (cópias do board, fotografia/render 3D, precificação, IDs da Shopify, políticas jurídicas e aprovação de alegações).
+- **(a) Dados pendentes:** Textos, preços, imagens ou atributos marcados como `To be confirmed` ou dependentes de dados de exemplo, com referência `arquivo:linha`.
+- **(b) Proposta de referência:** Documento em `docs/*-proposta.md` com ideias de formato, texto e regras. Todas as propostas aguardam aprovação do Robson e não são regras aprovadas.
+- **(c) Insumos e decisões necessárias:** Definições do Robson, como textos aprovados no board, fotografias, imagens tridimensionais, preços, códigos de produto na Shopify, políticas jurídicas e aprovação de alegações.
 
 Ao final, apresenta-se uma **lista única priorizada** com as decisões transversais que destravam o maior número de rotas simultaneamente.
 
@@ -17,7 +17,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum texto `To be confirmed` fixo no código. A página consome produtos e banners via `catalogProvider` e `contentProvider`.
 - **(b) Proposta de referência:** Nenhuma proposta isolada; implementa o board de entrada desktop e mobile.
-- **(c) Decisão ou insumo do Robson:** Renders 3D finais dos produtos das linhas Human e Pet para os cards de destaque e hero split; IDs reais dos produtos principais na Shopify.
+- **(c) Decisão ou insumo do Robson:** Imagens tridimensionais finais dos produtos Human e Pet para os cards de destaque e a composição dividida do topo; códigos reais dos produtos principais na Shopify.
 
 ---
 
@@ -35,7 +35,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(account)/account/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed` no arquivo da página. Consome dados de cliente e resumo de pedidos via `accountProvider`.
 - **(b) Proposta de referência:** `docs/account-retention-proposta.md` e contratos de conta em `lib/contracts/account.ts`.
-- **(c) Decisão ou insumo do Robson:** Configuração da integração do portal de clientes da Shopify (multipass ou autenticação de Storefront).
+- **(c) Decisão ou insumo do Robson:** Nenhuma pendência adicional de login; essa decisão já está encerrada no plano v3.
 
 ---
 
@@ -49,8 +49,8 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(account)/account/email-preferences/_components/email-preferences-form.tsx:183`: Dias de aviso prévio de cobrança de assinatura (`A heads-up To be confirmed days before each delivery`).
   - `app/(account)/account/email-preferences/_components/email-preferences-form.tsx:234`: Prazo de efetivação de alterações (`Changes apply within To be confirmed`).
   - `app/(account)/account/email-preferences/_components/email-preferences-form.tsx:287`: Frequência de resumo semanal/mensal (`<option value="">To be confirmed</option>`).
-- **(b) Proposta de referência:** `docs/account-pets-proposta.md` (seção de configurações e e-mails).
-- **(c) Decisão ou insumo do Robson:** Definição do prazo operacional de descadastro (ex.: 48 horas) e antecedência do e-mail de aviso de cobrança da assinatura (ex.: 3 dias).
+- **(b) Proposta de referência:** Nenhuma proposta específica de preferências de e-mail foi localizada.
+- **(c) Decisão ou insumo do Robson:** Definir as descrições e os prazos operacionais de comunicação e descadastro. Nenhum prazo é assumido neste documento.
 
 ---
 
@@ -78,23 +78,23 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **(a) Dados pendentes no código:**
   - `app/(account)/account/pets/page.tsx:68`: Texto de recomendações de produtos no cabeçalho (`Recommendations: To be confirmed`).
   - `app/(account)/account/pets/_components/actions.ts:47`: Mensagem de confirmação de cadastro (`message: "To be confirmed"`).
-  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:122`: Opção de seleção de porte/idade (`To be confirmed`).
-  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:130, 134`: Textos de instrução de dose e peso (`To be confirmed`).
-  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:179`: Mensagem de exclusão de pet (`To be confirmed`).
-  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:194`: Upload de foto do animal (`Photo: To be confirmed`).
-  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:202, 209, 216`: Exibição de raça, peso e dose diária recomendada (`To be confirmed`).
-  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:251, 279`: Recomendações e avisos clínicos veterinários (`To be confirmed`).
+  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:122`: Opção vazia de nível de atividade (`To be confirmed`).
+  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:130, 134`: Texto da foto e opção de foco de saúde (`To be confirmed`).
+  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:179`: Opção alternativa quando falta o nível de atividade.
+  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:194`: Identificação da foto no cartão do pet (`Photo: To be confirmed`).
+  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:202, 209, 216`: Valores de raça, peso e idade quando não estão disponíveis.
+  - `app/(account)/account/pets/_components/pet-profile-manager.tsx:251, 279`: Texto auxiliar do link para adicionar pet e mensagem de recomendações ainda pendente.
 - **(b) Proposta de referência:** `docs/account-pets-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Aprovação veterinária para a tabela de recomendação de dose por faixa de peso e liberação de upload de fotos (Cloudinary ou S3).
+- **(c) Decisão ou insumo do Robson:** Aprovação veterinária de qualquer recomendação de dose e decisão sobre armazenamento de fotos.
 
 ---
 
 ## 8. Rota `/account/settings` (Configurações da Conta)
 
 - **Página:** `app/(account)/account/settings/page.tsx`
-- **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Formulários de endereço e dados pessoais conectados ao mock.
+- **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Formulários de endereço e dados pessoais conectados a dados de exemplo.
 - **(b) Proposta de referência:** `docs/account-retention-proposta.md` e `lib/contracts/account.ts`.
-- **(c) Decisão ou insumo do Robson:** Validação do fluxo de exclusão definitiva de conta sob a LGPD e CCPA.
+- **(c) Decisão ou insumo do Robson:** Validação do fluxo de exclusão definitiva conforme a Lei Geral de Proteção de Dados (LGPD) e a Lei de Privacidade do Consumidor da Califórnia (CCPA, sigla em inglês).
 
 ---
 
@@ -103,7 +103,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(account)/account/subscriptions/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`.
 - **(b) Proposta de referência:** `docs/account-retention-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Configuração do aplicativo de assinaturas na Shopify (ex.: Recharge ou Shopify Subscriptions).
+- **(c) Decisão ou insumo do Robson:** Nenhuma decisão pendente sobre o serviço de assinaturas; o plano v3 já define Shopify Subscriptions.
 
 ---
 
@@ -125,11 +125,11 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(shared)/affiliates/page.tsx:147`: Política de produtos gratuitos para teste (`To be confirmed`).
   - `app/(shared)/affiliates/page.tsx:168`: Requisitos mínimos de seguidores e prazo de análise (`To be confirmed`).
   - `app/(shared)/affiliates/page.tsx:190`: Termos do programa e diretrizes de conteúdo (`To be confirmed`).
-  - `app/(shared)/affiliates/page.tsx:210, 218`: Respostas do FAQ e canal de dúvidas (`To be confirmed`).
+  - `app/(shared)/affiliates/page.tsx:210, 218`: Respostas das perguntas frequentes e canal de dúvidas (`To be confirmed`).
   - `app/(shared)/affiliates/_components/affiliate-application-form.tsx:36, 44`: Exemplos de redes e nicho (`placeholder="To be confirmed"`).
   - `app/(shared)/affiliates/_components/affiliate-application-form.tsx:103, 112, 131`: Checkbox de diretrizes e mensagem de confirmação (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/affiliates-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Definição da comissão percentual (ex.: 15%), plataforma de tracking (ex.: Impact ou UpPromise) e regras de compliance FTC.
+- **(c) Decisão ou insumo do Robson:** Aprovar a proposta de comissão e definir a plataforma de rastreamento e as regras de publicidade aplicáveis. As condições propostas ainda aguardam aprovação.
 
 ---
 
@@ -138,7 +138,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/cart/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Preços e itens derivados do `catalogProvider` e `cartProvider`.
 - **(b) Proposta de referência:** Regras de frete em `lib/market/shipping.ts`.
-- **(c) Decisão ou insumo do Robson:** Definição final dos limites de frete grátis por mercado (atualmente $75 para Human e $65 para Pet nos EUA).
+- **(c) Decisão ou insumo do Robson:** Aprovar os limites propostos para frete grátis por mercado. Os valores atuais no código ainda aguardam confirmação.
 
 ---
 
@@ -171,7 +171,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(shared)/experts/page.tsx:118`: Descrição da etapa 4 do processo de revisão (`To be confirmed`).
   - `app/(shared)/experts/page.tsx:164`: Critérios de seleção de especialistas (`To be confirmed`).
   - `app/(shared)/experts/page.tsx:219`: Política de remuneração e independência dos pareceristas (`To be confirmed`).
-  - `app/(shared)/experts/page.tsx:238, 252`: Respostas do FAQ e texto de contato (`To be confirmed`).
+  - `app/(shared)/experts/page.tsx:238, 252`: Respostas das perguntas frequentes e texto de contato (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/experts-proposta.md`.
 - **(c) Decisão ou insumo do Robson:** Nomes reais, fotos em alta resolução, mini-biografias e credenciais médicas ou veterinárias dos membros do conselho.
 
@@ -195,16 +195,16 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(shared)/gift-card/_components/gift-card-purchase-form.tsx:234, 446`: Validação de entrega e termos de uso (`To be confirmed`).
   - `app/(shared)/gift-card/_components/gift-card-faq.tsx:21, 33, 37, 41, 45`: Respostas sobre recarga, expiração, devolução e uso entre mercados (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/gift-card-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Valores nominais aprovados (ex.: $50, $100, $200), artes dos três designs de cartão e produto Gift Card na Shopify.
+- **(c) Decisão ou insumo do Robson:** Aprovar os valores nominais propostos, as artes dos designs e o cadastro do cartão-presente na Shopify. Nenhum valor da proposta está aprovado.
 
 ---
 
 ## 18. Rota `/help` (Central de Ajuda e Contato)
 
 - **Página:** `app/(shared)/help/page.tsx`
-- **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Formulário de contato e suporte integrados ao mock de forms.
+- **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Formulários de contato e suporte usam dados de exemplo.
 - **(b) Proposta de referência:** `docs/faq-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Definição do e-mail oficial de suporte ao cliente e horário de atendimento (ex.: seg-sex 9h-17h EST).
+- **(c) Decisão ou insumo do Robson:** Definir o e-mail oficial de suporte e o horário de atendimento. Ambos ainda são pendências.
 
 ---
 
@@ -213,7 +213,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(human)/human/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed` na rota.
 - **(b) Proposta de referência:** Proposta de conteúdo geral em `docs/w5-00a-content-proposals.md`.
-- **(c) Decisão ou insumo do Robson:** Renders 3D das fórmulas Human (Global Longevity e Prime) e aprovação jurídica das alegações de NAD+.
+- **(c) Decisão ou insumo do Robson:** Imagens tridimensionais das fórmulas Human (Global Longevity e Prime) e aprovação jurídica das alegações sobre dinucleotídeo de nicotinamida e adenina (NAD+).
 
 ---
 
@@ -222,7 +222,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(human)/human/build-your-box/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Lógica de cálculo de economia baseada no catálogo.
 - **(b) Proposta de referência:** Contratos de bundles em `lib/contracts/catalog.ts`.
-- **(c) Decisão ou insumo do Robson:** Regras de desconto por quantidade de itens no box (ex.: 15% para 2 frascos, 20% para 3 frascos).
+- **(c) Decisão ou insumo do Robson:** Definir e aprovar as regras de desconto por quantidade de itens no box. Os exemplos da proposta não são regras aprovadas.
 
 ---
 
@@ -236,7 +236,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(human)/human/compare/_components/compare-formulas.tsx:112, 117, 122, 127, 132, 137`: Especificações técnicas por linha da tabela (`To be confirmed`).
   - `app/(human)/human/compare/_components/compare-formulas.tsx:185, 237`: Destaques de pureza e dosagem (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/human-compare-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Aprovação da tabela comparativa entre NAD+ Global e NAD+ Prime (ingredientes ativos, miligramas por dose e rotina ideal).
+- **(c) Decisão ou insumo do Robson:** Aprovação da tabela comparativa entre dinucleotídeo de nicotinamida e adenina (NAD+) Global e NAD+ Prime (ingredientes ativos, quantidades por dose e rotina proposta).
 
 ---
 
@@ -263,7 +263,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(human)/human/products/[slug]/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Cópias e abas de ciência estruturadas via catálogo.
 - **(b) Proposta de referência:** `docs/shopify-handles.md`.
-- **(c) Decisão ou insumo do Robson:** Renders 3D das variantes de tamanho/frasco e publicação de lotes e laudos reais no primeiro envio.
+- **(c) Decisão ou insumo do Robson:** Imagens tridimensionais das variantes de tamanho e frasco, além de lotes e laudos reais para a primeira remessa.
 
 ---
 
@@ -299,7 +299,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(human)/human/subscribe/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`.
 - **(b) Proposta de referência:** `docs/shipping-returns-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Percentual de desconto permanente da assinatura (atualmente 20% no design) e brindes do primeiro pedido.
+- **(c) Decisão ou insumo do Robson:** Aprovar o percentual de desconto permanente da assinatura e os brindes do primeiro pedido; os valores mostrados no design ainda não foram aprovados.
 
 ---
 
@@ -312,9 +312,9 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(shared)/ingredients/_components/ingredient-glossary.tsx:109`: Miligramagem clínica por dose (`To be confirmed`).
   - `app/(shared)/ingredients/_components/ingredient-glossary.tsx:173, 184`: Sinônimos científicos e referências de absorção (`To be confirmed`).
   - `app/(shared)/ingredients/_components/ingredient-glossary.tsx:197, 210, 223`: Citações de estudos clínicos e nomes de pesquisadores (`To be confirmed`).
-  - `app/(shared)/ingredients/_components/ingredient-glossary.tsx:236, 267`: Mecanismo celular detalhado de cada composto (`To be confirmed`).
+  - `app/(shared)/ingredients/_components/ingredient-glossary.tsx:236, 267`: Mecanismo de ação no organismo de cada composto (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/ingredients-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Revisão científica e jurídica dos compostos listados (NMN, Resveratrol, Quercetina, Fisetina, TMG, Apigenina) e dosagens declaradas.
+- **(c) Decisão ou insumo do Robson:** Revisão científica e jurídica dos compostos listados, incluindo mononucleotídeo de nicotinamida (NMN) e trimetilglicina (TMG), além de resveratrol, quercetina, fisetina e apigenina, e das dosagens declaradas.
 
 ---
 
@@ -323,9 +323,10 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/journal/page.tsx`
 - **(a) Dados pendentes no código:**
   - `app/(shared)/journal/page.tsx:8`: Descrição nos metadados (`description: "To be confirmed"`).
-  - `app/(shared)/journal/_components/journal-browser.tsx:226, 256`: Tempo estimado de leitura e autor revisor em artigos sem dados completos (`To be confirmed`).
+  - `data/content.json:64-75`, artigo `why-nad-declines-in-senior-dogs-and-what-you-can-do`: os campos `reviewer`, `publishedAt`, `updatedAt` e `sections[].body` estão como `To be confirmed`; `sections[].title` contém títulos também pendentes. O tempo está no campo `readingMinutes` (linha 62), não nas linhas 226 ou 256 do navegador.
+  - `app/(shared)/journal/_components/journal-browser.tsx:198-200, 207-211`: o cartão mostra `readingMinutes`, `title` e `excerpt`; as linhas 226 e 256 são, respectivamente, o estado sem resultados e o título de guias de raças.
 - **(b) Proposta de referência:** `docs/journal-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Textos completos dos primeiros artigos editoriais e fotos de capa autorizadas.
+- **(c) Decisão ou insumo do Robson:** Textos completos dos primeiros artigos editoriais, identificação do revisor, datas e fotos de capa autorizadas.
 
 ---
 
@@ -344,7 +345,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/lab-results/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed` no arquivo da rota; busca desabilitada no lançamento exibindo mensagem informativa de que os primeiros lotes serão publicados em breve.
 - **(b) Proposta de referência:** `docs/contracts.md` (seção LabsProvider).
-- **(c) Decisão ou insumo do Robson:** Certificados de Análise (COAs) reais emitidos por laboratório independente terceirizado (com números de lote e teores de pureza).
+- **(c) Decisão ou insumo do Robson:** Certificados de análise reais emitidos por laboratório independente, com números de lote e teores de pureza.
 
 ---
 
@@ -358,7 +359,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(shared)/legal/accessibility/_components/accessibility-content.tsx:423, 442, 461`: Versões das tecnologias assistivas e sistemas operacionais homologados (`To be confirmed`).
   - `app/(shared)/legal/accessibility/_components/accessibility-content.tsx:512, 534, 555, 597`: Cronograma de correção de limitações e contatos dos responsáveis técnicos (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/legal-accessibility-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Informar e-mail de contato de acessibilidade (ex.: `accessibility@nadeon.com`) e aprovação formal da meta de conformidade WCAG 2.1 AA.
+- **(c) Decisão ou insumo do Robson:** Informar o e-mail e telefone reais de acessibilidade; os contatos exibidos no código são placeholders. Aprovar a meta das Diretrizes de Acessibilidade para Conteúdo Web 2.1, nível AA (WCAG 2.1 AA).
 
 ---
 
@@ -368,11 +369,11 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **(a) Dados pendentes no código:**
   - `app/(shared)/legal/do-not-sell/_components/do-not-sell-content.tsx:64`: Data de vigência da política (`To be confirmed`).
   - `app/(shared)/legal/do-not-sell/_components/do-not-sell-content.tsx:117, 122, 123, 130`: Endereço postal e telefone gratuito para solicitações (`To be confirmed`).
-  - `app/(shared)/legal/do-not-sell/_components/do-not-sell-content.tsx:175, 186`: Prazos de resposta para confirmação e conclusão sob a CCPA (`To be confirmed`).
+  - `app/(shared)/legal/do-not-sell/_components/do-not-sell-content.tsx:175, 186`: Prazos de resposta para confirmação e conclusão sob a Lei de Privacidade do Consumidor da Califórnia (CCPA, sigla em inglês) e a Lei de Direitos de Privacidade da Califórnia (CPRA, sigla em inglês), ambos `To be confirmed`.
   - `app/(shared)/legal/do-not-sell/_components/privacy-form.tsx:207, 221, 236, 251`: Protocolo de registro e remetente de e-mail de verificação (`To be confirmed`).
   - `app/(shared)/legal/do-not-sell/_components/privacy-form.tsx:553, 568`: Prazo de validação de documentos de agente autorizado (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/legal-do-not-sell-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Dados cadastrais da empresa física nos EUA (endereço postal e telefone 0800/toll-free exigido pela Califórnia).
+- **(c) Decisão ou insumo do Robson:** Dados cadastrais da empresa nos EUA, incluindo endereço postal e telefone gratuito para solicitações da Califórnia. Os valores exibidos são exemplos provisórios, não contatos confirmados.
 
 ---
 
@@ -381,10 +382,10 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/legal/privacy/page.tsx`
 - **(a) Dados pendentes no código:**
   - `app/(shared)/legal/privacy/_components/privacy-content.tsx:92, 93, 94`: Data de vigência, versão e data de última atualização (`To be confirmed`).
-  - `app/(shared)/legal/privacy/_components/privacy-content.tsx:438`: Telefone do encarregado de privacidade (DPO) (`To be confirmed`).
+  - `app/(shared)/legal/privacy/_components/privacy-content.tsx:438`: Telefone do encarregado de proteção de dados (`To be confirmed`).
   - `app/(shared)/legal/privacy/_components/privacy-content.tsx:561`: E-mail oficial de privacidade (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/legal-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Revisão jurídica dos dados do controlador da empresa e e-mail institucional (`privacy@nadeon.com`).
+- **(c) Decisão ou insumo do Robson:** Revisão jurídica dos dados da empresa e definição do e-mail institucional de privacidade. O endereço exibido é um exemplo provisório.
 
 ---
 
@@ -395,7 +396,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(shared)/legal/terms/_components/terms-content.tsx:105, 106, 107`: Data de vigência, versão e atualização dos termos (`To be confirmed`).
   - `app/(shared)/legal/terms/_components/terms-content.tsx:868, 926`: E-mail do departamento jurídico e foro de arbitragem/jurisdição (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/legal-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Revisão jurídica por advogado especializado em e-commerce americano e definição do estado de jurisdição (ex.: Delaware).
+- **(c) Decisão ou insumo do Robson:** Revisão jurídica por advogado com experiência em comércio eletrônico nos EUA e definição da jurisdição aplicável.
 
 ---
 
@@ -432,7 +433,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(pet)/pet/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed` fixo no arquivo da rota.
 - **(b) Proposta de referência:** `docs/w5-00a-content-proposals.md`.
-- **(c) Decisão ou insumo do Robson:** Renders 3D das fórmulas Pet (Chews e Oils para cães, gatos e equinos), fotografia dos animais e selos veterinários.
+- **(c) Decisão ou insumo do Robson:** Imagens tridimensionais das fórmulas Pet (mastigáveis e óleos para cães, gatos e equinos), fotografias dos animais e selos veterinários.
 
 ---
 
@@ -444,9 +445,9 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(pet)/pet/benefit/[beneficio]/page.tsx:69, 87, 94`: Citações de revisão veterinária e estudos clínicos (`To be confirmed`).
   - `app/(pet)/pet/benefit/[beneficio]/page.tsx:112, 128, 144, 160`: Dosagens recomendadas por porte e tempo para primeiros efeitos (`To be confirmed`).
   - `app/(pet)/pet/benefit/[beneficio]/page.tsx:185, 202, 219`: Estatísticas percentuais de melhora e relatos de tutores (`To be confirmed`).
-  - `app/(pet)/pet/benefit/[beneficio]/page.tsx:245, 262, 280`: Perguntas do FAQ de cada benefício (articulações, energia, pelagem, cognição) (`To be confirmed`).
+  - `app/(pet)/pet/benefit/[beneficio]/page.tsx:245, 262, 280`: Perguntas frequentes sobre cada benefício (articulações, energia, pelagem, cognição) (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/pet-benefit-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Validação veterinária das afirmações de benefício e prazos para percepção de resultados (ex.: 3 a 4 semanas).
+- **(c) Decisão ou insumo do Robson:** Revisão veterinária das afirmações de benefício e dos prazos propostos; nenhum prazo é tratado como aprovado.
 
 ---
 
@@ -492,7 +493,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(pet)/pet/cats/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`.
 - **(b) Proposta de referência:** `docs/w5-00a-content-proposals.md`.
-- **(c) Decisão ou insumo do Robson:** Render 3D do óleo de salmão com NAD+ para gatos e palatabilizantes utilizados.
+- **(c) Decisão ou insumo do Robson:** Imagem tridimensional do óleo de salmão para gatos e definição dos palatabilizantes utilizados.
 
 ---
 
@@ -516,7 +517,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(pet)/pet/dogs/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`.
 - **(b) Proposta de referência:** `docs/w5-00a-content-proposals.md`.
-- **(c) Decisão ou insumo do Robson:** Renders 3D dos chews mastigáveis sabor bacon/fígado nos três portes de cão.
+- **(c) Decisão ou insumo do Robson:** Imagens tridimensionais dos mastigáveis sabor bacon e fígado nos três portes de cão.
 
 ---
 
@@ -524,7 +525,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 
 - **Página:** `app/(pet)/pet/dose-calculator/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Lógica matemática de peso vs miligramas implementada em `lib/dosing/calculator.ts`.
-- **(b) Proposta de referência:** Tabela de dosagem aprovada em `lib/contracts/catalog.ts`.
+- **(b) Proposta de referência:** Valores atuais da tabela de dosagem em `lib/contracts/catalog.ts`; a aprovação veterinária permanece pendente.
 - **(c) Decisão ou insumo do Robson:** Assinatura formal do médico veterinário responsável pela fórmula de dosagem por quilo/libra.
 
 ---
@@ -543,8 +544,9 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(pet)/pet/journal/page.tsx`
 - **(a) Dados pendentes no código:**
   - `app/(pet)/pet/journal/page.tsx:8`: Descrição nos metadados (`description: "To be confirmed"`).
-- **(b) Proposta de referência:** `docs/journal-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Fornecer os artigos veterinários revisados com foco em longevidade canina e felina.
+  - `data/content.json:61-75`, artigo `why-nad-declines-in-senior-dogs-and-what-you-can-do`: o campo `excerpt` termina em asterisco; `reviewer`, `publishedAt`, `updatedAt` e `sections[].body` são `To be confirmed`.
+- **(b) Proposta de referência:** `docs/journal-proposta.md`; qualquer texto sugerido aguarda aprovação.
+- **(c) Decisão ou insumo do Robson:** Confirmar o tratamento do aviso da Food and Drug Administration (FDA): a proposta, ainda pendente de confirmação do responsável, é exibir o aviso uma vez perto do título em cada artigo do Journal Pet. O campo de resumo (`excerpt`) termina em asterisco e o cartão o mostra em `app/(shared)/journal/_components/journal-browser.tsx:210-211`. Os corpos ainda são placeholders; completar os artigos e obter revisão veterinária antes da publicação.
 
 ---
 
@@ -594,7 +596,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(pet)/pet/subscribe/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`.
 - **(b) Proposta de referência:** `docs/shipping-returns-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Definição dos benefícios adicionais para assinantes da linha Pet (ex.: suporte veterinário básico ou dosador grátis).
+- **(c) Decisão ou insumo do Robson:** Definir e aprovar eventuais benefícios adicionais para assinantes Pet; exemplos de proposta não são compromissos aprovados.
 
 ---
 
@@ -606,10 +608,10 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(shared)/professionals/page.tsx:79, 103`: Tiers de desconto profissional e modelo de comissão por indicação (`To be confirmed`).
   - `app/(shared)/professionals/page.tsx:114, 144`: Política de envio de amostras gratuitas para clínicas (`To be confirmed`).
   - `app/(shared)/professionals/page.tsx:170, 195`: Acesso à biblioteca técnica e laudos de pureza restritos (`To be confirmed`).
-  - `app/(shared)/professionals/page.tsx:220, 250`: Perguntas do FAQ sobre verificação de CRM/CRMV e venda direta em clínicas (`To be confirmed`).
+  - `app/(shared)/professionals/page.tsx:220, 250`: Perguntas frequentes sobre verificação no Conselho Regional de Medicina ou no Conselho Regional de Medicina Veterinária e venda direta em clínicas (`To be confirmed`).
   - `app/(shared)/professionals/_components/professional-application-form.tsx:96, 111, 129, 167, 200`: Exemplos de registro profissional, especialidades e resposta de envio (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/professionals-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Definição da comissão de recomendação clínica (ex.: 20%), regras de verificação de CRM/CRMV e material físico de suporte (folhetos para consultório).
+- **(c) Decisão ou insumo do Robson:** Aprovar as condições propostas para profissionais, definir regras de verificação dos registros no Conselho Regional de Medicina ou no Conselho Regional de Medicina Veterinária e decidir sobre material impresso de apoio. As propostas aguardam aprovação.
 
 ---
 
@@ -618,9 +620,9 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/reviews/page.tsx`
 - **(a) Dados pendentes no código:**
   - `app/(shared)/reviews/page.tsx:51`: Sanitização de autor quando incompleto (`displayAuthorName -> "To be confirmed"`).
-  - `app/(shared)/reviews/page.tsx:248, 249, 261`: Mensagens sobre programa de incentivo de reviews e termos de moderação (`To be confirmed`).
+  - `app/(shared)/reviews/page.tsx:248, 249, 261`: Mensagens sobre programa de incentivo a avaliações e termos de moderação (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/reviews-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Conexão com a plataforma oficial de avaliações (Shopify Reviews, Junip ou Yotpo) e política estrita de não incentivo financeiro a reviews.
+- **(c) Decisão ou insumo do Robson:** Conexão com a plataforma oficial de avaliações (Shopify Reviews, Junip ou Yotpo) e política de não oferecer recompensa financeira por avaliações.
 
 ---
 
@@ -629,9 +631,9 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/reviews/write/page.tsx`
 - **(a) Dados pendentes no código:**
   - `app/(shared)/reviews/write/page.tsx:126`: Nota de diretrizes sobre avaliações incentivadas (`Reviews are not incentivized. To be confirmed.`).
-  - `app/(shared)/reviews/write/_components/review-form.tsx:112, 115`: Upload de fotos e avaliação detalhada por atributo (`Add photos (optional): To be confirmed`).
+  - `app/(shared)/reviews/write/_components/review-form.tsx:112, 115`: Envio de fotos e avaliação detalhada por atributo (`Add photos (optional): To be confirmed`).
 - **(b) Proposta de referência:** `docs/reviews-write-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Definição de aceitar fotos de clientes no review (exigindo moderação prévia antes da publicação) e termos de uso de imagem.
+- **(c) Decisão ou insumo do Robson:** Definir se serão aceitas fotos de clientes em avaliações, com moderação antes da publicação, e aprovar os termos de uso de imagem.
 
 ---
 
@@ -640,7 +642,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/science/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed` no arquivo da rota; citações e gráficos implementados de acordo com o board.
 - **(b) Proposta de referência:** `docs/contracts.md` e decisão ADR-020 em `.maestri/DECISIONS.md`.
-- **(c) Decisão ou insumo do Robson:** Revisão científica final e validação jurídica das alegações sobre NAD+, sirtuínas e biogênese mitocondrial.
+- **(c) Decisão ou insumo do Robson:** Revisão científica final e validação jurídica das alegações sobre dinucleotídeo de nicotinamida e adenina (NAD+), sirtuínas e formação de mitocôndrias.
 
 ---
 
@@ -649,7 +651,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 - **Página:** `app/(shared)/search/page.tsx`
 - **(a) Dados pendentes no código:** Nenhum `To be confirmed`.
 - **(b) Proposta de referência:** `lib/contracts/catalog.ts`.
-- **(c) Decisão ou insumo do Robson:** Definição de sinônimos de busca na Shopify (ex.: busca por "colágeno", "energia", "dor articular").
+- **(c) Decisão ou insumo do Robson:** Definir e aprovar sinônimos autorizados para a busca na Shopify.
 
 ---
 
@@ -657,9 +659,9 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 
 - **Página:** `app/(shared)/shipping-returns/page.tsx`
 - **(a) Dados pendentes no código:**
-  - Linhas 44 a 158: Horário de corte para envio no mesmo dia (cutoff time), transportadoras parceiras (USPS, UPS, FedEx), custos de frete econômico e expresso, destinos internacionais atendidos, política de devolução de frascos abertos, taxa de reabastecimento (restocking fee) e prazos de reembolso (`To be confirmed`).
-  - Linhas 205 a 235: Data de atualização da política, garantia incondicional (ex.: 30 vs 60 dias) e endereço de devolução de pacotes (`To be confirmed`).
-  - Linhas 351 a 369: Requisitos de entrega em caixas postais (PO Boxes) e endereços militares (APO/FPO) (`To be confirmed`).
+  - Linhas 44 a 158: Horário limite para envio no mesmo dia, transportadoras, custos de frete econômico e expresso, destinos internacionais atendidos, política de devolução de frascos abertos, eventual taxa para reposição de estoque e prazos de reembolso (`To be confirmed`).
+  - Linhas 205 a 235: Data de atualização da política, prazo e condições da garantia e endereço de devolução de pacotes (`To be confirmed`). Os termos propostos aguardam aprovação jurídica.
+  - Linhas 351 a 369: Requisitos de entrega em caixas postais e endereços militares (`To be confirmed`).
   - Linhas 489 a 501: Frequência e regras de frete em envios recorrentes de assinaturas (`To be confirmed`).
   - Linhas 617 a 680: Janela máxima para relatar caixas avariadas no transporte (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/shipping-returns-proposta.md`.
@@ -670,9 +672,9 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 ## 61. Rota `/track` (Rastreamento de Pedido)
 
 - **Página:** `app/(shared)/track/page.tsx`
-- **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Formulário integrado ao mock de rastreio.
+- **(a) Dados pendentes no código:** Nenhum `To be confirmed`. Formulário integrado a dados de exemplo para rastreio.
 - **(b) Proposta de referência:** `lib/contracts/account.ts`.
-- **(c) Decisão ou insumo do Robson:** Integração com a API de rastreamento do centro de distribuição ou aplicativo Shopify (ex.: AfterShip, Wonderment).
+- **(c) Decisão ou insumo do Robson:** Definir e aprovar a integração com o serviço de rastreamento de pedidos.
 
 ---
 
@@ -689,17 +691,17 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 
 ---
 
-## 63. Rota `/wholesale` (Venda no Atacado B2B)
+## 63. Rota `/wholesale` (Venda no Atacado entre Empresas)
 
 - **Página:** `app/(shared)/wholesale/page.tsx`
 - **(a) Dados pendentes no código:**
   - `app/(shared)/wholesale/page.tsx:21, 62`: Pedido mínimo inicial em dólares ou unidades (`Minimum: To be confirmed`).
   - `app/(shared)/wholesale/page.tsx:25`: Acesso público aos relatórios de lote para lojistas (`Public lab reports: To be confirmed`).
-  - `app/(shared)/wholesale/page.tsx:108`: Catálogo completo de preços de atacado (Line sheet) (`Line sheet: To be confirmed`).
-  - `app/(shared)/wholesale/page.tsx:228, 239`: Prazo de resposta da equipe comercial e e-mail B2B (`To be confirmed`).
-  - `app/(shared)/wholesale/page.tsx:276`: FAQ sobre exclusividade territorial e revenda online em marketplaces (`To be confirmed`).
+  - `app/(shared)/wholesale/page.tsx:108`: Catálogo de produtos e preços para lojistas (`To be confirmed`).
+  - `app/(shared)/wholesale/page.tsx:228, 239`: Prazo de resposta da equipe comercial e e-mail para lojistas (`To be confirmed`).
+  - `app/(shared)/wholesale/page.tsx:276`: Perguntas frequentes sobre exclusividade territorial e revenda online em marketplaces (`To be confirmed`).
 - **(b) Proposta de referência:** `docs/wholesale-proposta.md`.
-- **(c) Decisão ou insumo do Robson:** Aprovação do pedido mínimo inicial (sugerido: $500), desconto percentual da tabela atacado (ex.: 45% a 50%) e PDF do Line Sheet para download.
+- **(c) Decisão ou insumo do Robson:** Aprovar as condições propostas de pedido mínimo, desconto e catálogo de produtos e preços para lojistas. Os valores e condições da proposta ainda não foram aprovados.
 
 ---
 
@@ -707,32 +709,33 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
 
 Esta lista organiza as decisões por **impacto decrescente no número de rotas destravadas simultaneamente**, permitindo focar primeiro nos insumos que resolvem blocos inteiros do site:
 
-1. **Renders 3D e Fotos de Produtos (Destrava 20 rotas):**
-   - Produção/aprovação dos renders 3D em alta resolução para os 36 códigos de produto (12 famílias de produto nas linhas Human e Pet).
+1. **Imagens tridimensionais e fotos de produtos (destrava 20 rotas):**
+   - Aprovar imagens em alta resolução e confirmar o escopo: o material de pendências registra a dúvida entre 12 imagens por família de produto e 36 variantes, sem confirmar uma contagem final.
    - _Rotas destravadas:_ `/`, `/human`, `/pet`, `/human/products/[slug]`, `/pet/products/[slug]`, `/human/shop`, `/human/shop/[format]`, `/pet/dogs`, `/pet/cats`, `/pet/horses`, `/human/kits`, `/human/kits/[slug]`, `/pet/kits`, `/pet/kits/[slug]`, `/human/build-your-box`, `/pet/build-your-box`, `/cart`, `/account/orders`, `/account/orders/[id]`, `/lp/[campanha]`.
 
-2. **Políticas de Frete, Envio e Devoluções (Destrava 10 rotas):**
-   - Aprovação do documento `docs/shipping-returns-proposta.md`: prazos de entrega, limites de frete grátis ($75 Human / $65 Pet), transportadoras (USPS/UPS), janela de garantia de satisfação (30 vs 60 dias) e política de frascos abertos.
+2. **Políticas de frete, envio e devoluções (destrava 10 rotas):**
+   - Aprovar a proposta `docs/shipping-returns-proposta.md`, incluindo prazos, limites de frete grátis, transportadoras, garantia e política de frascos abertos. Os termos e valores da proposta ainda não estão aprovados.
    - _Rotas destravadas:_ `/shipping-returns`, `/cart`, `/where-to-buy`, `/human/subscribe`, `/pet/subscribe`, `/lp/[campanha]`, `/offers/[oferta]`, `/account/subscriptions/[id]/cancel`, `/legal/terms`, `/help`.
 
-3. **Revisão Jurídica e Dados Institucionais dos EUA (Destrava 8 rotas):**
-   - Fornecimento dos dados corporativos nos EUA: razão social, endereço físico para devoluções/notificações, telefone toll-free 0800 e e-mails de privacidade (`privacy@nadeon.com`, `accessibility@nadeon.com`).
-   - Aprovação dos documentos `docs/legal-proposta.md`, `docs/legal-accessibility-proposta.md` e `docs/legal-do-not-sell-proposta.md`.
+3. **Revisão jurídica e dados institucionais dos EUA (destrava 8 rotas):**
+   - Fornecer razão social, endereço para devoluções e notificações, telefone gratuito e e-mails de privacidade. Contatos em código e em propostas são placeholders até que os valores reais sejam confirmados.
+   - Revisar e aprovar as propostas `docs/legal-proposta.md`, `docs/legal-accessibility-proposta.md` e `docs/legal-do-not-sell-proposta.md`; nenhuma está aprovada por este relatório.
    - _Rotas destravadas:_ `/legal/terms`, `/legal/privacy`, `/legal/accessibility`, `/legal/do-not-sell`, `/account/settings`, `/about`, `/help`, `/shipping-returns`.
 
-4. **Validação do Comitê Veterinário e Doses Pet (Destrava 7 rotas):**
-   - Assinatura técnica/aprovação veterinária das doses por faixa de peso, guias de cuidados das raças e alegações de saúde em `docs/pet-breed-guide-proposta.md`, `docs/pet-benefit-proposta.md` e `docs/pet-concern-proposta.md`.
+4. **Validação veterinária e doses Pet (destrava 7 rotas):**
+   - Revisão e aprovação veterinária das doses por peso, dos guias de raças e das alegações de saúde nas propostas `docs/pet-breed-guide-proposta.md`, `docs/pet-benefit-proposta.md` e `docs/pet-concern-proposta.md`. As propostas aguardam aprovação.
    - _Rotas destravadas:_ `/pet/breeds`, `/pet/breeds/[raca]`, `/pet/benefit/[beneficio]`, `/pet/concern/[problema]`, `/pet/quiz`, `/pet/dose-calculator`, `/account/pets`.
 
-5. **Regras Comerciais de Programas de Parceria (Destrava 4 rotas):**
-   - Aprovação dos modelos de remuneração e regras:
-     - Afiliados (`docs/affiliates-proposta.md`): comissão (ex.: 15%) e plataforma de tracking.
-     - Profissionais de Saúde (`docs/professionals-proposta.md`): comissão clínica (ex.: 20%) e amostras.
-     - Atacado B2B (`docs/wholesale-proposta.md`): pedido mínimo (ex.: $500) e line sheet.
-     - Vale-presente (`docs/gift-card-proposta.md`): valores aprovados ($50, $100, $200).
+5. **Regras comerciais de parcerias (destrava 4 rotas):**
+   - Revisar e aprovar as condições propostas para afiliados (`docs/affiliates-proposta.md`), profissionais de saúde (`docs/professionals-proposta.md`), venda entre empresas (`docs/wholesale-proposta.md`) e vale-presente (`docs/gift-card-proposta.md`). Comissões, rastreamento, pedido mínimo, catálogo de produtos e preços para lojistas e valores do vale-presente permanecem pendentes; nenhum desses termos é apresentado como aprovado.
    - _Rotas destravadas:_ `/affiliates`, `/professionals`, `/wholesale`, `/gift-card`.
 
-6. **Especialistas e Laudos Reais de Laboratório (Destrava 4 rotas):**
+6. **Especialistas e laudos reais de laboratório (destrava 4 rotas):**
    - Fotos e minibiografias dos pareceristas reais em `docs/experts-proposta.md`.
-   - Primeiros laudos laboratoriais reais (COAs) para publicação no repositório de testes.
+   - Primeiros certificados de análise reais para publicação na página de laudos.
    - _Rotas destravadas:_ `/experts`, `/lab-results`, `/science`, `/ingredients`.
+
+7. **Acessibilidade e contraste em várias rotas (pendente da revisão final W5-29):**
+   - O resumo do verificador W5-29 registrou seis pares Pet abaixo dos limites: cor de destaque `#e0a63c` sobre fundo comum `#fff6ea` (`2,03:1`) e fundo elevado `#ffffff` (`2,17:1`), abaixo de `3:1` para interface; coral `#ff6b6b` sobre esses fundos (`2,59:1` e `2,78:1`), abaixo de `4,5:1` para texto; verde-menta `#7fe0b0` sobre esses fundos (`1,49:1` e `1,59:1`), também abaixo de `4,5:1`. **Todos os resultados permanecem pendentes da revisão final W5-29.**
+   - Há uma divergência ainda não resolvida: o resumo W5-29 atribui `1,49:1` e `1,59:1` ao verde-menta, enquanto a revisão W5-29 descreve dois resultados genéricos de âmbar nessas razões como combinações que a interface não usa. A revisão também identifica os anéis de foco Pet `accent` com `2,03:1` e `2,17:1`, abaixo do mínimo de interface `3:1`; descreve o ícone âmbar em cartão escuro e o texto de anúncio em superfícies escuras ou âmbar. A identificação final dos pares deve aguardar a revisão W5-29; não altere cores por este relatório.
+   - _Rotas afetadas:_ várias páginas e componentes com tema Pet; a lista exata depende da confirmação dos pares realmente renderizados.
