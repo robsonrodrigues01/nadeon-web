@@ -21,7 +21,7 @@ export function FooterNav({ line = "human", className = "" }: FooterNavProps) {
           <h3 className="font-heading font-bold text-xs uppercase tracking-widest text-accent mb-3.5 select-none">
             {column.title}
           </h3>
-          <ul className="space-y-0.5">
+          <ul className="space-y-2">
             {column.links.map((link) => (
               <li key={link.label}>
                 <Link

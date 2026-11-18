@@ -45,6 +45,7 @@ describe("W5-38 Minimum 44px touch targets", () => {
       for (const link of links) {
         expect(link.className).toContain("py-1");
         expect(link.className).toContain("before:-inset-y-2");
+        expect(link.closest("ul")?.className).toContain("space-y-2");
       }
     });
 
@@ -60,6 +61,7 @@ describe("W5-38 Minimum 44px touch targets", () => {
         expect(link.className).toContain("before:inset-x-0");
         expect(link.className).toContain("before:-inset-y-2");
         expect(link.className).toContain("focus-visible:ring-2");
+        expect(link.closest("ul")?.className).toContain("space-y-2");
       }
     });
   });
