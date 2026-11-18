@@ -4584,18 +4584,18 @@
     "id": "W5-31",
     "onda": 5,
     "titulo": "Fila permanente #10: cobertura de testes — rotas e componentes sem teste de comportamento; lista priorizada e testes para os 5 de maior risco",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T03:34:06.355Z",
+    "lease_ate": null,
     "pr": "agy/W5-31"
   },
   {
     "id": "W5-32",
     "onda": 5,
     "titulo": "Fila permanente #13: specs Playwright cobrindo rotas novas desde a W3-02 (onda 4 e 5): smoke por rota (status 200, h1, sem erro de console) e axe; escrever sem executar",
-    "status": "para_revisao",
+    "status": "em_andamento",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T03:40:39.700Z",
+    "lease_ate": "2026-11-18T03:50:23.754Z",
     "pr": "agy/W5-32"
   },
   {
@@ -4613,7 +4613,7 @@
     "titulo": "Fila permanente #4: erros e avisos no console por rota (portal logs-start/logs), relatório e correções pequenas com teste",
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T03:50:04.584Z"
+    "lease_ate": "2026-11-18T03:50:45.919Z"
   },
   {
     "id": "W5-35",
