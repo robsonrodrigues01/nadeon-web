@@ -15,7 +15,6 @@ const routes = [
   "/pet/breeds",
   "/pet/breeds/labrador-retriever",
   "/pet/cats",
-  "/pet/concern/dogs",
   "/pet/dogs",
   "/pet/dose-calculator",
   "/pet/horses",
