@@ -97,8 +97,7 @@ export class MockReviewsProvider implements ReviewsProvider {
 
   async summary(productSlug: string): Promise<ReviewSummary> {
     const list = submittedReviews.filter(
-      (r) =>
-        r.productSlug === productSlug && r.moderationStatus === "approved"
+      (r) => r.productSlug === productSlug && r.moderationStatus === "approved"
     );
 
     const breakdown: Record<number, number> = {
