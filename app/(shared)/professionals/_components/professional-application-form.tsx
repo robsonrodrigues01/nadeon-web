@@ -203,7 +203,7 @@ export function ProfessionalApplicationForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="min-h-11 rounded-full bg-gradient-gold px-6 py-3 font-bold uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-60 sm:col-span-2 sm:justify-self-start"
+        className="min-h-11 rounded-full bg-gradient-gold px-6 py-3 font-bold uppercase text-accent-fg shadow-card hover:brightness-105 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-60 sm:col-span-2 sm:justify-self-start"
       >
         {isPending ? "Submitting…" : "Submit application"}
       </button>
