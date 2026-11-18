@@ -46,6 +46,7 @@ export function CartLineItem({
             alt={line.product.title}
             width={96}
             height={96}
+            sizes="96px"
             className="h-full w-full object-contain p-1"
           />
         )}

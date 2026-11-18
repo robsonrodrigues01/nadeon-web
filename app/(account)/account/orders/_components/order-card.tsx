@@ -44,6 +44,7 @@ export function OrderCard({ row }: OrderCardProps) {
                   alt={item.title}
                   width={40}
                   height={40}
+                  sizes="40px"
                   className="size-10 shrink-0 rounded-field object-cover bg-bg"
                 />
               ) : (

@@ -182,6 +182,7 @@ export default async function W1_20Section() {
                           alt={`${product.name} label render artwork`}
                           width={260}
                           height={160}
+                          sizes="260px"
                           className="object-contain max-h-full max-w-full p-2"
                         />
                       ) : (
@@ -409,6 +410,7 @@ export default async function W1_20Section() {
                           alt={`${product.name} label render artwork`}
                           width={260}
                           height={160}
+                          sizes="260px"
                           className="object-contain max-h-full max-w-full p-2"
                         />
                       ) : (

@@ -531,6 +531,7 @@ function RecommendedProduct({
           alt={product.name}
           width={96}
           height={96}
+          sizes="96px"
           className="h-24 w-24 shrink-0 rounded-field object-contain"
         />
       )}

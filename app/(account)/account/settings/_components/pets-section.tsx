@@ -100,6 +100,7 @@ export function PetsSection({
                 src={pet.photoSrc}
                 width={96}
                 height={96}
+                sizes="96px"
                 alt={`Photo of ${pet.name}`}
                 className="h-24 w-24 shrink-0 rounded-card object-cover"
               />
