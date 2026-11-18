@@ -4718,5 +4718,13 @@
     "status": "entregue",
     "responsavel": "Maestro",
     "lease_ate": null
+  },
+  {
+    "id": "W6-08",
+    "onda": 6,
+    "titulo": "Pentest A4: limite de envio (5 por 10 min por IP e formulário) nas 6 actions públicas, com Netlify Blobs em produção e memória local; IP só como hash; falha do store não bloqueia",
+    "status": "bloqueada",
+    "responsavel": "Maestro",
+    "lease_ate": null
   }
 ]

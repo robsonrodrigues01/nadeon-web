@@ -169,3 +169,6 @@ Robson autorizou o pentest do nadeonlabs.com conforme docs/pentest-plano.md: esc
 
 ## 2026-11-18 — Equipe de agentes encerrada pelo Robson
 Robson fechou de propósito os agentes do canvas (Prisma5, Trilho, Crivo6, Lupa, Lente, Auditor) e pausou a vigia. "A equipe sou eu": o Maestro segue sozinho, e o Robson aprova no lugar da revisão independente. W6-05 (next 16.4.6, react 19.2.9) publicada sem revisão de agente, por decisão do Robson, pela gravidade dos RCE.
+
+## 2026-11-18 — Limite de envio pelo Cloudflare, não pelo código
+W6-08 (limite com @netlify/blobs em server action) testada na prévia pentest: a primeira versão travou a action 30 s (504); com prazo de 1,5 s os formulários voltaram, mas o Blobs não gravou nada (store form-rate-limit vazio, 7 envios passaram). Não foi para o main. Robson escolheu a opção 1: regra de rate limiting no Cloudflare (o domínio passa pelo Cloudflare), sem código. Turnstile fica como reforço antes da Shopify. Branch agy/W6-08 mantida só como registro.
