@@ -1,7 +1,8 @@
-# Memória de curto prazo (18/11/2026 01:35 BRT)
+# Memória de curto prazo (18/11/2026 04:25 BRT)
 
-- Foco: fechar a onda 5 local (falta só a W5-34) e itens de navegador da fila permanente.
-- Agentes: Prisma5 (Gemini, portal) livre após W5-34; Trilho e Crivo6 (Codex) livres, cota 6%; Lente revisando W5-34; Lupa livre.
-- Codex recusa tarefas em português como "eleições": escrever tarefas em inglês, começando com "Software task in an e-commerce codebase".
-- Deploy: push em main publica sozinho na Netlify. Gate verde antes de todo push.
-- Último checkpoint: checkpoints/20261118T0135-onda5.md.
+- Foco: nada aberto. Onda 5 e segunda passada da fila permanente entregues e publicadas (53e1ba6).
+- Próximo trabalho depende do Robson: insumos de docs/pendencias-por-rota.md, Shopify, aprovação do netlify.toml com @netlify/plugin-nextjs.
+- Codex com cota de 6% até 08:26. Prisma5 (Gemini) livre.
+- Rotina de entrega: merge, gate, push, conferir deploy (fns>=1) e curl das rotas.
+- Prisma5 tende a afrouxar checagens de autorização para testar no portal; conferir esses diffs.
+- Último checkpoint: checkpoints/20261118T0425-fila-ondas45.md.

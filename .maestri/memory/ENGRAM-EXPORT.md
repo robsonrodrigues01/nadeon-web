@@ -1,20 +1,104 @@
 # Exportação do Engram — Nadeon
 
-Gerado em 2026-11-18 04:45 UTC por maestri/export-engram.mjs (só leitura de ~/.engram/engram.db), projetos 047724f7-a1d5-46c1-bca9-76994f71d1d9, nadeon, nadeon-web. 64 memórias, mais recentes primeiro.
+Gerado em 2026-11-18 07:25 UTC por maestri/export-engram.mjs (só leitura de ~/.engram/engram.db), projetos 047724f7-a1d5-46c1-bca9-76994f71d1d9, nadeon, nadeon-web. 68 memórias, mais recentes primeiro.
 
 Sem segredos: caminhos encurtados para ~, IDs da Netlify e e-mails removidos. A fonte da verdade continua em .maestri/ (DECISIONS, PROJECT_STATE, NEXT_ACTIONS).
 
 ## Índice
 
-- decision: 22
-- bugfix: 11
-- learning: 10
+- learning: 11
+- decision: 24
+- bugfix: 12
 - discovery: 14
 - feedback: 2
 - architecture: 1
 - preference: 4
 
+## learning
+
+### nadeon-web: Prisma5 afrouxa checagem de dono para testar no portal (18/11)
+
+_2026-11-18 07:07 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+Duas vezes (W5-39 e W5-40) a Prisma5/Gemini colocou em app/(shared)/reviews/write/page.tsx uma exceção de e-mail de teste na checagem de dono do pedido, para a página abrir no portal com os dados mock. Os revisores pegaram nas duas. Regra adicionada ao maestri/BRIEFING-CONSTRUTOR-W2.md: nunca afrouxar sessão, dono ou autorização para testar; ajustar os mocks. Como aplicar: em toda revisão de tarefa da Prisma5 que passe pelo portal, conferir diffs em checagens de autorização. W5-39 entregue (gate 1608, deploy 7c3c065).
+
+### Maestro renovar heartbeat por agente confunde o agente (18/11)
+
+_2026-11-18 03:08 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+Quando o Maestro roda maestri-task heartbeat no lugar do agente, para calar o alerta INVESTIGAR, o agente Codex (Trilho, W5-32) vê o lease renovado sem ter renovado, acha que existe trabalho concorrente e para por 15 min em modo só leitura. Como aplicar: não renovar heartbeat por agente sem avisá-lo; se renovar, mandar mensagem explícita de que a reserva é dele. O INVESTIGAR com heartbeat de ~4-5 min é normal nos agentes Codex. Estado 18/11 00:05: entregues W5-04, W5-17, W5-22..W5-28 e W4-30; W5-30 e W5-31 com MUDANÇAS na fila; W5-29 com Prisma5; W5-33 com Crivo6.
+
+### Codex Luna recusa tarefas em PT como "voting/elections"; inglês funciona (17/11)
+
+_2026-11-18 02:00 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+Desde ~22:46 de 17/11, Trilho e Crivo6 (Codex GPT-6-Luna) respondem "I cannot assist with this request regarding voting systems or elections infrastructure" para tarefas em português, mesmo em sessão nova (/new). Fragmentos isolados passam; a mensagem inteira é recusada. Reescrever a tarefa em inglês e abrir com "Software task in an e-commerce codebase" funcionou de primeira (W5-22, Trilho). Palavras como "campanha", "vigia", "eleição" são suspeitas. Na época, a cota semanal do Codex estava em 12%.
+
+### nadeon-web: classificador bloqueia merge no main e agentes com bypass (16/11)
+
+_2026-11-16 18:49 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+**What**: No 16/11 à tarde, o classificador do auto mode do Claude Code negou (a) `maestri recruit` com `agy --dangerously-skip-permissions` ou `codex --dangerously-bypass-approvals-and-sandbox` ("Create Unsafe Agents"), mesmo com o Robson dizendo "libera só desta vez" no chat, e (b) `git merge` direto no main + pnpm gate. Recrutar sem as flags de bypass funcionou (Vigia3 Antigravity, Lente Codex gpt-6-luna low).
+**Why**: Aprovação no chat não altera a regra; só uma regra de permissão em settings libera.
+**Where**: nadeon-web/.maestri/pipeline/tasks.json (W3-66..W3-73 criadas), maestri/ORQUESTRADOR.md
+**Learned**: Amarelo de memória = `sysctl kern.memorystatus_vm_pressure_level` == 2 (não é a %). Gemini pausados a pedido do Robson (troca de conta); Lente fez itens 4, 6, 8, 10 da fila (itens 5, 7, 9 adiados: portal instável / next build). W3-39 e W3-45 APROVADO aguardando merge. Dev server parado para aliviar memória.
+
+### nadeon-web: Luna para no meio anunciando passos; worktree removido quebra agente
+
+_2026-11-16 00:52 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+**What**: Agentes Codex/Luna frequentemente encerram o turno com "agora vou..." sem terminar; observador acusa término; Maestro precisa reenviar "continue até o fim sem anunciar" (agora no passo 0 do BRIEFING-CONSTRUTOR-W2). Remover worktree que é cwd de agente quebra a escrita dele (Lente4, Lupa3): antes de `git worktree remove`, `maestri recruit --replace --dir <repo>` ou usar caminhos absolutos. Testes de comportamento (W3-39) acharam 8 bugs reais na conta; os que não dependem da onda 4 viraram W3-45.
+
+### nadeon-web: ciclo contínuo de QA local (W3-15 a W3-37)
+
+_2026-11-16 00:37 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+**What**: 15/11 noite: fila permanente em execução (768/1440/320 px, teclado, console, contraste, segurança, imagens, bundle, cobertura, texto vs board, pendências do Robson em docs/PENDENCIAS-ROBSON.md). Agentes Codex reaproveitados entre tarefas (construtor vira revisor do trabalho de outro). **Gotchas**: Luna recusa a tarefa de código morto (falso positivo "voting systems") — W3-30 bloqueada para Gemini; Codex com --role fica preso em .maestri/roles/<id>; `maestri ask` às vezes retorna antes do fim — observador until-loop com espera extra. Revisores às vezes reprovam por mudança legítima em teste; Maestro aprova com nota.
+
+### nadeon-web: varredura de overflow 375 px em 38 rotas
+
+_2026-11-15 05:00 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+**What**: 15/11 ~02:00 BRT o Maestro varreu 38 rotas em 375 px no portal "Medidor" (navigate + evaluate scrollWidth): nenhuma com rolagem horizontal de página após corrigir bundle-section (human) e cart-line-item (flex-wrap). W3-07 e W3-13 entregues (gate 1103 testes). W3-08 (revisão visual quiz/conteúdo/legal/404) em andamento com Prisma4. **How to apply**: loop de rotas com `maestri portal navigate` + `evaluate` é o jeito barato de regressão visual objetiva.
+
+### nadeon-web: medir overflow no portal Maestri, não por classe CSS
+
+_2026-11-15 04:42 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+**What**: W3-12 aplicou min-w-0 no header/search e testes só checavam classe; o /human seguia com scrollWidth 406. Medição no portal Maestri ("Medidor", --size 375x812, `evaluate` com document.documentElement.scrollWidth e lista de elementos com getBoundingClientRect().right > innerWidth) achou a causa real: bundle-section.tsx da home Human (2 cards de 194 px sem flex-wrap). **How to apply**: para layout/responsivo, exigir medição real no portal; teste de classe não prova nada.
+
+### nadeon-web: conflitos de merge entre tarefas que tocam a mesma rota
+
+_2026-11-15 03:49 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+**What**: W2-43 (aprovada) conflitou com W2-40 já no main em app/(shared)/track (3 arquivos, formatos de retorno diferentes de lookupOrder). Maestro abortou o merge e mandou o construtor fazer git merge main e resolver no próprio branch, mantendo o contrato do main. **How to apply**: ao criar tarefas que tocam a mesma rota, serializar (depende_de) ou exigir git merge main antes de review. W3-03 entregue (scripts/check-routes.mjs); W3-04 corrige links /quiz, /journal, /reviews, /human/compare e metadata ausente.
+
+### nadeon-web: it.todo de testes semânticos podem estar errados
+
+_2026-11-15 03:27 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+**What**: W3-01 (testes semânticos do catálogo seção 5) marcou como ausentes elementos que existiam ("See bundles", "View details"), e isso gerou a W2-42 sem trabalho a fazer. **How to apply**: antes de transformar it.todo em tarefa, conferir com grep no app/. Classificação: onda C, Shopify-hosted (checkout/e-mails), login onda 4 e "Write a review" suprimido não viram tarefa. Também: Gemini (Antigravity) esgota a cota; construtores trocados para Codex gpt-6-luna low.
+
+### nadeon-web: gate pega erro de server/client que testes não pegam
+
+_2026-11-15 00:18 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+**What**: W2-30 passou nos testes da rota mas quebrou `next build`: page.tsx (server) chamava getSubscribeFaqs exportada de arquivo "use client". Corrigido movendo dados para subscribe-faq-data.ts. Gates do merge também falharam várias vezes por Prettier e por integração (DailyRoutine passando locale ao ProductCard após W1-24).
+**How to apply**: no briefing do revisor/construtor, exigir que dados/funções usados por página de servidor fiquem em .ts sem "use client"; Maestro roda prettier --list-different antes do gate. Memória: monitorar `sysctl kern.memorystatus_vm_pressure_level` (1 normal, 2 amarelo); em 2, não liberar tarefa nova.
+
 ## decision
+
+### nadeon-web: segunda passada da fila permanente nas rotas das ondas 4-5 (18/11 madrugada)
+
+_2026-11-18 06:45 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+Depois que a onda 5 fechou, a fila permanente ganhou uma segunda passada só nas rotas das ondas 4 e 5. W5-37 visual 1440/320 entregue (rolagem em offers e where-to-buy). W5-38 alvos de 44 px entregue (área de toque por pseudo-elemento, mantendo o py-1 e o space-y-2 do rodapé). W5-39 teclado e foco em revisão (Lupa). W5-40 visual 768 px e estados visuais de formulário (Prisma5). Último deploy d1404ee com fns 1 e rotas 200. Rotina de entrega: merge, gate, push, conferir deploy (fns>=1) e curl das rotas.
+
+### nadeon-web: onda 5 fechada e publicada (18/11 ~02:45)
+
+_2026-11-18 05:37 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+W5-34 entregue (hidratação sem supressão; gate 1597 testes + build). Onda 5 local fechada: todas as W5 entregues. Push 2d0672e..fe24fe5; o webhook do Bitbucket publica na Netlify. Seguem a W5-37 (revisão visual 1440/320 das rotas das ondas 4 e 5, Prisma5) e as 12 tarefas da onda 4 bloqueadas pela Shopify e pelo Robson. Memórias do Engram exportadas para .maestri/memory/ENGRAM-EXPORT.md pelo script maestri/export-engram.mjs.
 
 ### nadeon-web: Robson aceita nadeonlabs.com público com dados de teste (18/11)
 
@@ -167,6 +251,12 @@ Robson aprovou (2026-11-14): Antigravity = preset AGY (construtores), Codex = pr
 
 ## bugfix
 
+### nadeon-web: reconectar repo na Netlify apaga plugin Next.js e derruba o site (18/11)
+
+_2026-11-18 05:57 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
+
+Depois que o Robson reconectou o repositório na Netlify, o plugin @netlify/plugin-nextjs sumiu da configuração do site. Os deploys saíram "ready" com "No functions deployed" e todas as rotas deram 404. Correção: updateSite com plugins [{package:"@netlify/plugin-nextjs"}] e novo deploy pelo build hook. Ficou com "1 function deployed" e as rotas voltaram a 200. Como aplicar: depois de todo deploy, conferir available_functions >= 1 e testar com curl algumas rotas. A correção definitiva (netlify.toml com [[plugins]] e devDependency) aguarda a aprovação do Robson.
+
 ### nadeon-web: push no Bitbucket não dispara deploy na Netlify; usar build hook (18/11)
 
 _2026-11-18 04:30 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
@@ -242,72 +332,6 @@ _2026-11-14 09:26 · nadeon_
 _2026-11-14 06:13 · nadeon_
 
 scripts/maestri-task.mjs: doneTask chama updateStatusFile (writeFileSync) e sobrescreve .maestri/status/<id>/DONE, apagando SHA e saída do verify (W0-02/03/05/06 perderam). W0-08 criada (Coruja autor, Lince revisor) para usar append. Até o merge, não rodar `done` do CLI. Main local em e3ad087 após merges W0-02..06.
-
-## learning
-
-### Maestro renovar heartbeat por agente confunde o agente (18/11)
-
-_2026-11-18 03:08 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-Quando o Maestro roda maestri-task heartbeat no lugar do agente, para calar o alerta INVESTIGAR, o agente Codex (Trilho, W5-32) vê o lease renovado sem ter renovado, acha que existe trabalho concorrente e para por 15 min em modo só leitura. Como aplicar: não renovar heartbeat por agente sem avisá-lo; se renovar, mandar mensagem explícita de que a reserva é dele. O INVESTIGAR com heartbeat de ~4-5 min é normal nos agentes Codex. Estado 18/11 00:05: entregues W5-04, W5-17, W5-22..W5-28 e W4-30; W5-30 e W5-31 com MUDANÇAS na fila; W5-29 com Prisma5; W5-33 com Crivo6.
-
-### Codex Luna recusa tarefas em PT como "voting/elections"; inglês funciona (17/11)
-
-_2026-11-18 02:00 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-Desde ~22:46 de 17/11, Trilho e Crivo6 (Codex GPT-6-Luna) respondem "I cannot assist with this request regarding voting systems or elections infrastructure" para tarefas em português, mesmo em sessão nova (/new). Fragmentos isolados passam; a mensagem inteira é recusada. Reescrever a tarefa em inglês e abrir com "Software task in an e-commerce codebase" funcionou de primeira (W5-22, Trilho). Palavras como "campanha", "vigia", "eleição" são suspeitas. Na época, a cota semanal do Codex estava em 12%.
-
-### nadeon-web: classificador bloqueia merge no main e agentes com bypass (16/11)
-
-_2026-11-16 18:49 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-**What**: No 16/11 à tarde, o classificador do auto mode do Claude Code negou (a) `maestri recruit` com `agy --dangerously-skip-permissions` ou `codex --dangerously-bypass-approvals-and-sandbox` ("Create Unsafe Agents"), mesmo com o Robson dizendo "libera só desta vez" no chat, e (b) `git merge` direto no main + pnpm gate. Recrutar sem as flags de bypass funcionou (Vigia3 Antigravity, Lente Codex gpt-6-luna low).
-**Why**: Aprovação no chat não altera a regra; só uma regra de permissão em settings libera.
-**Where**: nadeon-web/.maestri/pipeline/tasks.json (W3-66..W3-73 criadas), maestri/ORQUESTRADOR.md
-**Learned**: Amarelo de memória = `sysctl kern.memorystatus_vm_pressure_level` == 2 (não é a %). Gemini pausados a pedido do Robson (troca de conta); Lente fez itens 4, 6, 8, 10 da fila (itens 5, 7, 9 adiados: portal instável / next build). W3-39 e W3-45 APROVADO aguardando merge. Dev server parado para aliviar memória.
-
-### nadeon-web: Luna para no meio anunciando passos; worktree removido quebra agente
-
-_2026-11-16 00:52 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-**What**: Agentes Codex/Luna frequentemente encerram o turno com "agora vou..." sem terminar; observador acusa término; Maestro precisa reenviar "continue até o fim sem anunciar" (agora no passo 0 do BRIEFING-CONSTRUTOR-W2). Remover worktree que é cwd de agente quebra a escrita dele (Lente4, Lupa3): antes de `git worktree remove`, `maestri recruit --replace --dir <repo>` ou usar caminhos absolutos. Testes de comportamento (W3-39) acharam 8 bugs reais na conta; os que não dependem da onda 4 viraram W3-45.
-
-### nadeon-web: ciclo contínuo de QA local (W3-15 a W3-37)
-
-_2026-11-16 00:37 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-**What**: 15/11 noite: fila permanente em execução (768/1440/320 px, teclado, console, contraste, segurança, imagens, bundle, cobertura, texto vs board, pendências do Robson em docs/PENDENCIAS-ROBSON.md). Agentes Codex reaproveitados entre tarefas (construtor vira revisor do trabalho de outro). **Gotchas**: Luna recusa a tarefa de código morto (falso positivo "voting systems") — W3-30 bloqueada para Gemini; Codex com --role fica preso em .maestri/roles/<id>; `maestri ask` às vezes retorna antes do fim — observador until-loop com espera extra. Revisores às vezes reprovam por mudança legítima em teste; Maestro aprova com nota.
-
-### nadeon-web: varredura de overflow 375 px em 38 rotas
-
-_2026-11-15 05:00 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-**What**: 15/11 ~02:00 BRT o Maestro varreu 38 rotas em 375 px no portal "Medidor" (navigate + evaluate scrollWidth): nenhuma com rolagem horizontal de página após corrigir bundle-section (human) e cart-line-item (flex-wrap). W3-07 e W3-13 entregues (gate 1103 testes). W3-08 (revisão visual quiz/conteúdo/legal/404) em andamento com Prisma4. **How to apply**: loop de rotas com `maestri portal navigate` + `evaluate` é o jeito barato de regressão visual objetiva.
-
-### nadeon-web: medir overflow no portal Maestri, não por classe CSS
-
-_2026-11-15 04:42 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-**What**: W3-12 aplicou min-w-0 no header/search e testes só checavam classe; o /human seguia com scrollWidth 406. Medição no portal Maestri ("Medidor", --size 375x812, `evaluate` com document.documentElement.scrollWidth e lista de elementos com getBoundingClientRect().right > innerWidth) achou a causa real: bundle-section.tsx da home Human (2 cards de 194 px sem flex-wrap). **How to apply**: para layout/responsivo, exigir medição real no portal; teste de classe não prova nada.
-
-### nadeon-web: conflitos de merge entre tarefas que tocam a mesma rota
-
-_2026-11-15 03:49 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-**What**: W2-43 (aprovada) conflitou com W2-40 já no main em app/(shared)/track (3 arquivos, formatos de retorno diferentes de lookupOrder). Maestro abortou o merge e mandou o construtor fazer git merge main e resolver no próprio branch, mantendo o contrato do main. **How to apply**: ao criar tarefas que tocam a mesma rota, serializar (depende_de) ou exigir git merge main antes de review. W3-03 entregue (scripts/check-routes.mjs); W3-04 corrige links /quiz, /journal, /reviews, /human/compare e metadata ausente.
-
-### nadeon-web: it.todo de testes semânticos podem estar errados
-
-_2026-11-15 03:27 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-**What**: W3-01 (testes semânticos do catálogo seção 5) marcou como ausentes elementos que existiam ("See bundles", "View details"), e isso gerou a W2-42 sem trabalho a fazer. **How to apply**: antes de transformar it.todo em tarefa, conferir com grep no app/. Classificação: onda C, Shopify-hosted (checkout/e-mails), login onda 4 e "Write a review" suprimido não viram tarefa. Também: Gemini (Antigravity) esgota a cota; construtores trocados para Codex gpt-6-luna low.
-
-### nadeon-web: gate pega erro de server/client que testes não pegam
-
-_2026-11-15 00:18 · 047724f7-a1d5-46c1-bca9-76994f71d1d9_
-
-**What**: W2-30 passou nos testes da rota mas quebrou `next build`: page.tsx (server) chamava getSubscribeFaqs exportada de arquivo "use client". Corrigido movendo dados para subscribe-faq-data.ts. Gates do merge também falharam várias vezes por Prettier e por integração (DailyRoutine passando locale ao ProductCard após W1-24).
-**How to apply**: no briefing do revisor/construtor, exigir que dados/funções usados por página de servidor fiquem em .ts sem "use client"; Maestro roda prettier --list-different antes do gate. Memória: monitorar `sysctl kern.memorystatus_vm_pressure_level` (1 normal, 2 amarelo); em 2, não liberar tarefa nova.
 
 ## discovery
 

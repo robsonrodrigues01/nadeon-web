@@ -53,3 +53,10 @@ Atualizado: 16/11/2026 01:45 BRT (Maestro).
 - Bitbucket: origin/main em 2d0672e. Netlify: o push em main dispara o deploy (webhook do Bitbucket para o build hook "bitbucket-push-main" da Netlify). nadeonlabs.com público com dados de teste, por decisão do Robson (DECISIONS 18/11). Mailyte em produção (MAILYTE_MODE=live).
 - Banco de dados: nenhum próprio. A Shopify guarda os dados (Storefront, Cart, Customer Account, Subscriptions, Metaobjects) e o Mailyte guarda contatos. Tudo por providers em lib/providers (mock ou live).
 - Pendências do Robson: docs/pendencias-por-rota.md (lista priorizada); Shopify por último; IDs de medição; detalhe de kit; programas de afiliados e indicação (textos do board retidos na W5-36); cores Pet abaixo de WCAG (W5-29); confirmar o aviso FDA nos artigos Pet.
+
+## 18/11/2026 04:25 BRT (Maestro)
+
+- Segunda passada da fila permanente nas rotas das ondas 4 e 5 concluída: W5-37 (visual 1440/320), W5-38 (alvos de 44 px), W5-39 (teclado e foco e checagem de dono em reviews/write), W5-40 (visual 768 px e estados visuais de formulário).
+- Main e origin/main em 53e1ba6, publicado na Netlify (fns 1, rotas 200). Gate: 1614 testes + build.
+- Incidente 18/11 ~01:40-02:40: depois da reconexão do repositório, o site ficou em 404 por falta do plugin Next.js; resolvido (DECISIONS 18/11).
+- Abertas: nenhuma. Bloqueadas: 12 da onda 4 (Shopify e Robson).
