@@ -4593,9 +4593,9 @@
     "id": "W5-32",
     "onda": 5,
     "titulo": "Fila permanente #13: specs Playwright cobrindo rotas novas desde a W3-02 (onda 4 e 5): smoke por rota (status 200, h1, sem erro de console) e axe; escrever sem executar",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T03:51:11.994Z",
+    "lease_ate": null,
     "pr": "agy/W5-32"
   },
   {
