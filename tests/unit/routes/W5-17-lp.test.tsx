@@ -20,13 +20,16 @@ function activeCampaign(id: string, values: Partial<Campaign> = {}): Campaign {
   };
 }
 
-function article(audience: "human" | "pet"): JournalArticle {
+function article(
+  audience: "human" | "pet",
+  excerpt = "TEST editorial summary"
+): JournalArticle {
   return {
     slug: "TEST-article",
     audience,
     title: "TEST editorial headline",
     category: "TEST category",
-    excerpt: "TEST editorial summary",
+    excerpt,
     readingMinutes: 4,
     species: audience === "pet" ? ["dog"] : [],
     reviewer: "To be confirmed",
@@ -56,19 +59,21 @@ describe("W5-17 /lp/[campanha]", () => {
       .mockResolvedValue(activeCampaign("listicle-test-article"));
     const content = vi
       .spyOn(contentProvider, "getJournalArticle")
-      .mockResolvedValue(article("pet"));
+      .mockResolvedValue(article("pet", "TEST editorial summary*"));
 
     await renderCampaign("listicle-test-article");
 
     expect(
       screen.getByRole("heading", { level: 1, name: "TEST editorial headline" })
     ).toBeTruthy();
+    expect(screen.getByText("TEST editorial summary*")).toBeTruthy();
     expect(screen.getByText("Advertisement")).toBeTruthy();
     expect(screen.getByText("Sponsored by Nadeon Labs")).toBeTruthy();
     expect(
       screen.getByText("TEST structure and function statement*")
     ).toBeTruthy();
-    expect(screen.getByRole("note").textContent).toMatch(
+    expect(screen.getAllByRole("note")).toHaveLength(2);
+    expect(screen.getAllByRole("note")[0].textContent).toMatch(
       /not been evaluated by the Food and Drug Administration/i
     );
     expect(screen.getByText("For animal use only.")).toBeTruthy();

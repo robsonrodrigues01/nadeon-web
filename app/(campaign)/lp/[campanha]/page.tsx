@@ -177,7 +177,11 @@ export default async function CampaignLandingPage({
           {title}
         </h1>
         <p className="text-lg leading-relaxed text-fg-muted">
-          {article?.excerpt ?? "Editorial summary: To be confirmed."}
+          {article?.excerpt.includes("*") ? (
+            <Claim showDisclaimer>{article.excerpt}</Claim>
+          ) : (
+            (article?.excerpt ?? "Editorial summary: To be confirmed.")
+          )}
         </p>
         <p className="text-sm text-fg-muted">
           By To be confirmed · To be confirmed ·{" "}
