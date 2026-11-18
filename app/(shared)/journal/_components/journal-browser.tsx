@@ -1,29 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Newsletter } from "@/components/brand/newsletter";
 import type {
   JournalArticleSummary,
+  JournalCategory,
   JournalPage,
 } from "@/lib/contracts/content";
 
 export function JournalBrowser({
   page,
   articles,
+  category: categoryPage,
 }: {
   page: JournalPage;
   articles: JournalArticleSummary[];
+  category?: JournalCategory;
 }) {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [species, setSpecies] = useState("all");
   const [visibleCount, setVisibleCount] = useState(6);
+  const categoryFilters = categoryPage
+    ? categoryPage.subcategories.includes("All")
+      ? categoryPage.subcategories
+      : ["All", ...categoryPage.subcategories]
+    : page.categories;
   const visibleArticles = articles.filter((article) => {
     const matchesQuery =
       `${article.title} ${article.excerpt} ${article.category}`
         .toLowerCase()
         .includes(query.trim().toLowerCase());
-    const matchesCategory = category === "All" || article.category === category;
+    const matchesCategory =
+      selectedCategory === "All" || article.category === selectedCategory;
     const matchesSpecies =
       species === "all" ||
       article.species.includes(species as "dog" | "cat" | "horse");
@@ -31,55 +41,103 @@ export function JournalBrowser({
   });
 
   return (
-    <main id="main-content" tabIndex={-1} className="flex-1 bg-bg text-fg">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      data-theme={categoryPage?.audience === "pet" ? "pet" : undefined}
+      className="flex-1 bg-bg text-fg"
+    >
       <section className="border-b border-border px-5 py-14 sm:px-8 sm:py-20 lg:px-12">
         <div className="mx-auto max-w-7xl">
-          <p className="text-xs font-bold uppercase tracking-widest text-accent">
-            {page.eyebrow}
-          </p>
+          {categoryPage ? (
+            <nav aria-label="Breadcrumb" className="mb-6 text-sm text-fg-muted">
+              <ol className="flex flex-wrap items-center gap-2">
+                <li>
+                  <Link
+                    href={
+                      categoryPage.audience === "pet"
+                        ? "/pet/journal"
+                        : "/journal"
+                    }
+                    className="inline-flex min-h-11 items-center underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  >
+                    Journal
+                  </Link>
+                </li>
+                {categoryPage.audience === "pet" && (
+                  <>
+                    <li aria-hidden="true">/</li>
+                    <li className="inline-flex min-h-11 items-center">Dogs</li>
+                  </>
+                )}
+                <li aria-hidden="true">/</li>
+                <li
+                  aria-current="page"
+                  className="inline-flex min-h-11 items-center"
+                >
+                  {categoryPage.title}
+                </li>
+              </ol>
+            </nav>
+          ) : (
+            <p className="text-xs font-bold uppercase tracking-widest text-accent">
+              {page.eyebrow}
+            </p>
+          )}
           <div className="mt-3 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <h1 className="font-archivo text-5xl font-extrabold uppercase sm:text-7xl">
-                {page.title}
+                {categoryPage?.title ?? page.title}
               </h1>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg">
-                {page.description}
+                {categoryPage?.description ?? page.description}
               </p>
+              {categoryPage && (
+                <p className="mt-4 text-sm text-fg-muted">
+                  Reviewed by {categoryPage.reviewer}
+                </p>
+              )}
             </div>
-            <label className="flex min-h-12 items-center gap-3 rounded-full border border-border px-5 focus-within:ring-2 focus-within:ring-accent lg:w-80">
-              <span aria-hidden="true" className="text-xl">
-                ⌕
-              </span>
-              <input
-                aria-label="Search the journal"
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.currentTarget.value)}
-                placeholder="Search the journal"
-                className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-fg-muted"
-              />
-            </label>
+            {!categoryPage && (
+              <label className="flex min-h-12 items-center gap-3 rounded-full border border-border px-5 focus-within:ring-2 focus-within:ring-accent lg:w-80">
+                <span aria-hidden="true" className="text-xl">
+                  ⌕
+                </span>
+                <input
+                  aria-label="Search the journal"
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.currentTarget.value)}
+                  placeholder="Search the journal"
+                  className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-fg-muted"
+                />
+              </label>
+            )}
           </div>
 
           <div
             className="mt-8 flex flex-wrap gap-2"
             role="group"
-            aria-label="Journal categories"
+            aria-label={
+              categoryPage
+                ? "Every article in this category"
+                : "Journal categories"
+            }
           >
-            {page.categories.map((item) => (
+            {categoryFilters.map((item) => (
               <button
                 key={item}
                 type="button"
-                aria-pressed={category === item}
-                onClick={() => setCategory(item)}
-                className={`min-h-11 rounded-full border px-5 py-2 text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${category === item ? "border-transparent bg-gradient-gold text-accent-fg" : "border-border text-fg"}`}
+                aria-pressed={selectedCategory === item}
+                onClick={() => setSelectedCategory(item)}
+                className={`min-h-11 rounded-full border px-5 py-2 text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${selectedCategory === item ? "border-transparent bg-gradient-gold text-accent-fg" : "border-border text-fg"}`}
               >
                 {item}
               </button>
             ))}
           </div>
 
-          {page.audience === "pet" && (
+          {page.audience === "pet" && !categoryPage && (
             <label className="mt-6 flex min-h-11 w-fit items-center gap-3 text-sm font-bold">
               Species
               <select
@@ -111,14 +169,18 @@ export function JournalBrowser({
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-accent">
-                LATEST
-              </p>
+              {!categoryPage && (
+                <p className="text-xs font-bold uppercase tracking-widest text-accent">
+                  LATEST
+                </p>
+              )}
               <h2
                 id="articles-title"
                 className="mt-2 font-archivo text-3xl font-extrabold uppercase sm:text-5xl"
               >
-                All articles
+                {categoryPage
+                  ? "Every article in this category"
+                  : "All articles"}
               </h2>
             </div>
             <p className="text-sm text-fg-muted" aria-live="polite">
@@ -176,7 +238,7 @@ export function JournalBrowser({
         </div>
       </section>
 
-      {page.audience === "pet" && (
+      {page.audience === "pet" && !categoryPage && (
         <section
           aria-labelledby="breed-title"
           className="px-5 py-14 sm:px-8 lg:px-12"
@@ -196,26 +258,46 @@ export function JournalBrowser({
         </section>
       )}
 
-      <section className="px-5 py-14 sm:px-8 lg:px-12">
-        <div
-          data-theme="pet"
-          className="mx-auto max-w-7xl rounded-card bg-gradient-sunrise p-6 sm:p-10"
-        >
-          <p className="mb-4 inline-flex min-h-8 items-center rounded-full bg-fg px-4 text-xs font-bold uppercase tracking-widest text-bg">
-            Newsletter
-          </p>
-          <Newsletter
-            variant={page.audience}
-            title="One good read a week"
-            subtitle={
-              page.audience === "pet"
-                ? "Vet-reviewed tips for dogs, cats and horses, new guides and 10% off their first jar. No spam, unsubscribe anytime."
-                : "New articles, research summaries and routine tips. Plus 10% off your first order. No spam, unsubscribe anytime."
-            }
-            buttonText="Subscribe"
-          />
-        </div>
-      </section>
+      {categoryPage?.audience === "pet" ? (
+        <section className="px-5 py-14 sm:px-8 lg:px-12">
+          <div className="mx-auto max-w-7xl rounded-card bg-gradient-sunrise p-6 sm:p-10">
+            <h2 className="font-archivo text-2xl font-extrabold uppercase sm:text-3xl">
+              Not sure what your dog needs?
+            </h2>
+            <p className="mt-3 max-w-2xl leading-relaxed text-fg-muted">
+              Answer 6 quick questions about age, size and goals. Get a formula
+              and a dose by weight.
+            </p>
+            <Link
+              href="/pet/quiz"
+              className="mt-5 inline-flex min-h-11 items-center rounded-full bg-fg px-6 font-bold uppercase text-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              Take the 60-second quiz
+            </Link>
+          </div>
+        </section>
+      ) : !categoryPage ? (
+        <section className="px-5 py-14 sm:px-8 lg:px-12">
+          <div
+            data-theme="pet"
+            className="mx-auto max-w-7xl rounded-card bg-gradient-sunrise p-6 sm:p-10"
+          >
+            <p className="mb-4 inline-flex min-h-8 items-center rounded-full bg-fg px-4 text-xs font-bold uppercase tracking-widest text-bg">
+              Newsletter
+            </p>
+            <Newsletter
+              variant={page.audience}
+              title="One good read a week"
+              subtitle={
+                page.audience === "pet"
+                  ? "Vet-reviewed tips for dogs, cats and horses, new guides and 10% off their first jar. No spam, unsubscribe anytime."
+                  : "New articles, research summaries and routine tips. Plus 10% off your first order. No spam, unsubscribe anytime."
+              }
+              buttonText="Subscribe"
+            />
+          </div>
+        </section>
+      ) : null}
     </main>
   );
 }
