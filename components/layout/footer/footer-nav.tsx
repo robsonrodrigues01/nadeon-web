@@ -26,7 +26,7 @@ export function FooterNav({ line = "human", className = "" }: FooterNavProps) {
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="inline-flex min-h-11 items-center text-sm text-fg/80 hover:text-accent hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm transition-colors"
+                  className="relative inline-block py-1 text-sm text-fg/80 hover:text-accent hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm transition-colors before:absolute before:inset-x-0 before:-inset-y-2 before:content-['']"
                 >
                   {link.label}
                 </Link>

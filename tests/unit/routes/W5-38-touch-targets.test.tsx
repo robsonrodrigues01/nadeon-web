@@ -16,7 +16,7 @@ afterEach(() => {
 
 describe("W5-38 Minimum 44px touch targets", () => {
   describe("Footer navigation links", () => {
-    it("ensures all human footer navigation links have min-h-11 and vertical centering", () => {
+    it("preserves footer link spacing and extends the clickable area", () => {
       render(<FooterNav line="human" />);
 
       const links = screen.getAllByRole("link");
@@ -34,29 +34,32 @@ describe("W5-38 Minimum 44px touch targets", () => {
 
       for (const label of expectedLabels) {
         const link = screen.getByRole("link", { name: label });
-        expect(link.className).toContain("min-h-11");
-        expect(link.className).toContain("inline-flex");
-        expect(link.className).toContain("items-center");
+        expect(link.className).toContain("py-1");
+        expect(link.className).toContain("relative");
+        expect(link.className).toContain("before:inset-x-0");
+        expect(link.className).toContain("before:-inset-y-2");
+        expect(link.className).toContain("focus-visible:ring-2");
       }
 
-      // Check all links in footer-nav have min-h-11
+      // Every footer link gets the same enlarged pseudo-element hit area.
       for (const link of links) {
-        expect(link.className).toContain("min-h-11");
-        expect(link.className).toContain("inline-flex");
-        expect(link.className).toContain("items-center");
+        expect(link.className).toContain("py-1");
+        expect(link.className).toContain("before:-inset-y-2");
       }
     });
 
-    it("ensures all pet footer navigation links have min-h-11 and vertical centering", () => {
+    it("extends the clickable area on all pet footer navigation links", () => {
       render(<FooterNav line="pet" />);
 
       const links = screen.getAllByRole("link");
       expect(links.length).toBeGreaterThan(10);
 
       for (const link of links) {
-        expect(link.className).toContain("min-h-11");
-        expect(link.className).toContain("inline-flex");
-        expect(link.className).toContain("items-center");
+        expect(link.className).toContain("py-1");
+        expect(link.className).toContain("relative");
+        expect(link.className).toContain("before:inset-x-0");
+        expect(link.className).toContain("before:-inset-y-2");
+        expect(link.className).toContain("focus-visible:ring-2");
       }
     });
   });
