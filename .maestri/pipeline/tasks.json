@@ -4715,8 +4715,8 @@
     "id": "W6-07",
     "onda": 6,
     "titulo": "Pentest A5: requestAccountDeletionAction exige sessão e usa o e-mail da sessão (ignora o do formulário); testes sem sessão e com e-mail diferente",
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Maestro",
-    "lease_ate": "2026-11-18T18:31:57.765Z"
+    "lease_ate": null
   }
 ]
