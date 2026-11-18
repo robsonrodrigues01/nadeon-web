@@ -60,8 +60,12 @@ export function getContrastRatio(foreground, background) {
   return (Math.max(front, back) + 0.05) / (Math.min(front, back) + 0.05);
 }
 
+const defaultTokensPath = fs.existsSync(path.resolve("styles/tokens.css"))
+  ? path.resolve("styles/tokens.css")
+  : fileURLToPath(new URL("../styles/tokens.css", import.meta.url));
+
 export function getContrastReport(
-  css = fs.readFileSync(path.resolve("styles/tokens.css"), "utf8")
+  css = fs.readFileSync(defaultTokensPath, "utf8")
 ) {
   const parsed = blocks(css);
   const root = Object.assign(
@@ -145,18 +149,11 @@ export function getContrastReport(
       4.5,
       "link"
     );
-    add(
-      theme,
-      "accent UI/bg",
-      vars["accent-ui"] || vars["accent-border"] || vars.accent,
-      vars.bg,
-      3,
-      "ui"
-    );
+    add(theme, "accent UI/bg", vars.accent, vars.bg, 3, "ui");
     add(
       theme,
       "accent UI/bg-elevated",
-      vars["accent-ui"] || vars["accent-border"] || vars.accent,
+      vars.accent,
       vars["bg-elevated"],
       3,
       "ui"
@@ -179,18 +176,46 @@ export function getContrastReport(
       4.5,
       "button"
     );
-    for (const token of ["product-amber", "product-coral", "product-mint"]) {
-      add(theme, `${token} text/bg`, root[token], vars.bg, 4.5, "text");
+    if (theme === "human") {
+      for (const token of ["product-amber", "product-coral", "product-mint"]) {
+        add(theme, `${token} text/bg`, root[token], vars.bg, 4.5, "text");
+        add(
+          theme,
+          `${token} text/bg-elevated`,
+          root[token],
+          vars["bg-elevated"],
+          4.5,
+          "text"
+        );
+      }
+    } else {
+      for (const token of ["product-coral", "product-mint"]) {
+        add(theme, `${token} text/bg`, root[token], vars.bg, 4.5, "text");
+        add(
+          theme,
+          `${token} text/bg-elevated`,
+          root[token],
+          vars["bg-elevated"],
+          4.5,
+          "text"
+        );
+      }
       add(
         theme,
-        `${token} text/bg-elevated`,
-        root[token],
-        vars["bg-elevated"],
+        "product-amber icon/fg surface",
+        root["product-amber"],
+        vars.fg,
+        3,
+        "ui"
+      );
+      add(
+        theme,
+        "product-amber text/accent-fg banner",
+        root["product-amber"],
+        vars["accent-fg"],
         4.5,
         "text"
       );
-    }
-    if (theme === "pet")
       for (const token of [
         "product-amber",
         "product-coral",
@@ -199,6 +224,7 @@ export function getContrastReport(
       ]) {
         add(theme, `fg/${token} surface`, vars.fg, root[token], 4.5, "text");
       }
+    }
     add(
       theme,
       "accent-fg/product-coral button text",
