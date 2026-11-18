@@ -1,5 +1,5 @@
 import React from "react";
-import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
+import { mockCatalogProvider } from "@/lib/providers";
 import {
   WeightSelector,
   WeightCalculator,

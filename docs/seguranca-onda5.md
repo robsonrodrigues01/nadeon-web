@@ -44,7 +44,7 @@ Os cinco eixos de auditoria analisados foram:
 
 ### 2.2. Validação com Zod em Server Actions
 
-- **Status:** Conforme (todas as server actions da Onda 5 utilizam esquemas Zod estritos).
+- **Status:** Conforme (as server actions analisadas validam os dados com Zod).
 - **Verificação:**
   - `app/(shared)/affiliates/actions.ts:32`: Utiliza `AffiliateApplicationSchema.safeParse`. Possui proteção contra poluição de parâmetros HTTP na linha 25 verificando `formData.getAll(field).length > 1`.
   - `app/(shared)/courses/[curso]/actions.ts:37`: Valida dados via `CourseRegistrationSchema.safeParse` com refinamento condicional `superRefine` para cursos com campos específicos.
@@ -67,8 +67,9 @@ Os cinco eixos de auditoria analisados foram:
 
 ### 2.4. Dados do Cliente em Logs (PII)
 
-- **Status:** Conforme (nenhum dado pessoal identificável é gravado em logs).
-- **Verificação:** Inspeção de todas as chamadas a `console.*` no projeto.
+- **Status:** Conforme no caso representativo coberto por teste; a revisão de todos os pontos de log permanece uma checagem estática/manual.
+- **Verificação automatizada:** `tests/unit/security/W5-26-security.test.ts` submete uma solicitação wholesale com nome, e-mail e endereço sintéticos, captura `console.log/info/warn/error/debug` e confirma que os marcadores PII não aparecem na saída.
+- **Limite:** O teste cobre uma action representativa. A inspeção de outras chamadas `console.*` não prova todos os caminhos de execução e deve ser repetida como revisão estática.
 - **Achados:**
   - `lib/providers/mock/forms.ts:34`: Grava em desenvolvimento apenas `{ timestamp, formType, id }`, onde `id` é um identificador anônimo aleatório gerado no momento. Nenhum campo de formulário ou e-mail é impresso.
   - `app/api/webhooks/route.ts:104,151,177`: Grava apenas tópicos de eventos e identificadores numéricos do pedido (`id=${orderId}`), preservando e-mails, endereços e nomes de clientes fora do log.
@@ -77,30 +78,34 @@ Os cinco eixos de auditoria analisados foram:
 
 ### 2.5. Imports de `lib/providers/mock/` Fora do Registry
 
-- **Status:** Conforme (zero imports diretos nas rotas e ações da Onda 5).
-- **Verificação:** Busca em toda a árvore de `app/`, `lib/` e `components/`.
+- **Status:** Conforme no código de runtime auditado.
+- **Verificação automatizada:** `tests/unit/security/W5-26-security.test.ts` procura imports estáticos diretos em `app/`, `components/`, `lib/` e `scripts/`, ignorando somente o próprio `lib/providers/`. Os testes em `tests/` ficam fora dessa regra porque usam mocks diretamente para fixtures de contrato.
+- **Achado corrigido:** O workbench `app/(shared)/dev/kit/sections/W1-13.tsx` agora importa `mockCatalogProvider` pelo registry `@/lib/providers`.
 - **Achados:**
-  - Todas as rotas e server actions da Onda 5 consomem provedores exclusivamente a partir de `@/lib/providers` no servidor e `@/lib/providers/client` no cliente.
-  - O único arquivo fora de `lib/providers/` com importação de mock é `app/(shared)/dev/kit/sections/W1-13.tsx:2`, pertencente ao workbench interno de desenvolvimento implementado na Onda 1.
+  - As rotas e server actions da Onda 5 consomem provedores pelo registry `@/lib/providers` no servidor e `@/lib/providers/client` no cliente.
+  - O workbench `app/(shared)/dev/kit/sections/W1-13.tsx` obtém o provider mock pelo registry, sem importar o módulo `lib/providers/mock/` diretamente.
 
 ---
 
 ## 3. Testes Automatizados Adicionados
 
-Foi criada a suíte de testes de regressão de segurança em:
+Foi criada e ampliada a suíte de testes de regressão de segurança em:
 
 - `tests/unit/security/W5-26-security.test.ts`
 
 Cobertura da suíte:
 
-1. Rejeição de submissão de avaliação não autenticada ou com ID de pedido divergente da sessão (padrão W4-20).
-2. Validação estrita de limites de notas e campos obrigatórios com Zod em avaliações.
-3. Validação de formato de e-mail e dados com Zod no cadastro de cursos.
-4. Prevenção de ataques de injeção de parâmetros HTTP duplicados na aplicação de afiliados.
-5. Validação de tipos e opções permitidas via enum Zod na aplicação de profissionais de saúde.
+1. Rejeição de submissão sem sessão (`null`) com motivo de login específico.
+2. Rejeição de um pedido existente, pago e entregue que pertence a outro e-mail/sessão, sem chamar o provider de reviews.
+3. Validação de nota e campos obrigatórios com Zod em avaliações.
+4. Validação de formato de e-mail no cadastro de cursos.
+5. Prevenção de ataques de injeção de parâmetros HTTP duplicados na aplicação de afiliados.
+6. Validação de tipos e opções permitidas via enum Zod na aplicação de profissionais de saúde.
+7. Captura do console numa action wholesale representativa, verificando ausência de nome, e-mail e endereço sintéticos.
+8. Busca estática de imports diretos de `lib/providers/mock/` no código de runtime fora do registry.
 
 ---
 
 ## 4. Conclusão
 
-A arquitetura e implementação das rotas e server actions da Onda 5 cumprem integralmente as diretrizes de segurança do projeto Nadeon. As proteções contra IDOR, a validação de dados por meio de esquemas Zod e as barreiras de isolamento de segredos e dados de clientes estão ativas e validadas por testes automatizados.
+As rotas e server actions analisadas validam dados com Zod e as avaliações repetem no servidor as checagens de sessão, dono do pedido e produto comprado. Os testes automatizam a rejeição de sessão nula, pedido de outro dono, isolamento de imports de mocks no código de runtime e a ausência de PII nos logs de uma action representativa. A inspeção ampla de outros logs e a revisão de segredos continuam sendo verificações estáticas, não provas automatizadas de todos os caminhos.
