@@ -129,6 +129,7 @@ describe("W5-21 reviews route", () => {
     vi.spyOn(reviewsProvider, "list").mockResolvedValue({
       reviews: Array.from({ length: 6 }, (_, index) => ({
         id: `rev_TEST_${index}`,
+        moderationStatus: "approved" as const,
         productSlug: product.slug,
         rating: 5,
         title: `TEST review ${index}`,
