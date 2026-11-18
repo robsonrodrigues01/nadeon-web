@@ -4614,7 +4614,7 @@
     "status": "para_revisao",
     "responsavel": "Prisma5",
     "lease_ate": "2026-11-18T04:39:28.368Z",
-    "pr": "local"
+    "pr": "agy/W5-34"
   },
   {
     "id": "W5-35",
@@ -4629,9 +4629,9 @@
     "id": "W5-36",
     "onda": 5,
     "titulo": "Fila permanente #9: texto das rotas das ondas 4 e 5 vs boards HTML em Páginas/ (diferenças fora de To be confirmed); corrigir divergências com o texto do board",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T04:33:46.725Z",
+    "lease_ate": null,
     "pr": "agy/W5-36"
   }
 ]
