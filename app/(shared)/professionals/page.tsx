@@ -156,18 +156,15 @@ export default async function ProfessionalsPage() {
           className="scroll-mt-8 space-y-6 border-y border-border py-12"
         >
           <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-widest text-fg-muted">
-              HOW IT WORKS
-            </p>
             <h2
               id="how-title"
               className="font-archivo text-3xl font-extrabold uppercase sm:text-4xl"
             >
-              Three steps to your code
+              How it works
             </h2>
           </div>
           <ol className="grid gap-4 md:grid-cols-3">
-            {["Apply", "Verification", "Get your code"].map((step, index) => (
+            {["Apply", "Verification", "To be confirmed"].map((step, index) => (
               <li key={step} className="rounded-card border border-border p-6">
                 <p className="text-sm font-semibold text-fg-muted">
                   {String(index + 1).padStart(2, "0")}
