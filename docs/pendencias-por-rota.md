@@ -546,7 +546,7 @@ Ao final, apresenta-se uma **lista única priorizada** com as decisões transver
   - `app/(pet)/pet/journal/page.tsx:8`: Descrição nos metadados (`description: "To be confirmed"`).
   - `data/content.json:61-75`, artigo `why-nad-declines-in-senior-dogs-and-what-you-can-do`: o campo `excerpt` termina em asterisco; `reviewer`, `publishedAt`, `updatedAt` e `sections[].body` são `To be confirmed`.
 - **(b) Proposta de referência:** `docs/journal-proposta.md`; qualquer texto sugerido aguarda aprovação.
-- **(c) Decisão ou insumo do Robson:** Confirmar o tratamento do aviso da Food and Drug Administration (FDA): a proposta, ainda pendente de confirmação do responsável, é exibir o aviso uma vez perto do título em cada artigo do Journal Pet. O campo de resumo (`excerpt`) termina em asterisco e o cartão o mostra em `app/(shared)/journal/_components/journal-browser.tsx:210-211`. Os corpos ainda são placeholders; completar os artigos e obter revisão veterinária antes da publicação.
+- **(c) Decisão ou insumo do Robson:** Cada página de artigo do Journal Pet já exibe o aviso da Food and Drug Administration (FDA) perto do título (implementado em W5-24); o responsável pode confirmar ou reverter essa decisão. Pergunta em aberto: o cartão de listagem também deve exibir o aviso junto ao `excerpt` Pet com asterisco em `app/(shared)/journal/_components/journal-browser.tsx:210-211`? Os corpos ainda são placeholders; completar os artigos e obter revisão veterinária antes da publicação.
 
 ---
 
@@ -735,7 +735,7 @@ Esta lista organiza as decisões por **impacto decrescente no número de rotas d
    - Primeiros certificados de análise reais para publicação na página de laudos.
    - _Rotas destravadas:_ `/experts`, `/lab-results`, `/science`, `/ingredients`.
 
-7. **Acessibilidade e contraste em várias rotas (pendente da revisão final W5-29):**
-   - O resumo do verificador W5-29 registrou seis pares Pet abaixo dos limites: cor de destaque `#e0a63c` sobre fundo comum `#fff6ea` (`2,03:1`) e fundo elevado `#ffffff` (`2,17:1`), abaixo de `3:1` para interface; coral `#ff6b6b` sobre esses fundos (`2,59:1` e `2,78:1`), abaixo de `4,5:1` para texto; verde-menta `#7fe0b0` sobre esses fundos (`1,49:1` e `1,59:1`), também abaixo de `4,5:1`. **Todos os resultados permanecem pendentes da revisão final W5-29.**
-   - Há uma divergência ainda não resolvida: o resumo W5-29 atribui `1,49:1` e `1,59:1` ao verde-menta, enquanto a revisão W5-29 descreve dois resultados genéricos de âmbar nessas razões como combinações que a interface não usa. A revisão também identifica os anéis de foco Pet `accent` com `2,03:1` e `2,17:1`, abaixo do mínimo de interface `3:1`; descreve o ícone âmbar em cartão escuro e o texto de anúncio em superfícies escuras ou âmbar. A identificação final dos pares deve aguardar a revisão W5-29; não altere cores por este relatório.
-   - _Rotas afetadas:_ várias páginas e componentes com tema Pet; a lista exata depende da confirmação dos pares realmente renderizados.
+7. **Acessibilidade e contraste em várias rotas (achados confirmados; aguardam decisão de marca):**
+   - W5-29 confirmou seis pares Pet abaixo dos critérios WCAG 2.x: `accent #e0a63c` / `bg #fff6ea` (2,03:1) e `/ bg-elevated #ffffff` (2,17:1), abaixo de 3:1 para interface; `product-coral #ff6b6b` / `bg` (2,59:1) e `/ bg-elevated` (2,78:1), abaixo de 4,5:1 para texto; `product-mint #7fe0b0` / `bg` (1,49:1) e `/ bg-elevated` (1,59:1), abaixo de 4,5:1 para texto.
+   - Esses são os pares finais reprovados registrados em `.maestri/status/W5-29/DONE`; aguardam decisão de marca. Os pares sintéticos de âmbar foram removidos após a revisão e não são achados. Não altere cores sem a decisão.
+   - _Rotas afetadas:_ componentes e páginas Pet que usam esses tokens sobre os fundos claros correspondentes.
