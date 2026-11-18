@@ -1,0 +1,90 @@
+# Bitbucket Pipelines - Nadeon Web
+# Portado a partir de .github/workflows/ci.yml
+# Versão fixa do Node.js alinhada com .nvmrc (20.20.1)
+
+image: node:20.20.1
+
+definitions:
+  caches:
+    pnpm: .pnpm-store
+  steps:
+    - step: &ci-step
+        name: CI (format, lint, typecheck, test, data:check, check-tokens, build)
+        caches:
+          - pnpm
+        script:
+          - corepack enable
+          - pnpm config set store-dir .pnpm-store
+          - pnpm install --frozen-lockfile
+          - pnpm format:check
+          - pnpm lint
+          - pnpm typecheck
+          - pnpm test
+          - pnpm data:check
+          - pnpm tokens:check
+          - pnpm build
+
+    - step: &e2e-step
+        name: E2E Playwright & Axe
+        caches:
+          - pnpm
+        script:
+          - corepack enable
+          - pnpm config set store-dir .pnpm-store
+          - pnpm install --frozen-lockfile
+          - pnpm build
+          - pnpm exec playwright install --with-deps chromium
+          - pnpm test:e2e
+        artifacts:
+          - playwright-report/**
+
+    - step: &lighthouse-step
+        name: Lighthouse CI
+        caches:
+          - pnpm
+        script:
+          - corepack enable
+          - pnpm config set store-dir .pnpm-store
+          - pnpm install --frozen-lockfile
+          - |
+            if [ -n "$PREVIEW_URL" ]; then
+              echo "Executando Lighthouse CI contra a URL de prévia: $PREVIEW_URL"
+              pnpm dlx @lhci/cli@0.14.0 autorun --collect.url="$PREVIEW_URL"
+            else
+              echo "Variável PREVIEW_URL não configurada. Pulando auditoria do Lighthouse CI."
+            fi
+
+    - step: &security-step
+        name: Security Audit
+        caches:
+          - pnpm
+        script:
+          - corepack enable
+          - pnpm config set store-dir .pnpm-store
+          - pnpm install --frozen-lockfile
+          - pnpm security:audit
+
+pipelines:
+  default:
+    - step: *ci-step
+
+  pull-requests:
+    "**":
+      - step: *ci-step
+      - step:
+          <<: *e2e-step
+          trigger: manual
+      - step:
+          <<: *lighthouse-step
+          trigger: manual
+
+  custom:
+    e2e-playwright-axe:
+      - step: *e2e-step
+    lighthouse:
+      - step: *lighthouse-step
+    full-e2e-lighthouse:
+      - step: *e2e-step
+      - step: *lighthouse-step
+    security-audit:
+      - step: *security-step
