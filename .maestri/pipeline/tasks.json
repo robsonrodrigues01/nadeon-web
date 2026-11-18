@@ -4505,11 +4505,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rotas do journal sem ambiguidade: mover /journal/[categoria] para /journal/category/[categoria] (links, testes, sitemap, check-routes) e reaplicar a W5-14 (/journal/[slug]) revertendo o revert 7ffeaa4",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
     "lease_ate": "2026-11-18T02:52:34.771Z",
     "branch": "agy/W5-24",
-    "pr": "agy/W5-24",
+    "pr": "local",
     "criterios": [
       "next build sem rota ambígua",
       "links antigos de categoria atualizados",
@@ -4568,6 +4568,6 @@
     "titulo": "Fila permanente #6: contraste WCAG AA dos tokens Human e Pet (script Node sobre styles/tokens.css, sem dependência nova), relatório e teste",
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T03:00:18.726Z"
+    "lease_ate": "2026-11-18T03:02:53.709Z"
   }
 ]
