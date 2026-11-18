@@ -10,7 +10,8 @@ import { TrustStrip } from "@/components/brand/trust-strip";
 import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
 import { GiftCardPurchaseForm } from "./_components/gift-card-purchase-form";
-import { GiftCardHowItWorks, GiftCardFaq } from "./_components/gift-card-faq";
+import { GiftCardFaq } from "./_components/gift-card-faq";
+import { GiftCardHowItWorks } from "./_components/gift-card-how-it-works";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
