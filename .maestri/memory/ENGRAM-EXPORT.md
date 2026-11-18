@@ -1,6 +1,6 @@
 # Exportação do Engram — Nadeon
 
-Gerado em 2026-11-18 07:25 UTC por maestri/export-engram.mjs (só leitura de ~/.engram/engram.db), projetos 047724f7-a1d5-46c1-bca9-76994f71d1d9, nadeon, nadeon-web. 68 memórias, mais recentes primeiro.
+Gerado em 2026-11-18 15:37 UTC por maestri/export-engram.mjs (só leitura de ~/.engram/engram.db), projetos 047724f7-a1d5-46c1-bca9-76994f71d1d9, nadeon, nadeon-web. 68 memórias, mais recentes primeiro.
 
 Sem segredos: caminhos encurtados para ~, IDs da Netlify e e-mails removidos. A fonte da verdade continua em .maestri/ (DECISIONS, PROJECT_STATE, NEXT_ACTIONS).
 
