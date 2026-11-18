@@ -2,9 +2,10 @@ import type { CartProvider } from "@/lib/contracts/cart";
 import type { GiftCardProvider } from "@/lib/contracts/gift-card";
 import { mockCartProvider, useCartStore } from "./mock/cart";
 import { MockGiftCardProvider, mockGiftCardProvider } from "./mock/gift-card";
-import { liveCartProvider, liveGiftCardProvider } from "./live";
+import { liveCartProvider, liveGiftCardProvider } from "./live/browser";
 
-const isLive = process.env.PROVIDERS === "live";
+// Só NEXT_PUBLIC_ chega ao navegador; manter igual a PROVIDERS do servidor.
+const isLive = process.env.NEXT_PUBLIC_PROVIDERS === "live";
 
 export const cartProvider: CartProvider = isLive
   ? liveCartProvider

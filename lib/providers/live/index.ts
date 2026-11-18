@@ -9,12 +9,6 @@ import type {
   ProductLine,
 } from "@/lib/contracts/catalog";
 import type {
-  AddCartLineInput,
-  Cart,
-  CartProvider,
-  UpdateCartLineInput,
-} from "@/lib/contracts/cart";
-import type {
   AccountProvider,
   Address,
   CustomerProfile,
@@ -52,7 +46,6 @@ import type { LabLot, LabsFilter, LabsProvider } from "@/lib/contracts/labs";
 import type { Campaign, CampaignConfig } from "@/lib/contracts/campaign";
 import type { ContentProvider } from "@/lib/contracts/content";
 import type { EmailPreferencesProvider } from "@/lib/contracts/email-preferences";
-import type { GiftCardProvider } from "@/lib/contracts/gift-card";
 import type { OffersProvider } from "@/lib/contracts/offers";
 import type { StoreLocatorProvider } from "@/lib/contracts/store-locator";
 import type { WholesaleProvider } from "@/lib/contracts/wholesale";
@@ -72,15 +65,15 @@ import {
 } from "@/lib/contracts/mailyte";
 import { z } from "zod";
 
-const NOT_IMPLEMENTED_MSG = "not implemented: onda 4";
+import {
+  LiveCartProvider,
+  NOT_IMPLEMENTED_MSG,
+  liveCartProvider,
+  liveGiftCardProvider,
+  liveStub,
+} from "./browser";
 
-function liveStub<T extends object>(provider: string): T {
-  return new Proxy({} as T, {
-    get: () => async () => {
-      throw new Error(`not implemented: onda 5 (${provider})`);
-    },
-  });
-}
+export { LiveCartProvider, liveCartProvider, liveGiftCardProvider };
 
 export class LiveCatalogProvider implements CatalogProvider {
   async getProducts(_filter?: CatalogFilter): Promise<Product[]> {
@@ -103,43 +96,6 @@ export class LiveCatalogProvider implements CatalogProvider {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
   async search(_q: string): Promise<Product[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-}
-
-export class LiveCartProvider implements CartProvider {
-  async get(): Promise<Cart | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async create(): Promise<Cart> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async addLines(_lines: AddCartLineInput[]): Promise<Cart> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async addKit(
-    _kitSlug: string,
-    _quantity: number,
-    _sellingPlanId?: string | null
-  ): Promise<Cart> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async updateLines(_lines: UpdateCartLineInput[]): Promise<Cart> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async removeLines(_lineIds: string[]): Promise<Cart> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async applyDiscount(_code: string): Promise<Cart> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async setLineSellingPlan(
-    _lineId: string,
-    _sellingPlanId: string | null
-  ): Promise<Cart> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async checkoutUrl(): Promise<string> {
     throw new Error(NOT_IMPLEMENTED_MSG);
   }
 }
@@ -472,7 +428,6 @@ export class LiveMailyteProvider implements MailyteProvider {
 }
 
 export const liveCatalogProvider = new LiveCatalogProvider();
-export const liveCartProvider = new LiveCartProvider();
 export const liveAccountProvider = new LiveAccountProvider();
 export const liveSubscriptionProvider = new LiveSubscriptionProvider();
 export const liveReviewsProvider = new LiveReviewsProvider();
@@ -484,8 +439,6 @@ export const liveContentProvider = liveStub<ContentProvider>("contentProvider");
 export const liveEmailPreferencesProvider = liveStub<EmailPreferencesProvider>(
   "emailPreferencesProvider"
 );
-export const liveGiftCardProvider =
-  liveStub<GiftCardProvider>("giftCardProvider");
 export const liveOffersProvider = liveStub<OffersProvider>("offersProvider");
 export const liveStoreLocatorProvider = liveStub<StoreLocatorProvider>(
   "storeLocatorProvider"
