@@ -209,7 +209,7 @@ export default async function OfferPage({ params }: PageProps) {
           </ol>
         </section>
 
-        {/* Kits on offer */}
+        {/* Kits */}
         <section
           className="border-t border-border py-12"
           aria-labelledby="kits-on-offer-title"
@@ -217,13 +217,13 @@ export default async function OfferPage({ params }: PageProps) {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-fg-muted">
-                KITS ON OFFER
+                OUR KITS
               </p>
               <h2
                 id="kits-on-offer-title"
                 className="mt-2 font-archivo text-3xl font-extrabold uppercase text-fg"
               >
-                Kits in the {title}
+                Our kits
               </h2>
             </div>
             <Link

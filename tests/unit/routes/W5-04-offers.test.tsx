@@ -71,7 +71,7 @@ describe("W5-04 /offers/[oferta] (Promo collection model)", () => {
 
     // Kits on offer has one honest placeholder and no fabricated cards.
     const kitsSection = screen.getByRole("region", {
-      name: "Kits in the Special Offer",
+      name: "Our kits",
     });
     expect(
       within(kitsSection).getByText("Kits on offer: To be confirmed.")
