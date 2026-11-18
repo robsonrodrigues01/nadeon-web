@@ -4647,8 +4647,17 @@
     "id": "W5-38",
     "onda": 5,
     "titulo": "Alvos de toque de 44 px (regra do projeto): links do rodapé (py-1, ~28 px) e <summary> (~24 px) com min-h-11 sem mudar o visual; achado da W5-37",
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T06:39:06.268Z",
+    "pr": "agy/W5-38"
+  },
+  {
+    "id": "W5-39",
+    "onda": 5,
+    "titulo": "Fila permanente #2: teclado e foco nas rotas das ondas 4 e 5 (portal, Tab/Shift+Tab/Escape/Enter): ordem, foco visível, armadilhas de foco, menus e diálogos; correções pequenas com teste",
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T06:23:11.625Z"
+    "lease_ate": "2026-11-18T06:45:15.432Z"
   }
 ]
