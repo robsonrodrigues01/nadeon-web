@@ -3956,7 +3956,8 @@
     "depende_de": [
       "W5-00b",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lente"
   },
   {
     "onda": 5,
@@ -4247,7 +4248,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T00:23:15.345Z",
+    "lease_ate": "2026-11-18T00:31:05.620Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4267,9 +4268,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T00:22:20.925Z",
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4316,7 +4317,7 @@
     "onda": 5,
     "status": "em_andamento",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T00:25:36.586Z",
+    "lease_ate": "2026-11-18T00:31:05.653Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4502,9 +4503,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rotas do journal sem ambiguidade: mover /journal/[categoria] para /journal/category/[categoria] (links, testes, sitemap, check-routes) e reaplicar a W5-14 (/journal/[slug]) revertendo o revert 7ffeaa4",
     "depende_de": [],
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-18T00:31:14.787Z",
     "branch": "agy/W5-24",
     "pr": "local",
     "criterios": [
