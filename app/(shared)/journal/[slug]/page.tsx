@@ -7,6 +7,10 @@ import { buildMetadata } from "@/lib/seo";
 
 const PENDING = "To be confirmed";
 
+function MarkedClaim({ text }: { text: string }) {
+  return <Claim showDisclaimer={text.includes("*")}>{text}</Claim>;
+}
+
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
 };
@@ -57,7 +61,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
               : PENDING}
           </p>
           <h1 className="mt-4 font-archivo text-4xl font-extrabold sm:text-6xl">
-            {isPet ? <Claim>{article.title}</Claim> : article.title}
+            {isPet ? <MarkedClaim text={article.title} /> : article.title}
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted">
             {isPet ? <Claim showDisclaimer>{article.excerpt}</Claim> : PENDING}
@@ -85,7 +89,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
                   href={`#section-${index + 1}`}
                 >
                   {String(index + 1).padStart(2, "0")}{" "}
-                  {isPet ? <Claim>{section.title}</Claim> : section.title}
+                  {isPet ? <MarkedClaim text={section.title} /> : section.title}
                 </a>
               </li>
             ))}
@@ -111,7 +115,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
                   <span className="mr-3 text-accent">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  {isPet ? <Claim>{section.title}</Claim> : section.title}
+                  {isPet ? <MarkedClaim text={section.title} /> : section.title}
                 </h2>
                 <p className="mt-5 max-w-3xl text-base leading-relaxed">
                   {PENDING}
