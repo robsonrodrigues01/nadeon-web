@@ -58,16 +58,26 @@ describe("W5-04 /offers/[oferta] (Promo collection model)", () => {
 
     // Code badge
     expect(
-      screen.getByText(/Code:\s*To be confirmed\s*or applied automatically/i)
+      screen.getByText(
+        /Code:\s*To be confirmed\s*· Application: To be confirmed/i
+      )
     ).toBeTruthy();
 
     // Shop the offer link
-    const shopOfferLink = screen.getByRole("link", { name: "Shop the offer" });
+    const shopOfferLink = screen.getByRole("link", { name: "View products" });
     expect(shopOfferLink.getAttribute("href")).toBe("#on-offer");
 
     // How the offer works
     expect(screen.getByText("HOW THE OFFER WORKS")).toBeTruthy();
     expect(screen.getByText("Three easy steps")).toBeTruthy();
+    expect(
+      screen.getByText("Product eligibility: To be confirmed.")
+    ).toBeTruthy();
+    expect(screen.getByText("Discount details")).toBeTruthy();
+    expect(screen.getByText("Shipping details")).toBeTruthy();
+    expect(
+      screen.queryByText(/eligible item marked with the offer badge/i)
+    ).toBeNull();
 
     // Kits on offer has one honest placeholder and no fabricated cards.
     const kitsSection = screen.getByRole("region", {
@@ -83,7 +93,7 @@ describe("W5-04 /offers/[oferta] (Promo collection model)", () => {
 
     // On offer has one honest placeholder and no fabricated product cards.
     const offersSection = screen.getByRole("region", {
-      name: "Shop the Special Offer",
+      name: "Explore products",
     });
     expect(
       within(offersSection).getByText("Products on offer: To be confirmed.")
@@ -139,7 +149,7 @@ describe("W5-04 /offers/[oferta] (Promo collection model)", () => {
       screen.getByText("Save on your favorite longevity formulas this spring.")
     ).toBeTruthy();
     expect(
-      screen.getByText(/Code:\s*SPRING25\s*or applied automatically/i)
+      screen.getByText(/Code:\s*SPRING25\s*· Application: To be confirmed/i)
     ).toBeTruthy();
   });
 

@@ -148,10 +148,10 @@ export default async function OfferPage({ params }: PageProps) {
                 href="#on-offer"
                 className="inline-flex min-h-11 items-center rounded-pill bg-fg px-6 font-bold text-bg transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                Shop the offer
+                View products
               </a>
               <span className="inline-flex min-h-11 items-center rounded-pill border border-border bg-bg-elevated px-4 text-xs font-bold text-fg">
-                Code: {code} or applied automatically
+                Code: {code} · Application: To be confirmed
               </span>
             </div>
           </div>
@@ -180,30 +180,27 @@ export default async function OfferPage({ params }: PageProps) {
               <span className="flex h-8 w-8 items-center justify-center rounded-pill bg-accent font-archivo text-sm font-bold text-bg">
                 1
               </span>
-              <h3 className="mt-4 font-bold text-fg">Pick your products</h3>
+              <h3 className="mt-4 font-bold text-fg">Choose products</h3>
               <p className="mt-2 text-sm text-fg-muted">
-                Choose any eligible item marked with the offer badge. (To be
-                confirmed)
+                Product eligibility: To be confirmed.
               </p>
             </li>
             <li className="rounded-card border border-border bg-bg-elevated p-6">
               <span className="flex h-8 w-8 items-center justify-center rounded-pill bg-accent font-archivo text-sm font-bold text-bg">
                 2
               </span>
-              <h3 className="mt-4 font-bold text-fg">Discount applies</h3>
+              <h3 className="mt-4 font-bold text-fg">Discount details</h3>
               <p className="mt-2 text-sm text-fg-muted">
-                Use code {code} at checkout, or it applies automatically. (To be
-                confirmed)
+                Code: {code}. Application: To be confirmed.
               </p>
             </li>
             <li className="rounded-card border border-border bg-bg-elevated p-6">
               <span className="flex h-8 w-8 items-center justify-center rounded-pill bg-accent font-archivo text-sm font-bold text-bg">
                 3
               </span>
-              <h3 className="mt-4 font-bold text-fg">Ships as usual</h3>
+              <h3 className="mt-4 font-bold text-fg">Shipping details</h3>
               <p className="mt-2 text-sm text-fg-muted">
-                Delivery and subscription perks work as normal. (To be
-                confirmed)
+                Shipping: To be confirmed.
               </p>
             </li>
           </ol>
@@ -247,13 +244,13 @@ export default async function OfferPage({ params }: PageProps) {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-fg-muted">
-                ON OFFER
+                PRODUCTS
               </p>
               <h2
                 id="on-offer-title"
                 className="mt-2 font-archivo text-3xl font-extrabold uppercase text-fg"
               >
-                Shop the {title}
+                Explore products
               </h2>
             </div>
             <nav aria-label="Category filter" className="flex flex-wrap gap-2">
@@ -310,7 +307,8 @@ export default async function OfferPage({ params }: PageProps) {
               Pick To be confirmed, save To be confirmed
             </h2>
             <p className="mt-2 text-sm text-fg-muted">
-              Mix any eligible products. Bundle rules: To be confirmed.
+              Product eligibility: To be confirmed. Bundle rules: To be
+              confirmed.
             </p>
             <p className="mt-4 font-bold text-fg">
               To be confirmed picked · add more to unlock To be confirmed
