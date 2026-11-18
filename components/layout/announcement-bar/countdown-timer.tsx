@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useSyncExternalStore } from "react";
 import type { CountdownTimerProps } from "./types";
 
 interface TimeValues {
@@ -31,26 +31,44 @@ function computeTimeLeft(targetDate: string | Date, nowMs: number): TimeValues {
   };
 }
 
+const STABLE_TIME_LEFT: TimeValues = {
+  days: "00",
+  hours: "00",
+  minutes: "00",
+  seconds: "00",
+  isExpired: false,
+};
+
+function subscribeToClock(callback: () => void): () => void {
+  const timer = setInterval(callback, 1000);
+  return () => clearInterval(timer);
+}
+
+function getClientClock(): number {
+  return Date.now();
+}
+
+function getServerClock(): number | null {
+  return null;
+}
+
 export function CountdownTimer({
   countdownEnd,
   line = "human",
   now,
   className = "",
 }: CountdownTimerProps) {
-  const [currentNow, setCurrentNow] = useState<number>(() =>
-    now ? new Date(now).getTime() : Date.now()
+  const clientNow = useSyncExternalStore(
+    subscribeToClock,
+    getClientClock,
+    getServerClock
   );
 
-  useEffect(() => {
-    // If now was provided statically and never changes, we still update if fake timers or clock advances
-    const timer = setInterval(() => {
-      setCurrentNow(Date.now());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const timeLeft = computeTimeLeft(countdownEnd, currentNow);
+  const currentNow = now ? new Date(now).getTime() : clientNow;
+  const timeLeft =
+    currentNow !== null
+      ? computeTimeLeft(countdownEnd, currentNow)
+      : STABLE_TIME_LEFT;
 
   const chipStyle =
     line === "human"
