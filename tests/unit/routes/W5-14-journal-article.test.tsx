@@ -37,7 +37,8 @@ const articles = [
     audience: "pet",
     title: "Why NAD+ declines in senior dogs, and what you can do",
     category: "Health",
-    excerpt: "To be confirmed",
+    excerpt:
+      "What changes inside an older dog, the daily habits that help, and how to talk to your vet about support.*",
     readingMinutes: 7,
     species: ["dog"],
     reviewer: "To be confirmed",
@@ -88,9 +89,28 @@ describe("W5-14 journal article route", () => {
         })
       ).toBe(true);
       if (article.audience === "pet") {
-        expect(screen.getByRole("note").textContent).toContain(
-          "For animal use only"
-        );
+        const title = screen.getByRole("heading", { level: 1 });
+        expect(
+          title.querySelector(":scope > span.inline > span")?.textContent
+        ).toBe(article.title);
+        expect(
+          screen.getByText(article.excerpt).parentElement?.className
+        ).toContain("inline");
+        const notes = screen
+          .getAllByRole("note")
+          .map((note) => note.textContent);
+        expect(
+          notes.some((note) => note?.includes("Food and Drug Administration"))
+        ).toBe(true);
+        expect(
+          notes.some((note) => note?.includes("For animal use only"))
+        ).toBe(true);
+        const sectionTitle = screen.getByRole("heading", {
+          name: `01 ${article.sections[0].title}`,
+        });
+        expect(
+          sectionTitle.querySelector(":scope > span.inline > span")?.textContent
+        ).toBe(article.sections[0].title);
       } else {
         expect(screen.queryByRole("note")).toBeNull();
       }

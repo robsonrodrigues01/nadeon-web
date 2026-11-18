@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Claim } from "@/components/commerce/product-card/claim";
 import { contentProvider } from "@/lib/providers";
 import { buildMetadata } from "@/lib/seo";
 
@@ -30,6 +31,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
   if (!article) notFound();
 
   const journalPath = article.audience === "pet" ? "/pet/journal" : "/journal";
+  const isPet = article.audience === "pet";
 
   return (
     <main id="main-content" tabIndex={-1} className="flex-1 bg-bg text-fg">
@@ -55,10 +57,10 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
               : PENDING}
           </p>
           <h1 className="mt-4 font-archivo text-4xl font-extrabold sm:text-6xl">
-            {article.title}
+            {isPet ? <Claim>{article.title}</Claim> : article.title}
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-            {PENDING}
+            {isPet ? <Claim showDisclaimer>{article.excerpt}</Claim> : PENDING}
           </p>
           <div className="mt-6 space-y-1 text-sm text-fg-muted">
             <p>{PENDING}</p>
@@ -82,7 +84,8 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
                   className="min-h-11 text-sm underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   href={`#section-${index + 1}`}
                 >
-                  {String(index + 1).padStart(2, "0")} {section.title}
+                  {String(index + 1).padStart(2, "0")}{" "}
+                  {isPet ? <Claim>{section.title}</Claim> : section.title}
                 </a>
               </li>
             ))}
@@ -108,7 +111,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
                   <span className="mr-3 text-accent">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  {section.title}
+                  {isPet ? <Claim>{section.title}</Claim> : section.title}
                 </h2>
                 <p className="mt-5 max-w-3xl text-base leading-relaxed">
                   {PENDING}
