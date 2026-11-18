@@ -4173,7 +4173,7 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "backlog",
     "responsavel": "Trilho",
     "lease_ate": "2026-11-18T00:19:29.427Z",
     "pr": "local",
@@ -4193,7 +4193,7 @@
       "W5-00c"
     ],
     "revisor": "Lente",
-    "nota": "MUDANÇAS (Lente); volta ao Trilho após W5-13"
+    "nota": "aprovada, merge revertido por rota ambígua; reentra pela W5-24"
   },
   {
     "onda": 5,
@@ -4491,6 +4491,25 @@
     "pr": "local",
     "criterios": [
       "teste com #add-pet aceito e #fff recusado",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W5-24",
+    "onda": 5,
+    "papel": "Frontend",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Rotas do journal sem ambiguidade: mover /journal/[categoria] para /journal/category/[categoria] (links, testes, sitemap, check-routes) e reaplicar a W5-14 (/journal/[slug]) revertendo o revert 7ffeaa4",
+    "depende_de": [],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W5-24",
+    "pr": "local",
+    "criterios": [
+      "next build sem rota ambígua",
+      "links antigos de categoria atualizados",
       "pnpm gate verde",
       "revisão APROVADO"
     ]
