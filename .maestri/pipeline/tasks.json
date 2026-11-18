@@ -4575,9 +4575,9 @@
     "id": "W5-30",
     "onda": 5,
     "titulo": "Fila permanente #14: docs/pendencias-por-rota.md — por rota, o que é placeholder/To be confirmed e de onde vem a proposta (docs/*-proposta.md), para o Robson aprovar",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T04:22:29.175Z",
+    "lease_ate": null,
     "pr": "agy/W5-30"
   },
   {
