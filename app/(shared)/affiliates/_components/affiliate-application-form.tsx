@@ -33,7 +33,7 @@ export function AffiliateApplicationForm() {
         id="affiliate-email"
         name="email"
         label="Email"
-        placeholder="To be confirmed"
+        placeholder="you@email.com"
         type="email"
         autoComplete="email"
       />
@@ -41,7 +41,7 @@ export function AffiliateApplicationForm() {
         id="affiliate-social"
         name="socialHandles"
         label="Social handles"
-        placeholder="To be confirmed"
+        placeholder="@instagram, @tiktok, YouTube channel"
       />
       <div className="grid gap-2">
         <label htmlFor="affiliate-links" className="text-sm font-bold">
@@ -52,7 +52,7 @@ export function AffiliateApplicationForm() {
           name="contentLinks"
           rows={4}
           required
-          placeholder="Add 2 or 3 links to recent posts or episodes, one per line"
+          placeholder="Links to 2 or 3 recent posts or episodes"
           className={inputClass}
         />
       </div>
@@ -89,7 +89,7 @@ export function AffiliateApplicationForm() {
           className={inputClass}
         >
           <option value="" disabled>
-            Select a niche
+            To be confirmed
           </option>
           {affiliateNicheOptions.map((niche) => (
             <option key={niche} value={niche.toLowerCase()}>

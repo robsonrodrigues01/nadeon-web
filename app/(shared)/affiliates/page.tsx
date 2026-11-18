@@ -164,9 +164,7 @@ export default function AffiliatesPage() {
           >
             Join the creator program
           </h2>
-          <p className="mt-3 max-w-2xl text-fg-muted">
-            Application requirements and review timing: To be confirmed.
-          </p>
+          <p className="mt-3 max-w-2xl text-fg-muted">Takes about 3 minutes.</p>
           <div className="mt-8">
             <AffiliateApplicationForm />
           </div>

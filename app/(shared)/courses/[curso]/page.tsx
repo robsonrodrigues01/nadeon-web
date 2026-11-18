@@ -88,13 +88,13 @@ export default async function CoursePage({ params }: CoursePageProps) {
         >
           <div className="mx-auto max-w-5xl">
             <p className="text-xs font-bold uppercase tracking-widest text-accent">
-              {course.lessons.length} lessons · every {course.cadenceDays} days
+              WHAT YOU&apos;LL LEARN
             </p>
             <h2
               id="course-lessons-title"
               className="mt-3 font-archivo text-3xl font-extrabold uppercase sm:text-5xl"
             >
-              What you&apos;ll learn
+              {course.lessons.length} lessons, every {course.cadenceDays} days
             </h2>
             <ol className="mt-8 grid gap-4 md:grid-cols-2">
               {course.lessons.map((lesson, index) => {

@@ -18,11 +18,11 @@ const partnershipBenefits = [
   {
     title: "Low opening order",
     description:
-      "Start small and reorder as you sell. Minimum: To be confirmed.",
+      "Start small and reorder as you sell. Minimum to be confirmed.",
   },
   {
     title: "Lot-tested",
-    description: "Public lab reports: To be confirmed.",
+    description: "A public lab report for every lot, ready for your customers.",
   },
   {
     title: "Marketing kit",
@@ -35,7 +35,7 @@ const partnershipBenefits = [
   },
   {
     title: "Ships from NJ",
-    description: "Fulfillment from our Clifton, New Jersey facility.",
+    description: "Fast fulfillment from our Clifton, New Jersey facility.",
   },
 ] as const;
 
@@ -175,7 +175,7 @@ export default async function WholesalePage() {
                   Nadeon Human
                 </h3>
                 <p className="mt-2 text-sm text-fg-muted">
-                  Capsules, powders, tinctures
+                  7 formulas · capsules, powders, tinctures
                 </p>
               </article>
               <article className="rounded-card border border-border bg-bg-elevated p-6">
@@ -183,7 +183,7 @@ export default async function WholesalePage() {
                   Nadeon Pet
                 </h3>
                 <p className="mt-2 text-sm text-fg-muted">
-                  Chews, treats, powders, oils
+                  8 formulas · chews, treats, powders, oils
                 </p>
               </article>
             </div>

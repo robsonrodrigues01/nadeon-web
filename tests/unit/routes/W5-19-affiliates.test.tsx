@@ -41,6 +41,14 @@ describe("W5-19 /affiliates", () => {
         .getByRole("link", { name: "See the guidelines" })
         .getAttribute("href")
     ).toBe("#guidelines");
+    expect(
+      screen.getByRole("heading", { name: "Start in three steps" })
+    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Share" })).toBeTruthy();
+    expect(screen.getByPlaceholderText("you@email.com")).toBeTruthy();
+    expect(
+      screen.getByPlaceholderText("@instagram, @tiktok, YouTube channel")
+    ).toBeTruthy();
     for (const label of [
       "Full name",
       "Email",
