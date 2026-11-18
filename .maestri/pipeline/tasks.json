@@ -3938,7 +3938,7 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
     "lease_ate": "2026-11-18T02:36:28.928Z",
     "pr": "agy/W5-04",
@@ -4468,7 +4468,7 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Portar o CI de .github/workflows/ci.yml para bitbucket-pipelines.yml (format, lint, typecheck, test, data:check, build; e2e Playwright, axe, Lighthouse em etapa separada), com cache do pnpm, versões fixas das imagens e nenhum segredo no arquivo",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
     "lease_ate": "2026-11-18T02:39:24.978Z",
     "branch": "agy/W4-30",
@@ -4505,9 +4505,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rotas do journal sem ambiguidade: mover /journal/[categoria] para /journal/category/[categoria] (links, testes, sitemap, check-routes) e reaplicar a W5-14 (/journal/[slug]) revertendo o revert 7ffeaa4",
     "depende_de": [],
-    "status": "para_revisao",
-    "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T02:27:30.124Z",
+    "status": "em_andamento",
+    "responsavel": "Prisma5",
+    "lease_ate": "2026-11-18T02:52:34.771Z",
     "branch": "agy/W5-24",
     "pr": "agy/W5-24",
     "criterios": [
@@ -4542,7 +4542,7 @@
     "status": "para_revisao",
     "responsavel": "Prisma5",
     "lease_ate": "2026-11-18T02:41:25.088Z",
-    "pr": "local"
+    "pr": "agy/W5-26"
   },
   {
     "id": "W5-27",
@@ -4557,9 +4557,17 @@
     "id": "W5-28",
     "onda": 5,
     "titulo": "Fila permanente #8: imagens — alt, width/height, priority só acima da dobra, sizes corretos em todas as rotas; corrigir com teste",
-    "status": "para_revisao",
-    "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T02:37:03.678Z",
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T02:52:41.957Z",
     "pr": "agy/W5-28"
+  },
+  {
+    "id": "W5-29",
+    "onda": 5,
+    "titulo": "Fila permanente #6: contraste WCAG AA dos tokens Human e Pet (script Node sobre styles/tokens.css, sem dependência nova), relatório e teste",
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-18T02:57:59.597Z"
   }
 ]
