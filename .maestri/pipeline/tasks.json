@@ -4577,7 +4577,7 @@
     "titulo": "Fila permanente #14: docs/pendencias-por-rota.md — por rota, o que é placeholder/To be confirmed e de onde vem a proposta (docs/*-proposta.md), para o Robson aprovar",
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T03:03:31.949Z"
+    "lease_ate": "2026-11-18T03:07:54.139Z"
   },
   {
     "id": "W5-31",
@@ -4585,6 +4585,6 @@
     "titulo": "Fila permanente #10: cobertura de testes — rotas e componentes sem teste de comportamento; lista priorizada e testes para os 5 de maior risco",
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T03:03:56.223Z"
+    "lease_ate": "2026-11-18T03:07:51.188Z"
   }
 ]
