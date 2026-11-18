@@ -67,7 +67,11 @@ describe("W5-31 high-risk behavior gaps", () => {
     } as Cart;
 
     render(<CartDrawerFooter cart={cart} onCheckout={onCheckout} />);
-    fireEvent.click(screen.getByRole("button", { name: "Checkout $74.99" }));
+    const checkoutButton = screen.getByRole("button", {
+      name: "Checkout $74.99",
+    });
+    expect(checkoutButton.textContent).toContain("$74.99");
+    fireEvent.click(checkoutButton);
 
     expect(onCheckout).toHaveBeenCalledOnce();
   });
