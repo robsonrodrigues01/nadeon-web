@@ -160,7 +160,7 @@ export default async function ProfessionalsPage() {
               id="how-title"
               className="font-archivo text-3xl font-extrabold uppercase sm:text-4xl"
             >
-              Three steps to your code
+              How it works
             </h2>
           </div>
           <ol className="grid gap-4 md:grid-cols-3">

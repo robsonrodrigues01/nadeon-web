@@ -44,9 +44,7 @@ describe("W5-19 /affiliates", () => {
     expect(
       screen.getByRole("heading", { name: "Start in three steps" })
     ).toBeTruthy();
-    expect(
-      screen.getByRole("heading", { name: "Share and earn" })
-    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Share" })).toBeTruthy();
     expect(screen.getByPlaceholderText("you@email.com")).toBeTruthy();
     expect(
       screen.getByPlaceholderText("@instagram, @tiktok, YouTube channel")

@@ -138,7 +138,7 @@ export default function AffiliatesPage() {
             </h2>
           </div>
           <ol className="grid gap-4 md:grid-cols-3">
-            {["Apply", "Get approved", "Share and earn"].map((step, index) => (
+            {["Apply", "Get approved", "Share"].map((step, index) => (
               <li key={step} className="rounded-card border border-border p-6">
                 <p className="text-sm font-semibold text-fg-muted">
                   {String(index + 1).padStart(2, "0")}
