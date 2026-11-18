@@ -240,6 +240,21 @@ describe("W5-35 form behavior", () => {
     expect(onOrderFound).not.toHaveBeenCalled();
   });
 
+  it("announces an order lookup action failure", async () => {
+    const user = userEvent.setup();
+    actions.orderLookup.mockRejectedValueOnce(new Error("Service unavailable"));
+    render(<OrderLookup signInHref="/account" />);
+    await user.type(screen.getByLabelText("Order number"), "NL-123456");
+    await user.type(screen.getByLabelText("Email"), "shopper@example.test");
+    await user.click(screen.getByRole("button", { name: "Track order" }));
+
+    const error = await screen.findByRole("alert");
+    expect(error.textContent).toBe(
+      "Unable to look up your order. Please try again."
+    );
+    expect(error.getAttribute("role")).toBe("alert");
+  });
+
   it("shows review validation, pending, server error, and success feedback", async () => {
     const user = userEvent.setup();
     const submit = deferred<unknown>();
