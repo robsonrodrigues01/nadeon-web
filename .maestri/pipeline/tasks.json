@@ -3938,9 +3938,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T00:25:42.565Z",
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -3957,7 +3957,8 @@
       "W5-00b",
       "W5-00c"
     ],
-    "revisor": "Lente"
+    "revisor": "Lente",
+    "nota": "MUDANÇAS (Lente); volta ao primeiro construtor livre"
   },
   {
     "onda": 5,
@@ -4246,9 +4247,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T00:31:05.620Z",
+    "lease_ate": "2026-11-18T00:40:19.113Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4315,9 +4316,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T00:31:05.653Z",
+    "lease_ate": "2026-11-18T00:33:32.666Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4333,7 +4334,8 @@
     "depende_de": [
       "W5-00a",
       "W5-00c"
-    ]
+    ],
+    "revisor": "Lupa"
   },
   {
     "onda": 5,
@@ -4359,9 +4361,9 @@
   },
   {
     "onda": 5,
-    "status": "backlog",
-    "responsavel": null,
-    "lease_ate": null,
+    "status": "para_revisao",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T00:51:42.439Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4503,14 +4505,32 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rotas do journal sem ambiguidade: mover /journal/[categoria] para /journal/category/[categoria] (links, testes, sitemap, check-routes) e reaplicar a W5-14 (/journal/[slug]) revertendo o revert 7ffeaa4",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T00:31:14.787Z",
+    "lease_ate": "2026-11-18T00:44:15.121Z",
     "branch": "agy/W5-24",
     "pr": "local",
     "criterios": [
       "next build sem rota ambígua",
       "links antigos de categoria atualizados",
+      "pnpm gate verde",
+      "revisão APROVADO"
+    ]
+  },
+  {
+    "id": "W5-25",
+    "onda": 5,
+    "papel": "QA",
+    "preset": "Luna 6 Low (GPT)",
+    "titulo": "Teste instável W2-43 account: deixa trabalho do React pendente após o teardown (ReferenceError: window is not defined em react-dom scheduler), gera erro não tratado no vitest e derruba o gate",
+    "depende_de": [],
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "branch": "agy/W5-25",
+    "pr": "local",
+    "criterios": [
+      "tests/unit sem unhandled errors em 3 rodadas",
       "pnpm gate verde",
       "revisão APROVADO"
     ]
