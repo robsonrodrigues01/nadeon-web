@@ -3938,9 +3938,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
-    "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T02:17:10.032Z",
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T02:36:28.928Z",
     "pr": "agy/W5-04",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4468,9 +4468,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Portar o CI de .github/workflows/ci.yml para bitbucket-pipelines.yml (format, lint, typecheck, test, data:check, build; e2e Playwright, axe, Lighthouse em etapa separada), com cache do pnpm, versões fixas das imagens e nenhum segredo no arquivo",
     "depende_de": [],
-    "status": "para_revisao",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T02:25:14.499Z",
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-18T02:39:24.978Z",
     "branch": "agy/W4-30",
     "pr": "agy/W4-30",
     "criterios": [
@@ -4539,24 +4539,27 @@
     "id": "W5-26",
     "onda": 5,
     "titulo": "Fila permanente #12: revisão de segurança local das rotas e server actions da onda 5 (segredos, validação zod, sessão e dono, PII em logs); relatório com achados e correções pequenas com teste",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T02:28:06.233Z"
+    "lease_ate": "2026-11-18T02:41:25.088Z",
+    "pr": "local"
   },
   {
     "id": "W5-27",
     "onda": 5,
     "titulo": "Fila permanente #11: código morto — exports sem uso e componentes órfãos; remover o que é seguro, com typecheck e testes verdes",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T02:27:25.997Z"
+    "lease_ate": "2026-11-18T02:31:27.202Z",
+    "pr": "agy/W5-27"
   },
   {
     "id": "W5-28",
     "onda": 5,
     "titulo": "Fila permanente #8: imagens — alt, width/height, priority só acima da dobra, sizes corretos em todas as rotas; corrigir com teste",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T02:28:56.328Z"
+    "lease_ate": "2026-11-18T02:37:03.678Z",
+    "pr": "agy/W5-28"
   }
 ]
