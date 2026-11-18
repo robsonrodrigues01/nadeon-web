@@ -21,12 +21,12 @@ export function FooterNav({ line = "human", className = "" }: FooterNavProps) {
           <h3 className="font-heading font-bold text-xs uppercase tracking-widest text-accent mb-3.5 select-none">
             {column.title}
           </h3>
-          <ul className="space-y-2">
+          <ul className="space-y-0.5">
             {column.links.map((link) => (
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="inline-block py-1 text-sm text-fg/80 hover:text-accent hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm transition-colors"
+                  className="inline-flex min-h-11 items-center text-sm text-fg/80 hover:text-accent hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm transition-colors"
                 >
                   {link.label}
                 </Link>

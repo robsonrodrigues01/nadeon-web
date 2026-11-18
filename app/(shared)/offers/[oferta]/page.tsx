@@ -345,7 +345,7 @@ export default async function OfferPage({ params }: PageProps) {
             Offer terms
           </h2>
           <details className="rounded-card border border-border bg-bg-elevated p-6">
-            <summary className="cursor-pointer font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+            <summary className="flex min-h-11 cursor-pointer items-center font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
               Full terms
             </summary>
             <ul className="mt-4 space-y-2 text-sm text-fg-muted">

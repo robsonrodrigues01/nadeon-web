@@ -346,7 +346,7 @@ export default async function CatsPage({
           {CAT_FAQS.map((item) => (
             <li key={item.question}>
               <details className="rounded-card border border-border bg-bg-elevated p-4">
-                <summary className="min-h-11 cursor-pointer text-base font-bold text-fg">
+                <summary className="flex min-h-11 cursor-pointer items-center text-base font-bold text-fg">
                   {item.question}
                 </summary>
                 <p className="mt-3 text-sm text-fg-muted">{item.answer}</p>

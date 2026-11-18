@@ -316,7 +316,7 @@ export default async function ConcernPage({
                 "When should I see my vet?",
               ].map((question) => (
                 <details key={question} className="group py-4">
-                  <summary className="min-h-11 cursor-pointer list-none py-2 font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                  <summary className="flex min-h-11 cursor-pointer list-none items-center py-2 font-bold text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                     {question}
                   </summary>
                   <p className="pb-2 text-sm text-fg-muted">To be confirmed.</p>

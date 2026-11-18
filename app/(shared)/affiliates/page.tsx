@@ -202,7 +202,7 @@ export default function AffiliatesPage() {
           <div className="divide-y divide-border border-y border-border">
             {questions.map((question) => (
               <details key={question} className="py-4">
-                <summary className="min-h-11 cursor-pointer py-2 font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                <summary className="flex min-h-11 cursor-pointer items-center py-2 font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                   {question}
                 </summary>
                 <p className="pb-2 text-fg-muted">To be confirmed</p>
