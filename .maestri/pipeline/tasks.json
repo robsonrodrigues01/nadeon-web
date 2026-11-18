@@ -4707,8 +4707,8 @@
     "id": "W6-06",
     "onda": 6,
     "titulo": "Pentest A2/A3/x-powered-by: separar providers do navegador (live/browser.ts) sem código de servidor, client.ts com NEXT_PUBLIC_PROVIDERS, poweredByHeader false; teste que impede client.ts de importar live/index",
-    "status": "em_andamento",
+    "status": "entregue",
     "responsavel": "Maestro",
-    "lease_ate": "2026-11-18T18:25:21.184Z"
+    "lease_ate": null
   }
 ]
