@@ -15,7 +15,7 @@ describe("theme token contrast", () => {
   for (const pair of report.pairs) {
     const name = `${pair.theme}: ${pair.name} (${pair.ratio.toFixed(2)}:1; minimum ${pair.minimum}:1)`;
     if (pair.ratio < pair.minimum) {
-      it.todo(`${name}; ${pair.suggestion}`);
+      it.todo(name);
     } else {
       it(name, () => expect(pair.ratio).toBeGreaterThanOrEqual(pair.minimum));
     }

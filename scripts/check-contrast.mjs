@@ -50,79 +50,14 @@ function luminance(rgb) {
   return c[0] * 0.2126 + c[1] * 0.7152 + c[2] * 0.0722;
 }
 
-function contrast(fg, bg) {
+export function getContrastRatio(foreground, background) {
+  const fg =
+    typeof foreground === "string" ? parseColor(foreground) : foreground;
+  const bg =
+    typeof background === "string" ? parseColor(background) : background;
   const front = luminance(composite(fg, bg));
   const back = luminance(bg);
   return (Math.max(front, back) + 0.05) / (Math.min(front, back) + 0.05);
-}
-
-function toHex(rgb) {
-  return (
-    "#" +
-    rgb
-      .slice(0, 3)
-      .map((v) =>
-        Math.round(v * 255)
-          .toString(16)
-          .padStart(2, "0")
-      )
-      .join("")
-  );
-}
-
-function toHsl([r, g, b]) {
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const delta = max - min;
-  const lightness = (max + min) / 2;
-  if (!delta) return [0, 0, lightness];
-  const saturation = delta / (1 - Math.abs(2 * lightness - 1));
-  const hue =
-    max === r
-      ? ((g - b) / delta) % 6
-      : max === g
-        ? (b - r) / delta + 2
-        : (r - g) / delta + 4;
-  return [((hue * 60 + 360) % 360) / 360, saturation, lightness];
-}
-
-function fromHsl([h, s, l]) {
-  const chroma = (1 - Math.abs(2 * l - 1)) * s;
-  const x = chroma * (1 - Math.abs(((h * 6) % 2) - 1));
-  const m = l - chroma / 2;
-  const rgb =
-    h < 1 / 6
-      ? [chroma, x, 0]
-      : h < 2 / 6
-        ? [x, chroma, 0]
-        : h < 3 / 6
-          ? [0, chroma, x]
-          : h < 4 / 6
-            ? [0, x, chroma]
-            : h < 5 / 6
-              ? [x, 0, chroma]
-              : [chroma, 0, x];
-  return rgb.map((channel) => channel + m).concat(1);
-}
-
-function sameToneSuggestion(fg, bg, minimum) {
-  const hsl = toHsl(fg);
-  const destination = luminance(fg) > luminance(bg) ? 1 : 0;
-  let low = 0;
-  let high = 1;
-  for (let i = 0; i < 24; i++) {
-    const amount = (low + high) / 2;
-    const candidate = fromHsl([
-      hsl[0],
-      hsl[1],
-      hsl[2] * (1 - amount) + destination * amount,
-    ]);
-    if (contrast(candidate, bg) >= minimum) high = amount;
-    else low = amount;
-  }
-  return toHex(
-    fromHsl([hsl[0], hsl[1], hsl[2] * (1 - high) + destination * high])
-  );
 }
 
 export function getContrastReport(
@@ -139,12 +74,12 @@ export function getContrastReport(
   );
   const gold = [
     ...(root["gradient-gold"] || "").matchAll(/#([\da-f]{3}|[\da-f]{6})\b/gi),
-  ].map(([, hex]) => parseColor("#" + hex));
+  ].map(([, hex]) => "#" + hex);
   const pairs = [];
   const add = (theme, name, fgValue, bgValue, minimum, category) => {
     const fg = parseColor(fgValue);
     const bg = parseColor(bgValue);
-    const value = contrast(fg, bg);
+    const value = getContrastRatio(fg, bg);
     pairs.push({
       theme,
       name,
@@ -153,11 +88,6 @@ export function getContrastReport(
       ratio: value,
       minimum,
       category,
-      suggestion:
-        value < minimum
-          ? "Suggested same-tone foreground adjustment: " +
-            sameToneSuggestion(fg, bg, minimum)
-          : null,
     });
   };
 
@@ -173,6 +103,15 @@ export function getContrastReport(
     );
     add(theme, "fg/bg", vars.fg, vars.bg, 4.5, "text");
     add(theme, "fg/bg-elevated", vars.fg, vars["bg-elevated"], 4.5, "text");
+    add(theme, "large text fg/bg", vars.fg, vars.bg, 3, "large text");
+    add(
+      theme,
+      "large text fg/bg-elevated",
+      vars.fg,
+      vars["bg-elevated"],
+      3,
+      "large text"
+    );
     add(theme, "fg-muted/bg", vars["fg-muted"], vars.bg, 4.5, "text");
     add(
       theme,
@@ -182,14 +121,21 @@ export function getContrastReport(
       4.5,
       "text"
     );
-    add(theme, "accent-fg/accent", vars["accent-fg"], vars.accent, 4.5, "text");
+    add(
+      theme,
+      "accent-fg/accent button",
+      vars["accent-fg"],
+      vars.accent,
+      4.5,
+      "button"
+    );
     add(
       theme,
       "accent-text/bg",
       vars["accent-text"] || vars.accent,
       vars.bg,
       4.5,
-      "text"
+      "link"
     );
     add(
       theme,
@@ -197,7 +143,7 @@ export function getContrastReport(
       vars["accent-text"] || vars.accent,
       vars["bg-elevated"],
       4.5,
-      "text"
+      "link"
     );
     add(
       theme,
@@ -215,22 +161,52 @@ export function getContrastReport(
       3,
       "ui"
     );
-    if (gold.length) {
-      const foreground = parseColor(vars["accent-fg"]);
-      const darkest = gold.reduce((worst, stop) =>
-        contrast(foreground, stop) < contrast(foreground, worst) ? stop : worst
-      );
+    gold.forEach((stop, index) =>
       add(
         theme,
-        "primary gold button text",
+        `primary gold button text on gradient stop ${index + 1}`,
         vars["accent-fg"],
-        toHex(darkest),
+        stop,
         4.5,
         "button"
+      )
+    );
+    add(
+      theme,
+      "accent-fg/product-amber button text",
+      vars["accent-fg"],
+      root["product-amber"],
+      4.5,
+      "button"
+    );
+    for (const token of ["product-amber", "product-coral", "product-mint"]) {
+      add(theme, `${token} text/bg`, root[token], vars.bg, 4.5, "text");
+      add(
+        theme,
+        `${token} text/bg-elevated`,
+        root[token],
+        vars["bg-elevated"],
+        4.5,
+        "text"
       );
     }
     if (theme === "pet")
-      add(theme, "pet solid button text", vars.bg, vars.fg, 4.5, "button");
+      for (const token of [
+        "product-amber",
+        "product-coral",
+        "product-sky",
+        "product-mint",
+      ]) {
+        add(theme, `fg/${token} surface`, vars.fg, root[token], 4.5, "text");
+      }
+    add(
+      theme,
+      "accent-fg/product-coral button text",
+      vars["accent-fg"],
+      root["product-coral"],
+      4.5,
+      "button"
+    );
   }
   return { pairs };
 }
@@ -245,6 +221,8 @@ if (
     console.log(
       (pair.ratio >= pair.minimum ? "PASS " : "FAIL ") +
         pair.theme +
+        " " +
+        pair.category +
         " " +
         pair.name +
         ": " +
@@ -263,7 +241,17 @@ if (
     );
     for (const pair of failures)
       console.error(
-        "- " + pair.theme + " " + pair.name + ": " + pair.suggestion
+        "- " +
+          pair.theme +
+          " " +
+          pair.category +
+          " " +
+          pair.name +
+          ": " +
+          pair.ratio.toFixed(2) +
+          ":1 (required " +
+          pair.minimum +
+          ":1)"
       );
     process.exitCode = 1;
   }
