@@ -3938,9 +3938,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T02:36:28.928Z",
+    "lease_ate": null,
     "pr": "agy/W5-04",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4539,9 +4539,9 @@
     "id": "W5-26",
     "onda": 5,
     "titulo": "Fila permanente #12: revisão de segurança local das rotas e server actions da onda 5 (segredos, validação zod, sessão e dono, PII em logs); relatório com achados e correções pequenas com teste",
-    "status": "para_revisao",
-    "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T02:41:25.088Z",
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T02:58:28.629Z",
     "pr": "agy/W5-26"
   },
   {
@@ -4557,7 +4557,7 @@
     "id": "W5-28",
     "onda": 5,
     "titulo": "Fila permanente #8: imagens — alt, width/height, priority só acima da dobra, sizes corretos em todas as rotas; corrigir com teste",
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Trilho",
     "lease_ate": "2026-11-18T02:52:41.957Z",
     "pr": "agy/W5-28"
@@ -4568,6 +4568,6 @@
     "titulo": "Fila permanente #6: contraste WCAG AA dos tokens Human e Pet (script Node sobre styles/tokens.css, sem dependência nova), relatório e teste",
     "status": "em_andamento",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T02:57:59.597Z"
+    "lease_ate": "2026-11-18T03:00:18.726Z"
   }
 ]
