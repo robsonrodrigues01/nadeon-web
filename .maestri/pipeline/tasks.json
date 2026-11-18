@@ -4247,9 +4247,9 @@
   },
   {
     "onda": 5,
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T02:15:25.014Z",
+    "lease_ate": null,
     "pr": "agy/W5-17",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4487,9 +4487,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "scripts/check-tokens.mjs: falso positivo em âncoras e ids que parecem hex (ex.: href=\"#add-pet\"); só tratar como cor hex quando seguido de fim de palavra e em contexto de cor, com teste",
     "depende_de": [],
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T02:10:16.707Z",
+    "lease_ate": null,
     "branch": "agy/W5-23",
     "pr": "agy/W5-23",
     "criterios": [
@@ -4505,11 +4505,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Rotas do journal sem ambiguidade: mover /journal/[categoria] para /journal/category/[categoria] (links, testes, sitemap, check-routes) e reaplicar a W5-14 (/journal/[slug]) revertendo o revert 7ffeaa4",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T02:24:15.882Z",
+    "lease_ate": "2026-11-18T02:27:30.124Z",
     "branch": "agy/W5-24",
-    "pr": "local",
+    "pr": "agy/W5-24",
     "criterios": [
       "next build sem rota ambígua",
       "links antigos de categoria atualizados",
@@ -4541,6 +4541,22 @@
     "titulo": "Fila permanente #12: revisão de segurança local das rotas e server actions da onda 5 (segredos, validação zod, sessão e dono, PII em logs); relatório com achados e correções pequenas com teste",
     "status": "em_andamento",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T02:26:37.947Z"
+    "lease_ate": "2026-11-18T02:28:06.233Z"
+  },
+  {
+    "id": "W5-27",
+    "onda": 5,
+    "titulo": "Fila permanente #11: código morto — exports sem uso e componentes órfãos; remover o que é seguro, com typecheck e testes verdes",
+    "status": "em_andamento",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T02:27:25.997Z"
+  },
+  {
+    "id": "W5-28",
+    "onda": 5,
+    "titulo": "Fila permanente #8: imagens — alt, width/height, priority só acima da dobra, sizes corretos em todas as rotas; corrigir com teste",
+    "status": "em_andamento",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-18T02:28:56.328Z"
   }
 ]
