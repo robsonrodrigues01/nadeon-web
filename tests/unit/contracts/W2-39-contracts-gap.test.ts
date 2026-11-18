@@ -56,7 +56,7 @@ describe("W2-39: Contracts Gaps", () => {
     it("returns order for valid orderNumber and matching email", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
         "TEST-NL-0001",
-        "test@example.com"
+        "test.alex.morgan@example.com"
       );
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0001");
@@ -66,7 +66,7 @@ describe("W2-39: Contracts Gaps", () => {
     it("is case-insensitive and trims whitespace on orderNumber and email", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
         " test-nl-0001 ",
-        " TEST@EXAMPLE.COM "
+        " TEST.ALEX.MORGAN@EXAMPLE.COM "
       );
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0001");
@@ -75,7 +75,7 @@ describe("W2-39: Contracts Gaps", () => {
     it("also looks up by order id", async () => {
       const order = await mockAccountProvider.lookupGuestOrder(
         "ord_TEST_0001",
-        "test@example.com"
+        "test.alex.morgan@example.com"
       );
       expect(order).not.toBeNull();
       expect(order?.orderNumber).toBe("TEST-NL-0001");
@@ -217,7 +217,7 @@ describe("W2-39: Contracts Gaps", () => {
         }
         expect(order.url).toBeTruthy();
         expect(order.statusUrl).toBeTruthy();
-        expect(order.email).toBe("test@example.com");
+        expect(order.email).toBe("test.alex.morgan@example.com");
       }
     });
   });
