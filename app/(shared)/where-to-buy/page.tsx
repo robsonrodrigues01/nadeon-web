@@ -120,7 +120,7 @@ export default async function WhereToBuyPage({
               Shop online
             </h2>
             <div className="mt-8 grid gap-5 lg:grid-cols-2">
-              <div className="flex flex-col justify-between gap-6 rounded-card border border-border bg-bg-elevated p-6 sm:flex-row sm:items-center sm:p-8">
+              <div className="min-w-0 flex flex-col justify-between gap-6 rounded-card border border-border bg-bg-elevated p-6 sm:flex-row sm:items-center sm:p-8">
                 <div>
                   <p className="inline-flex rounded-pill bg-bg px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-accent">
                     Best place to buy
@@ -136,7 +136,7 @@ export default async function WhereToBuyPage({
                     · 60-day money-back guarantee
                   </p>
                 </div>
-                <div className="flex shrink-0 gap-3">
+                <div className="flex flex-wrap gap-3">
                   <Link
                     href="/human/shop"
                     aria-label="Shop Human online"
@@ -153,7 +153,7 @@ export default async function WhereToBuyPage({
                   </Link>
                 </div>
               </div>
-              <div className="flex flex-col justify-between gap-5 rounded-card border border-border bg-bg-elevated p-6 sm:flex-row sm:items-center sm:p-8">
+              <div className="min-w-0 flex flex-col justify-between gap-5 rounded-card border border-border bg-bg-elevated p-6 sm:flex-row sm:items-center sm:p-8">
                 <div>
                   <h3 className="font-archivo text-2xl font-extrabold text-fg">
                     Marketplaces
