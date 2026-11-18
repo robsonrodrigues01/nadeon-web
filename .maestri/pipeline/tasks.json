@@ -4647,9 +4647,9 @@
     "id": "W5-38",
     "onda": 5,
     "titulo": "Alvos de toque de 44 px (regra do projeto): links do rodapé (py-1, ~28 px) e <summary> (~24 px) com min-h-11 sem mudar o visual; achado da W5-37",
-    "status": "para_revisao",
+    "status": "entregue",
     "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T06:39:06.268Z",
+    "lease_ate": null,
     "pr": "agy/W5-38"
   },
   {
