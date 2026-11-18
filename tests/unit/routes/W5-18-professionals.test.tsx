@@ -73,11 +73,10 @@ describe("W5-18 /professionals", () => {
       screen.getByRole("link", { name: "Email the team" }).getAttribute("href")
     ).toBe("/help#contact");
     expect(screen.getAllByText("To be confirmed").length).toBeGreaterThan(0);
-    expect(
-      screen.queryByRole("heading", { name: "Three steps to your code" })
-    ).toBeNull();
     expect(screen.queryByRole("heading", { name: "Get your code" })).toBeNull();
-    expect(screen.getByRole("heading", { name: "How it works" })).toBeTruthy();
+    expect(
+      screen.getByRole("heading", { name: "Three steps to your code" })
+    ).toBeTruthy();
     expect(
       screen.getByRole("heading", { level: 3, name: "To be confirmed" })
     ).toBeTruthy();

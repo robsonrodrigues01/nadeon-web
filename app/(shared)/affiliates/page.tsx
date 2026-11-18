@@ -138,7 +138,7 @@ export default function AffiliatesPage() {
             </h2>
           </div>
           <ol className="grid gap-4 md:grid-cols-3">
-            {["Apply", "Get approved", "Share"].map((step, index) => (
+            {["Apply", "Get approved", "Share and earn"].map((step, index) => (
               <li key={step} className="rounded-card border border-border p-6">
                 <p className="text-sm font-semibold text-fg-muted">
                   {String(index + 1).padStart(2, "0")}
@@ -164,9 +164,7 @@ export default function AffiliatesPage() {
           >
             Join the creator program
           </h2>
-          <p className="mt-3 max-w-2xl text-fg-muted">
-            Application requirements and review timing: To be confirmed.
-          </p>
+          <p className="mt-3 max-w-2xl text-fg-muted">Takes about 3 minutes.</p>
           <div className="mt-8">
             <AffiliateApplicationForm />
           </div>

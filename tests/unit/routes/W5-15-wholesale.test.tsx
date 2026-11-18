@@ -78,6 +78,14 @@ describe("W5-15 /wholesale", () => {
     ).toBeTruthy();
     expect(screen.getByText("Response time: To be confirmed.")).toBeTruthy();
     expect(screen.getByText("Line sheet: To be confirmed.")).toBeTruthy();
+    expect(
+      screen.getByText(
+        "A public lab report for every lot, ready for your customers."
+      )
+    ).toBeTruthy();
+    expect(
+      screen.getByText("7 formulas · capsules, powders, tinctures")
+    ).toBeTruthy();
     expect(screen.queryByText(/wholesale@nadeonlabs\.com/i)).toBeNull();
     expect(screen.queryByText(/\$X\.XX|Tier 1|Tier 2|Tier 3/)).toBeNull();
     expect(

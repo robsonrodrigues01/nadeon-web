@@ -43,6 +43,10 @@ describe("W5-20 /courses/[curso]", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: title })).toBeTruthy();
     expect(screen.getByRole("heading", { name: lesson })).toBeTruthy();
+    expect(screen.getByText("WHAT YOU'LL LEARN")).toBeTruthy();
+    expect(
+      screen.getByRole("heading", { name: /7 lessons, every/ })
+    ).toBeTruthy();
     expect(contentProviderMock.getCourse).toHaveBeenCalledWith(slug);
   });
 
