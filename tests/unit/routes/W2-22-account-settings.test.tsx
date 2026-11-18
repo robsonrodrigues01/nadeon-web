@@ -481,12 +481,43 @@ describe("W2-22 /account/settings", () => {
       );
 
       expect(res).toEqual({ status: "success", id: "req_del_123" });
+      // O e-mail vem da sessão, não do formulário (pentest W6-07).
       expect(sendPrivacyRequest).toHaveBeenCalledWith({
-        email: "alex.morgan@example.com",
+        email: "test.alex.morgan@example.com",
         firstName: "Alex",
         lastName: "Morgan",
         requestType: "delete",
       });
+    });
+
+    it("sem sessão, não envia o pedido de exclusão", async () => {
+      const sendPrivacyRequest = vi
+        .spyOn(formsProvider, "sendPrivacyRequest")
+        .mockResolvedValue({ success: true, id: "req_del_123" });
+      vi.spyOn(mockAccountProvider, "getSession").mockResolvedValueOnce(null);
+
+      const res = await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm(VALID_DELETION)
+      );
+
+      expect(res.status).toBe("error");
+      expect(sendPrivacyRequest).not.toHaveBeenCalled();
+    });
+
+    it("ignora o e-mail de outra pessoa digitado no formulário", async () => {
+      const sendPrivacyRequest = vi
+        .spyOn(formsProvider, "sendPrivacyRequest")
+        .mockResolvedValue({ success: true, id: "req_del_123" });
+
+      await requestAccountDeletionAction(
+        { status: "idle" },
+        deletionForm({ ...VALID_DELETION, email: "victim@example.com" })
+      );
+
+      expect(sendPrivacyRequest).toHaveBeenCalledWith(
+        expect.objectContaining({ email: "test.alex.morgan@example.com" })
+      );
     });
 
     it("rejeita quando a confirmação está ausente ou não é 'on'", async () => {

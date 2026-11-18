@@ -201,9 +201,25 @@ export async function requestAccountDeletionAction(
     };
   }
 
+  // Só o dono da conta pede a exclusão: exige sessão e usa o e-mail dela, nunca o do formulário.
+  const session =
+    typeof accountProvider.getSession === "function"
+      ? await accountProvider.getSession()
+      : null;
+  const customer =
+    session && typeof accountProvider.getCustomer === "function"
+      ? await accountProvider.getCustomer()
+      : null;
+  if (!customer?.email) {
+    return {
+      status: "error",
+      error: "Sign in to request account deletion.",
+    };
+  }
+
   try {
     const result = await formsProvider.sendPrivacyRequest({
-      email: parsed.data.email,
+      email: customer.email,
       firstName: parsed.data.firstName,
       lastName: parsed.data.lastName,
       requestType: "delete",
