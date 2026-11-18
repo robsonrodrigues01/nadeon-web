@@ -36,13 +36,9 @@ export default async function WriteReviewPage({
   const item = order?.items.find(
     (candidate) => candidate.productSlug === params.productSlug
   );
-  const isEmailMatch =
-    order?.email?.toLowerCase() === customer.email.toLowerCase() ||
-    (order?.email === "test@example.com" &&
-      customer.email === "test.alex.morgan@example.com");
   if (
     !order ||
-    !isEmailMatch ||
+    order.email?.toLowerCase() !== customer.email.toLowerCase() ||
     order.financialStatus !== "paid" ||
     order.fulfillmentStatus !== "delivered" ||
     !item
