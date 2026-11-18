@@ -3938,9 +3938,9 @@
   },
   {
     "onda": 5,
-    "status": "em_andamento",
-    "responsavel": "Trilho",
-    "lease_ate": "2026-11-18T02:00:59.637Z",
+    "status": "para_revisao",
+    "responsavel": "Crivo6",
+    "lease_ate": "2026-11-18T02:17:10.032Z",
     "pr": "local",
     "criterios": [
       "rota com board desktop e mobile",
@@ -4248,9 +4248,9 @@
   {
     "onda": 5,
     "status": "para_revisao",
-    "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T00:40:19.113Z",
-    "pr": "local",
+    "responsavel": "Trilho",
+    "lease_ate": "2026-11-18T02:15:25.014Z",
+    "pr": "agy/W5-17",
     "criterios": [
       "rota com board desktop e mobile",
       "testes de comportamento",
@@ -4364,7 +4364,7 @@
     "status": "para_revisao",
     "responsavel": "Trilho",
     "lease_ate": "2026-11-18T00:51:42.439Z",
-    "pr": "local",
+    "pr": "agy/W5-22",
     "criterios": [
       "rota com board desktop e mobile",
       "testes de comportamento",
@@ -4487,9 +4487,9 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "scripts/check-tokens.mjs: falso positivo em âncoras e ids que parecem hex (ex.: href=\"#add-pet\"); só tratar como cor hex quando seguido de fim de palavra e em contexto de cor, com teste",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Prisma5",
-    "lease_ate": "2026-11-18T02:01:19.985Z",
+    "lease_ate": "2026-11-18T02:10:16.707Z",
     "branch": "agy/W5-23",
     "pr": "local",
     "criterios": [
@@ -4524,11 +4524,11 @@
     "preset": "Luna 6 Low (GPT)",
     "titulo": "Teste instável W2-43 account: deixa trabalho do React pendente após o teardown (ReferenceError: window is not defined em react-dom scheduler), gera erro não tratado no vitest e derruba o gate",
     "depende_de": [],
-    "status": "em_andamento",
+    "status": "para_revisao",
     "responsavel": "Crivo6",
-    "lease_ate": "2026-11-18T02:00:59.732Z",
+    "lease_ate": "2026-11-18T02:11:19.103Z",
     "branch": "agy/W5-25",
-    "pr": "local",
+    "pr": "agy/W5-25",
     "criterios": [
       "tests/unit sem unhandled errors em 3 rodadas",
       "pnpm gate verde",
