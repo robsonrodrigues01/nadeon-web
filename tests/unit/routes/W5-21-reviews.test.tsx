@@ -54,6 +54,7 @@ describe("W5-21 reviews route", () => {
 
     const providerReview: Review = {
       id: "rev_TEST_01",
+      moderationStatus: "approved",
       productSlug: product.slug,
       rating: 4,
       title: "TEST review title",
@@ -68,6 +69,7 @@ describe("W5-21 reviews route", () => {
     const unverifiedReview: Review = {
       ...providerReview,
       id: "rev_TEST_unverified",
+      moderationStatus: "pending",
       title: "TEST unverified title",
       verifiedBuyer: false,
     };

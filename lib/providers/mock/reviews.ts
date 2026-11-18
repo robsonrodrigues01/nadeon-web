@@ -15,6 +15,7 @@ import { mockAccountProvider } from "@/lib/providers/mock/account";
 const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
   ReviewSchema.parse({
     id: "rev_dev_01",
+    moderationStatus: "approved",
     productSlug: "biohack",
     rating: 5,
     title: "Remarkable sustained energy and clarity",
@@ -27,6 +28,7 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
   }),
   ReviewSchema.parse({
     id: "rev_dev_02",
+    moderationStatus: "approved",
     productSlug: "biohack",
     rating: 5,
     title: "Best NAD+ formula on the market",
@@ -39,6 +41,7 @@ const DEV_KIT_SAMPLE_REVIEWS: Review[] = [
   }),
   ReviewSchema.parse({
     id: "rev_dev_03",
+    moderationStatus: "approved",
     productSlug: "more-good-years",
     rating: 5,
     title: "My 11-year-old lab is acting like a puppy again",
@@ -59,9 +62,9 @@ export class MockReviewsProvider implements ReviewsProvider {
     filter?: ReviewsFilter
   ): Promise<{ reviews: Review[]; total: number }> {
     // Launch state default is empty list, unless includeDevSamples is requested
-    let pool: Review[] = submittedReviews.map((review) =>
-      ReviewSchema.parse(review)
-    );
+    let pool: Review[] = submittedReviews
+      .filter((review) => review.moderationStatus === "approved")
+      .map((review) => ReviewSchema.parse(review));
     if (filter?.includeDevSamples) {
       pool = [...pool, ...DEV_KIT_SAMPLE_REVIEWS];
     }
@@ -93,7 +96,10 @@ export class MockReviewsProvider implements ReviewsProvider {
   }
 
   async summary(productSlug: string): Promise<ReviewSummary> {
-    const list = submittedReviews.filter((r) => r.productSlug === productSlug);
+    const list = submittedReviews.filter(
+      (r) =>
+        r.productSlug === productSlug && r.moderationStatus === "approved"
+    );
 
     const breakdown: Record<number, number> = {
       1: 0,
@@ -143,6 +149,7 @@ export class MockReviewsProvider implements ReviewsProvider {
 
     const newReview = StoredReviewSchema.parse({
       id: `rev_${Math.random().toString(36).substring(2, 9)}`,
+      moderationStatus: "pending",
       orderId: order.id,
       productSlug: validatedInput.productSlug,
       rating: validatedInput.rating,

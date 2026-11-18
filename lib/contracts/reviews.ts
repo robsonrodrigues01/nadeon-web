@@ -3,6 +3,7 @@ import { PetSpeciesSchema } from "./account";
 
 export const ReviewSchema = z.object({
   id: z.string(),
+  moderationStatus: z.enum(["pending", "approved"]),
   productSlug: z.string(),
   rating: z.number().int().min(1).max(5),
   title: z.string(),
