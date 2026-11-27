@@ -9,7 +9,7 @@ export interface CartCatalogProduct {
   name: string;
   technicalName: string;
   format: string;
-  servingsPerJar: number;
+  servingsPerJar?: number;
   image?: string;
   variants: { id: string; price: Money }[];
   sellingPlans: {

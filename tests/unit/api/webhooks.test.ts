@@ -4,8 +4,10 @@ import { POST } from "@/app/api/webhooks/route";
 import { mockMailyteProvider } from "@/lib/providers/mock/mailyte";
 
 const revalidatePathMock = vi.hoisted(() => vi.fn());
+const revalidateTagMock = vi.hoisted(() => vi.fn());
 vi.mock("next/cache", () => ({
   revalidatePath: revalidatePathMock,
+  revalidateTag: revalidateTagMock,
 }));
 
 function signPayload(body: string, secret: string): string {
@@ -25,6 +27,7 @@ describe("POST /api/webhooks", () => {
     process.env.SHOPIFY_WEBHOOK_SECRET = TEST_SECRET;
     mockMailyteProvider.clearRecordedEvents();
     revalidatePathMock.mockClear();
+    revalidateTagMock.mockClear();
     consoleInfoSpy = vi.spyOn(console, "info").mockImplementation(() => {});
   });
 
@@ -364,6 +367,11 @@ describe("POST /api/webhooks", () => {
     expect(revalidatePathMock).toHaveBeenCalledWith("/pet/cats");
     expect(revalidatePathMock).toHaveBeenCalledWith("/pet/horses");
     expect(revalidatePathMock).toHaveBeenCalledWith("/");
+    expect(revalidateTagMock).toHaveBeenCalledWith(
+      "product-TEST-super-blend",
+      "max"
+    );
+    expect(revalidateTagMock).toHaveBeenCalledWith("catalog", "max");
   });
 
   it("handles unknown topics gracefully with status 200", async () => {

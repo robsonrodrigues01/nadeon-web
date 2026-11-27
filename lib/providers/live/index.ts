@@ -72,33 +72,14 @@ import {
   liveGiftCardProvider,
   liveStub,
 } from "./browser";
+import { LiveCatalogProvider } from "./catalog";
 
-export { LiveCartProvider, liveCartProvider, liveGiftCardProvider };
-
-export class LiveCatalogProvider implements CatalogProvider {
-  async getProducts(_filter?: CatalogFilter): Promise<Product[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getProduct(_slug: string): Promise<Product | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getCollection(
-    _handle: string,
-    _filter?: CatalogFilter,
-    _sort?: CatalogSort
-  ): Promise<Collection | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getKits(_line?: ProductLine): Promise<Kit[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getKit(_slug: string): Promise<Kit | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async search(_q: string): Promise<Product[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-}
+export {
+  LiveCartProvider,
+  liveCartProvider,
+  liveGiftCardProvider,
+  LiveCatalogProvider,
+};
 
 export class LiveAccountProvider
   implements AccountProvider, PetProfileProvider

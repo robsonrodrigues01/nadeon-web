@@ -2,6 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.shopify.com",
+      },
+    ],
+  },
   async headers() {
     const headers = [
       { key: "X-Frame-Options", value: "DENY" },
@@ -26,7 +34,7 @@ const nextConfig: NextConfig = {
           "form-action 'self'",
           "script-src 'self' 'unsafe-inline'",
           "style-src 'self' 'unsafe-inline'",
-          "img-src 'self' data: blob:",
+          "img-src 'self' data: blob: https://cdn.shopify.com",
           "font-src 'self' data:",
           "connect-src 'self'",
         ].join("; "),

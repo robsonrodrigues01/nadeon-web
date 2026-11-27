@@ -551,7 +551,14 @@ function RecommendedProduct({
           </Link>
         </h2>
         <p className="mt-1 text-sm text-fg-muted">
-          {product.format} · {product.servingsPerJar} servings per jar
+          {[
+            product.format,
+            product.servingsPerJar
+              ? `${product.servingsPerJar} servings per jar`
+              : null,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
         </p>
 
         {variant && (

@@ -1,6 +1,7 @@
 import React from "react";
 import type { Product } from "@/lib/contracts/catalog";
 import { Button } from "@/components/ui/button";
+import { Claim } from "./product-card/claim";
 
 export interface ProductCardMinProps {
   product: Product;
@@ -85,7 +86,7 @@ export function ProductCardMin({ product, className }: ProductCardMinProps) {
                 <span className="text-accent font-bold" aria-hidden="true">
                   ✓
                 </span>
-                <span>{benefit}</span>
+                <Claim showDisclaimer={false}>{benefit}</Claim>
               </li>
             ))}
           </ul>

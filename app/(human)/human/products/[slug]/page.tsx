@@ -182,8 +182,15 @@ export default async function ProductPage({ params }: PageProps) {
                   {product.name}
                 </h1>
                 <p className="text-sm font-bold text-fg-muted mt-1.5">
-                  {product.technicalName} · {product.netWeight} ·{" "}
-                  {product.servingsPerJar} servings
+                  {[
+                    product.technicalName,
+                    product.netWeight,
+                    product.servingsPerJar
+                      ? `${product.servingsPerJar} servings`
+                      : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
                 </p>
               </div>
 

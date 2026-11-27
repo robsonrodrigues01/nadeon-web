@@ -155,7 +155,7 @@ export function ProductCard({
                   <span className="text-accent font-bold" aria-hidden="true">
                     ✓
                   </span>
-                  <span>{product.benefits[0]}</span>
+                  <Claim showDisclaimer={false}>{product.benefits[0]}</Claim>
                 </div>
               );
             }

@@ -252,7 +252,9 @@ export function PetPurchaseCard({
           {product.name}
         </h1>
         <p className="mt-2 text-sm sm:text-base font-medium text-fg/80">
-          {product.technicalName} · {product.netWeight}
+          {[product.technicalName, product.netWeight]
+            .filter(Boolean)
+            .join(" · ")}
         </p>
       </div>
 
@@ -468,7 +470,7 @@ export function PetPurchaseCard({
                     const isRecommended = plan.intervalDays === 60;
                     const planRadioId = `${componentId}-plan-${plan.id}`;
 
-                    let planSubtitle = product.netWeight;
+                    let planSubtitle = product.netWeight ?? "";
                     if (plan.intervalDays === 60) {
                       planSubtitle = weightBands[1]
                         ? `Recommended for ${weightBands[1].label}`

@@ -59,7 +59,14 @@ export function CartLineItem({
           </h2>
           {product && (
             <p className="mt-0.5 text-xs text-fg-muted">
-              {product.format} · {product.servingsPerJar} servings
+              {[
+                product.format,
+                product.servingsPerJar
+                  ? `${product.servingsPerJar} servings`
+                  : null,
+              ]
+                .filter(Boolean)
+                .join(" · ")}
             </p>
           )}
 

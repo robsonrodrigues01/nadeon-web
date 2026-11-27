@@ -66,8 +66,14 @@ export function CompareFormulas({ products, market }: CompareFormulasProps) {
       },
       {
         label: "Servings",
-        value: (product) => `${product.servingsPerJar} per jar`,
-        content: (product) => `${product.servingsPerJar} per jar`,
+        value: (product) =>
+          product.servingsPerJar
+            ? `${product.servingsPerJar} per jar`
+            : "To be confirmed",
+        content: (product) =>
+          product.servingsPerJar
+            ? `${product.servingsPerJar} per jar`
+            : "To be confirmed",
       },
       {
         label: "Best for",

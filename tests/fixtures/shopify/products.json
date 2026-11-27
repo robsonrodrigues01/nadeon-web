@@ -1,0 +1,595 @@
+{
+  "_comment": "TEST data fixture - recorded Shopify Storefront API products response",
+  "data": {
+    "products": {
+      "nodes": [
+        {
+          "id": "gid://shopify/Product/1000000001",
+          "handle": "biohack",
+          "title": "BioHack",
+          "description": "Cellular Longevity & NAD+ Optimizer",
+          "images": {
+            "nodes": [
+              {
+                "url": "https://cdn.shopify.com/s/files/1/0000/products/biohack.png",
+                "altText": "BioHack bottle"
+              }
+            ]
+          },
+          "variants": {
+            "nodes": [
+              {
+                "id": "gid://shopify/ProductVariant/2000000001",
+                "title": "1 jar",
+                "sku": "NAD-HUM-BIO-1",
+                "price": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "selectedOptions": [
+                  {
+                    "name": "Quantity",
+                    "value": "1 jar"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/ProductVariant/2000000002",
+                "title": "2 jars",
+                "sku": "NAD-HUM-BIO-2",
+                "price": {
+                  "amount": "106.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": {
+                  "amount": "118.00",
+                  "currencyCode": "USD"
+                },
+                "selectedOptions": [
+                  {
+                    "name": "Quantity",
+                    "value": "2 jars"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/ProductVariant/2000000003",
+                "title": "3 jars",
+                "sku": "NAD-HUM-BIO-3",
+                "price": {
+                  "amount": "150.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": {
+                  "amount": "177.00",
+                  "currencyCode": "USD"
+                },
+                "selectedOptions": [
+                  {
+                    "name": "Quantity",
+                    "value": "3 jars"
+                  }
+                ]
+              }
+            ]
+          },
+          "sellingPlanGroups": {
+            "nodes": [
+              {
+                "sellingPlans": {
+                  "nodes": [
+                    {
+                      "id": "gid://shopify/SellingPlan/3000000001",
+                      "name": "Delivery every 30 days",
+                      "options": [
+                        {
+                          "name": "Delivery frequency",
+                          "value": "30 days"
+                        }
+                      ],
+                      "priceAdjustments": [
+                        {
+                          "adjustmentValue": {
+                            "adjustmentPercentage": 10
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "gid://shopify/SellingPlan/3000000002",
+                      "name": "Delivery every 2 months",
+                      "options": [
+                        {
+                          "name": "Delivery frequency",
+                          "value": "2 months"
+                        }
+                      ],
+                      "priceAdjustments": [
+                        {
+                          "adjustmentValue": {
+                            "adjustmentPercentage": 15
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "metafields": [
+            {
+              "key": "technical_name",
+              "value": "NMN 500 mg",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "line",
+              "value": "human",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "species",
+              "value": null,
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "format",
+              "value": "Capsules",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "color",
+              "value": "#1A0A2C",
+              "type": "color"
+            },
+            {
+              "key": "serving",
+              "value": "2 capsules daily with water, in the morning",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "servings_per_jar",
+              "value": "30",
+              "type": "number_integer"
+            },
+            {
+              "key": "net_weight",
+              "value": "60 capsules",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "how_to_use",
+              "value": "Take 2 capsules each morning with a glass of water.",
+              "type": "multi_line_text_field"
+            },
+            {
+              "key": "benefits",
+              "value": "[\"Replenishes cellular NAD+ levels*\",\"Activates sirtuins and mitochondrial biogenesis*\",\"Supports mental clarity and sustained daily energy*\"]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "claims",
+              "value": "[\"Replenishes cellular NAD+ levels*\",\"Activates sirtuins*\"]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "related",
+              "value": "[\"powerhouse\"]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "actives",
+              "value": "[{\"name\":\"NMN (β-nicotinamide mononucleotide)\",\"amount\":\"500 mg\"}]",
+              "type": "json"
+            },
+            {
+              "key": "faq",
+              "value": "[{\"question\":\"When should I take BioHack?\",\"answer\":\"Take 2 capsules each morning with water.\"}]",
+              "type": "json"
+            },
+            {
+              "key": "dosing_by_weight",
+              "value": "[]",
+              "type": "json"
+            }
+          ]
+        },
+        {
+          "id": "gid://shopify/Product/1000000002",
+          "handle": "more-good-years",
+          "title": "More Good Years",
+          "description": "Canine Cellular Longevity",
+          "images": {
+            "nodes": [
+              {
+                "url": "https://cdn.shopify.com/s/files/1/0000/products/more-good-years.png",
+                "altText": "More Good Years jar"
+              }
+            ]
+          },
+          "variants": {
+            "nodes": [
+              {
+                "id": "gid://shopify/ProductVariant/2000000004",
+                "title": "1 jar",
+                "sku": "NAD-PET-MGY-1",
+                "price": {
+                  "amount": "44.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": {
+                  "amount": "44.00",
+                  "currencyCode": "USD"
+                },
+                "selectedOptions": [
+                  {
+                    "name": "Quantity",
+                    "value": "1 jar"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/ProductVariant/2000000005",
+                "title": "2 jars",
+                "sku": "NAD-PET-MGY-2",
+                "price": {
+                  "amount": "80.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": {
+                  "amount": "88.00",
+                  "currencyCode": "USD"
+                },
+                "selectedOptions": [
+                  {
+                    "name": "Quantity",
+                    "value": "2 jars"
+                  }
+                ]
+              },
+              {
+                "id": "gid://shopify/ProductVariant/2000000006",
+                "title": "3 jars",
+                "sku": "NAD-PET-MGY-3",
+                "price": {
+                  "amount": "108.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": {
+                  "amount": "132.00",
+                  "currencyCode": "USD"
+                },
+                "selectedOptions": [
+                  {
+                    "name": "Quantity",
+                    "value": "3 jars"
+                  }
+                ]
+              }
+            ]
+          },
+          "sellingPlanGroups": {
+            "nodes": []
+          },
+          "metafields": [
+            {
+              "key": "technical_name",
+              "value": "Senior · NMN 75 mg",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "line",
+              "value": "pet",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "species",
+              "value": "dog",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "format",
+              "value": "Soft chews",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "color",
+              "value": "#FFC35A",
+              "type": "color"
+            },
+            {
+              "key": "serving",
+              "value": "1 to 4 soft chews depending on weight",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "servings_per_jar",
+              "value": "60",
+              "type": "number_integer"
+            },
+            {
+              "key": "net_weight",
+              "value": "60 soft chews",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "how_to_use",
+              "value": "Give daily with food.",
+              "type": "multi_line_text_field"
+            },
+            {
+              "key": "benefits",
+              "value": "[\"Supports NAD+ replenishment*\",\"Supports hip and joint comfort*\"]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "claims",
+              "value": "[\"Supports NAD+ replenishment*\"]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "related",
+              "value": "[]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "actives",
+              "value": "[{\"name\":\"NMN\",\"amount\":\"75 mg\"}]",
+              "type": "json"
+            },
+            {
+              "key": "faq",
+              "value": "[]",
+              "type": "json"
+            },
+            {
+              "key": "dosing_by_weight",
+              "value": "[{\"minWeightLbs\":0,\"maxWeightLbs\":20,\"dose\":\"1 chew\",\"servingDescription\":\"Up to 20 lbs\"},{\"minWeightLbs\":21,\"maxWeightLbs\":50,\"dose\":\"2 chews\",\"servingDescription\":\"21 to 50 lbs\"}]",
+              "type": "json"
+            }
+          ]
+        },
+        {
+          "id": "gid://shopify/Product/1000000003",
+          "handle": "sample-no-size",
+          "title": "Sample No Size",
+          "description": "Product with omitted size fields",
+          "images": {
+            "nodes": [
+              {
+                "url": "https://cdn.shopify.com/s/files/1/0000/products/sample-no-size.png",
+                "altText": "Sample No Size"
+              }
+            ]
+          },
+          "variants": {
+            "nodes": [
+              {
+                "id": "gid://shopify/ProductVariant/2000000007",
+                "title": "1 Bottle",
+                "sku": "NAD-SAMPLE-1",
+                "price": {
+                  "amount": "39.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": null,
+                "selectedOptions": [
+                  {
+                    "name": "Quantity",
+                    "value": "1 Bottle"
+                  }
+                ]
+              }
+            ]
+          },
+          "sellingPlanGroups": {
+            "nodes": []
+          },
+          "metafields": [
+            {
+              "key": "technical_name",
+              "value": "Active Drops",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "line",
+              "value": "human",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "format",
+              "value": "Tinctures",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "color",
+              "value": "#112233",
+              "type": "color"
+            },
+            {
+              "key": "how_to_use",
+              "value": "Take 1 dropper daily.",
+              "type": "multi_line_text_field"
+            },
+            {
+              "key": "benefits",
+              "value": "[\"Fast absorption*\"]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "claims",
+              "value": "[\"Fast absorption*\"]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "actives",
+              "value": "[{\"name\":\"Resveratrol\",\"amount\":\"100 mg\"}]",
+              "type": "json"
+            }
+          ]
+        },
+        {
+          "id": "gid://shopify/Product/1000000004",
+          "handle": "sample-no-asterisk",
+          "title": "Sample No Asterisk",
+          "description": "Product with benefits lacking asterisks from Shopify",
+          "images": {
+            "nodes": []
+          },
+          "variants": {
+            "nodes": [
+              {
+                "id": "gid://shopify/ProductVariant/2000000008",
+                "title": "1 jar",
+                "price": {
+                  "amount": "49.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": null
+              }
+            ]
+          },
+          "sellingPlanGroups": {
+            "nodes": []
+          },
+          "metafields": [
+            {
+              "key": "technical_name",
+              "value": "Pure Complex",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "line",
+              "value": "human",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "format",
+              "value": "Capsules",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "benefits",
+              "value": "[\"Boosts cellular metabolism\",\"Improves sleep quality\"]",
+              "type": "list.single_line_text_field"
+            },
+            {
+              "key": "claims",
+              "value": "[\"Boosts cellular metabolism\",\"Improves sleep quality\"]",
+              "type": "list.single_line_text_field"
+            }
+          ]
+        },
+        {
+          "id": "gid://shopify/Product/1000000005",
+          "handle": "cat-longevity",
+          "title": "Cat Longevity",
+          "description": "Feline NMN Drops",
+          "images": {
+            "nodes": []
+          },
+          "variants": {
+            "nodes": [
+              {
+                "id": "gid://shopify/ProductVariant/2000000009",
+                "title": "1 Bottle",
+                "price": {
+                  "amount": "35.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": null
+              }
+            ]
+          },
+          "sellingPlanGroups": {
+            "nodes": []
+          },
+          "metafields": [
+            {
+              "key": "technical_name",
+              "value": "Feline Formula",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "line",
+              "value": "pet",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "species",
+              "value": "cat",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "format",
+              "value": "Oils",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "benefits",
+              "value": "[\"Supports feline kidney health*\"]",
+              "type": "list.single_line_text_field"
+            }
+          ]
+        },
+        {
+          "id": "gid://shopify/Product/1000000006",
+          "handle": "horse-vitality",
+          "title": "Horse Vitality",
+          "description": "Equine Cellular Formula",
+          "images": {
+            "nodes": []
+          },
+          "variants": {
+            "nodes": [
+              {
+                "id": "gid://shopify/ProductVariant/2000000010",
+                "title": "1 Bucket",
+                "price": {
+                  "amount": "120.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": null
+              }
+            ]
+          },
+          "sellingPlanGroups": {
+            "nodes": []
+          },
+          "metafields": [
+            {
+              "key": "technical_name",
+              "value": "Equine NMN Blend",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "line",
+              "value": "pet",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "species",
+              "value": "horse",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "format",
+              "value": "Powders",
+              "type": "single_line_text_field"
+            },
+            {
+              "key": "benefits",
+              "value": "[\"Supports equine muscle recovery*\"]",
+              "type": "list.single_line_text_field"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
