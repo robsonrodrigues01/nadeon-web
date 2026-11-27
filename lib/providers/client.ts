@@ -3,15 +3,25 @@ import type { GiftCardProvider } from "@/lib/contracts/gift-card";
 import { mockCartProvider, useCartStore } from "./mock/cart";
 import { MockGiftCardProvider, mockGiftCardProvider } from "./mock/gift-card";
 import { liveCartProvider, liveGiftCardProvider } from "./live/browser";
+import { parseLiveList } from "./live-list";
 
-// Só NEXT_PUBLIC_ chega ao navegador; manter igual a PROVIDERS do servidor.
-const isLive = process.env.NEXT_PUBLIC_PROVIDERS === "live";
+const BROWSER_LIVE_KEYS = ["cart", "gift-card"] as const;
 
-export const cartProvider: CartProvider = isLive
+// Só NEXT_PUBLIC_ chega ao navegador; manter igual a PROVIDERS/PROVIDERS_LIVE do servidor.
+const live =
+  process.env.NEXT_PUBLIC_PROVIDERS === "live"
+    ? new Set(BROWSER_LIVE_KEYS)
+    : parseLiveList(
+        "NEXT_PUBLIC_PROVIDERS_LIVE",
+        process.env.NEXT_PUBLIC_PROVIDERS_LIVE,
+        BROWSER_LIVE_KEYS
+      );
+
+export const cartProvider: CartProvider = live.has("cart")
   ? liveCartProvider
   : mockCartProvider;
 
-export const giftCardProvider: GiftCardProvider = isLive
+export const giftCardProvider: GiftCardProvider = live.has("gift-card")
   ? liveGiftCardProvider
   : mockGiftCardProvider;
 

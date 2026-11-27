@@ -50,126 +50,179 @@ import {
   liveStoreLocatorProvider,
   liveWholesaleProvider,
 } from "./live";
+import { parseLiveList } from "./live-list";
 
 export type ProvidersMode = "mock" | "live";
+
+export const LIVE_PROVIDER_KEYS = [
+  "catalog",
+  "cart",
+  "account",
+  "pets",
+  "subscription",
+  "reviews",
+  "forms",
+  "labs",
+  "campaign",
+  "content",
+  "email-preferences",
+  "gift-card",
+  "offers",
+  "store-locator",
+  "wholesale",
+  "mailyte",
+] as const;
+
+export type LiveProviderKey = (typeof LIVE_PROVIDER_KEYS)[number];
+
+export interface Providers {
+  catalogProvider: CatalogProvider;
+  cartProvider: CartProvider;
+  accountProvider: AccountProvider;
+  petProfileProvider: PetProfileProvider;
+  subscriptionProvider: SubscriptionProvider;
+  reviewsProvider: ReviewsProvider;
+  formsProvider: FormsProvider;
+  labsProvider: LabsProvider;
+  campaignConfig: CampaignConfig;
+  mailyteProvider: MailyteProvider;
+  contentProvider: ContentProvider;
+  emailPreferencesProvider: EmailPreferencesProvider;
+  giftCardProvider: GiftCardProvider;
+  offersProvider: OffersProvider;
+  storeLocatorProvider: StoreLocatorProvider;
+  wholesaleProvider: WholesaleProvider;
+}
 
 export function getProvidersMode(): ProvidersMode {
   return process.env.PROVIDERS === "live" ? "live" : "mock";
 }
 
-function getMailyteProvider(mode: ProvidersMode): MailyteProvider {
-  return mode === "live" || process.env.MAILYTE_MODE === "live"
-    ? liveMailyteProvider
-    : mockMailyteProvider;
+/** Providers switched to live by PROVIDERS=live (all) or PROVIDERS_LIVE (comma list). */
+export function getLiveProviderKeys(): Set<LiveProviderKey> {
+  if (getProvidersMode() === "live") return new Set(LIVE_PROVIDER_KEYS);
+  return parseLiveList(
+    "PROVIDERS_LIVE",
+    process.env.PROVIDERS_LIVE,
+    LIVE_PROVIDER_KEYS
+  );
 }
 
-export function getProviders(mode: ProvidersMode = getProvidersMode()) {
-  if (mode === "live") {
-    return {
-      catalogProvider: liveCatalogProvider,
-      cartProvider: liveCartProvider,
-      accountProvider: liveAccountProvider,
-      petProfileProvider: liveAccountProvider,
-      subscriptionProvider: liveSubscriptionProvider,
-      reviewsProvider: liveReviewsProvider,
-      formsProvider: liveFormsProvider,
-      labsProvider: liveLabsProvider,
-      campaignConfig: liveCampaignConfig,
-      mailyteProvider: getMailyteProvider(mode),
-      contentProvider: liveContentProvider,
-      emailPreferencesProvider: liveEmailPreferencesProvider,
-      giftCardProvider: liveGiftCardProvider,
-      offersProvider: liveOffersProvider,
-      storeLocatorProvider: liveStoreLocatorProvider,
-      wholesaleProvider: liveWholesaleProvider,
-    };
-  }
+/**
+ * Without a mode, each provider follows the environment. An explicit mode
+ * forces every provider, except Mailyte, which MAILYTE_MODE=live always turns live.
+ */
+export function getProviders(mode?: ProvidersMode): Providers {
+  const live: Set<LiveProviderKey> =
+    mode === "live"
+      ? new Set(LIVE_PROVIDER_KEYS)
+      : mode === "mock"
+        ? new Set()
+        : getLiveProviderKeys();
+  const pick = <T>(key: LiveProviderKey, liveProvider: T, mockProvider: T) =>
+    live.has(key) ? liveProvider : mockProvider;
 
   return {
-    catalogProvider: mockCatalogProvider,
-    cartProvider: mockCartProvider,
-    accountProvider: mockAccountProvider,
-    petProfileProvider: mockAccountProvider,
-    subscriptionProvider: mockSubscriptionProvider,
-    reviewsProvider: mockReviewsProvider,
-    formsProvider: mockFormsProvider,
-    labsProvider: mockLabsProvider,
-    campaignConfig: mockCampaignConfig,
-    mailyteProvider: getMailyteProvider(mode),
-    contentProvider: mockContentProvider,
-    emailPreferencesProvider: mockEmailPreferencesProvider,
-    giftCardProvider: mockGiftCardProvider,
-    offersProvider: mockOffersProvider,
-    storeLocatorProvider: mockStoreLocatorProvider,
-    wholesaleProvider: mockWholesaleProvider,
+    catalogProvider: pick("catalog", liveCatalogProvider, mockCatalogProvider),
+    cartProvider: pick<CartProvider>(
+      "cart",
+      liveCartProvider,
+      mockCartProvider
+    ),
+    accountProvider: pick<AccountProvider>(
+      "account",
+      liveAccountProvider,
+      mockAccountProvider
+    ),
+    petProfileProvider: pick<PetProfileProvider>(
+      "pets",
+      liveAccountProvider,
+      mockAccountProvider
+    ),
+    subscriptionProvider: pick<SubscriptionProvider>(
+      "subscription",
+      liveSubscriptionProvider,
+      mockSubscriptionProvider
+    ),
+    reviewsProvider: pick<ReviewsProvider>(
+      "reviews",
+      liveReviewsProvider,
+      mockReviewsProvider
+    ),
+    formsProvider: pick<FormsProvider>(
+      "forms",
+      liveFormsProvider,
+      mockFormsProvider
+    ),
+    labsProvider: pick<LabsProvider>(
+      "labs",
+      liveLabsProvider,
+      mockLabsProvider
+    ),
+    campaignConfig: pick<CampaignConfig>(
+      "campaign",
+      liveCampaignConfig,
+      mockCampaignConfig
+    ),
+    mailyteProvider:
+      live.has("mailyte") || process.env.MAILYTE_MODE === "live"
+        ? liveMailyteProvider
+        : mockMailyteProvider,
+    contentProvider: pick<ContentProvider>(
+      "content",
+      liveContentProvider,
+      mockContentProvider
+    ),
+    emailPreferencesProvider: pick<EmailPreferencesProvider>(
+      "email-preferences",
+      liveEmailPreferencesProvider,
+      mockEmailPreferencesProvider
+    ),
+    giftCardProvider: pick<GiftCardProvider>(
+      "gift-card",
+      liveGiftCardProvider,
+      mockGiftCardProvider
+    ),
+    offersProvider: pick<OffersProvider>(
+      "offers",
+      liveOffersProvider,
+      mockOffersProvider
+    ),
+    storeLocatorProvider: pick<StoreLocatorProvider>(
+      "store-locator",
+      liveStoreLocatorProvider,
+      mockStoreLocatorProvider
+    ),
+    wholesaleProvider: pick<WholesaleProvider>(
+      "wholesale",
+      liveWholesaleProvider,
+      mockWholesaleProvider
+    ),
   };
 }
 
-const isLive = process.env.PROVIDERS === "live";
+const selected = getProviders();
 
-export const catalogProvider: CatalogProvider = isLive
-  ? liveCatalogProvider
-  : mockCatalogProvider;
-
-export const cartProvider: CartProvider = isLive
-  ? liveCartProvider
-  : mockCartProvider;
-
-export const accountProvider: AccountProvider = isLive
-  ? liveAccountProvider
-  : mockAccountProvider;
-
-export const petProfileProvider: PetProfileProvider = isLive
-  ? liveAccountProvider
-  : mockAccountProvider;
-
-export const subscriptionProvider: SubscriptionProvider = isLive
-  ? liveSubscriptionProvider
-  : mockSubscriptionProvider;
-
-export const reviewsProvider: ReviewsProvider = isLive
-  ? liveReviewsProvider
-  : mockReviewsProvider;
-
-export const formsProvider: FormsProvider = isLive
-  ? liveFormsProvider
-  : mockFormsProvider;
-
-export const labsProvider: LabsProvider = isLive
-  ? liveLabsProvider
-  : mockLabsProvider;
-
-export const campaignConfig: CampaignConfig = isLive
-  ? liveCampaignConfig
-  : mockCampaignConfig;
-
-export const mailyteProvider: MailyteProvider = isLive
-  ? getMailyteProvider("live")
-  : getMailyteProvider("mock");
-
-export const contentProvider: ContentProvider = isLive
-  ? liveContentProvider
-  : mockContentProvider;
-
-export const emailPreferencesProvider: EmailPreferencesProvider = isLive
-  ? liveEmailPreferencesProvider
-  : mockEmailPreferencesProvider;
-
-export const giftCardProvider: GiftCardProvider = isLive
-  ? liveGiftCardProvider
-  : mockGiftCardProvider;
-
-export const offersProvider: OffersProvider = isLive
-  ? liveOffersProvider
-  : mockOffersProvider;
-
-export const storeLocatorProvider: StoreLocatorProvider = isLive
-  ? liveStoreLocatorProvider
-  : mockStoreLocatorProvider;
-
-export const wholesaleProvider: WholesaleProvider = isLive
-  ? liveWholesaleProvider
-  : mockWholesaleProvider;
+export const catalogProvider: CatalogProvider = selected.catalogProvider;
+export const cartProvider: CartProvider = selected.cartProvider;
+export const accountProvider: AccountProvider = selected.accountProvider;
+export const petProfileProvider: PetProfileProvider =
+  selected.petProfileProvider;
+export const subscriptionProvider: SubscriptionProvider =
+  selected.subscriptionProvider;
+export const reviewsProvider: ReviewsProvider = selected.reviewsProvider;
+export const formsProvider: FormsProvider = selected.formsProvider;
+export const labsProvider: LabsProvider = selected.labsProvider;
+export const campaignConfig: CampaignConfig = selected.campaignConfig;
+export const mailyteProvider: MailyteProvider = selected.mailyteProvider;
+export const contentProvider: ContentProvider = selected.contentProvider;
+export const emailPreferencesProvider: EmailPreferencesProvider =
+  selected.emailPreferencesProvider;
+export const giftCardProvider: GiftCardProvider = selected.giftCardProvider;
+export const offersProvider: OffersProvider = selected.offersProvider;
+export const storeLocatorProvider: StoreLocatorProvider =
+  selected.storeLocatorProvider;
+export const wholesaleProvider: WholesaleProvider = selected.wholesaleProvider;
 
 export {
   mockCatalogProvider,
