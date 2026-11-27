@@ -4729,10 +4729,10 @@
   },
   {
     "onda": 4,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Droid",
     "lease_ate": null,
-    "pr": "local",
+    "pr": "d1d9fb6",
     "preset": "Droid worker",
     "id": "W4-31",
     "papel": "Backend/API",
@@ -4745,7 +4745,8 @@
       "pnpm gate verde",
       "aprovação do Robson antes do merge"
     ],
-    "branch": "droid/W4-31"
+    "branch": "droid/W4-31",
+    "nota": "27/11: gate verde (1649 testes, build); conferido no navegador com PROVIDERS_LIVE=account (erro amigável em /account, /human normal); merge aprovado pelo Robson; deploy Vercel d1d9fb6 com rotas 200"
   },
   {
     "onda": 4,
