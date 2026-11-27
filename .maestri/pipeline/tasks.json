@@ -3311,7 +3311,7 @@
       "revisão APROVADO"
     ],
     "bloqueio": "mercados e regras de frete definidos na Shopify (W3-79: políticas de envio)",
-    "nota": "aguardando Robson: mercados e regras de frete definidos na Shopify (W3-79: políticas de envio)"
+    "nota": "aguardando Robson: mercados e regras de frete definidos na Shopify (W3-79: políticas de envio); 26/11: escopo mudou, todos pagam em USD (ver DECISIONS 2026-11-26 e W4-35); falta só frete internacional na Shopify"
   },
   {
     "onda": 4,
@@ -3446,7 +3446,7 @@
       "revisão APROVADO"
     ],
     "bloqueio": "decisão do Robson (W3-83)",
-    "nota": "aguardando Robson: decisão do Robson (W3-83)"
+    "nota": "aguardando Robson: decisão do Robson (W3-83); 26/11: Robson decidiu kits só depois do lançamento (W4-40 esconde)"
   },
   {
     "onda": 4,
@@ -4726,5 +4726,214 @@
     "status": "bloqueada",
     "responsavel": "Maestro",
     "lease_ate": null
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-31",
+    "papel": "Backend/API",
+    "depende_de": [],
+    "titulo": "Seleção live por provider: catálogo, carrinho, conta, assinaturas e pets ligam em live de forma independente; em produção nunca cai para mock; falha da Shopify mostra erro amigável",
+    "criterios": [
+      "cada provider escolhe mock/live sozinho (servidor e navegador)",
+      "produção sem fallback para mock, com teste",
+      "estado de erro amigável quando a Shopify falha",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "branch": "droid/W4-31"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-32",
+    "papel": "Backend/API",
+    "depende_de": [],
+    "titulo": "Metafields de produto na Shopify (benefícios, doses, ingredientes, avisos) e script que copia o conteúdo de data/products para eles, com dry-run e gravação só após ok do Robson",
+    "criterios": [
+      "definição dos metafields documentada em docs/",
+      "script com dry-run testado por fixture",
+      "gravação real só com --allow-mutations e ok do Robson",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "nota": "gravação real depende do login do Shopify CLI e dos produtos cadastrados",
+    "branch": "droid/W4-32"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-33",
+    "papel": "Backend/API",
+    "depende_de": [
+      "W4-31",
+      "W4-32"
+    ],
+    "titulo": "LiveCatalogProvider pela Storefront API: produtos, variantes, preços em USD e selling plans por handle; conteúdo dos metafields; todo benefício passa por <Claim> com aviso da FDA",
+    "criterios": [
+      "testes com respostas gravadas da Storefront API",
+      "benefícios da Shopify sempre renderizados com <Claim>",
+      "kits fora do catálogo no lançamento",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "nota": "teste real depende do token do canal Headless",
+    "branch": "droid/W4-33"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-34",
+    "papel": "Frontend",
+    "depende_de": [
+      "W4-33"
+    ],
+    "titulo": "LiveCartProvider no navegador pela Cart API: criar, adicionar, alterar, remover, cupom, selling plan na linha e checkoutUrl da Shopify",
+    "criterios": [
+      "testes com respostas gravadas da Cart API",
+      "checkout redireciona para o checkout da Shopify",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "branch": "droid/W4-34"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-35",
+    "papel": "Frontend",
+    "depende_de": [],
+    "titulo": "Moeda única USD: remover seletor de moeda, todos os mercados em USD, aviso de envio internacional e impostos pagos na entrega",
+    "criterios": [
+      "nenhum preço fora de USD",
+      "aviso de envio internacional nas páginas de frete e checkout",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "branch": "droid/W4-35"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-36",
+    "papel": "Backend/API",
+    "depende_de": [
+      "W4-31"
+    ],
+    "titulo": "Login por código pela Customer Account API (OAuth com PKCE), sessão, saída e perfil do cliente em live",
+    "criterios": [
+      "fluxo de login testado com respostas gravadas",
+      "URL de retorno HTTPS documentada para cadastro na Shopify",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "nota": "teste real depende da Customer Account API configurada no canal Headless; W4-01 vira a verificação real; callback cadastrado na Shopify: /account/auth/callback (www.nadeonlabs.com e nadeon-web.vercel.app), cliente Público; variáveis SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID e SHOPIFY_SHOP_ID",
+    "branch": "droid/W4-36"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-37",
+    "papel": "Backend/API",
+    "depende_de": [
+      "W4-36"
+    ],
+    "titulo": "Pedidos em live (lista e detalhe) pela Customer Account API; /track aponta para a página de status de pedido da Shopify",
+    "criterios": [
+      "lista e detalhe com respostas gravadas",
+      "/track sem consulta própria, com link para a Shopify",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "branch": "droid/W4-37"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-38",
+    "papel": "Backend/API",
+    "depende_de": [
+      "W4-36"
+    ],
+    "titulo": "Assinaturas em live: listar e executar só as ações que a API permite; demais ações levam para a página de assinaturas da Shopify",
+    "criterios": [
+      "capabilities() reflete a API",
+      "ações não suportadas viram link para a Shopify",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "nota": "W4-02 vira a verificação real com o Shopify Subscriptions instalado",
+    "branch": "droid/W4-38"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-39",
+    "papel": "Backend/API",
+    "depende_de": [
+      "W4-36"
+    ],
+    "titulo": "Pets do cliente em metafields do cliente na Shopify (listar, salvar, remover)",
+    "criterios": [
+      "testes com respostas gravadas",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "branch": "droid/W4-39"
+  },
+  {
+    "onda": 4,
+    "status": "backlog",
+    "responsavel": null,
+    "lease_ate": null,
+    "pr": "local",
+    "preset": "Droid worker",
+    "id": "W4-40",
+    "papel": "Frontend",
+    "depende_de": [],
+    "titulo": "Esconder kits e vale-presente no lançamento (rotas, menus, cards e quiz), sem apagar o código",
+    "criterios": [
+      "nenhum link para kit ou vale-presente nas páginas",
+      "rotas de kit e vale-presente fora do sitemap",
+      "pnpm gate verde",
+      "aprovação do Robson antes do merge"
+    ],
+    "branch": "droid/W4-40"
   }
 ]

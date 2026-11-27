@@ -172,3 +172,19 @@ Robson fechou de propósito os agentes do canvas (Prisma5, Trilho, Crivo6, Lupa,
 
 ## 2026-11-18 — Limite de envio pelo Cloudflare, não pelo código
 W6-08 (limite com @netlify/blobs em server action) testada na prévia pentest: a primeira versão travou a action 30 s (504); com prazo de 1,5 s os formulários voltaram, mas o Blobs não gravou nada (store form-rate-limit vazio, 7 envios passaram). Não foi para o main. Robson escolheu a opção 1: regra de rate limiting no Cloudflare (o domínio passa pelo Cloudflare), sem código. Turnstile fica como reforço antes da Shopify. Branch agy/W6-08 mantida só como registro.
+
+## 2026-11-26: Hospedagem na Vercel e código no GitHub
+Robson trocou a hospedagem de volta para a Vercel (plano Hobby; sem plano Pro por decisão dele) e o repositório principal para o GitHub (robsonrodrigues01/nadeon-web). Substitui as decisões de 17/11 (Netlify e Bitbucket). Prévia conferida em nadeon-web.vercel.app com as mesmas rotas da Netlify; DNS do nadeonlabs.com apontado para a Vercel pelo Robson. Netlify, Bitbucket e bitbucket-pipelines.yml ficam até serem desligados. CI do GitHub só roda com o repositório público ou com a cobrança do GitHub em dia; na primeira execução falhou nos testes unitários (Node 20 do .nvmrc não tem Map.groupBy, usado pelo vitest 5.1) e em 68 testes E2E.
+
+## 2026-11-26: Escopo da ligação com a Shopify no lançamento
+Decidido pelo Robson em entrevista (grill-with-docs):
+- Funciona de verdade no lançamento: catálogo, carrinho, checkout, assinatura no carrinho, login por código e toda a área de conta (pedidos, assinaturas, pets).
+- Conteúdo dos produtos (benefícios, doses, ingredientes) passa a viver em metafields da Shopify. O texto atual de data/products é copiado para lá por script, com aprovação do Robson antes de gravar. Substitui a regra de conteúdo só no código.
+- Todo benefício vindo da Shopify é tratado como alegação e recebe asterisco e aviso da FDA (<Claim>) automaticamente.
+- Venda principalmente nos EUA, com envio internacional. Todos pagam em USD; o seletor de moeda sai do site; frete internacional configurado na Shopify; impostos de importação pagos pelo cliente na entrega. Substitui a moeda local do ADR-009.
+- Assinaturas: o site oferece só as ações que a API permite; as demais levam para a página de assinaturas da Shopify.
+- Pets do cliente ficam em metafields do cliente na Shopify.
+- Rastreio sem login usa a página de status de pedido da Shopify; /track aponta para ela.
+- Kits e vale-presente ficam para depois do lançamento.
+- Se a Shopify falhar em produção, o site mostra erro amigável e nunca dados de teste.
+- Ordem de construção: seleção live por provider, metafields e migração, catálogo, carrinho e checkout, login, pedidos, assinaturas, pets (W4-31 a W4-40).
