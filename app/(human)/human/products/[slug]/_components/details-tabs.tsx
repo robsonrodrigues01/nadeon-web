@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 import type { Product } from "@/lib/contracts/catalog";
-import { Claim } from "@/components/commerce/product-card/claim";
+import {
+  Claim,
+  FDA_DISCLAIMER,
+} from "@/components/commerce/product-card/claim";
 
 export interface DetailsTabsProps {
   product: Product;
@@ -267,10 +270,10 @@ export function DetailsTabs({ product }: DetailsTabsProps) {
                 </button>
               </div>
 
-              {openAccordion["benefits"] && (
-                <ul className="space-y-3 text-sm" role="list">
-                  {product.benefits && product.benefits.length > 0 ? (
-                    product.benefits.map((benefit, idx) => (
+              {openAccordion["benefits"] && product.benefits.length > 0 && (
+                <>
+                  <ul className="space-y-3 text-sm" role="list">
+                    {product.benefits.map((benefit, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span
                           className="text-accent font-bold select-none"
@@ -278,23 +281,17 @@ export function DetailsTabs({ product }: DetailsTabsProps) {
                         >
                           ✓
                         </span>
-                        <Claim showDisclaimer>{benefit}</Claim>
+                        <Claim>{benefit}</Claim>
                       </li>
-                    ))
-                  ) : (
-                    <li className="flex items-start gap-2">
-                      <span
-                        className="text-accent font-bold select-none"
-                        aria-hidden="true"
-                      >
-                        ✓
-                      </span>
-                      <Claim showDisclaimer>
-                        Supports cellular energy and NAD+ levels*
-                      </Claim>
-                    </li>
-                  )}
-                </ul>
+                    ))}
+                  </ul>
+                  <p
+                    role="note"
+                    className="mt-3 text-[11px] text-fg-muted leading-normal italic"
+                  >
+                    {FDA_DISCLAIMER}
+                  </p>
+                </>
               )}
             </div>
           </div>
