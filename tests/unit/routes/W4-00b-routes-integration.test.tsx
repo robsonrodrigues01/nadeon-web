@@ -31,6 +31,7 @@ vi.mock("@/lib/providers/client", async (importOriginal) => {
     ...actual,
     cartProvider: {
       ...actual.cartProvider,
+      get: () => actual.cartProvider.get(),
       addLines: (...args: unknown[]) => mockAddLines(...args),
     },
   };

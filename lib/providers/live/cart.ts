@@ -641,6 +641,8 @@ export class LiveCartProvider implements CartProvider {
     this.getCredentials();
     const storedCartId = this.getStoredCartId();
     if (!storedCartId) {
+      // The browser store may still hold a cart saved by the mock provider.
+      this.resetClientStore();
       return null;
     }
 

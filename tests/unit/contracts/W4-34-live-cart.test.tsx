@@ -190,6 +190,21 @@ describe("W4-34 LiveCartProvider", () => {
       expect(mockFetch).not.toHaveBeenCalled();
     });
 
+    it("clears a leftover cart from the browser store when there is no cart id", async () => {
+      useCartStore.getState().setCart({
+        ...useCartStore.getState().cart,
+        totalQuantity: 3,
+      });
+      const provider = new LiveCartProvider({
+        ...credentials,
+        fetchImpl: createMockFetch(cartGetFixture) as unknown as typeof fetch,
+        storage,
+      });
+
+      await provider.get();
+      expect(useCartStore.getState().cart.totalQuantity).toBe(0);
+    });
+
     it("fetches cart by id, maps lines, discounts, selling plans, attributes, and updates store", async () => {
       storage.setItem(CART_STORAGE_KEY, "gid://shopify/Cart/c1-test-cart-id");
       const mockFetch = createMockFetch(cartGetFixture);
