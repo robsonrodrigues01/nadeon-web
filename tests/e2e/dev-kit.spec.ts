@@ -79,7 +79,7 @@ if (!process.env.VITEST) {
       await expect(loadingButton).toHaveAttribute("aria-busy", "true");
     });
 
-    test("renders minimal product cards with multi-market pricing (USD & EUR) and compliance", async ({
+    test("renders minimal product cards with USD pricing and compliance", async ({
       page,
     }: {
       page: Page;

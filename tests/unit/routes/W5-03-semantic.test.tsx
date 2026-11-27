@@ -117,7 +117,8 @@ describe("W5-03 semantic concern collection route", () => {
         { variantId: product.variants[0].id, quantity: 1 },
       ])
     );
-    expect(screen.getByText(/£/)).toBeTruthy();
+    expect(screen.getByText(/^\$\d/)).toBeTruthy();
+    expect(screen.queryByText(/£/)).toBeNull();
     fireEvent.change(
       screen.getByRole("combobox", { name: "To be confirmed" }),
       {

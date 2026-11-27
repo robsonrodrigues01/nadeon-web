@@ -31,15 +31,15 @@ describe("W2-16: /search route", () => {
     cleanup();
   });
 
-  it("formats prices in the market currency from the market cookie", async () => {
+  it("formats prices in USD even when the market cookie is non-US", async () => {
     await renderSearch("nmn");
     expect(screen.getAllByText(/^\$\d/).length).toBeGreaterThan(0);
     cleanup();
 
     cookieJar.value = "gb";
     await renderSearch("nmn");
-    expect(screen.getAllByText(/^£\d/).length).toBeGreaterThan(0);
-    expect(screen.queryAllByText(/^\$\d/)).toHaveLength(0);
+    expect(screen.getAllByText(/^\$\d/).length).toBeGreaterThan(0);
+    expect(screen.queryAllByText(/£/)).toHaveLength(0);
   });
 
   it("generates noindex metadata for the search page", async () => {

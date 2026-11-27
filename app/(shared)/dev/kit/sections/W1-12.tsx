@@ -1,5 +1,6 @@
 import React from "react";
 import { catalogProvider } from "@/lib/providers";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import { ProductCard } from "@/components/commerce/product-card";
 import { PurchaseOptions } from "@/components/commerce/purchase-options";
 
@@ -124,15 +125,15 @@ export default async function W1_12Section() {
         </div>
       )}
 
-      {/* International Currency Proof */}
+      {/* USD Single-Currency Proof */}
       {biohack && (
         <div className="rounded-card border border-border bg-bg-elevated p-6 space-y-4">
           <h4 className="title text-lg font-bold uppercase text-fg">
-            Rule 7 Proof: Market Currency Formatting
+            USD Currency Formatting
           </h4>
           <p className="text-xs text-fg-muted">
-            Prices are formatted according to the catalog currencyCode via
-            Intl.NumberFormat, never concatenated strings.
+            All storefront prices format in USD via the market formatter
+            (Intl.NumberFormat), never concatenated strings.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -141,22 +142,7 @@ export default async function W1_12Section() {
                 US Market (USD)
               </span>
               <div className="text-xl font-black text-fg">
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                }).format(biohack.variants[0].price.amount)}
-              </div>
-            </div>
-
-            <div className="p-4 rounded-field border border-border bg-bg">
-              <span className="text-xs font-bold text-fg-muted block mb-1">
-                EU Market (EUR)
-              </span>
-              <div className="text-xl font-black text-accent">
-                {new Intl.NumberFormat("de-DE", {
-                  style: "currency",
-                  currency: "EUR",
-                }).format(Math.round(biohack.variants[0].price.amount * 0.92))}
+                {formatMoneyWithMarket(biohack.variants[0].price)}
               </div>
             </div>
           </div>

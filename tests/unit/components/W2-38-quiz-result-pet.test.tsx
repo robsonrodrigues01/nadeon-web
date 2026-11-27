@@ -109,7 +109,7 @@ describe("QuizResultPet Component (W2-38)", () => {
       expect(screen.getByText("$63.75")).toBeDefined();
     });
 
-    it("converts and formats prices according to non-US market via MarketProvider (e.g. UK market GBP)", () => {
+    it("formats prices in USD even for non-US markets via MarketProvider (e.g. UK market)", () => {
       const gbMarket =
         getMarket("GB") ||
         SUPPORTED_MARKETS.find((m) => m.countryCode === "GB")!;
@@ -139,8 +139,8 @@ describe("QuizResultPet Component (W2-38)", () => {
         </MarketProvider>
       );
 
-      // Must format with GBP (£) symbol, no raw hardcoded $
-      expect(screen.getAllByText(/£/).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/^\$\d/).length).toBeGreaterThan(0);
+      expect(screen.queryAllByText(/£/)).toHaveLength(0);
     });
 
     it("displays 'To be confirmed' when recommended products/kits are missing from catalog", () => {

@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { Cart } from "@/lib/providers/client";
+import { getInternationalShippingNotice, useMarket } from "@/lib/market";
 import { formatMoney } from "./money";
 
 export interface CartDrawerFooterProps {
@@ -15,6 +16,8 @@ export function CartDrawerFooter({
   theme = "human",
   onCheckout,
 }: CartDrawerFooterProps) {
+  const { market } = useMarket();
+  const internationalNotice = getInternationalShippingNotice(market);
   const isPet = theme === "pet";
   const hasSavings = cart.totalDiscount.amount > 0;
   const formattedTotal = formatMoney(cart.totalPrice);
@@ -61,10 +64,20 @@ export function CartDrawerFooter({
         Checkout · {formattedTotal}
       </button>
 
-      {/* Taxes note */}
-      <p className="text-center text-[11px] text-fg-muted mt-2.5 mb-3.5">
-        Taxes and shipping calculated at checkout
-      </p>
+      {/* Taxes & shipping note */}
+      {internationalNotice ? (
+        <p
+          role="note"
+          aria-label="International shipping notice"
+          className="rounded-field border border-border/50 bg-bg px-3 py-2 text-center text-[11px] leading-relaxed text-fg-muted mt-2.5 mb-3.5"
+        >
+          {internationalNotice}
+        </p>
+      ) : (
+        <p className="text-center text-[11px] text-fg-muted mt-2.5 mb-3.5">
+          Taxes and shipping calculated at checkout
+        </p>
+      )}
 
       {/* Express checkout buttons */}
       <div

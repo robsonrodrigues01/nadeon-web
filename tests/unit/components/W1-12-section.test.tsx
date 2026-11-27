@@ -47,11 +47,8 @@ describe("W1-12 Dev Kit Section", () => {
     expect(humanBlock).toBeTruthy();
     expect(petBlock).toBeTruthy();
 
-    // Market pricing proof section
-    expect(
-      screen.getByText(/Rule 7 Proof: Market Currency Formatting/i)
-    ).toBeTruthy();
+    // USD currency formatting proof section
+    expect(screen.getByText(/USD Currency Formatting/i)).toBeTruthy();
     expect(screen.getByText("US Market (USD)")).toBeTruthy();
-    expect(screen.getByText("EU Market (EUR)")).toBeTruthy();
   });
 });

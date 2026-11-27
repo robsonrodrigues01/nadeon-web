@@ -8,6 +8,11 @@ import type {
 } from "@/lib/quiz";
 import type { Product, Kit } from "@/lib/contracts/catalog";
 import { cartProvider as defaultCartProvider } from "@/lib/providers/client";
+import {
+  formatFreeShippingLabel,
+  formatMarketPrice,
+  useMarket,
+} from "@/lib/market";
 import { subscribeNewsletter } from "@/components/brand/newsletter/actions";
 import { Button } from "@/components/ui/button";
 import { Claim } from "@/components/commerce/product-card/claim";
@@ -37,10 +42,7 @@ function formatMoney(
   currencyCode = "USD",
   locale = "en-US"
 ): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: currencyCode,
-  }).format(amount);
+  return formatMarketPrice(amount, currencyCode, locale);
 }
 
 export function QuizResultHuman({
@@ -55,6 +57,10 @@ export function QuizResultHuman({
   className = "",
 }: QuizResultHumanProps) {
   const componentId = useId();
+  const { market } = useMarket();
+  const freeShippingText =
+    formatFreeShippingLabel(market, "human") ??
+    "International shipping available";
 
   // Selected recommendation or alternative
   const [activeKitSlug, setActiveKitSlug] = useState<string | undefined>(
@@ -409,7 +415,7 @@ export function QuizResultHuman({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-fg-muted pt-2 text-center sm:text-left">
               <span className="flex items-center justify-center sm:justify-start gap-1.5">
                 <Truck className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                Free shipping over $75
+                {freeShippingText}
               </span>
               <span className="flex items-center justify-center sm:justify-start gap-1.5">
                 <ShieldCheck

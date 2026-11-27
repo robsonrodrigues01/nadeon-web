@@ -12,6 +12,7 @@ import { MarketProvider } from "@/lib/market/context";
 import {
   formatFreeShippingThreshold,
   formatFreeShippingLabel,
+  getInternationalShippingNotice,
 } from "@/lib/market/shipping";
 
 export const metadata: Metadata = buildMetadata({
@@ -120,6 +121,7 @@ export default async function ShippingReturnsPage() {
   const market = await getVisitorMarket();
   const freeShippingThreshold = formatFreeShippingThreshold(market, "human");
   const freeShippingLabel = formatFreeShippingLabel(market, "human");
+  const internationalNotice = getInternationalShippingNotice(market);
 
   const shippingZones = [
     {
@@ -271,6 +273,17 @@ export default async function ShippingReturnsPage() {
             >
               Zones and delivery times
             </h2>
+
+            {internationalNotice && (
+              <div
+                role="note"
+                aria-label="International shipping notice"
+                className="mt-6 rounded-card border border-border bg-bg-elevated p-4 sm:p-5 text-sm leading-relaxed text-fg-muted"
+              >
+                <p className="font-bold text-fg">International shipping</p>
+                <p className="mt-1">{internationalNotice}</p>
+              </div>
+            )}
 
             {/* Desktop Table */}
             <div className="mt-8 hidden overflow-hidden rounded-card border border-border bg-bg-elevated md:block">

@@ -8,6 +8,7 @@ import {
   type Cart,
   type CartProvider,
 } from "@/lib/providers/client";
+import { formatFreeShippingLabel, useMarket } from "@/lib/market";
 import { useCartDrawerStore } from "./use-cart-drawer";
 import { CartDrawerShippingBar } from "./cart-drawer-shipping-bar";
 import { CartDrawerItem } from "./cart-drawer-item";
@@ -32,6 +33,7 @@ export function CartDrawer({
   cartProvider = defaultCartProvider,
   returnFocusRef,
 }: CartDrawerProps) {
+  const { market } = useMarket();
   const store = useCartDrawerStore();
   const liveCart = useCartStore((state) => state.cart);
   const previousActiveElement = useRef<HTMLElement | null>(null);
@@ -59,6 +61,9 @@ export function CartDrawer({
   };
 
   const resolvedTheme = theme ?? store.theme ?? "human";
+  const showShippingBar = Boolean(
+    formatFreeShippingLabel(market, resolvedTheme)
+  );
   const totalQuantity = cart.totalQuantity ?? 0;
   const isEmpty = !cart.lines || cart.lines.length === 0;
 
@@ -114,11 +119,13 @@ export function CartDrawer({
           ) : (
             <>
               {/* Shipping Progress */}
-              <CartDrawerShippingBar
-                subtotal={cart.subtotalPrice.amount}
-                currencyCode={cart.subtotalPrice.currencyCode}
-                theme={resolvedTheme}
-              />
+              {showShippingBar && (
+                <CartDrawerShippingBar
+                  subtotal={cart.subtotalPrice.amount}
+                  currencyCode={cart.subtotalPrice.currencyCode}
+                  theme={resolvedTheme}
+                />
+              )}
 
               {/* Items List & Upsell */}
               <div className="flex-1 overflow-y-auto px-6 sm:px-7 py-2 divide-y divide-border/20">

@@ -325,7 +325,7 @@ describe("W2-17: /cart route", () => {
   });
 
   describe("money formatting", () => {
-    it("formats cart money with the market formatter and currency", () => {
+    it("formats cart money in USD for all markets", () => {
       const us = getMarket("us")!;
       const gb = getMarket("gb")!;
       expect(
@@ -333,7 +333,7 @@ describe("W2-17: /cart route", () => {
       ).toBe("$10.00");
       expect(
         formatMoneyWithMarket({ amount: 10, currencyCode: "USD" }, gb)
-      ).toBe("£7.90");
+      ).toBe("$10.00");
     });
   });
 });

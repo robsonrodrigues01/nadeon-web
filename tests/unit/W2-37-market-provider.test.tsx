@@ -78,34 +78,34 @@ describe("W2-37: MarketProvider e isolamento SSR / hidratação", () => {
       expect(market.currency.code).toBe("USD");
     });
 
-    it("reads the UK market when nadeon_market cookie is 'gb'", async () => {
+    it("reads the UK market when nadeon_market cookie is 'gb' and keeps USD currency", async () => {
       mockCookieValue = "gb";
       const market = await getVisitorMarket();
       expect(market.id).toBe("gb");
-      expect(market.currency.code).toBe("GBP");
-      expect(market.currency.symbol).toBe("£");
+      expect(market.currency.code).toBe("USD");
+      expect(market.currency.symbol).toBe("$");
     });
 
-    it("reads the Canada market when nadeon_market cookie is 'ca'", async () => {
+    it("reads the Canada market when nadeon_market cookie is 'ca' and keeps USD currency", async () => {
       mockCookieValue = "ca";
       const market = await getVisitorMarket();
       expect(market.id).toBe("ca");
-      expect(market.currency.code).toBe("CAD");
+      expect(market.currency.code).toBe("USD");
     });
 
-    it("reads the EU market when nadeon_market cookie is 'eu'", async () => {
+    it("reads the EU market when nadeon_market cookie is 'eu' and keeps USD currency", async () => {
       mockCookieValue = "eu";
       const market = await getVisitorMarket();
       expect(market.id).toBe("eu");
-      expect(market.currency.code).toBe("EUR");
-      expect(market.currency.symbol).toBe("€");
+      expect(market.currency.code).toBe("USD");
+      expect(market.currency.symbol).toBe("$");
     });
 
-    it("reads the Australia market when nadeon_market cookie is 'au'", async () => {
+    it("reads the Australia market when nadeon_market cookie is 'au' and keeps USD currency", async () => {
       mockCookieValue = "au";
       const market = await getVisitorMarket();
       expect(market.id).toBe("au");
-      expect(market.currency.code).toBe("AUD");
+      expect(market.currency.code).toBe("USD");
     });
 
     it("falls back to DEFAULT_MARKET when cookie has invalid market value", async () => {
@@ -128,7 +128,7 @@ describe("W2-37: MarketProvider e isolamento SSR / hidratação", () => {
       expect(html).toContain('data-testid="currency-code">USD<');
     });
 
-    it("aplica o cookie do mercado após montar no cliente (useEffect)", async () => {
+    it("aplica o cookie do mercado após montar no cliente mantendo USD (useEffect)", async () => {
       document.cookie = `${MARKET_COOKIE_NAME}=gb`;
       render(
         <MarketProvider>
@@ -136,18 +136,18 @@ describe("W2-37: MarketProvider e isolamento SSR / hidratação", () => {
         </MarketProvider>
       );
 
-      // No cliente, após a montagem o useEffect aplica o cookie
+      // No cliente, após a montagem o useEffect aplica o cookie (país), mantendo USD
       const marketIdEl = await screen.findByTestId("market-id");
       expect(marketIdEl.textContent).toBe("gb");
 
       const currencyEl = screen.getByTestId("currency-code");
-      expect(currencyEl.textContent).toBe("GBP");
+      expect(currencyEl.textContent).toBe("USD");
 
       const symbolEl = screen.getByTestId("currency-symbol");
-      expect(symbolEl.textContent).toBe("£");
+      expect(symbolEl.textContent).toBe("$");
 
       const formattedMoneyEl = screen.getByTestId("formatted-money");
-      expect(formattedMoneyEl.textContent).toBe("£51.35");
+      expect(formattedMoneyEl.textContent).toBe("$65.00");
     });
 
     it("permanece em DEFAULT_MARKET se nenhum cookie estiver presente", async () => {
@@ -164,7 +164,7 @@ describe("W2-37: MarketProvider e isolamento SSR / hidratação", () => {
   });
 
   describe("Páginas dinâmicas com initialMarket", () => {
-    it("MarketProvider com initialMarket sai no HTML inicial no mercado especificado", () => {
+    it("MarketProvider com initialMarket sai no HTML inicial no mercado especificado em USD", () => {
       const gbMarket = getMarket("gb")!;
       const html = renderToString(
         <MarketProvider initialMarket={gbMarket}>
@@ -172,26 +172,26 @@ describe("W2-37: MarketProvider e isolamento SSR / hidratação", () => {
         </MarketProvider>
       );
       expect(html).toContain('data-testid="market-id">gb<');
-      expect(html).toContain('data-testid="currency-code">GBP<');
-      expect(html).toContain("£51.35");
+      expect(html).toContain('data-testid="currency-code">USD<');
+      expect(html).toContain("$65.00");
     });
 
-    it("página dinâmica /pet/dogs entrega initialMarket={market} e renderiza no mercado do visitante no SSR", async () => {
+    it("página dinâmica /pet/dogs entrega initialMarket={market} e renderiza em USD mesmo com cookie gb", async () => {
       mockCookieValue = "gb";
       const pageJsx = await DogsPage();
       const html = renderToString(pageJsx);
 
-      // Preços de bundles e componentes usam o mercado do visitante no HTML inicial
-      expect(html).toContain("£");
+      expect(html).toContain("$");
+      expect(html).not.toContain("£");
     });
 
-    it("página dinâmica /human/shop entrega initialMarket={market} e renderiza no mercado do visitante no SSR", async () => {
+    it("página dinâmica /human/shop entrega initialMarket={market} e renderiza em USD mesmo com cookie eu", async () => {
       mockCookieValue = "eu";
       const pageJsx = await HumanShopPage();
       const html = renderToString(pageJsx);
 
-      // Preços de kits e componentes usam o mercado do visitante no HTML inicial
-      expect(html).toContain("€");
+      expect(html).toContain("$");
+      expect(html).not.toContain("€");
     });
   });
 });

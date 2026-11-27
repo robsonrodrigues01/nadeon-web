@@ -253,16 +253,15 @@ describe("W2-15: /pet/dose-calculator Route Suite", () => {
   });
 
   describe("Price in market currency", () => {
-    it("formats the price with the market currency and locale, not en-US", () => {
+    it("formats the price in USD even for non-US markets", () => {
       const gb = getMarket("gb");
       expect(gb).toBeDefined();
       renderCalc({ market: gb! });
       enterWeight("35");
       fireEvent.click(screen.getByRole("button", { name: "Calculate dose" }));
 
-      // 44 USD * 0.79 GBP rate = 34.76 GBP
-      expect(screen.getByText("£34.76")).toBeTruthy();
-      expect(screen.queryByText(/^\$/)).toBeNull();
+      expect(screen.getByText("$44.00")).toBeTruthy();
+      expect(screen.queryByText(/£/)).toBeNull();
     });
 
     it("uses the default US market price when no other market is set", () => {

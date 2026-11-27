@@ -2,6 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
+import {
+  formatFreeShippingLabel,
+  getInternationalShippingNotice,
+  useMarket,
+} from "@/lib/market";
 
 export interface CartDrawerEmptyProps {
   theme?: "human" | "pet";
@@ -12,7 +17,10 @@ export function CartDrawerEmpty({
   theme = "human",
   onClose,
 }: CartDrawerEmptyProps) {
+  const { market } = useMarket();
   const isPet = theme === "pet";
+  const freeShippingLabel = formatFreeShippingLabel(market, theme);
+  const internationalNotice = getInternationalShippingNotice(market);
 
   return (
     <div className="py-12 px-6 sm:px-7 flex flex-col items-center text-center justify-center space-y-4">
@@ -57,10 +65,21 @@ export function CartDrawerEmpty({
         </Link>
       </div>
 
-      <div className="pt-3 text-[11px] text-fg-muted">
-        {isPet
-          ? "Free shipping over $49 · Subscribe & save 15%"
-          : "Free shipping over $75 · Subscribe & save 15%"}
+      <div className="pt-3 text-[11px] text-fg-muted space-y-2">
+        <p>
+          {freeShippingLabel
+            ? `${freeShippingLabel} · Subscribe & save 15%`
+            : "Subscribe & save 15%"}
+        </p>
+        {internationalNotice && (
+          <p
+            role="note"
+            aria-label="International shipping notice"
+            className="leading-relaxed"
+          >
+            {internationalNotice}
+          </p>
+        )}
       </div>
     </div>
   );

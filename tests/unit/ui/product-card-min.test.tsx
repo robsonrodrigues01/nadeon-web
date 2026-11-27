@@ -5,7 +5,7 @@ import { ProductCardMin } from "@/components/commerce/product-card-min";
 import { mockCatalogProvider } from "@/lib/providers/mock/catalog";
 
 describe("ProductCardMin component", () => {
-  it("renders BioHack with prices formatted in USD and EUR", async () => {
+  it("renders BioHack with prices formatted in USD only", async () => {
     const biohack = await mockCatalogProvider.getProduct("biohack");
     expect(biohack).not.toBeNull();
 
@@ -15,9 +15,10 @@ describe("ProductCardMin component", () => {
     expect(html).toContain("BioHack");
     expect(html).toContain("Cellular Longevity &amp; NAD+ Optimizer");
 
-    // Price formatted in USD and in EUR to prove currency per market
+    // Price formatted in USD only
     expect(html).toContain("$65.00");
-    expect(html).toContain("EUR");
+    expect(html).not.toContain("EUR");
+    expect(html).not.toContain("€");
 
     // Primary action button
     expect(html).toContain("Add to cart");

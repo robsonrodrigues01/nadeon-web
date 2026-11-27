@@ -52,7 +52,7 @@ describe("W2-41 cart", () => {
   it.each([
     ["pet", "us", 49, "USD"],
     ["human", "us", 75, "USD"],
-    ["pet", "ca", null, "CAD"],
+    ["pet", "ca", null, "USD"],
   ] as const)(
     "shows shared shipping progress for %s in %s",
     async (line, market, threshold, currency) => {
