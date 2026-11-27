@@ -4750,10 +4750,10 @@
   },
   {
     "onda": 4,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Droid",
     "lease_ate": null,
-    "pr": "local",
+    "pr": "5cb129e",
     "preset": "Droid worker",
     "id": "W4-32",
     "papel": "Backend/API",
@@ -4766,7 +4766,7 @@
       "pnpm gate verde",
       "aprovação do Robson antes do merge"
     ],
-    "nota": "gravação real depende do login do Shopify CLI e dos produtos cadastrados",
+    "nota": "27/11: 15 definições criadas (namespace nadeon, storefront PUBLIC_READ); conteúdo copiado para os 21 produtos com --skip-size em 12 (tamanho diferente da Shopify, Robson preenche); gate verde 1657 testes; merge aprovado pelo Robson",
     "branch": "droid/W4-32"
   },
   {
