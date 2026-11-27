@@ -4771,10 +4771,10 @@
   },
   {
     "onda": 4,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Droid (worker Gemini 3.8 Flash)",
     "lease_ate": null,
-    "pr": "local",
+    "pr": "f537949",
     "preset": "Droid worker",
     "id": "W4-33",
     "papel": "Backend/API",
@@ -4790,7 +4790,7 @@
       "pnpm gate verde",
       "aprovação do Robson antes do merge"
     ],
-    "nota": "teste real depende do token do canal Headless",
+    "nota": "27/11: LiveCatalogProvider pela Storefront API com fixtures (18 testes); tamanhos opcionais; benefícios sempre como alegação; um aviso da FDA abaixo da lista; gate verde 1675 testes; conferido no navegador em mock; teste real pendente (produtos em rascunho, não publicados no Headless); merge aprovado pelo Robson",
     "branch": "droid/W4-33"
   },
   {
