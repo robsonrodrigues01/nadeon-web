@@ -1,0 +1,84 @@
+{
+  "_comment": "TEST data fixture - product with missing size fields",
+  "data": {
+    "product": {
+      "id": "gid://shopify/Product/1000000003",
+      "handle": "sample-no-size",
+      "title": "Sample No Size",
+      "description": "Product with omitted size fields",
+      "images": {
+        "nodes": [
+          {
+            "url": "https://cdn.shopify.com/s/files/1/0000/products/sample-no-size.png",
+            "altText": "Sample No Size"
+          }
+        ]
+      },
+      "variants": {
+        "nodes": [
+          {
+            "id": "gid://shopify/ProductVariant/2000000007",
+            "title": "1 Bottle",
+            "sku": "NAD-SAMPLE-1",
+            "price": {
+              "amount": "39.00",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "selectedOptions": [
+              {
+                "name": "Quantity",
+                "value": "1 Bottle"
+              }
+            ]
+          }
+        ]
+      },
+      "sellingPlanGroups": {
+        "nodes": []
+      },
+      "metafields": [
+        {
+          "key": "technical_name",
+          "value": "Active Drops",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "line",
+          "value": "human",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "format",
+          "value": "Tinctures",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "color",
+          "value": "#112233",
+          "type": "color"
+        },
+        {
+          "key": "how_to_use",
+          "value": "Take 1 dropper daily.",
+          "type": "multi_line_text_field"
+        },
+        {
+          "key": "benefits",
+          "value": "[\"Fast absorption*\"]",
+          "type": "list.single_line_text_field"
+        },
+        {
+          "key": "claims",
+          "value": "[\"Fast absorption*\"]",
+          "type": "list.single_line_text_field"
+        },
+        {
+          "key": "actives",
+          "value": "[{\"name\":\"Resveratrol\",\"amount\":\"100 mg\"}]",
+          "type": "json"
+        }
+      ]
+    }
+  }
+}

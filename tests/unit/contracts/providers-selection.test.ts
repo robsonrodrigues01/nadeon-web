@@ -96,11 +96,11 @@ describe("Providers Selection & Stubs", () => {
     }
   );
 
-  it("throws 'not implemented: onda 4' on all live provider methods", async () => {
+  it("throws clear configuration error on live catalog and 'not implemented: onda 4' on other live provider methods", async () => {
     const live = getProviders("live");
 
     await expect(live.catalogProvider.getProducts()).rejects.toThrow(
-      "not implemented: onda 4"
+      /Shopify Storefront configuration error/i
     );
     await expect(live.cartProvider.get()).rejects.toThrow(
       "not implemented: onda 4"

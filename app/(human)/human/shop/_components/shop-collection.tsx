@@ -322,11 +322,7 @@ export function ShopCollection({
 
                     {claimText && (
                       <div className="text-xs text-fg-muted mt-2 min-h-[36px] line-clamp-2">
-                        {claimText.includes("*") ? (
-                          <Claim showDisclaimer={false}>{claimText}</Claim>
-                        ) : (
-                          <span>{claimText}</span>
-                        )}
+                        <Claim showDisclaimer={false}>{claimText}</Claim>
                       </div>
                     )}
 

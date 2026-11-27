@@ -1,0 +1,201 @@
+{
+  "_comment": "TEST data fixture - single product BioHack response",
+  "data": {
+    "product": {
+      "id": "gid://shopify/Product/1000000001",
+      "handle": "biohack",
+      "title": "BioHack",
+      "description": "Cellular Longevity & NAD+ Optimizer",
+      "images": {
+        "nodes": [
+          {
+            "url": "https://cdn.shopify.com/s/files/1/0000/products/biohack.png",
+            "altText": "BioHack bottle"
+          }
+        ]
+      },
+      "variants": {
+        "nodes": [
+          {
+            "id": "gid://shopify/ProductVariant/2000000001",
+            "title": "1 jar",
+            "sku": "NAD-HUM-BIO-1",
+            "price": {
+              "amount": "59.00",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": {
+              "amount": "59.00",
+              "currencyCode": "USD"
+            },
+            "selectedOptions": [
+              {
+                "name": "Quantity",
+                "value": "1 jar"
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/ProductVariant/2000000002",
+            "title": "2 jars",
+            "sku": "NAD-HUM-BIO-2",
+            "price": {
+              "amount": "106.00",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": {
+              "amount": "118.00",
+              "currencyCode": "USD"
+            },
+            "selectedOptions": [
+              {
+                "name": "Quantity",
+                "value": "2 jars"
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/ProductVariant/2000000003",
+            "title": "3 jars",
+            "sku": "NAD-HUM-BIO-3",
+            "price": {
+              "amount": "150.00",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": {
+              "amount": "177.00",
+              "currencyCode": "USD"
+            },
+            "selectedOptions": [
+              {
+                "name": "Quantity",
+                "value": "3 jars"
+              }
+            ]
+          }
+        ]
+      },
+      "sellingPlanGroups": {
+        "nodes": [
+          {
+            "sellingPlans": {
+              "nodes": [
+                {
+                  "id": "gid://shopify/SellingPlan/3000000001",
+                  "name": "Delivery every 30 days",
+                  "options": [
+                    {
+                      "name": "Delivery frequency",
+                      "value": "30 days"
+                    }
+                  ],
+                  "priceAdjustments": [
+                    {
+                      "adjustmentValue": {
+                        "adjustmentPercentage": 10
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "gid://shopify/SellingPlan/3000000002",
+                  "name": "Delivery every 2 months",
+                  "options": [
+                    {
+                      "name": "Delivery frequency",
+                      "value": "2 months"
+                    }
+                  ],
+                  "priceAdjustments": [
+                    {
+                      "adjustmentValue": {
+                        "adjustmentPercentage": 15
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "metafields": [
+        {
+          "key": "technical_name",
+          "value": "NMN 500 mg",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "line",
+          "value": "human",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "species",
+          "value": null,
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "format",
+          "value": "Capsules",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "color",
+          "value": "#1A0A2C",
+          "type": "color"
+        },
+        {
+          "key": "serving",
+          "value": "2 capsules daily with water, in the morning",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "servings_per_jar",
+          "value": "30",
+          "type": "number_integer"
+        },
+        {
+          "key": "net_weight",
+          "value": "60 capsules",
+          "type": "single_line_text_field"
+        },
+        {
+          "key": "how_to_use",
+          "value": "Take 2 capsules each morning with water.",
+          "type": "multi_line_text_field"
+        },
+        {
+          "key": "benefits",
+          "value": "[\"Replenishes cellular NAD+ levels*\",\"Activates sirtuins and mitochondrial biogenesis*\"]",
+          "type": "list.single_line_text_field"
+        },
+        {
+          "key": "claims",
+          "value": "[\"Replenishes cellular NAD+ levels*\",\"Activates sirtuins*\"]",
+          "type": "list.single_line_text_field"
+        },
+        {
+          "key": "related",
+          "value": "[\"powerhouse\"]",
+          "type": "list.single_line_text_field"
+        },
+        {
+          "key": "actives",
+          "value": "[{\"name\":\"NMN (β-nicotinamide mononucleotide)\",\"amount\":\"500 mg\"}]",
+          "type": "json"
+        },
+        {
+          "key": "faq",
+          "value": "[{\"question\":\"When should I take BioHack?\",\"answer\":\"Take 2 capsules each morning with water.\"}]",
+          "type": "json"
+        },
+        {
+          "key": "dosing_by_weight",
+          "value": "[]",
+          "type": "json"
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { mailyteProvider } from "@/lib/providers";
 import {
   MailyteCheckoutStartedInputSchema,
@@ -167,12 +167,14 @@ export async function POST(request: Request): Promise<Response> {
       if (handle) {
         revalidatePath(`/human/products/${handle}`);
         revalidatePath(`/pet/products/${handle}`);
+        revalidateTag(`product-${handle}`, "max");
       }
       revalidatePath("/human/shop");
       revalidatePath("/pet/dogs");
       revalidatePath("/pet/cats");
       revalidatePath("/pet/horses");
       revalidatePath("/");
+      revalidateTag("catalog", "max");
 
       console.info(
         `[webhook] topic=products/update status=revalidated id=${productId}`

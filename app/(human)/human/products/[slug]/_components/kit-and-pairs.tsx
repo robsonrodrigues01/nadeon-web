@@ -217,8 +217,10 @@ export function KitAndPairs({
                     <div className="text-xs text-fg-muted mt-3 line-clamp-2">
                       {product.claims[0] ? (
                         <Claim showDisclaimer>{product.claims[0].text}</Claim>
+                      ) : product.benefits[0] ? (
+                        <Claim showDisclaimer>{product.benefits[0]}</Claim>
                       ) : (
-                        product.benefits[0] || "Supports cellular routine"
+                        "Supports cellular routine"
                       )}
                     </div>
 

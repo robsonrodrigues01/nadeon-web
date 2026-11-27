@@ -258,7 +258,9 @@ export function PurchaseOptions({
 
                     const planSubtitle =
                       plan.intervalDays === 30
-                        ? `${product.servingsPerJar} servings · 30 days`
+                        ? product.servingsPerJar
+                          ? `${product.servingsPerJar} servings · 30 days`
+                          : "30 days"
                         : plan.intervalDays === 60
                           ? "Recommended: fewer deliveries, same discount"
                           : "Stock up for the quarter";

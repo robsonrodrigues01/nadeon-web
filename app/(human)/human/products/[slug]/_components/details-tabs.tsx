@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 import type { Product } from "@/lib/contracts/catalog";
-import { Claim } from "@/components/commerce/product-card/claim";
+import {
+  Claim,
+  FDA_DISCLAIMER,
+} from "@/components/commerce/product-card/claim";
 
 export interface DetailsTabsProps {
   product: Product;
@@ -142,14 +145,18 @@ export function DetailsTabs({ product }: DetailsTabsProps) {
 
             {openAccordion["supplement-facts"] && (
               <div className="mt-3 space-y-2 text-sm">
-                <div className="flex justify-between py-1 border-b border-bg/20">
-                  <span>Serving size: 2 capsules</span>
-                </div>
-                <div className="flex justify-between py-1 border-b-3 border-bg font-semibold">
-                  <span>
-                    Servings per container: {product.servingsPerJar || 30}
-                  </span>
-                </div>
+                {product.serving && (
+                  <div className="flex justify-between py-1 border-b border-bg/20">
+                    <span>Serving size: {product.serving}</span>
+                  </div>
+                )}
+                {product.servingsPerJar != null && (
+                  <div className="flex justify-between py-1 border-b-3 border-bg font-semibold">
+                    <span>
+                      Servings per container: {product.servingsPerJar}
+                    </span>
+                  </div>
+                )}
 
                 <div className="flex justify-between text-xs font-bold pt-2 pb-1 border-b border-bg/30">
                   <span>Amount per serving</span>
@@ -263,40 +270,28 @@ export function DetailsTabs({ product }: DetailsTabsProps) {
                 </button>
               </div>
 
-              {openAccordion["benefits"] && (
-                <ul className="space-y-3 text-sm" role="list">
-                  <li className="flex items-start gap-2">
-                    <span
-                      className="text-accent font-bold select-none"
-                      aria-hidden="true"
-                    >
-                      ✓
-                    </span>
-                    <Claim showDisclaimer>
-                      Supports cellular energy and NAD+ levels*
-                    </Claim>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span
-                      className="text-accent font-bold select-none"
-                      aria-hidden="true"
-                    >
-                      ✓
-                    </span>
-                    <Claim showDisclaimer>
-                      Supports healthy aging from the inside*
-                    </Claim>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span
-                      className="text-accent font-bold select-none"
-                      aria-hidden="true"
-                    >
-                      ✓
-                    </span>
-                    <span>500 mg NMN per serving, no proprietary blend</span>
-                  </li>
-                </ul>
+              {openAccordion["benefits"] && product.benefits.length > 0 && (
+                <>
+                  <ul className="space-y-3 text-sm" role="list">
+                    {product.benefits.map((benefit, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span
+                          className="text-accent font-bold select-none"
+                          aria-hidden="true"
+                        >
+                          ✓
+                        </span>
+                        <Claim>{benefit}</Claim>
+                      </li>
+                    ))}
+                  </ul>
+                  <p
+                    role="note"
+                    className="mt-3 text-[11px] text-fg-muted leading-normal italic"
+                  >
+                    {FDA_DISCLAIMER}
+                  </p>
+                </>
               )}
             </div>
           </div>
