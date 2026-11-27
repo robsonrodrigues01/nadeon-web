@@ -4795,10 +4795,10 @@
   },
   {
     "onda": 4,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Droid (worker Gemini 3.8 Flash)",
     "lease_ate": null,
-    "pr": "local",
+    "pr": "e5f0ff8",
     "preset": "Droid worker",
     "id": "W4-34",
     "papel": "Frontend",
@@ -4812,7 +4812,8 @@
       "pnpm gate verde",
       "aprovação do Robson antes do merge"
     ],
-    "branch": "droid/W4-34"
+    "branch": "droid/W4-34",
+    "nota": "27/11: LiveCartProvider pela Cart API no navegador (22 testes com fixtures); store do carrinho independente do provider; CSP connect-src com a Storefront; revisão corrigiu carrinho antigo no live e contador ao carregar; gate verde 1698 testes; carrinho testado no navegador em mock; teste real pendente (produtos não publicados no Headless); merge aprovado pelo Robson"
   },
   {
     "onda": 4,
