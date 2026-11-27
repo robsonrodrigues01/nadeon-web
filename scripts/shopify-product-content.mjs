@@ -84,7 +84,14 @@ export const METAFIELD_DEFINITIONS = [
 
 const TYPES = new Map(METAFIELD_DEFINITIONS.map((d) => [d.key, d.type]));
 
-export function buildContentMetafields(product) {
+const SIZE_KEYS = new Set([
+  "net_weight",
+  "servings_per_jar",
+  "serving",
+  "dosing_by_weight",
+]);
+
+export function buildContentMetafields(product, { skipSize = false } = {}) {
   const values = {
     technical_name: product.technicalName,
     line: product.line,
@@ -105,6 +112,7 @@ export function buildContentMetafields(product) {
   };
   return Object.entries(values)
     .filter(([, value]) => value != null && value !== "")
+    .filter(([key]) => !(skipSize && SIZE_KEYS.has(key)))
     .map(([key, value]) => ({
       namespace: NAMESPACE,
       key,
@@ -127,7 +135,21 @@ function assertNoUserErrors(label, userErrors) {
     throw new Error(`${label}: ${userErrors.map((e) => e.message).join("; ")}`);
 }
 
-export async function syncProductContent({ products, execute, apply = false }) {
+/**
+ * @param {{
+ *   products: object[];
+ *   execute: (query: string, variables?: object, options?: { mutation?: boolean }) => Promise<any>;
+ *   apply?: boolean;
+ *   skipSizeFor?: string[];
+ * }} options
+ */
+export async function syncProductContent({
+  products,
+  execute,
+  apply = false,
+  skipSizeFor = [],
+}) {
+  const skipSize = new Set(skipSizeFor);
   const existing = await execute(DEFINITIONS_QUERY);
   const existingKeys = new Set(
     existing.metafieldDefinitions.nodes.map((node) => node.key)
@@ -168,7 +190,9 @@ export async function syncProductContent({ products, execute, apply = false }) {
       continue;
     }
     productsFound.push(product.handle);
-    const metafields = buildContentMetafields(product).map((field) => ({
+    const metafields = buildContentMetafields(product, {
+      skipSize: skipSize.has(product.handle),
+    }).map((field) => ({
       ...field,
       ownerId: id,
     }));
@@ -234,6 +258,12 @@ const isCli =
 if (isCli) {
   const store = process.env.SHOPIFY_STORE_DOMAIN;
   const apply = process.argv.includes("--apply");
+  const skipSizeArg = process.argv.find((arg) =>
+    arg.startsWith("--skip-size=")
+  );
+  const skipSizeFor = skipSizeArg
+    ? skipSizeArg.slice("--skip-size=".length).split(",").filter(Boolean)
+    : [];
   if (!store) {
     console.error(
       "Defina SHOPIFY_STORE_DOMAIN (use node --env-file=.env.local)."
@@ -248,6 +278,7 @@ if (isCli) {
           cli: process.env.SHOPIFY_CLI ?? "shopify",
         }),
         apply,
+        skipSizeFor,
       });
       console.log(JSON.stringify(summary, null, 2));
       if (!apply)

@@ -33,5 +33,8 @@ node --env-file=.env.local scripts/shopify-product-content.mjs          # dry-ru
 node --env-file=.env.local scripts/shopify-product-content.mjs --apply  # grava
 ```
 
+Para não copiar tamanho e doses (`net_weight`, `servings_per_jar`, `serving`, `dosing_by_weight`)
+de alguns produtos, use `--skip-size=handle1,handle2`.
+
 Se o CLI não estiver no PATH, defina `SHOPIFY_CLI` com o caminho dele. Rodar de novo sobrescreve
 os valores com o conteúdo atual de `data/products`; depois da migração, edite o conteúdo na Shopify.

@@ -158,6 +158,44 @@ function fakeShopify({
   return { calls, execute };
 }
 
+describe("W4-32 size fields left blank", () => {
+  it("leaves size and dosing fields out when skipSize is set", () => {
+    const fields = byKey(buildContentMetafields(product, { skipSize: true }));
+    expect(fields.net_weight).toBeUndefined();
+    expect(fields.servings_per_jar).toBeUndefined();
+    expect(fields.serving).toBeUndefined();
+    expect(fields.dosing_by_weight).toBeUndefined();
+    expect(fields.technical_name.value).toBe("Senior · NMN 75 mg");
+    expect(fields.benefits).toBeDefined();
+  });
+
+  it("sync skips size fields only for the listed handles", async () => {
+    const shop = fakeShopify({
+      existingKeys: METAFIELD_DEFINITIONS.map((d) => d.key),
+      productIds: {
+        "sample-chew": "gid://shopify/Product/1",
+        "other-chew": "gid://shopify/Product/2",
+      },
+    });
+
+    await syncProductContent({
+      products: [product, { ...product, handle: "other-chew" }],
+      execute: shop.execute,
+      apply: true,
+      skipSizeFor: ["sample-chew"],
+    });
+
+    const keysFor = (ownerId: string) =>
+      shop.calls
+        .filter((c) => c.query.includes("metafieldsSet"))
+        .flatMap((c) => c.variables.metafields ?? [])
+        .filter((m) => m.ownerId === ownerId)
+        .map((m) => (m as { key?: string }).key);
+    expect(keysFor("gid://shopify/Product/1")).not.toContain("net_weight");
+    expect(keysFor("gid://shopify/Product/2")).toContain("net_weight");
+  });
+});
+
 describe("W4-32 syncProductContent", () => {
   const products = [product, { ...product, handle: "not-in-shopify" }];
 
