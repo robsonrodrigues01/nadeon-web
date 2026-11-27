@@ -11,7 +11,7 @@ import Link from "next/link";
 import { Search, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
-import { useCartStore } from "@/lib/providers/client";
+import { cartProvider, useCartStore } from "@/lib/providers/client";
 import { openCartDrawer } from "@/components/commerce/cart-drawer";
 
 export interface HeaderProps {
@@ -57,6 +57,11 @@ export function Header({
     () => initialCartCount ?? useCartStore.getState().cart?.totalQuantity ?? 0,
     () => initialCartCount ?? 0
   );
+
+  // With the live cart the saved count can be stale until Shopify answers.
+  useEffect(() => {
+    cartProvider.get().catch(() => {});
+  }, []);
 
   const navItems = isPet ? PET_NAV_ITEMS : HUMAN_NAV_ITEMS;
   const switchTarget = isPet

@@ -1,0 +1,228 @@
+{
+  "_comment": "TEST data fixture - cartLinesAdd response",
+  "data": {
+    "cartLinesAdd": {
+      "cart": {
+        "id": "gid://shopify/Cart/c1-test-cart-id",
+        "checkoutUrl": "https://test-store.myshopify.com/checkouts/cn/c1-test-cart-id",
+        "totalQuantity": 3,
+        "cost": {
+          "subtotalAmount": {
+            "amount": "159.30",
+            "currencyCode": "USD"
+          },
+          "totalAmount": {
+            "amount": "159.30",
+            "currencyCode": "USD"
+          },
+          "totalDiscountAmount": {
+            "amount": "0.00",
+            "currencyCode": "USD"
+          }
+        },
+        "discountCodes": [],
+        "discountAllocations": [],
+        "lines": {
+          "nodes": [
+            {
+              "id": "gid://shopify/CartLine/line-1",
+              "quantity": 1,
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "compareAtAmountPerQuantity": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "subtotalAmount": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "totalAmount": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                }
+              },
+              "sellingPlanAllocation": {
+                "sellingPlan": {
+                  "id": "gid://shopify/SellingPlan/plan-1",
+                  "name": "1 jar every 30 days (15% off)",
+                  "options": [
+                    {
+                      "name": "Delivery every",
+                      "value": "30 Days"
+                    }
+                  ],
+                  "priceAdjustments": [
+                    {
+                      "adjustmentValue": {
+                        "adjustmentPercentage": 15
+                      }
+                    }
+                  ]
+                },
+                "compareAtPrice": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "price": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "perDeliveryPrice": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "unitPrice": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                }
+              },
+              "merchandise": {
+                "id": "gid://shopify/ProductVariant/2000000001",
+                "title": "1 jar",
+                "sku": "NAD-HUM-BIO-1",
+                "price": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "product": {
+                  "id": "gid://shopify/Product/1000000001",
+                  "title": "BioHack",
+                  "handle": "biohack",
+                  "metafield": {
+                    "value": "human",
+                    "type": "single_line_text_field"
+                  },
+                  "images": {
+                    "nodes": [
+                      {
+                        "url": "https://cdn.shopify.com/s/files/1/0000/products/biohack.png",
+                        "altText": "BioHack bottle"
+                      }
+                    ]
+                  }
+                }
+              },
+              "attributes": [
+                {
+                  "key": "flavor",
+                  "value": "berry"
+                }
+              ]
+            },
+            {
+              "id": "gid://shopify/CartLine/line-2",
+              "quantity": 1,
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtAmountPerQuantity": null,
+                "subtotalAmount": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "totalAmount": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                }
+              },
+              "sellingPlanAllocation": null,
+              "merchandise": {
+                "id": "gid://shopify/ProductVariant/2000000002",
+                "title": "1 jar",
+                "sku": "NAD-PET-DOG-1",
+                "price": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": null,
+                "product": {
+                  "id": "gid://shopify/Product/1000000002",
+                  "title": "More Good Years Dog",
+                  "handle": "more-good-years-dog",
+                  "metafield": {
+                    "value": "pet",
+                    "type": "single_line_text_field"
+                  },
+                  "images": {
+                    "nodes": [
+                      {
+                        "url": "https://cdn.shopify.com/s/files/1/0000/products/mgy-dog.png",
+                        "altText": "Dog supplement"
+                      }
+                    ]
+                  }
+                }
+              },
+              "attributes": []
+            },
+            {
+              "id": "gid://shopify/CartLine/line-3",
+              "quantity": 1,
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "compareAtAmountPerQuantity": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "subtotalAmount": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "totalAmount": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                }
+              },
+              "sellingPlanAllocation": null,
+              "merchandise": {
+                "id": "gid://shopify/ProductVariant/2000000003",
+                "title": "1 jar",
+                "sku": "NAD-HUM-CAT-1",
+                "price": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "product": {
+                  "id": "gid://shopify/Product/1000000003",
+                  "title": "Renew",
+                  "handle": "renew",
+                  "metafield": {
+                    "value": "human",
+                    "type": "single_line_text_field"
+                  },
+                  "images": {
+                    "nodes": [
+                      {
+                        "url": "https://cdn.shopify.com/s/files/1/0000/products/renew.png",
+                        "altText": "Renew bottle"
+                      }
+                    ]
+                  }
+                }
+              },
+              "attributes": []
+            }
+          ]
+        }
+      },
+      "userErrors": []
+    }
+  }
+}

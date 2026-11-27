@@ -1,0 +1,15 @@
+{
+  "_comment": "TEST data fixture - mutation response with userErrors",
+  "data": {
+    "cartLinesAdd": {
+      "cart": null,
+      "userErrors": [
+        {
+          "code": "LESS_THAN",
+          "field": ["lines", "0", "quantity"],
+          "message": "The merchandise is out of stock."
+        }
+      ]
+    }
+  }
+}

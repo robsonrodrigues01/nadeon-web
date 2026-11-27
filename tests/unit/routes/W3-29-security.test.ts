@@ -39,12 +39,25 @@ describe("W3-29 production security", () => {
 
     expect(csp).toContain("default-src 'self'");
     expect(csp).toContain("frame-ancestors 'none'");
+    expect(csp).toContain("connect-src 'self' https://*.myshopify.com");
     expect(csp).not.toContain("unsafe-eval");
     expect(headers.get("X-Frame-Options")).toBe("DENY");
     expect(headers.get("Referrer-Policy")).toBe(
       "strict-origin-when-cross-origin"
     );
     expect(headers.get("Permissions-Policy")).toContain("camera=()");
+  });
+
+  it("includes specific storefront origin in CSP when NEXT_PUBLIC_SHOPIFY_STOREFRONT_DOMAIN is set", async () => {
+    (process.env as Record<string, string | undefined>).NODE_ENV = "production";
+    process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_DOMAIN = "store.myshopify.com";
+    const rules = await nextConfig.headers?.();
+    const headers = new Map(
+      rules?.[0]?.headers.map(({ key, value }) => [key, value])
+    );
+    const csp = headers.get("Content-Security-Policy");
+
+    expect(csp).toContain("connect-src 'self' https://store.myshopify.com");
   });
 
   it("omits CSP in development so Next HMR remains usable", async () => {

@@ -1,0 +1,84 @@
+{
+  "_comment": "TEST data fixture - cartDiscountCodesUpdate response (not applicable)",
+  "data": {
+    "cartDiscountCodesUpdate": {
+      "cart": {
+        "id": "gid://shopify/Cart/c1-test-cart-id",
+        "checkoutUrl": "https://test-store.myshopify.com/checkouts/cn/c1-test-cart-id",
+        "totalQuantity": 2,
+        "cost": {
+          "subtotalAmount": {
+            "amount": "109.15",
+            "currencyCode": "USD"
+          },
+          "totalAmount": {
+            "amount": "109.15",
+            "currencyCode": "USD"
+          },
+          "totalDiscountAmount": {
+            "amount": "0.00",
+            "currencyCode": "USD"
+          }
+        },
+        "discountCodes": [
+          {
+            "code": "INVALID_CODE",
+            "applicable": false
+          }
+        ],
+        "discountAllocations": [],
+        "lines": {
+          "nodes": [
+            {
+              "id": "gid://shopify/CartLine/line-1",
+              "quantity": 1,
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "compareAtAmountPerQuantity": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "subtotalAmount": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "totalAmount": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                }
+              },
+              "sellingPlanAllocation": null,
+              "merchandise": {
+                "id": "gid://shopify/ProductVariant/2000000001",
+                "title": "1 jar",
+                "sku": "NAD-HUM-BIO-1",
+                "price": {
+                  "amount": "50.15",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": null,
+                "product": {
+                  "id": "gid://shopify/Product/1000000001",
+                  "title": "BioHack",
+                  "handle": "biohack",
+                  "metafield": {
+                    "value": "human",
+                    "type": "single_line_text_field"
+                  },
+                  "images": {
+                    "nodes": []
+                  }
+                }
+              },
+              "attributes": []
+            }
+          ]
+        }
+      },
+      "userErrors": []
+    }
+  }
+}

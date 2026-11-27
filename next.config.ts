@@ -24,6 +24,14 @@ const nextConfig: NextConfig = {
     ];
 
     if (process.env.NODE_ENV === "production") {
+      const storefrontDomain =
+        process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_DOMAIN;
+      const storefrontOrigin = storefrontDomain
+        ? storefrontDomain.startsWith("http")
+          ? storefrontDomain
+          : `https://${storefrontDomain}`
+        : "https://*.myshopify.com";
+
       headers.push({
         key: "Content-Security-Policy",
         value: [
@@ -36,7 +44,7 @@ const nextConfig: NextConfig = {
           "style-src 'self' 'unsafe-inline'",
           "img-src 'self' data: blob: https://cdn.shopify.com",
           "font-src 'self' data:",
-          "connect-src 'self'",
+          `connect-src 'self' ${storefrontOrigin}`,
         ].join("; "),
       });
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, type RefObject } from "react";
+import React, { useEffect, useRef, type RefObject } from "react";
 import { Dialog } from "radix-ui";
 import {
   cartProvider as defaultCartProvider,
@@ -39,6 +39,12 @@ export function CartDrawer({
   const cart = customCart ?? liveCart;
   const isControlled = isOpen !== undefined;
   const isDrawerOpen = isControlled ? isOpen : store.isOpen;
+
+  useEffect(() => {
+    if (isDrawerOpen) {
+      cartProvider.get().catch(() => {});
+    }
+  }, [isDrawerOpen, cartProvider]);
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
