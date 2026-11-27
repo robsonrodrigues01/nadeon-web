@@ -1,0 +1,81 @@
+{
+  "_comment": "TEST data fixture - cartLinesRemove response",
+  "data": {
+    "cartLinesRemove": {
+      "cart": {
+        "id": "gid://shopify/Cart/c1-test-cart-id",
+        "checkoutUrl": "https://test-store.myshopify.com/checkouts/cn/c1-test-cart-id",
+        "totalQuantity": 1,
+        "cost": {
+          "subtotalAmount": {
+            "amount": "59.00",
+            "currencyCode": "USD"
+          },
+          "totalAmount": {
+            "amount": "59.00",
+            "currencyCode": "USD"
+          },
+          "totalDiscountAmount": {
+            "amount": "0.00",
+            "currencyCode": "USD"
+          }
+        },
+        "discountCodes": [],
+        "discountAllocations": [],
+        "lines": {
+          "nodes": [
+            {
+              "id": "gid://shopify/CartLine/line-2",
+              "quantity": 1,
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtAmountPerQuantity": null,
+                "subtotalAmount": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "totalAmount": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                }
+              },
+              "sellingPlanAllocation": null,
+              "merchandise": {
+                "id": "gid://shopify/ProductVariant/2000000002",
+                "title": "1 jar",
+                "sku": "NAD-PET-DOG-1",
+                "price": {
+                  "amount": "59.00",
+                  "currencyCode": "USD"
+                },
+                "compareAtPrice": null,
+                "product": {
+                  "id": "gid://shopify/Product/1000000002",
+                  "title": "More Good Years Dog",
+                  "handle": "more-good-years-dog",
+                  "metafield": {
+                    "value": "pet",
+                    "type": "single_line_text_field"
+                  },
+                  "images": {
+                    "nodes": [
+                      {
+                        "url": "https://cdn.shopify.com/s/files/1/0000/products/mgy-dog.png",
+                        "altText": "Dog supplement"
+                      }
+                    ]
+                  }
+                }
+              },
+              "attributes": []
+            }
+          ]
+        }
+      },
+      "userErrors": []
+    }
+  }
+}

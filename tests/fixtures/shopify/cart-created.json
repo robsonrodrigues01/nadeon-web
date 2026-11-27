@@ -1,0 +1,32 @@
+{
+  "_comment": "TEST data fixture - cartCreate response with empty lines",
+  "data": {
+    "cartCreate": {
+      "cart": {
+        "id": "gid://shopify/Cart/c1-empty-cart-id",
+        "checkoutUrl": "https://test-store.myshopify.com/checkouts/cn/c1-empty-cart-id",
+        "totalQuantity": 0,
+        "cost": {
+          "subtotalAmount": {
+            "amount": "0.00",
+            "currencyCode": "USD"
+          },
+          "totalAmount": {
+            "amount": "0.00",
+            "currencyCode": "USD"
+          },
+          "totalDiscountAmount": {
+            "amount": "0.00",
+            "currencyCode": "USD"
+          }
+        },
+        "discountCodes": [],
+        "discountAllocations": [],
+        "lines": {
+          "nodes": []
+        }
+      },
+      "userErrors": []
+    }
+  }
+}

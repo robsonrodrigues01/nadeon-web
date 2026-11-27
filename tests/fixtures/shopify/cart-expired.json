@@ -1,0 +1,6 @@
+{
+  "_comment": "TEST data fixture - getCart expired response (cart null)",
+  "data": {
+    "cart": null
+  }
+}

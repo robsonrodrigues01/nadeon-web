@@ -1,6 +1,7 @@
 import type { CartProvider } from "@/lib/contracts/cart";
 import type { GiftCardProvider } from "@/lib/contracts/gift-card";
-import { mockCartProvider, useCartStore } from "./mock/cart";
+import { mockCartProvider } from "./mock/cart";
+import { useCartStore } from "./cart-store";
 import { MockGiftCardProvider, mockGiftCardProvider } from "./mock/gift-card";
 import { liveCartProvider, liveGiftCardProvider } from "./live/browser";
 import { parseLiveList } from "./live-list";
