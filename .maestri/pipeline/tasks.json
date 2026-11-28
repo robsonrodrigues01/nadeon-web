@@ -4859,10 +4859,10 @@
   },
   {
     "onda": 4,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Droid (worker Claude Sonnet 5.5)",
     "lease_ate": null,
-    "pr": "local",
+    "pr": "0ccf513",
     "preset": "Droid worker",
     "id": "W4-37",
     "papel": "Backend/API",
@@ -4876,7 +4876,8 @@
       "pnpm gate verde",
       "aprovação do Robson antes do merge"
     ],
-    "branch": "droid/W4-37"
+    "branch": "droid/W4-37",
+    "nota": "27/11: pedidos, detalhe, endereços e reorder pela Customer Account API (49 testes com fixtures; campos conferidos na doc 2026-10); /track e ajuda em live apontam para a página de status da Shopify e para o login; revisão corrigiu o Reorder do painel (carrinho do servidor → navegador); gate verde 1785 testes; conferido no navegador em mock e com PROVIDERS_LIVE=account; pedidos reais não testados (precisa de sessão real); merge aprovado pelo Robson"
   },
   {
     "onda": 4,
