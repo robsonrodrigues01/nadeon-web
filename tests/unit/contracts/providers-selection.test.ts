@@ -108,7 +108,7 @@ describe("Providers Selection & Stubs", () => {
     await expect(live.accountProvider.getSession()).rejects.toThrow(
       /Shopify Customer Account configuration error/i
     );
-    await expect(live.accountProvider.getOrders()).rejects.toThrow(
+    await expect(live.petProfileProvider.getPets()).rejects.toThrow(
       "not implemented: onda 4"
     );
     await expect(live.subscriptionProvider.list()).rejects.toThrow(

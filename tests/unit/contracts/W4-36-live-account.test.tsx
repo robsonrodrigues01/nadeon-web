@@ -815,23 +815,8 @@ describe("W4-36 LiveAccountProvider & Customer Account OAuth PKCE", () => {
       expect(tryAgain.getAttribute("href")).toBe("/account");
     });
 
-    it("keeps W4-37..W4-39 methods throwing not implemented", async () => {
+    it("keeps the pet methods throwing not implemented", async () => {
       const provider = new LiveAccountProvider();
-      await expect(provider.getOrders()).rejects.toThrow(
-        "not implemented: onda 4"
-      );
-      await expect(provider.getOrder("1")).rejects.toThrow(
-        "not implemented: onda 4"
-      );
-      await expect(provider.lookupGuestOrder("1", "a@b.com")).rejects.toThrow(
-        "not implemented: onda 4"
-      );
-      await expect(provider.reorder("1")).rejects.toThrow(
-        "not implemented: onda 4"
-      );
-      await expect(provider.getAddresses()).rejects.toThrow(
-        "not implemented: onda 4"
-      );
       await expect(provider.getPets()).rejects.toThrow(
         "not implemented: onda 4"
       );

@@ -80,6 +80,27 @@ describe("W3-28 account action input validation", () => {
   });
 });
 
+describe("W4-37 reorder with Shopify variant GIDs", () => {
+  it("accepts product variant GIDs and rejects other GIDs", async () => {
+    mocks.addLines.mockClear();
+    const gid = "gid://shopify/ProductVariant/777001";
+    await expect(
+      reorderAction(form({ variantId: gid, quantity: "1" }))
+    ).rejects.toThrow("REDIRECT:/cart");
+    expect(mocks.addLines).toHaveBeenCalledWith([
+      { variantId: gid, quantity: 1 },
+    ]);
+
+    mocks.addLines.mockClear();
+    await expect(
+      reorderAction(
+        form({ variantId: "gid://shopify/Product/777001", quantity: "1" })
+      )
+    ).rejects.toThrow("Valid order lines are required");
+    expect(mocks.addLines).not.toHaveBeenCalled();
+  });
+});
+
 describe("W3-28 public form errors", () => {
   it("does not return provider error details to privacy request callers", async () => {
     const error = new Error("private@example.test provider diagnostic");

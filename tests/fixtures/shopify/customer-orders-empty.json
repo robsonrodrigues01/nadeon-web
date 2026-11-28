@@ -1,0 +1,10 @@
+{
+  "_comment": "TEST data fixture - customer without orders",
+  "data": {
+    "customer": {
+      "orders": {
+        "nodes": []
+      }
+    }
+  }
+}

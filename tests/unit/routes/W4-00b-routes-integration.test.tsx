@@ -15,6 +15,7 @@ const mockSendContact = vi.fn();
 const mockAddLines = vi.fn();
 
 vi.mock("@/lib/providers", () => ({
+  getLiveProviderKeys: () => new Set<string>(),
   accountProvider: {
     lookupGuestOrder: (...args: unknown[]) => mockLookupGuestOrder(...args),
     signInUrl: vi.fn().mockResolvedValue("/account/login?returnTo=%2Ftrack"),

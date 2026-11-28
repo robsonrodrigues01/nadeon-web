@@ -13,7 +13,7 @@ export interface OrderCardProps {
  * in-transit orders track the package, delivered orders can be bought again.
  */
 export function OrderCard({ row }: OrderCardProps) {
-  const detailsHref = `/account/orders/${row.id}`;
+  const detailsHref = `/account/orders/${encodeURIComponent(row.id)}`;
 
   return (
     <article className="flex flex-col gap-5 rounded-card border border-border bg-bg-elevated p-5 md:p-6 lg:grid lg:grid-cols-[160px_minmax(0,1fr)_140px_auto] lg:items-center lg:gap-6">

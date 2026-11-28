@@ -7,6 +7,7 @@ const sendContact = vi.fn();
 const lookupGuestOrder = vi.fn();
 
 vi.mock("@/lib/providers", () => ({
+  getLiveProviderKeys: () => new Set<string>(),
   formsProvider: { sendContact: (...args: unknown[]) => sendContact(...args) },
   accountProvider: {
     lookupGuestOrder: (...args: unknown[]) => lookupGuestOrder(...args),

@@ -1,0 +1,230 @@
+{
+  "_comment": "TEST data fixture - Customer Account API orders list (sorted by processedAt desc is applied by the API; order here is deliberately arbitrary)",
+  "data": {
+    "customer": {
+      "orders": {
+        "nodes": [
+          {
+            "id": "gid://shopify/Order/5550001?key=TESTkeyA",
+            "name": "#NL-100234",
+            "number": 100234,
+            "processedAt": "2026-10-20T15:04:05Z",
+            "financialStatus": "PAID",
+            "statusPageUrl": "https://shopify.com/999999999/account/orders/5550001?key=TESTkeyA",
+            "totalPrice": {
+              "amount": "118.00",
+              "currencyCode": "USD"
+            },
+            "shippingAddress": {
+              "firstName": "TEST Alex",
+              "lastName": "TEST Morgan",
+              "company": null,
+              "address1": "100 TEST Main St",
+              "address2": "Apt 4",
+              "city": "Clifton",
+              "zoneCode": "NJ",
+              "territoryCode": "US",
+              "zip": "07011",
+              "phoneNumber": "+15550109999"
+            },
+            "lineItems": {
+              "nodes": [
+                {
+                  "id": "gid://shopify/LineItem/1",
+                  "title": "TEST BioHack",
+                  "variantTitle": "2 Jars",
+                  "quantity": 1,
+                  "variantId": "gid://shopify/ProductVariant/777001",
+                  "image": {
+                    "url": "https://cdn.shopify.com/s/files/TEST/biohack.png"
+                  },
+                  "price": {
+                    "amount": "118.00",
+                    "currencyCode": "USD"
+                  }
+                }
+              ]
+            },
+            "fulfillments": {
+              "nodes": [
+                {
+                  "status": "SUCCESS",
+                  "latestShipmentStatus": "DELIVERED",
+                  "trackingInformation": [
+                    {
+                      "company": "UPS",
+                      "number": "1ZTEST0000000001",
+                      "url": "https://www.ups.com/track?tracknum=1ZTEST0000000001"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "gid://shopify/Order/5550002?key=TESTkeyB",
+            "name": "#NL-100235",
+            "number": 100235,
+            "processedAt": "2026-11-10T10:00:00Z",
+            "financialStatus": "PAID",
+            "statusPageUrl": "https://shopify.com/999999999/account/orders/5550002?key=TESTkeyB",
+            "totalPrice": {
+              "amount": "162.00",
+              "currencyCode": "USD"
+            },
+            "shippingAddress": {
+              "firstName": "TEST Alex",
+              "lastName": "TEST Morgan",
+              "company": null,
+              "address1": "100 TEST Main St",
+              "address2": "Apt 4",
+              "city": "Clifton",
+              "zoneCode": "NJ",
+              "territoryCode": "US",
+              "zip": "07011",
+              "phoneNumber": "+15550109999"
+            },
+            "lineItems": {
+              "nodes": [
+                {
+                  "id": "gid://shopify/LineItem/2",
+                  "title": "TEST BioHack",
+                  "variantTitle": "2 Jars",
+                  "quantity": 1,
+                  "variantId": "gid://shopify/ProductVariant/777002",
+                  "image": {
+                    "url": "https://cdn.shopify.com/s/files/TEST/biohack.png"
+                  },
+                  "price": {
+                    "amount": "118.00",
+                    "currencyCode": "USD"
+                  }
+                },
+                {
+                  "id": "gid://shopify/LineItem/3",
+                  "title": "TEST More Good Years",
+                  "variantTitle": "1 Jar",
+                  "quantity": 2,
+                  "variantId": "gid://shopify/ProductVariant/777003",
+                  "image": {
+                    "url": "https://cdn.shopify.com/s/files/TEST/biohack.png"
+                  },
+                  "price": {
+                    "amount": "22.00",
+                    "currencyCode": "USD"
+                  }
+                }
+              ]
+            },
+            "fulfillments": {
+              "nodes": [
+                {
+                  "status": "SUCCESS",
+                  "latestShipmentStatus": "IN_TRANSIT",
+                  "trackingInformation": [
+                    {
+                      "company": "UPS",
+                      "number": "1ZTEST0000000002",
+                      "url": "https://www.ups.com/track?tracknum=1ZTEST0000000002"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "gid://shopify/Order/5550003?key=TESTkeyC",
+            "name": "#NL-100236",
+            "number": 100236,
+            "processedAt": "2026-11-25T08:30:00Z",
+            "financialStatus": "PENDING",
+            "statusPageUrl": "https://shopify.com/999999999/account/orders/5550003?key=TESTkeyC",
+            "totalPrice": {
+              "amount": "118.00",
+              "currencyCode": "USD"
+            },
+            "shippingAddress": {
+              "firstName": "TEST Alex",
+              "lastName": "TEST Morgan",
+              "company": null,
+              "address1": "100 TEST Main St",
+              "address2": "Apt 4",
+              "city": "Clifton",
+              "zoneCode": "NJ",
+              "territoryCode": "US",
+              "zip": "07011",
+              "phoneNumber": "+15550109999"
+            },
+            "lineItems": {
+              "nodes": [
+                {
+                  "id": "gid://shopify/LineItem/4",
+                  "title": "TEST BioHack",
+                  "variantTitle": "2 Jars",
+                  "quantity": 1,
+                  "variantId": "gid://shopify/ProductVariant/777004",
+                  "image": {
+                    "url": "https://cdn.shopify.com/s/files/TEST/biohack.png"
+                  },
+                  "price": {
+                    "amount": "118.00",
+                    "currencyCode": "USD"
+                  }
+                }
+              ]
+            },
+            "fulfillments": {
+              "nodes": []
+            }
+          },
+          {
+            "id": "gid://shopify/Order/5550004",
+            "name": null,
+            "number": 100237,
+            "processedAt": "2026-11-26T09:00:00Z",
+            "financialStatus": null,
+            "statusPageUrl": null,
+            "totalPrice": null,
+            "shippingAddress": null,
+            "lineItems": {
+              "nodes": [
+                {
+                  "id": "gid://shopify/LineItem/5",
+                  "title": "TEST BioHack",
+                  "variantTitle": null,
+                  "quantity": 1,
+                  "variantId": null,
+                  "image": null,
+                  "price": null
+                },
+                {
+                  "id": "gid://shopify/LineItem/6",
+                  "title": "TEST BioHack",
+                  "variantTitle": "2 Jars",
+                  "quantity": 0,
+                  "variantId": "gid://shopify/ProductVariant/777006",
+                  "image": {
+                    "url": "https://cdn.shopify.com/s/files/TEST/biohack.png"
+                  },
+                  "price": {
+                    "amount": "118.00",
+                    "currencyCode": "USD"
+                  }
+                }
+              ]
+            },
+            "fulfillments": {
+              "nodes": [
+                {
+                  "status": "OPEN",
+                  "latestShipmentStatus": null,
+                  "trackingInformation": []
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}
