@@ -94,7 +94,60 @@ export const SUPPORTED_MARKETS: Market[] = [
     freeShipping: null,
     taxNotice: "Import duties and Swiss VAT paid by recipient upon delivery.",
   },
+  {
+    id: "intl",
+    countryCode: "INTL",
+    name: "International",
+    region: "Other",
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
+    rate: 1.0,
+    flag: "🌐",
+    freeShipping: null,
+    taxNotice: "Import duties and taxes paid by recipient upon delivery.",
+  },
 ];
+
+const EU_COUNTRIES = new Set([
+  "AT",
+  "BE",
+  "BG",
+  "HR",
+  "CY",
+  "CZ",
+  "DK",
+  "EE",
+  "FI",
+  "FR",
+  "DE",
+  "GR",
+  "HU",
+  "IE",
+  "IT",
+  "LV",
+  "LT",
+  "LU",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SK",
+  "SI",
+  "ES",
+  "SE",
+]);
+
+/** Market for an ISO country code: its own market, the EU market, or International. */
+export function getMarketForCountry(
+  countryCode?: string | null
+): Market | undefined {
+  const code = countryCode?.trim().toUpperCase();
+  if (!code || !/^[A-Z]{2}$/.test(code)) return undefined;
+  const own = SUPPORTED_MARKETS.find((m) => m.countryCode === code);
+  if (own) return own;
+  return getMarket(EU_COUNTRIES.has(code) ? "eu" : "intl");
+}
 
 export const DEFAULT_MARKET: Market = SUPPORTED_MARKETS[0];
 
