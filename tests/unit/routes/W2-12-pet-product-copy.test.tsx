@@ -82,7 +82,7 @@ describe("Route W2-12: copy and price rules", () => {
     expect(text).not.toMatch(/Is More Good Years right/);
   });
 
-  it("formats prices with the market from the cookie, not a fixed locale", async () => {
+  it("formats prices in USD even when the cookie market is non-US", async () => {
     marketCookie.value = "eu";
     try {
       const jsx = await PetProductDetailPage({
@@ -91,7 +91,8 @@ describe("Route W2-12: copy and price rules", () => {
       const { container } = render(jsx);
       const text = container.textContent ?? "";
 
-      expect(text).toMatch(/€/);
+      expect(text).toMatch(/\$\d+\.\d{2}/);
+      expect(text).not.toMatch(/€/);
     } finally {
       marketCookie.value = undefined;
     }

@@ -42,9 +42,9 @@ describe("W3-74: convertAmount", () => {
 });
 
 describe("W3-74: formatMarketPrice", () => {
-  it("formats standard amounts with currency code and locale", () => {
+  it("formats standard amounts in USD with en-US formatting regardless of passed currency or locale", () => {
     expect(formatMarketPrice(25, "USD", "en-US")).toBe("$25.00");
-    expect(formatMarketPrice(25, "GBP", "en-GB")).toBe("£25.00");
+    expect(formatMarketPrice(25, "GBP", "en-GB")).toBe("$25.00");
   });
 
   it("handles non-finite values safely by formatting 0 instead of throwing or NaN", () => {
@@ -74,66 +74,42 @@ describe("W3-74: formatMoneyWithMarket", () => {
     expect(formatMoneyWithMarket(75)).toBe("$75.00");
   });
 
-  it("converts numeric amount according to market rate and fraction digits", () => {
-    // US -> GB: 10 * 0.79 = 7.90 GBP
-    expect(formatMoneyWithMarket(10, GB)).toBe("£7.90");
-    // US -> JP: 10 * 155 = 1550 JPY (0 fraction digits)
-    expect(formatMoneyWithMarket(10, JP)).toBe(
-      new Intl.NumberFormat(JP.locale, {
-        style: "currency",
-        currency: JP.currency.code,
-      }).format(1550)
-    );
+  it("formats numeric amounts in USD without conversion for non-US markets", () => {
+    expect(formatMoneyWithMarket(10, GB)).toBe("$10.00");
+    expect(formatMoneyWithMarket(10, JP)).toBe("$10.00");
   });
 
-  it("respects options.convert = false for numeric amounts", () => {
-    expect(formatMoneyWithMarket(10, GB, { convert: false })).toBe("£10.00");
-    expect(formatMoneyWithMarket(10, JP, { convert: false })).toBe(
-      new Intl.NumberFormat(JP.locale, {
-        style: "currency",
-        currency: JP.currency.code,
-      }).format(10)
-    );
+  it("formats numeric amounts identically when options.convert = false", () => {
+    expect(formatMoneyWithMarket(10, GB, { convert: false })).toBe("$10.00");
+    expect(formatMoneyWithMarket(10, JP, { convert: false })).toBe("$10.00");
   });
 
-  it("converts Money object when currencyCode is USD and target is non-USD", () => {
+  it("formats Money objects in USD for any market without conversion", () => {
     expect(formatMoneyWithMarket({ amount: 10, currencyCode: "USD" }, GB)).toBe(
-      "£7.90"
+      "$10.00"
     );
     expect(formatMoneyWithMarket({ amount: 10, currencyCode: "USD" }, JP)).toBe(
-      new Intl.NumberFormat(JP.locale, {
-        style: "currency",
-        currency: JP.currency.code,
-      }).format(1550)
+      "$10.00"
     );
   });
 
-  it("does not convert Money object when currencyCode is already non-USD", () => {
-    // Already in GBP: amount remains 10 GBP, not multiplied by 0.79
+  it("formats Money objects in USD even when passed non-USD currency codes", () => {
     expect(formatMoneyWithMarket({ amount: 10, currencyCode: "GBP" }, GB)).toBe(
-      "£10.00"
+      "$10.00"
     );
   });
 
-  it("does not convert Money object when options.convert = false", () => {
-    expect(
-      formatMoneyWithMarket({ amount: 10, currencyCode: "USD" }, GB, {
-        convert: false,
-      })
-    ).toBe("£10.00");
-  });
-
-  it("accepts custom currency, locale, and fraction digits options", () => {
+  it("respects fraction digits options while keeping USD", () => {
     expect(
       formatMoneyWithMarket(50, US, {
         currency: "EUR",
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
       })
-    ).toBe("€50");
+    ).toBe("$50");
   });
 
-  it("falls back gracefully when options specify an invalid locale", () => {
+  it("keeps en-US USD formatting even when options specify an invalid locale", () => {
     expect(
       formatMoneyWithMarket(100, US, {
         locale: "invalid-locale-123",

@@ -100,14 +100,14 @@ describe("W2-08: /human/build-your-box math and formatting", () => {
     expect(totals.savingsCents).toBe(3720);
   });
 
-  it("formats money with the market currency and locale (rule 14)", () => {
+  it("formats money in USD with en-US formatting even when given a non-USD market object", () => {
     expect(formatCents(21080, DEFAULT_MARKET)).toBe("$210.80");
     const eur: Market = {
       ...DEFAULT_MARKET,
       currency: { ...DEFAULT_MARKET.currency, code: "EUR", symbol: "€" },
       locale: "de-DE",
     };
-    expect(formatCents(21080, eur)).toContain("€");
+    expect(formatCents(21080, eur)).toBe("$210.80");
   });
 
   it("offers only frequencies every product sells and the subscription allows", () => {

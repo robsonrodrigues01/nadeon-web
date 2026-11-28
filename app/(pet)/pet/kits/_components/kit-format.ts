@@ -1,5 +1,5 @@
 import type { Kit, Money, Product } from "@/lib/contracts/catalog";
-import { convertAmount, formatMoneyWithMarket } from "@/lib/market/formatter";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
 import type { Market } from "@/lib/market/types";
 
 export interface KitProductView {
@@ -27,20 +27,13 @@ export function formatKitMoney(money: Money, market: Market): string {
   return formatMoneyWithMarket(money, market);
 }
 
-/** Price in the market currency, converted the same way formatKitMoney formats it (for JSON-LD). */
-export function marketOffer(money: Money, market: Market): Money {
-  const needsConversion =
-    money.currencyCode === "USD" && market.currency.code !== "USD";
-  return needsConversion
-    ? {
-        amount: convertAmount(
-          money.amount,
-          market.rate,
-          market.currency.fractionDigits
-        ),
-        currencyCode: market.currency.code,
-      }
-    : money;
+/** Price in USD (for JSON-LD). */
+export function marketOffer(money: Money, _market?: Market): Money {
+  void _market;
+  return {
+    amount: money.amount,
+    currencyCode: "USD",
+  };
 }
 
 /** Percentage saved against compare-at prices, rounded; null when no kit has a compare-at price. */

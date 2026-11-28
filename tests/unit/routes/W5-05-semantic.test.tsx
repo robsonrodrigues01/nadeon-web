@@ -100,7 +100,8 @@ describe("W5-05 semantic ingredients glossary route", () => {
     expect(
       within(details!).getAllByText("To be confirmed").length
     ).toBeGreaterThan(0);
-    expect(within(details!).getAllByText(/£/).length).toBeGreaterThan(0);
+    expect(within(details!).getAllByText(/^\$\d/).length).toBeGreaterThan(0);
+    expect(within(details!).queryAllByText(/£/)).toHaveLength(0);
     expect(
       within(details!)
         .getAllByRole("link", { name: /Shop/ })

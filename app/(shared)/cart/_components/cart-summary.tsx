@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Lock } from "lucide-react";
 import { cartProvider, type Cart } from "@/lib/providers/client";
-import { useMarket } from "@/lib/market";
+import { getInternationalShippingNotice, useMarket } from "@/lib/market";
 import type { CartCatalogProduct, RunCartAction } from "./types";
 import { redirectToCheckout } from "./checkout";
 
@@ -15,7 +15,8 @@ interface CartSummaryProps {
 }
 
 export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
-  const { formatMoney } = useMarket();
+  const { market, formatMoney } = useMarket();
+  const internationalNotice = getInternationalShippingNotice(market);
   const [code, setCode] = useState("");
   const [checkingOut, setCheckingOut] = useState(false);
   const [checkoutError, setCheckoutError] = useState(false);
@@ -168,9 +169,19 @@ export function CartSummary({ cart, catalog, pending, run }: CartSummaryProps) {
           <Lock className="h-3.5 w-3.5" aria-hidden="true" />
           Secure checkout · Skip or cancel subscriptions anytime
         </p>
-        <p className="mt-2 text-center text-xs text-fg-muted">
-          Taxes and shipping calculated at checkout
-        </p>
+        {internationalNotice ? (
+          <p
+            role="note"
+            aria-label="International shipping notice"
+            className="mt-3 rounded-field border border-border bg-bg p-3 text-center text-xs leading-relaxed text-fg-muted"
+          >
+            {internationalNotice}
+          </p>
+        ) : (
+          <p className="mt-2 text-center text-xs text-fg-muted">
+            Taxes and shipping calculated at checkout
+          </p>
+        )}
         {hasSubscription && (
           <p className="mt-2 text-center text-xs text-fg-muted">
             Subscription price applies to every delivery while subscribed.

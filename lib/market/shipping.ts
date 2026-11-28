@@ -41,3 +41,11 @@ export function formatFreeShippingLabel(
   const price = formatFreeShippingThreshold(market, line);
   return price === null ? null : `Free shipping over ${price}`;
 }
+
+export const INTERNATIONAL_SHIPPING_NOTICE =
+  "International shipping is available. All prices are in USD, shipping costs are calculated at checkout, and import duties and taxes are paid by the customer on delivery.";
+
+/** Notice shown to non-US visitors wherever shipping or checkout is presented. */
+export function getInternationalShippingNotice(market: Market): string | null {
+  return market.id === "us" ? null : INTERNATIONAL_SHIPPING_NOTICE;
+}

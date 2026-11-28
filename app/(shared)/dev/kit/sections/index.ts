@@ -7,7 +7,6 @@ import SW1_13 from "./W1-13";
 import SW1_10 from "./W1-10";
 import SW1_09 from "./W1-09";
 import SW1_08 from "./W1-08";
-import SW1_05 from "./W1-05";
 import SW1_04 from "./W1-04";
 import SW1_07 from "./W1-07";
 import SW1_02 from "./W1-02";
@@ -40,7 +39,6 @@ export const sections: DevKitSection[] = [
   { id: "W1-02", title: "Announcement bar", Component: SW1_02 },
   { id: "W1-07", title: "Trust strip", Component: SW1_07 },
   { id: "W1-04", title: "Footer", Component: SW1_04 },
-  { id: "W1-05", title: "Country selector", Component: SW1_05 },
   { id: "W1-08", title: "Cookie banner", Component: SW1_08 },
   { id: "W1-09", title: "First-visit popup", Component: SW1_09 },
   { id: "W1-10", title: "Analytics", Component: SW1_10 },

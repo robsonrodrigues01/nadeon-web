@@ -237,7 +237,7 @@ describe("W2-13: /pet/kits/[slug] Route Suite", () => {
     expect(screen.queryByRole("banner")).toBeNull();
   });
 
-  it("emits JSON-LD offer in the market currency of the cookie", async () => {
+  it("emits JSON-LD offer in USD even when cookie market is non-US", async () => {
     vi.mocked(cookies).mockResolvedValueOnce({
       get: (name: string) =>
         name === "nadeon_market" ? { value: "ca" } : undefined,
@@ -250,8 +250,8 @@ describe("W2-13: /pet/kits/[slug] Route Suite", () => {
 
     const ld = document.getElementById("pet-kit-product-ld")?.textContent ?? "";
     const data = JSON.parse(ld);
-    expect(data.offers.priceCurrency).toBe("CAD");
-    expect(data.offers.price).toBeCloseTo(102, 0);
+    expect(data.offers.priceCurrency).toBe("USD");
+    expect(data.offers.price).toBe(75);
   });
 
   it("returns 404 for a kit that is not a pet kit", async () => {
@@ -310,7 +310,7 @@ describe("W2-13: market from nadeon_market cookie (Rule 14)", () => {
     expect((await getRequestMarket()).id).toBe(DEFAULT_MARKET.id);
   });
 
-  it("reads the market from the cookie and formats prices in its currency", async () => {
+  it("reads the visitor market from the cookie and still formats prices in USD", async () => {
     const ca = getMarket("ca")!;
     vi.mocked(cookies).mockResolvedValue({
       get: (name: string) =>
@@ -332,11 +332,10 @@ describe("W2-13: market from nadeon_market cookie (Rule 14)", () => {
       ],
     ]);
     const view = buildKitView(kit, map, market);
-    // Canadian market converts the USD catalog price by the market rate (75 USD -> ~102 CAD).
     expect(view.price).toBe(
       formatMoneyWithMarket({ amount: 75, currencyCode: "USD" }, ca)
     );
-    expect(view.price).toMatch(/102/);
+    expect(view.price).toBe("$75.00");
   });
 
   it("falls back to the default market for an unknown cookie value", async () => {

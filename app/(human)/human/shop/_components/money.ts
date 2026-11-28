@@ -1,12 +1,9 @@
 import type { Money } from "@/lib/contracts/catalog";
+import { formatMoneyWithMarket } from "@/lib/market/formatter";
 
 /**
- * Formats a monetary value according to the specified market currency and locale.
- * Follows Rule 7: Always uses Intl.NumberFormat, never manual string concatenation.
+ * Formats a monetary value in USD with en-US formatting.
  */
 export function formatMoney(money: Money, locale = "en-US"): string {
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currencyCode,
-  }).format(money.amount);
+  return formatMoneyWithMarket(money, undefined, { locale });
 }

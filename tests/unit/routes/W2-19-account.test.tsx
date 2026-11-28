@@ -300,19 +300,18 @@ describe("Route /account (W2-19)", () => {
       );
     });
 
-    it("formata preço com a moeda do mercado, nunca com $ fixo", () => {
-      const gbp = SUPPORTED_MARKETS.find((m) => m.currency.code === "GBP");
-      expect(gbp).toBeDefined();
+    it("formata preço em USD mesmo quando o mercado do visitante é internacional", () => {
+      const gb = SUPPORTED_MARKETS.find((m) => m.countryCode === "GB");
+      expect(gb).toBeDefined();
       const view = buildAccountDashboard({
         customer,
         subscriptions: [sub("s1", "active", "2026-12-02T00:00:00.000Z")],
         orders: [order("o1", "2026-10-24T00:00:00.000Z", 100)],
         capabilities,
-        market: gbp!,
+        market: gb!,
       });
-      expect(view.nextDelivery?.totalLabel).not.toContain("$");
-      expect(view.nextDelivery?.totalLabel).toContain("£");
-      expect(view.recentOrder?.totalLabel).toContain("£");
+      expect(view.nextDelivery?.totalLabel).toBe("$10.00");
+      expect(view.recentOrder?.totalLabel).toBe("$100.00");
     });
   });
 

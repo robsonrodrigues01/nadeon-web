@@ -11,10 +11,8 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { CartDrawer } from "@/components/commerce/cart-drawer";
-import { CountrySelector } from "@/components/layout/country-selector";
 import { CookieSettingsModal } from "@/components/layout/cookie-banner";
 import { FirstVisitPopup } from "@/components/layout/popup";
-import { MarketProvider } from "@/lib/market";
 import { ConsentProvider } from "@/lib/consent";
 import type { Cart } from "@/lib/providers/client";
 
@@ -59,36 +57,6 @@ describe("W3-21 keyboard accessibility", () => {
         .map(() => path.relative(process.cwd(), file));
     });
     expect(missing).toEqual([]);
-  });
-
-  it("traps country-selector focus and restores the trigger after Escape", async () => {
-    render(
-      <MarketProvider>
-        <CountrySelector />
-      </MarketProvider>
-    );
-    const trigger = screen.getByRole("button", {
-      name: /select country and currency/i,
-    });
-    trigger.focus();
-    fireEvent.click(trigger);
-
-    const dialog = screen.getByRole("dialog");
-    const focusable = dialog.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
-    );
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    last.focus();
-    fireEvent.keyDown(window, { key: "Tab" });
-    expect(document.activeElement).toBe(first);
-    first.focus();
-    fireEvent.keyDown(window, { key: "Tab", shiftKey: true });
-    expect(document.activeElement).toBe(last);
-
-    fireEvent.keyDown(window, { key: "Escape" });
-    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
-    expect(document.activeElement).toBe(trigger);
   });
 
   it("traps cookie-settings focus and restores its trigger after Escape", async () => {

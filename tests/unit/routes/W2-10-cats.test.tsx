@@ -44,13 +44,11 @@ describe("W2-10 Route: /pet/cats", () => {
     pushMock.mockClear();
   });
 
-  it("formats prices in the cookie market currency (Canada converts USD to CAD)", async () => {
+  it("keeps USD pricing when the visitor market cookie is Canada", async () => {
     marketCookie = "ca";
     await renderCats();
 
-    // Cat Care lists at 54 USD; CA rate 1.36 gives 73.44 CAD (CAD shown in the kit card).
-    expect(screen.getAllByText(/73\.44/).length).toBeGreaterThan(0);
-    expect(screen.queryByText(/\$54\.00/)).toBeNull();
+    expect(screen.getAllByText(/\$54\.00/).length).toBeGreaterThan(0);
   });
 
   it("exports metadata with canonical path /pet/cats", () => {

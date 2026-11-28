@@ -1,4 +1,13 @@
-import type { Market } from "./types";
+import type { Market, MarketCurrency } from "./types";
+
+const USD_CURRENCY: MarketCurrency = {
+  code: "USD",
+  symbol: "$",
+  name: "US Dollar",
+  fractionDigits: 2,
+};
+
+const USD_LOCALE = "en-US";
 
 export const SUPPORTED_MARKETS: Market[] = [
   {
@@ -6,13 +15,8 @@ export const SUPPORTED_MARKETS: Market[] = [
     countryCode: "US",
     name: "United States",
     region: "North America",
-    currency: {
-      code: "USD",
-      symbol: "$",
-      name: "US Dollar",
-      fractionDigits: 2,
-    },
-    locale: "en-US",
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
     rate: 1.0,
     flag: "🇺🇸",
     freeShipping: { human: 75, pet: 49 },
@@ -23,14 +27,9 @@ export const SUPPORTED_MARKETS: Market[] = [
     countryCode: "CA",
     name: "Canada",
     region: "North America",
-    currency: {
-      code: "CAD",
-      symbol: "CA$",
-      name: "Canadian Dollar",
-      fractionDigits: 2,
-    },
-    locale: "en-CA",
-    rate: 1.36,
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
+    rate: 1.0,
     flag: "🇨🇦",
     freeShipping: null,
     taxNotice: "Import duties and GST/HST paid by recipient upon delivery.",
@@ -40,14 +39,9 @@ export const SUPPORTED_MARKETS: Market[] = [
     countryCode: "GB",
     name: "United Kingdom",
     region: "Europe",
-    currency: {
-      code: "GBP",
-      symbol: "£",
-      name: "British Pound",
-      fractionDigits: 2,
-    },
-    locale: "en-GB",
-    rate: 0.79,
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
+    rate: 1.0,
     flag: "🇬🇧",
     freeShipping: null,
     taxNotice: "Import duties and VAT paid by recipient upon delivery.",
@@ -57,14 +51,9 @@ export const SUPPORTED_MARKETS: Market[] = [
     countryCode: "EU",
     name: "European Union",
     region: "Europe",
-    currency: {
-      code: "EUR",
-      symbol: "€",
-      name: "Euro",
-      fractionDigits: 2,
-    },
-    locale: "en-IE",
-    rate: 0.92,
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
+    rate: 1.0,
     flag: "🇪🇺",
     freeShipping: null,
     taxNotice: "Import duties and local VAT paid by recipient upon delivery.",
@@ -74,14 +63,9 @@ export const SUPPORTED_MARKETS: Market[] = [
     countryCode: "AU",
     name: "Australia",
     region: "Asia Pacific",
-    currency: {
-      code: "AUD",
-      symbol: "A$",
-      name: "Australian Dollar",
-      fractionDigits: 2,
-    },
-    locale: "en-AU",
-    rate: 1.52,
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
+    rate: 1.0,
     flag: "🇦🇺",
     freeShipping: null,
     taxNotice: "Import duties and GST paid by recipient upon delivery.",
@@ -91,14 +75,9 @@ export const SUPPORTED_MARKETS: Market[] = [
     countryCode: "JP",
     name: "Japan",
     region: "Asia Pacific",
-    currency: {
-      code: "JPY",
-      symbol: "¥",
-      name: "Japanese Yen",
-      fractionDigits: 0,
-    },
-    locale: "ja-JP",
-    rate: 155,
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
+    rate: 1.0,
     flag: "🇯🇵",
     freeShipping: null,
     taxNotice: "Import consumption taxes paid by recipient upon delivery.",
@@ -108,19 +87,67 @@ export const SUPPORTED_MARKETS: Market[] = [
     countryCode: "CH",
     name: "Switzerland",
     region: "Europe",
-    currency: {
-      code: "CHF",
-      symbol: "CHF",
-      name: "Swiss Franc",
-      fractionDigits: 2,
-    },
-    locale: "de-CH",
-    rate: 0.88,
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
+    rate: 1.0,
     flag: "🇨🇭",
     freeShipping: null,
     taxNotice: "Import duties and Swiss VAT paid by recipient upon delivery.",
   },
+  {
+    id: "intl",
+    countryCode: "INTL",
+    name: "International",
+    region: "Other",
+    currency: USD_CURRENCY,
+    locale: USD_LOCALE,
+    rate: 1.0,
+    flag: "🌐",
+    freeShipping: null,
+    taxNotice: "Import duties and taxes paid by recipient upon delivery.",
+  },
 ];
+
+const EU_COUNTRIES = new Set([
+  "AT",
+  "BE",
+  "BG",
+  "HR",
+  "CY",
+  "CZ",
+  "DK",
+  "EE",
+  "FI",
+  "FR",
+  "DE",
+  "GR",
+  "HU",
+  "IE",
+  "IT",
+  "LV",
+  "LT",
+  "LU",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SK",
+  "SI",
+  "ES",
+  "SE",
+]);
+
+/** Market for an ISO country code: its own market, the EU market, or International. */
+export function getMarketForCountry(
+  countryCode?: string | null
+): Market | undefined {
+  const code = countryCode?.trim().toUpperCase();
+  if (!code || !/^[A-Z]{2}$/.test(code)) return undefined;
+  const own = SUPPORTED_MARKETS.find((m) => m.countryCode === code);
+  if (own) return own;
+  return getMarket(EU_COUNTRIES.has(code) ? "eu" : "intl");
+}
 
 export const DEFAULT_MARKET: Market = SUPPORTED_MARKETS[0];
 
