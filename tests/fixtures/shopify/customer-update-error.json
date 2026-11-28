@@ -1,0 +1,13 @@
+{
+  "data": {
+    "customerUpdate": {
+      "customer": null,
+      "userErrors": [
+        {
+          "field": ["firstName"],
+          "message": "First name is invalid"
+        }
+      ]
+    }
+  }
+}

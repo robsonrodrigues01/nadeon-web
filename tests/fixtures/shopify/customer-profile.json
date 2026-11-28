@@ -1,0 +1,18 @@
+{
+  "data": {
+    "customer": {
+      "id": "gid://shopify/Customer/999000111",
+      "firstName": "TEST Alex",
+      "lastName": "TEST Morgan",
+      "emailAddress": {
+        "emailAddress": "test.alex.morgan@example.com"
+      },
+      "phoneNumber": {
+        "phoneNumber": "+15550109999"
+      },
+      "defaultAddress": {
+        "id": "gid://shopify/CustomerAddress/888000222"
+      }
+    }
+  }
+}

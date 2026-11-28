@@ -72,63 +72,16 @@ import {
   liveGiftCardProvider,
   liveStub,
 } from "./browser";
+import { LiveAccountProvider } from "./account";
 import { LiveCatalogProvider } from "./catalog";
 
 export {
+  LiveAccountProvider,
   LiveCartProvider,
   liveCartProvider,
   liveGiftCardProvider,
   LiveCatalogProvider,
 };
-
-export class LiveAccountProvider
-  implements AccountProvider, PetProfileProvider
-{
-  async getSession(): Promise<Session | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async signInUrl(_returnTo?: string): Promise<string> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async signOut(): Promise<void> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getCustomer(): Promise<CustomerProfile | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getOrders(): Promise<Order[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getOrder(_id: string): Promise<Order | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async lookupGuestOrder(
-    _orderNumberOrInput: string | GuestOrderLookupInput,
-    _email?: string
-  ): Promise<GuestOrderTracking | null> {
-    // TODO: Shopify Storefront / Orders API guest lookup in Onda 4
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async reorder(_orderId: string): Promise<OrderLine[]> {
-    // TODO: Shopify Storefront order reorder in Onda 4
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getAddresses(): Promise<Address[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async updateProfile(_input: ProfileInput): Promise<CustomerProfile> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async getPets(): Promise<Pet[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async savePet(_pet: PetInput): Promise<Pet> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-  async removePet(_id: string): Promise<void> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-}
 
 export class LiveSubscriptionProvider implements SubscriptionProvider {
   async list(): Promise<Subscription[]> {

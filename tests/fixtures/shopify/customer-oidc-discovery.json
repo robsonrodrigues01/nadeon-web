@@ -1,0 +1,10 @@
+{
+  "authorization_endpoint": "https://shopify.com/authentication/999999999/oauth/authorize",
+  "token_endpoint": "https://shopify.com/authentication/999999999/oauth/token",
+  "end_session_endpoint": "https://shopify.com/authentication/999999999/logout",
+  "jwks_uri": "https://shopify.com/authentication/999999999/.well-known/jwks.json",
+  "issuer": "https://shopify.com/authentication/999999999",
+  "scopes_supported": ["openid", "email", "customer-account-api:full"],
+  "response_types_supported": ["code"],
+  "code_challenge_methods_supported": ["S256"]
+}

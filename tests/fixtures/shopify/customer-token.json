@@ -1,0 +1,7 @@
+{
+  "access_token": "shcat_TEST_access_token_001",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "shcrt_TEST_refresh_token_001",
+  "scope": "openid email customer-account-api:full"
+}
