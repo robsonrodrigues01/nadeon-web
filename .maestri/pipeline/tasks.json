@@ -4837,10 +4837,10 @@
   },
   {
     "onda": 4,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Droid (worker Gemini 3.8 Flash)",
     "lease_ate": null,
-    "pr": "local",
+    "pr": "4faf613",
     "preset": "Droid worker",
     "id": "W4-36",
     "papel": "Backend/API",
@@ -4854,7 +4854,7 @@
       "pnpm gate verde",
       "aprovação do Robson antes do merge"
     ],
-    "nota": "teste real depende da Customer Account API configurada no canal Headless; W4-01 vira a verificação real; callback cadastrado na Shopify: /account/auth/callback (www.nadeonlabs.com e nadeon-web.vercel.app), cliente Público; variáveis SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID e SHOPIFY_SHOP_ID",
+    "nota": "27/11: login OAuth PKCE pela Customer Account API (sessão, perfil, nome, saída), 31 testes com fixtures; revisão liberou form-action para https://shopify.com (saída); conferido contra a Shopify real: tela de login abre com redirect www.nadeonlabs.com e endereço falso é recusado; login completo não testado (precisa de e-mail real); falta cadastrar SHOPIFY_CUSTOMER_ACCOUNT_CLIENT_ID e SHOPIFY_SHOP_ID na Vercel antes de ligar a conta; gate verde 1733 testes; merge aprovado pelo Robson",
     "branch": "droid/W4-36"
   },
   {
