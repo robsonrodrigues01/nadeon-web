@@ -98,11 +98,11 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
       expect(notFoundOrder).toBeNull();
     });
 
-    it("throws not implemented in LiveAccountProvider with TODO comment", async () => {
+    it("returns null in LiveAccountProvider (guests use the Shopify status page)", async () => {
       const live = new LiveAccountProvider();
       await expect(
         live.lookupGuestOrder("TEST-NL-0001", "test@example.com")
-      ).rejects.toThrow(/not implemented: onda 4/);
+      ).resolves.toBeNull();
     });
   });
 
@@ -147,10 +147,10 @@ describe("W4-00: Contract & Mock (Pre-Wave 4)", () => {
       ).rejects.toThrow(/Order not found/);
     });
 
-    it("LiveAccountProvider.reorder throws not implemented error", async () => {
+    it("LiveAccountProvider.reorder throws for an id that is not a Shopify order", async () => {
       const live = new LiveAccountProvider();
       await expect(live.reorder("ord_TEST_0001")).rejects.toThrow(
-        /not implemented: onda 4/
+        /Order not found/
       );
     });
   });

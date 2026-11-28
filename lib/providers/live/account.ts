@@ -18,6 +18,18 @@ import {
   SessionSchema,
 } from "@/lib/contracts/account";
 import { NOT_IMPLEMENTED_MSG } from "./browser";
+import {
+  ADDRESSES_PAGE_SIZE,
+  GET_CUSTOMER_ADDRESSES_QUERY,
+  GET_CUSTOMER_ORDER_QUERY,
+  GET_CUSTOMER_ORDERS_QUERY,
+  ORDERS_PAGE_SIZE,
+  mapCustomerAddresses,
+  mapShopifyOrder,
+  normalizeOrderId,
+  type RawCustomerAddresses,
+  type RawOrder,
+} from "./account-orders";
 
 export const CUSTOMER_ACCOUNT_API_VERSION = "2026-10";
 export const CUSTOMER_ACCOUNT_SCOPE = "openid email customer-account-api:full";
@@ -995,31 +1007,75 @@ export class LiveAccountProvider
     return mapShopifyCustomer(raw);
   }
 
-  /* eslint-disable @typescript-eslint/no-unused-vars */
   async getOrders(): Promise<Order[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
+    const raw = await this.queryAsCustomer<{
+      customer?: {
+        orders?: { nodes?: Array<RawOrder | null> | null } | null;
+      } | null;
+    }>(GET_CUSTOMER_ORDERS_QUERY, { first: ORDERS_PAGE_SIZE });
+    const nodes = raw?.customer?.orders?.nodes ?? [];
+    return nodes
+      .filter((node): node is RawOrder => Boolean(node?.id))
+      .map(mapShopifyOrder);
   }
 
-  async getOrder(_id: string): Promise<Order | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
+  async getOrder(id: string): Promise<Order | null> {
+    const orderId = normalizeOrderId(id);
+    if (!orderId) {
+      return null;
+    }
+    const raw = await this.queryAsCustomer<{ order?: RawOrder | null }>(
+      GET_CUSTOMER_ORDER_QUERY,
+      { id: orderId }
+    );
+    return raw?.order?.id ? mapShopifyOrder(raw.order) : null;
   }
 
+  // Guests are sent to Shopify's order status page, so there is no own lookup.
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   async lookupGuestOrder(
     _orderNumberOrInput: string | GuestOrderLookupInput,
     _email?: string
   ): Promise<GuestOrderTracking | null> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-
-  async reorder(_orderId: string): Promise<OrderLine[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
-  }
-
-  async getAddresses(): Promise<Address[]> {
-    throw new Error(NOT_IMPLEMENTED_MSG);
+    return null;
   }
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
+  async reorder(orderId: string): Promise<OrderLine[]> {
+    const order = await this.getOrder(orderId);
+    if (!order) {
+      throw new Error(`Order not found: ${orderId}`);
+    }
+    return order.lines ?? [];
+  }
+
+  async getAddresses(): Promise<Address[]> {
+    const raw = await this.queryAsCustomer<{
+      customer?: RawCustomerAddresses | null;
+    }>(GET_CUSTOMER_ADDRESSES_QUERY, { first: ADDRESSES_PAGE_SIZE });
+    return raw?.customer ? mapCustomerAddresses(raw.customer) : [];
+  }
+
+  /** Runs a query as the signed-in customer; null without a valid session. */
+  private async queryAsCustomer<T>(
+    query: string,
+    variables: Record<string, unknown>
+  ): Promise<T | null> {
+    const session = await this.getSession();
+    if (!session) {
+      return null;
+    }
+    const config = getCustomerAccountConfig(this.options);
+    const fetchFn = this.options?.fetchImpl ?? globalThis.fetch;
+    const result = await executeCustomerGraphql<T>(
+      config.shopId,
+      session.accessToken,
+      query,
+      variables,
+      fetchFn
+    );
+    return result.data;
+  }
   async updateProfile(input: ProfileInput): Promise<CustomerProfile> {
     const session = await this.getSession();
     if (!session) {

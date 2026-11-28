@@ -2,13 +2,14 @@ import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { accountProvider } from "@/lib/providers";
+import { accountProvider, getLiveProviderKeys } from "@/lib/providers";
 import { buildMetadata } from "@/lib/seo";
 import { DEFAULT_MARKET, getMarket, MARKET_COOKIE_NAME } from "@/lib/market";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { TrustStrip } from "@/components/brand/trust-strip";
 import { Footer } from "@/components/layout/footer";
+import { ShopifyOrderStatusNotice } from "./_components/shopify-order-status-notice";
 import { TrackView } from "./_components/track-view";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -58,7 +59,10 @@ export default async function TrackOrderPage({
   const marketId = cookieStore.get(MARKET_COOKIE_NAME)?.value;
   const market = getMarket(marketId) ?? DEFAULT_MARKET;
 
-  const signInHref = await accountProvider.signInUrl("/track");
+  const isLive = getLiveProviderKeys().has("account");
+  const signInHref = await accountProvider.signInUrl(
+    isLive ? "/account/orders" : "/track"
+  );
 
   return (
     <>
@@ -89,17 +93,35 @@ export default async function TrackOrderPage({
               Track your order
             </h1>
             <p className="mt-3 text-base text-fg-muted">
-              No account needed. Enter your order number and the email you used
-              at checkout.
+              {isLive
+                ? "Your order status page is on Shopify. No account needed."
+                : "No account needed. Enter your order number and the email you used at checkout."}
             </p>
           </header>
 
           <div className="mt-10">
-            <TrackView
-              signInHref={signInHref}
-              market={market}
-              initialOrderNumber={rawOrderNumber}
-            />
+            {isLive ? (
+              <section
+                aria-labelledby="shopify-status-heading"
+                className="max-w-2xl rounded-card border border-border p-6 sm:p-8"
+              >
+                <h2
+                  id="shopify-status-heading"
+                  className="font-archivo text-xl font-bold text-fg"
+                >
+                  Find your order status
+                </h2>
+                <div className="mt-5">
+                  <ShopifyOrderStatusNotice signInHref={signInHref} />
+                </div>
+              </section>
+            ) : (
+              <TrackView
+                signInHref={signInHref}
+                market={market}
+                initialOrderNumber={rawOrderNumber}
+              />
+            )}
           </div>
 
           <section aria-labelledby="help-links-heading" className="mt-14">

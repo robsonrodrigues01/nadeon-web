@@ -1,0 +1,6 @@
+{
+  "_comment": "TEST data fixture - order not owned by the customer",
+  "data": {
+    "order": null
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "_comment": "TEST data fixture - single order by id",
+  "data": {
+    "order": {
+      "id": "gid://shopify/Order/5550002?key=TESTkeyB",
+      "name": "#NL-100235",
+      "number": 100235,
+      "processedAt": "2026-11-10T10:00:00Z",
+      "financialStatus": "PAID",
+      "statusPageUrl": "https://shopify.com/999999999/account/orders/5550002?key=TESTkeyB",
+      "totalPrice": {
+        "amount": "162.00",
+        "currencyCode": "USD"
+      },
+      "shippingAddress": {
+        "firstName": "TEST Alex",
+        "lastName": "TEST Morgan",
+        "company": null,
+        "address1": "100 TEST Main St",
+        "address2": "Apt 4",
+        "city": "Clifton",
+        "zoneCode": "NJ",
+        "territoryCode": "US",
+        "zip": "07011",
+        "phoneNumber": "+15550109999"
+      },
+      "lineItems": {
+        "nodes": [
+          {
+            "id": "gid://shopify/LineItem/2",
+            "title": "TEST BioHack",
+            "variantTitle": "2 Jars",
+            "quantity": 1,
+            "variantId": "gid://shopify/ProductVariant/777002",
+            "image": {
+              "url": "https://cdn.shopify.com/s/files/TEST/biohack.png"
+            },
+            "price": {
+              "amount": "118.00",
+              "currencyCode": "USD"
+            }
+          },
+          {
+            "id": "gid://shopify/LineItem/3",
+            "title": "TEST More Good Years",
+            "variantTitle": "1 Jar",
+            "quantity": 2,
+            "variantId": "gid://shopify/ProductVariant/777003",
+            "image": {
+              "url": "https://cdn.shopify.com/s/files/TEST/biohack.png"
+            },
+            "price": {
+              "amount": "22.00",
+              "currencyCode": "USD"
+            }
+          }
+        ]
+      },
+      "fulfillments": {
+        "nodes": [
+          {
+            "status": "SUCCESS",
+            "latestShipmentStatus": "IN_TRANSIT",
+            "trackingInformation": [
+              {
+                "company": "UPS",
+                "number": "1ZTEST0000000002",
+                "url": "https://www.ups.com/track?tracknum=1ZTEST0000000002"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

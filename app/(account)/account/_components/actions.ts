@@ -16,9 +16,16 @@ const IdSchema = z
   .max(128)
   .regex(/^[A-Za-z0-9_-]+$/);
 
+const VariantIdSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(128)
+  .regex(/^([A-Za-z0-9_-]+|gid:\/\/shopify\/ProductVariant\/\d+)$/);
+
 const ReorderInputSchema = z
   .object({
-    variantIds: z.array(IdSchema).min(1).max(20),
+    variantIds: z.array(VariantIdSchema).min(1).max(20),
     quantities: z.array(z.coerce.number().int().min(1).max(99)).min(1).max(20),
   })
   .refine(

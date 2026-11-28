@@ -106,11 +106,11 @@ describe("W2-39: Contracts Gaps", () => {
       ).toBeNull();
     });
 
-    it("throws not implemented in LiveAccountProvider", async () => {
+    it("returns null in LiveAccountProvider (guests use the Shopify status page)", async () => {
       const live = new LiveAccountProvider();
       await expect(
         live.lookupGuestOrder("TEST-NL-0001", "test@test.com")
-      ).rejects.toThrow(/not implemented: onda 4/);
+      ).resolves.toBeNull();
     });
   });
 

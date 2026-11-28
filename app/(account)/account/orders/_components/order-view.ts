@@ -73,6 +73,7 @@ export interface OrderDetailView {
   items: OrderItemView[];
   trackingNumber?: string;
   trackingUrl?: string;
+  statusUrl?: string;
   lines?: OrderLine[];
   url?: string;
   copyLink?: string;
@@ -131,6 +132,7 @@ export function toOrderDetailView(
     })),
     trackingNumber: order.trackingNumber,
     trackingUrl: order.trackingUrl,
+    statusUrl: order.statusUrl,
     lines: order.lines,
     url: order.url,
     copyLink: order.copyLink ?? order.url,

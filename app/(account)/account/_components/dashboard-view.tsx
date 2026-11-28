@@ -233,7 +233,7 @@ export function AccountDashboard({ view }: { view: AccountDashboardView }) {
                       </form>
                     ) : null}
                     <Button
-                      href={`/account/orders/${recentOrder.id}`}
+                      href={`/account/orders/${encodeURIComponent(recentOrder.id)}`}
                       variant="secondary"
                       size="sm"
                     >

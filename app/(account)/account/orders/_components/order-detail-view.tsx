@@ -62,6 +62,18 @@ export function OrderDetailView({ order }: OrderDetailViewProps) {
             canReorder={order.canReorder}
             showBuyAgain={order.canReorder ?? true}
           />
+          {order.statusUrl && (
+            <Button
+              variant="secondary"
+              size="sm"
+              href={order.statusUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View order status on Shopify
+              <span className="sr-only">(opens in a new tab)</span>
+            </Button>
+          )}
           <Button variant="secondary" size="sm" href="/help">
             Get help
           </Button>

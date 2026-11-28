@@ -1,0 +1,53 @@
+{
+  "_comment": "TEST data fixture - customer addresses",
+  "data": {
+    "customer": {
+      "defaultAddress": {
+        "id": "gid://shopify/CustomerAddress/888000222"
+      },
+      "addresses": {
+        "nodes": [
+          {
+            "id": "gid://shopify/CustomerAddress/888000111",
+            "firstName": "TEST Alex",
+            "lastName": "TEST Morgan",
+            "company": "TEST Co",
+            "address1": "1 TEST Side St",
+            "address2": null,
+            "city": "Clifton",
+            "zoneCode": "NJ",
+            "territoryCode": "US",
+            "zip": "07011",
+            "phoneNumber": null
+          },
+          {
+            "id": "gid://shopify/CustomerAddress/888000222",
+            "firstName": "TEST Alex",
+            "lastName": "TEST Morgan",
+            "company": null,
+            "address1": "100 TEST Main St",
+            "address2": "Apt 4",
+            "city": "Clifton",
+            "zoneCode": "NJ",
+            "territoryCode": "US",
+            "zip": "07011",
+            "phoneNumber": "+15550109999"
+          },
+          {
+            "id": "gid://shopify/CustomerAddress/888000333",
+            "firstName": null,
+            "lastName": null,
+            "company": null,
+            "address1": "3 TEST Min Rd",
+            "address2": null,
+            "city": "Austin",
+            "zoneCode": null,
+            "territoryCode": "US",
+            "zip": "73301",
+            "phoneNumber": null
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getLiveProviderKeys } from "@/lib/providers";
 import { buildMetadata } from "@/lib/seo";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
@@ -8,6 +9,7 @@ import { TrustStrip } from "@/components/brand/trust-strip";
 import { Newsletter } from "@/components/brand/newsletter";
 import { Footer } from "@/components/layout/footer";
 import { ContactForm } from "./_components/contact-form";
+import { ShopifyOrderStatusNotice } from "@/app/(shared)/track/_components/shopify-order-status-notice";
 import { TrackForm } from "./_components/track-form";
 
 export const metadata: Metadata = buildMetadata({
@@ -52,6 +54,9 @@ const linkButtonClass =
   "inline-flex min-h-11 items-center rounded-full border border-border px-5 font-bold text-fg transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 export default function HelpPage() {
+  // /account/orders sends visitors without a session to sign in first.
+  const isLive = getLiveProviderKeys().has("account");
+
   return (
     <>
       <AnnouncementBar line="human" />
@@ -123,14 +128,22 @@ export default function HelpPage() {
               >
                 Where is my order?
               </h2>
-              <p className="mt-3 text-sm text-fg-muted">
-                Enter your order number and the email you used at checkout.
-              </p>
-              <TrackForm />
-              <p className="mt-6 text-sm text-fg-muted">
-                Your order number is in your confirmation email and starts with
-                NL.
-              </p>
+              {isLive ? (
+                <div className="mt-5">
+                  <ShopifyOrderStatusNotice signInHref="/account/orders" />
+                </div>
+              ) : (
+                <>
+                  <p className="mt-3 text-sm text-fg-muted">
+                    Enter your order number and the email you used at checkout.
+                  </p>
+                  <TrackForm />
+                  <p className="mt-6 text-sm text-fg-muted">
+                    Your order number is in your confirmation email and starts
+                    with NL.
+                  </p>
+                </>
+              )}
             </section>
           </div>
 
