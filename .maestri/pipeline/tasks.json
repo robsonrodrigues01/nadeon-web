@@ -4817,10 +4817,10 @@
   },
   {
     "onda": 4,
-    "status": "backlog",
-    "responsavel": null,
+    "status": "entregue",
+    "responsavel": "Droid (worker Gemini 3.8 Flash)",
     "lease_ate": null,
-    "pr": "local",
+    "pr": "6313652",
     "preset": "Droid worker",
     "id": "W4-35",
     "papel": "Frontend",
@@ -4832,7 +4832,8 @@
       "pnpm gate verde",
       "aprovação do Robson antes do merge"
     ],
-    "branch": "droid/W4-35"
+    "branch": "droid/W4-35",
+    "nota": "27/11: todos os mercados em USD, seletor removido, aviso internacional no carrinho e em /shipping-returns; revisão adicionou proxy.ts que detecta o país por x-vercel-ip-country (UE→eu, demais→intl); gate verde 1702 testes; conferido em produção local (US sem aviso, BR/DE com aviso) e na gaveta; merge aprovado pelo Robson. Observado e não investigado: gaveta mostra 'every 30 days' com plano de 60 dias no carrinho mock"
   },
   {
     "onda": 4,
