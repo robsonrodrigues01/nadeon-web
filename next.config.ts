@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
           "base-uri 'self'",
           "object-src 'none'",
           "frame-ancestors 'none'",
-          "form-action 'self'",
+          "form-action 'self' https://shopify.com",
           "script-src 'self' 'unsafe-inline'",
           "style-src 'self' 'unsafe-inline'",
           "img-src 'self' data: blob: https://cdn.shopify.com",

@@ -40,6 +40,8 @@ describe("W3-29 production security", () => {
     expect(csp).toContain("default-src 'self'");
     expect(csp).toContain("frame-ancestors 'none'");
     expect(csp).toContain("connect-src 'self' https://*.myshopify.com");
+    // Live sign-out is a form whose redirect ends at Shopify's end-session endpoint.
+    expect(csp).toContain("form-action 'self' https://shopify.com");
     expect(csp).not.toContain("unsafe-eval");
     expect(headers.get("X-Frame-Options")).toBe("DENY");
     expect(headers.get("Referrer-Policy")).toBe(
