@@ -9,6 +9,7 @@ const revalidatePathMock = vi.fn();
 
 vi.mock("next/navigation", () => ({
   redirect: (url: string) => redirectMock(url),
+  useRouter: () => ({ push: vi.fn() }),
 }));
 vi.mock("next/cache", () => ({
   revalidatePath: (path: string) => revalidatePathMock(path),
